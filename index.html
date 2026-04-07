@@ -5,7 +5,23 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
 <title>수락산 · 수락디자인거리</title>
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet"/>
-<style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans-serif}#app{display:flex;flex-direction:column;height:100dvh;max-width:480px;margin:0 auto;background:#fff}#nav{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:#fff;border-bottom:1px solid rgba(0,0,0,.08)}#vtabs{flex-shrink:0;display:flex;background:#fff;border-bottom:1px solid rgba(0,0,0,.1)}.vtab{flex:1;padding:8px 0;font-size:11px;font-weight:700;color:#9AA090;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;-webkit-tap-highlight-color:transparent}.vtab.on{color:#3D6B4F;border-bottom:2.5px solid #3D6B4F}.vtab-ic{font-size:18px}#views{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0}.view{display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden}.view.on{display:flex}#map-filter-bar,#list-filter-bar{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;background:#fff;border-bottom:1px solid #eee}.fcat{padding:6px 12px;border-radius:20px;border:1.5px solid #ddd;font-size:12px;font-weight:700;cursor:pointer;background:#fff;white-space:nowrap;-webkit-tap-highlight-color:transparent}.fcat.on{background:#3D6B4F;color:#fff;border-color:#3D6B4F}#map-stage{flex:1;position:relative;overflow:hidden;cursor:grab;touch-action:none;background:#B8C8A0;min-height:0}#map-canvas{position:absolute;top:0;left:0;width:900px;height:480px;transform-origin:0 0;will-change:transform}#pins-layer{position:absolute;top:0;left:0;width:900px;height:480px;pointer-events:none}.mpin{position:absolute;transform:translate(-50%,-100%);cursor:pointer;display:flex;flex-direction:column;align-items:center;pointer-events:all;-webkit-tap-highlight-color:transparent}.mpin-dot{width:30px;height:30px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.9);box-shadow:0 2px 8px rgba(0,0,0,.28)}.mpin-ic{transform:rotate(45deg);font-size:14px;line-height:1}.mpin-lbl{font-size:9px;font-weight:700;background:rgba(255,255,255,.95);padding:2px 4px;border-radius:3px;white-space:nowrap;max-width:64px;overflow:hidden;text-overflow:ellipsis;color:#222;margin-top:1px;box-shadow:0 1px 3px rgba(0,0,0,.15)}.mpin.sel .mpin-dot{width:38px;height:38px}#zoom-ctrl{position:absolute;right:8px;top:8px;z-index:20;display:flex;flex-direction:column;gap:4px}.zbtn{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.12);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15);-webkit-user-select:none}#scale-box{position:absolute;left:8px;bottom:8px;z-index:20;background:rgba(255,255,255,.85);padding:3px 7px;border-radius:5px;font-size:11px;color:#3D6B4F;font-weight:700}#store-list{flex:1;overflow-y:auto;padding:8px}.scard{background:#fff;border-radius:14px;margin-bottom:10px;display:flex;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow:hidden;border:1px solid rgba(0,0,0,.06);-webkit-tap-highlight-color:transparent}.scard-bar{width:5px;flex-shrink:0}.scard-thumb{width:68px;height:68px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;position:relative}.scard-gic{position:absolute;bottom:4px;right:4px;font-size:13px}.scard-body{flex:1;padding:10px;min-width:0}.scard-meta{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-bottom:4px}.scard-cat{font-size:10px;font-weight:700}.scard-status,.scard-gbadge{font-size:10px;padding:2px 6px;border-radius:10px}.scard-name{font-size:14px;font-weight:800;color:#1A3020;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.scard-menu{font-size:11px;color:#888;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.scard-foot{display:flex;gap:8px;font-size:11px}#paging{display:flex;justify-content:center;gap:4px;padding:10px;flex-shrink:0}.pgb{width:32px;height:32px;border-radius:8px;border:1px solid #ddd;background:#fff;font-size:13px;cursor:pointer;font-family:inherit}.pgb.on{background:#3D6B4F;color:#fff;border-color:#3D6B4F}#goods-view,#trail-view,#info-view{overflow-y:auto}.view-inner{padding:12px 14px 70px}.goods-stats{display:flex;gap:8px;margin-bottom:14px}.stat-box{flex:1;background:#f8f8f0;border-radius:10px;padding:10px;text-align:center}.stat-num{font-size:18px;font-weight:800}.stat-lbl{font-size:10px;color:#888;margin-bottom:2px}.col-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}.col-card{border-radius:12px;overflow:hidden;border:1.5px solid #ddd}.col-card.have{border-color:#3D6B4F}.col-top{padding:12px;text-align:center;background:rgba(0,0,0,.02);font-size:28px;position:relative}.col-card.have .col-top{background:rgba(61,107,79,.08)}.col-chk{position:absolute;top:4px;right:6px;color:#3D6B4F;font-size:14px;font-weight:800}.col-body{padding:8px}.col-gname{font-size:12px;font-weight:800;color:#1A3020;margin-bottom:2px}.col-cat{font-size:10px;color:#888;margin-bottom:6px}.col-tbtn{width:100%;padding:5px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}.cg-card{background:#fff;border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,.07);border:1px solid rgba(0,0,0,.06)}.cg-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}.cg-ic{font-size:26px}.cg-cat{font-size:11px;font-weight:700;margin-bottom:2px}.cg-gname{font-size:13px;font-weight:800;color:#1A3020}.cg-desc{font-size:11px;color:#666;margin-bottom:8px;line-height:1.5}.cg-stags{display:flex;flex-wrap:wrap;gap:6px}.cg-stag{padding:4px 10px;border-radius:16px;background:#f0f0f0;font-size:11px;font-weight:700;cursor:pointer}.sp-card{background:#fff;border-radius:12px;margin-bottom:8px;display:flex;overflow:hidden;border:1px solid rgba(0,0,0,.06);box-shadow:0 1px 4px rgba(0,0,0,.06)}.sp-bar{width:5px;flex-shrink:0}.sp-body{flex:1;padding:10px}.sp-name{font-size:13px;font-weight:800;color:#1A3020;margin-bottom:4px}.sp-desc{font-size:11px;color:#666;margin-bottom:8px}.sp-row{display:flex;justify-content:space-between;align-items:center}.sp-gds{font-size:12px;color:#3D6B4F;font-weight:700}.sp-btn{padding:5px 12px;border-radius:16px;border:1.5px solid #3D6B4F;background:#fff;color:#3D6B4F;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}.sp-btn.done{background:#3D6B4F;color:#fff}.trail-card{background:#fff;border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.06)}.trail-hd{padding:14px;display:flex;align-items:center;gap:10px}.trail-ic{font-size:28px}.trail-name{font-size:15px;font-weight:800;color:#1A3020}.trail-info{font-size:12px;color:#888;margin-top:2px}.trail-body{padding:0 14px 14px}.trail-desc{font-size:12px;color:#555;line-height:1.6;margin-bottom:10px}.trail-pts{display:flex;flex-wrap:wrap;gap:6px}.trail-pt{padding:5px 10px;border-radius:16px;background:#f0f6f0;border:1px solid #c0d8c0;font-size:11px;font-weight:700;color:#3D6B4F}.wd-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.wd-item{background:#f8f8f0;border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center}.wd-lbl{font-size:11px;color:#888}.wd-val{font-size:13px;font-weight:800;color:#1A3020}.wd-feel{font-size:12px;color:#666;text-align:center;padding:4px}.t-bar{height:5px}.t-body{padding:12px 14px}.t-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.t-name{font-size:14px;font-weight:800;color:#1A3020}.t-lv{font-size:11px;padding:3px 8px;border-radius:10px;font-weight:700}.t-row2{display:flex;gap:12px;margin-bottom:8px}.t-stat{font-size:12px;color:#666}.t-route{font-size:12px;color:#444;background:#f8f8f8;border-radius:8px;padding:8px 10px;margin-bottom:8px;line-height:1.5}.t-gds{font-size:12px;color:#3D6B4F;font-weight:700}.info-hd{background:linear-gradient(135deg,#2A5038,#3D6B4F);color:#fff;padding:20px;margin-bottom:14px;border-radius:14px}.info-h1{font-size:18px;font-weight:800;margin-bottom:6px;line-height:1.3}.info-hp{font-size:12px;opacity:.85;line-height:1.5}.info-sec-tit{font-size:13px;font-weight:800;color:#1A3020;margin:14px 0 8px}.rc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}.rc-card{background:#f8f8f0;border-radius:12px;padding:12px;text-align:center}.rc-ic{font-size:24px;margin-bottom:6px}.rc-t{font-size:12px;font-weight:800;color:#1A3020;margin-bottom:2px}.rc-d{font-size:11px;color:#888}.steps{display:flex;flex-direction:column;gap:10px;margin-bottom:4px}.step-row{display:flex;align-items:flex-start;gap:12px;background:#fff;border-radius:12px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.06)}.step-badge{width:28px;height:28px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}.step-inf{flex:1}.step-t{font-size:13px;font-weight:800;color:#1A3020;margin-bottom:3px}.step-d{font-size:11px;color:#666;line-height:1.5}.cp-list{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}.cp-item{display:flex;overflow:hidden;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,.06);box-shadow:0 1px 4px rgba(0,0,0,.06)}.cp-bar{width:5px;flex-shrink:0}.cp-bd{flex:1;padding:10px}.cp-n{font-size:13px;font-weight:800;color:#1A3020;margin-bottom:3px}.cp-d{font-size:11px;color:#666}.app-card{background:#f8f8f0;border-radius:14px;padding:16px;margin-bottom:4px}#pop-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:flex-end;justify-content:center}#pop-sheet{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;padding-bottom:24px;position:relative;animation:slideUp .25s ease}@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}#pop-x{position:absolute;right:14px;top:14px;background:rgba(0,0,0,.08);border:none;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;z-index:1;-webkit-tap-highlight-color:transparent}#pop-bar{height:6px;border-radius:20px 20px 0 0}#pop-body{padding:16px}#pop-hdr{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:8px}#pop-cat,#pop-status,#pop-gbadge{font-size:11px;padding:2px 8px;border-radius:10px;background:#f0f0f0}#pop-name{font-size:20px;font-weight:800;color:#1A3020;margin-bottom:4px}#pop-likes{font-size:13px;color:#e74c3c;margin-bottom:6px}#pop-desc{font-size:12px;color:#666;line-height:1.6;margin-bottom:10px}#pop-menu-lbl{font-size:12px;font-weight:700;color:#3D6B4F;margin-bottom:8px}#pop-menus{margin-bottom:10px}.pm-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f5f5f5}.pm-n{font-size:13px;color:#333}.pm-p{font-size:13px;font-weight:700;color:#3D6B4F}#pop-dist{font-size:12px;color:#888;margin-bottom:10px}#pop-gbox{background:#f8f8f0;border-radius:10px;padding:12px;margin-bottom:12px}#pop-gtit{font-size:11px;font-weight:800;color:#3D6B4F;margin-bottom:4px}#pop-gcert{font-size:11px;color:#FF6B35;font-weight:700;margin-bottom:8px}#pop-gitem{display:flex;flex-wrap:wrap;gap:6px}.gpill{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid #ddd;background:#fff;-webkit-tap-highlight-color:transparent;font-family:inherit}.gpill.have{background:#3D6B4F;color:#fff;border-color:#3D6B4F}#pop-cta{width:100%;padding:14px;border-radius:12px;color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;margin-top:4px;font-family:inherit}</style>
+<style>*{margin:0;padding:0;box-sizing:border-box}html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans-serif}#app{display:flex;flex-direction:column;height:100dvh;max-width:480px;margin:0 auto;background:#fff}#nav{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:#fff;border-bottom:1px solid rgba(0,0,0,.08)}#vtabs{flex-shrink:0;display:flex;background:#fff;border-bottom:1px solid rgba(0,0,0,.1)}.vtab{flex:1;padding:8px 0;font-size:11px;font-weight:700;color:#9AA090;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;-webkit-tap-highlight-color:transparent}.vtab.on{color:#3D6B4F;border-bottom:2.5px solid #3D6B4F}.vtab-ic{font-size:18px}#views{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0}.view{display:none;flex-direction:column;flex:1;min-height:0;overflow:hidden}.view.on{display:flex}#map-filter-bar,#list-filter-bar{flex-shrink:0;display:flex;gap:6px;padding:8px 12px;overflow-x:auto;background:#fff;border-bottom:1px solid #eee}.fcat{padding:6px 12px;border-radius:20px;border:1.5px solid #ddd;font-size:12px;font-weight:700;cursor:pointer;background:#fff;white-space:nowrap;-webkit-tap-highlight-color:transparent}.fcat.on{background:#3D6B4F;color:#fff;border-color:#3D6B4F}#map-stage{flex:1;position:relative;overflow:hidden;cursor:grab;touch-action:none;background:#B8C8A0;min-height:0}#map-canvas{position:absolute;top:0;left:0;width:900px;height:480px;transform-origin:0 0;will-change:transform}#pins-layer{position:absolute;top:0;left:0;width:900px;height:480px;pointer-events:none}.mpin{position:absolute;transform:translate(-50%,-100%);cursor:pointer;display:flex;flex-direction:column;align-items:center;pointer-events:all;-webkit-tap-highlight-color:transparent}.mpin-dot{width:30px;height:30px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.9);box-shadow:0 2px 8px rgba(0,0,0,.28)}.mpin-ic{transform:rotate(45deg);font-size:14px;line-height:1}.mpin-lbl{font-size:9px;font-weight:700;background:rgba(255,255,255,.95);padding:2px 4px;border-radius:3px;white-space:nowrap;max-width:64px;overflow:hidden;text-overflow:ellipsis;color:#222;margin-top:1px;box-shadow:0 1px 3px rgba(0,0,0,.15)}.mpin.sel .mpin-dot{width:38px;height:38px}#zoom-ctrl{position:absolute;right:8px;top:8px;z-index:20;display:flex;flex-direction:column;gap:4px}.zbtn{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.95);border:1px solid rgba(0,0,0,.12);font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.15);-webkit-user-select:none}#scale-box{position:absolute;left:8px;bottom:8px;z-index:20;background:rgba(255,255,255,.85);padding:3px 7px;border-radius:5px;font-size:11px;color:#3D6B4F;font-weight:700}#store-list{flex:1;overflow-y:auto;padding:8px}.scard{background:#fff;border-radius:14px;margin-bottom:10px;display:flex;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow:hidden;border:1px solid rgba(0,0,0,.06);-webkit-tap-highlight-color:transparent}.scard-bar{width:5px;flex-shrink:0}.scard-thumb{width:68px;height:68px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;position:relative}.scard-gic{position:absolute;bottom:4px;right:4px;font-size:13px}.scard-body{flex:1;padding:10px;min-width:0}.scard-meta{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-bottom:4px}.scard-cat{font-size:10px;font-weight:700}.scard-status,.scard-gbadge{font-size:10px;padding:2px 6px;border-radius:10px}.scard-name{font-size:14px;font-weight:800;color:#1A3020;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.scard-menu{font-size:11px;color:#888;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.scard-foot{display:flex;gap:8px;font-size:11px}#paging{display:flex;justify-content:center;gap:4px;padding:10px;flex-shrink:0}.pgb{width:32px;height:32px;border-radius:8px;border:1px solid #ddd;background:#fff;font-size:13px;cursor:pointer;font-family:inherit}.pgb.on{background:#3D6B4F;color:#fff;border-color:#3D6B4F}#goods-view,#trail-view,#info-view{overflow-y:auto}.view-inner{padding:12px 14px 70px}.goods-stats{display:flex;gap:8px;margin-bottom:14px}.stat-box{flex:1;background:#f8f8f0;border-radius:10px;padding:10px;text-align:center}.stat-num{font-size:18px;font-weight:800}.stat-lbl{font-size:10px;color:#888;margin-bottom:2px}.col-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}.col-card{border-radius:12px;overflow:hidden;border:1.5px solid #ddd}.col-card.have{border-color:#3D6B4F}.col-top{padding:12px;text-align:center;background:rgba(0,0,0,.02);font-size:28px;position:relative}.col-card.have .col-top{background:rgba(61,107,79,.08)}.col-chk{position:absolute;top:4px;right:6px;color:#3D6B4F;font-size:14px;font-weight:800}.col-body{padding:8px}.col-gname{font-size:12px;font-weight:800;color:#1A3020;margin-bottom:2px}.col-cat{font-size:10px;color:#888;margin-bottom:6px}.col-tbtn{width:100%;padding:5px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}.cg-card{background:#fff;border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,.07);border:1px solid rgba(0,0,0,.06)}.cg-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}.cg-ic{font-size:26px}.cg-cat{font-size:11px;font-weight:700;margin-bottom:2px}.cg-gname{font-size:13px;font-weight:800;color:#1A3020}.cg-desc{font-size:11px;color:#666;margin-bottom:8px;line-height:1.5}.cg-stags{display:flex;flex-wrap:wrap;gap:6px}.cg-stag{padding:4px 10px;border-radius:16px;background:#f0f0f0;font-size:11px;font-weight:700;cursor:pointer}.sp-card{background:#fff;border-radius:12px;margin-bottom:8px;display:flex;overflow:hidden;border:1px solid rgba(0,0,0,.06);box-shadow:0 1px 4px rgba(0,0,0,.06)}.sp-bar{width:5px;flex-shrink:0}.sp-body{flex:1;padding:10px}.sp-name{font-size:13px;font-weight:800;color:#1A3020;margin-bottom:4px}.sp-desc{font-size:11px;color:#666;margin-bottom:8px}.sp-row{display:flex;justify-content:space-between;align-items:center}.sp-gds{font-size:12px;color:#3D6B4F;font-weight:700}.sp-btn{padding:5px 12px;border-radius:16px;border:1.5px solid #3D6B4F;background:#fff;color:#3D6B4F;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit}.sp-btn.done{background:#3D6B4F;color:#fff}.trail-card{background:#fff;border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.06)}.trail-hd{padding:14px;display:flex;align-items:center;gap:10px}.trail-ic{font-size:28px}.trail-name{font-size:15px;font-weight:800;color:#1A3020}.trail-info{font-size:12px;color:#888;margin-top:2px}.trail-body{padding:0 14px 14px}.trail-desc{font-size:12px;color:#555;line-height:1.6;margin-bottom:10px}.trail-pts{display:flex;flex-wrap:wrap;gap:6px}.trail-pt{padding:5px 10px;border-radius:16px;background:#f0f6f0;border:1px solid #c0d8c0;font-size:11px;font-weight:700;color:#3D6B4F}.wd-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.wd-item{background:#f8f8f0;border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between;align-items:center}.wd-lbl{font-size:11px;color:#888}.wd-val{font-size:13px;font-weight:800;color:#1A3020}.wd-feel{font-size:12px;color:#666;text-align:center;padding:4px}.t-bar{height:5px}.t-body{padding:12px 14px}.t-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}.t-name{font-size:14px;font-weight:800;color:#1A3020}.t-lv{font-size:11px;padding:3px 8px;border-radius:10px;font-weight:700}.t-row2{display:flex;gap:12px;margin-bottom:8px}.t-stat{font-size:12px;color:#666}.t-route{font-size:12px;color:#444;background:#f8f8f8;border-radius:8px;padding:8px 10px;margin-bottom:8px;line-height:1.5}.t-gds{font-size:12px;color:#3D6B4F;font-weight:700}.info-hd{background:linear-gradient(135deg,#2A5038,#3D6B4F);color:#fff;padding:20px;margin-bottom:14px;border-radius:14px}.info-h1{font-size:18px;font-weight:800;margin-bottom:6px;line-height:1.3}.info-hp{font-size:12px;opacity:.85;line-height:1.5}.info-sec-tit{font-size:13px;font-weight:800;color:#1A3020;margin:14px 0 8px}.rc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}.rc-card{background:#f8f8f0;border-radius:12px;padding:12px;text-align:center}.rc-ic{font-size:24px;margin-bottom:6px}.rc-t{font-size:12px;font-weight:800;color:#1A3020;margin-bottom:2px}.rc-d{font-size:11px;color:#888}.steps{display:flex;flex-direction:column;gap:10px;margin-bottom:4px}.step-row{display:flex;align-items:flex-start;gap:12px;background:#fff;border-radius:12px;padding:12px;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.06)}.step-badge{width:28px;height:28px;border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0}.step-inf{flex:1}.step-t{font-size:13px;font-weight:800;color:#1A3020;margin-bottom:3px}.step-d{font-size:11px;color:#666;line-height:1.5}.cp-list{display:flex;flex-direction:column;gap:8px;margin-bottom:4px}.cp-item{display:flex;overflow:hidden;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,.06);box-shadow:0 1px 4px rgba(0,0,0,.06)}.cp-bar{width:5px;flex-shrink:0}.cp-bd{flex:1;padding:10px}.cp-n{font-size:13px;font-weight:800;color:#1A3020;margin-bottom:3px}.cp-d{font-size:11px;color:#666}.app-card{background:#f8f8f0;border-radius:14px;padding:16px;margin-bottom:4px}#pop-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:flex;align-items:flex-end;justify-content:center}#pop-sheet{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:85vh;overflow-y:auto;padding-bottom:24px;position:relative;animation:slideUp .25s ease}@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}#pop-x{position:absolute;right:14px;top:14px;background:rgba(0,0,0,.08);border:none;border-radius:50%;width:32px;height:32px;font-size:14px;cursor:pointer;z-index:1;-webkit-tap-highlight-color:transparent}#pop-bar{height:6px;border-radius:20px 20px 0 0}#pop-body{padding:16px}#pop-hdr{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:8px}#pop-cat,#pop-status,#pop-gbadge{font-size:11px;padding:2px 8px;border-radius:10px;background:#f0f0f0}#pop-name{font-size:20px;font-weight:800;color:#1A3020;margin-bottom:4px}#pop-likes{font-size:13px;color:#e74c3c;margin-bottom:6px}#pop-desc{font-size:12px;color:#666;line-height:1.6;margin-bottom:10px}#pop-menu-lbl{font-size:12px;font-weight:700;color:#3D6B4F;margin-bottom:8px}#pop-menus{margin-bottom:10px}.pm-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f5f5f5}.pm-n{font-size:13px;color:#333}.pm-p{font-size:13px;font-weight:700;color:#3D6B4F}#pop-dist{font-size:12px;color:#888;margin-bottom:10px}#pop-gbox{background:#f8f8f0;border-radius:10px;padding:12px;margin-bottom:12px}#pop-gtit{font-size:11px;font-weight:800;color:#3D6B4F;margin-bottom:4px}#pop-gcert{font-size:11px;color:#FF6B35;font-weight:700;margin-bottom:8px}#pop-gitem{display:flex;flex-wrap:wrap;gap:6px}.gpill{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid #ddd;background:#fff;-webkit-tap-highlight-color:transparent;font-family:inherit}.gpill.have{background:#3D6B4F;color:#fff;border-color:#3D6B4F}#pop-cta{width:100%;padding:14px;border-radius:12px;color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;margin-top:4px;font-family:inherit}
+.info-wd-card{background:linear-gradient(135deg,#1E4A6E,#2A7AAA);border-radius:14px;padding:14px;margin-bottom:4px;color:#fff}
+.info-wd-tit{font-size:13px;font-weight:800;margin-bottom:10px;opacity:.9}
+.info-wd-card .wd-grid{grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+.info-wd-card .wd-item{background:rgba(255,255,255,.15);border-radius:8px;padding:8px 10px}
+.info-wd-card .wd-lbl{color:rgba(255,255,255,.75);font-size:11px}
+.info-wd-card .wd-val{color:#fff;font-size:14px;font-weight:800}
+.info-wd-row{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.info-wd-hike{font-size:13px;font-weight:800}
+.info-wd-feel{font-size:12px;opacity:.85}
+.mt-card{background:#fff;border-radius:14px;padding:0;margin-bottom:4px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.06)}
+.mt-hd{display:flex;align-items:center;gap:10px;padding:14px;background:linear-gradient(135deg,#f8f5ee,#f0ebe0)}
+.mt-ic{font-size:32px}
+.mt-nm{font-size:15px;font-weight:800;color:#1A3020;margin-bottom:2px}
+.mt-rg{font-size:11px;color:#888}
+.mt-desc{font-size:12px;color:#555;line-height:1.7;padding:12px 14px;border-bottom:1px solid #f0f0f0}
+.mt-card .trail-pts{padding:10px 14px;display:flex;flex-wrap:wrap;gap:6px}.info-goods-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}.info-goods-card{background:#fff;border-radius:12px;padding:12px 8px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.07);border:1px solid rgba(0,0,0,.06)}.info-goods-top{display:flex;justify-content:center;align-items:center;gap:2px;margin-bottom:6px}.goods-how-card{background:linear-gradient(135deg,#2A5038,#3D6B4F);border-radius:14px;padding:14px;margin-bottom:14px;color:#fff}.goods-how-tit{font-size:12px;font-weight:800;margin-bottom:10px;opacity:.9}.goods-how-steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.goods-mini-step{display:flex;align-items:center;font-size:11px;color:#fff}.goods-step-n{width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:10px;margin-right:4px;flex-shrink:0}.ds-card{background:#fff;border-radius:14px;padding:14px;margin-bottom:4px;box-shadow:0 2px 8px rgba(0,0,0,.07);border:1px solid rgba(0,0,0,.06)}.ds-desc{font-size:12px;color:#555;line-height:1.7;margin-bottom:10px}.ds-tags{display:flex;flex-wrap:wrap;gap:6px}.ds-tag{padding:5px 10px;border-radius:16px;background:#f0f6f0;border:1px solid #c0d8c0;font-size:11px;font-weight:700;color:#3D6B4F}</style>
 </head>
 <body>
 <div id="app">
@@ -115,6 +131,7 @@
     </div>
     <div class="view" id="goods-view">
       <div class="view-inner">
+<div id="goods-help"></div>
         <div style="font-size:14px;font-weight:800;color:#1A3020;margin-bottom:10px">🎒 내 굿즈 컬렉션</div>
         <div class="goods-stats">
           <div class="stat-box"><div class="stat-lbl">수집</div><div class="stat-num" style="color:#3D6B4F"><span id="cs-col">0/5</span></div></div>
@@ -154,13 +171,10 @@
         <div id="pop-gitem"></div>
       </div>
       <button id="pop-cta" style="display:none"><span id="pop-cta-txt">길찾기</span></button>
-    </div>
-  </div>
-</div>
-<script>
-(function(){
+    </d
 
-// ── 데이터 ──
+
+<script>
 var LANGS={
   KO:{title:"수락산 · 수락디자인거리",h1:"수락산에서 시작되는\n특별한 하루",
   hp:"등산길 · 둘레길 · 빛의 런웨이\n수락디자인거리를 하나의 여정으로",
@@ -196,11 +210,11 @@ var LANGS={
   wdTitle:"🌤️ 현재 날씨",wdHum:"💧 습도",wdWind:"💨 풍속",wdSunset:"🌄 일몰",wdHiking:"등산 추천",
   exit3:"3번출구",station:"수락산역",designRd:"✨ 수락디자인거리",
   summitLbl:"⛰️ 수락산 정상 638m (약 2km↗)",fallsLbl:"💧 은류폭포 1.8km↗",ridgeLbl:"🏔️ 향로봉 능선 2.5km↗",
-  trailLbl:"🥾 등산로 입구 → 150m",lg1:"식사→🗝️",lg2:"카페→🥤",lg3:"고기→🧦",lg4:"편의·아웃도어→🧢",have:"개 보유",mtName:"수락산 (水樂山) 638m",mtRegion:"서울 노원구 · 경기 의정부시",mtDesc:"물이 있어 즐거운 산으로 기차바위·은류폭포 등 독특한 지형과 사계절 경관으로 사랑받는 명산입니다.",mtTags:"🚇 3번출구 바로|🌊 은류폭포|🪨 기차바위|🏔️ 정상 638m|🦅 향로봉",wdTemp:"🌡️ 기온",secTrail:"🥾 수락산 등산 코스",secMt:"⛰️ 수락산 소개",secHow:"굿즈 수령 방법",secRoute:"🏔️ 여정 소개",secCert:"📸 인증 장소",secApp:"ℹ️ 앱 안내",appName:"수락산 · 수락디자인거리",appAddr:"서울 노원구 동일로242길",appDesc:"수락산역 3번출구 → 도보 2분",appTag:"#수락산 #수락산역맛집 #수락디자인거리"},
-  EN:{title:"Suraksan · Design Street",h1:"A Special Day\nStarting at Suraksan",hp:"Trail · Dulle-gil · Light Runway\nAll in one journey",surakiMsg:"Get SNS certified at the summit or trail, 📸\nthen collect goods by category at Design Street stores!",rc1:"Trail",rc1d:"Summit 638m",rc2:"Dulle-gil",rc2d:"~8km",rc3:"Light Runway",rc3d:"Design Street",gft:"🎒 Goods: 1x Suraksan SNS cert + category store payment",gs1:"SNS Cert\nAnywhere",gs2:"Visit\nCategory Store",gs3:"Show Cert\nwhen Paying",gs4:"Goods\nReceived!",hs1:"Suraksan Summit",hs2:"Dulle-gil",hs3:"Stores",tmap:"Map",tlist:"Stores",tgoods:"Goods",ttrail:"Trail",all:"All",food:"Meal",cafe:"Café",gogi:"BBQ",outdoor:"Outdoor",sock:"Socks",tumbler:"Tumbler",bandana:"Bandana",keyring:"Keyring",cap:"Camp Cap",listttl:"Store List",dir:"Directions",maplbl:"Suraksan Station Exit 3",open:"Open",closed:"Closed",nostore:"No stores found",navInfo:"Guide",bt1:"Map",bt2:"Stores",bt3:"Goods",bt4:"Trail",gvTitle:"Goods Guide",gvSub:"Get goods by paying at category stores after SNS cert",howTitle:"How to Get Goods",hw1t:"Visit Suraksan anywhere — summit, trail, or entrance",hw1d:"Any single SNS photo from Suraksan counts! Repeat visits are also valid.",hw2t:"Upload to SNS",hw2d:"Use #Suraksan #SurakDesignStreet hashtags",hw3t:"Visit category store & pay",hw3d:"Show SNS cert when paying to receive 1 goods item",hw4t:"Collect all 5 → Honorary Membership!",hw4d:"Collect all 5 category goods to receive digital honorary membership",gvCats:"5 Category Goods",gvCatsSub:"1 item per category, 5 total",gvPts:"SNS Cert Points",gvPtsSub:"Select each point individually. Cert count adds to your progress",gvCol:"My Collection",gvColSub:"Goods from Suraksan cert + store purchases",cs1:"Collected",cs2:"Certified",cs3:"Progress",have:"Have",nothave:"Not Yet",certBtn:"Certified!",certDone:"✓ Done",gvVip:"Honorary Membership",vipTitle:"Surak Design Street\nHonorary Member",vipSub:"Issued after collecting all 5 goods",vipLock:"Collect all 5 goods to\nunlock your honorary membership!",vipBen1:"Priority event invites",vipBen2:"Limited edition goods",vipBen3:"Special store perks",vipBen4:"Surak-i fan community",tvTitle:"Suraksan Trail Info",tvSub:"Course difficulty, distance, cert points & linked goods",rwTitle:"Light Runway — Seasonal Gobo Lights",rwSub:"Seasonal themed lighting throughout Surak Design Street",rws1:"Spring · Cherry",rwsd1:"Cherry blossom gobo lights fill the street with spring",rws2:"Summer · Stream",rwsd2:"Cool blue lights bring summer night freshness",rws3:"Autumn · Maple",rwsd3:"Red and gold maple lights for autumn romance",rws4:"Winter · Snow",rwsd4:"Snowflake gobo lights create a fairytale street",pgt:"How to Get Goods Here",pcert:"📸 Any Suraksan SNS cert + payment at this store = goods received",likes:"people like this",menuLbl:"Recommended Menu",distHint:"From Exit 3 by distance",lg1:"SNS Cert",lg2:"Meal/BBQ→🧦",lg3:"Café→🥤",lg4:"Outdoor→🧢",feels:'Feels like',hikingGood:'🥾 Good for hiking',hikingBad:'⚠️ Check conditions',wdTitle:'🌤️ Current Weather',wdHum:'💧 Humidity',wdWind:'💨 Wind',wdSunset:'🌅 Sunset',wdHiking:'🥾 Hiking Conditions',certLabel:'Cert',goodsLabel:'Goods',surakiDesc:'Suraki(水樂) — Joy of Water at Suraksan',surakiMsg2:'📸 Certify at Suraksan summit or trail,<br>then get goods at Design Street shops!',exit3:'Exit 3',station:'Suraksan Stn.',designRd:'✨ Design Street',trailLbl:'🥾 Trail Entrance ↑',summitLbl:'⛰️ Summit 638m ↑ (~2km)',fallsLbl:'💧 Eunryu Falls → 1.8km',ridgeLbl:'🏔️ Hyangnobong Ridge → 2.5km',mtName:"Suraksan 638m",mtRegion:"Nowon-gu Seoul / Uijeongbu Gyeonggi",mtDesc:"Suraksan (638m) on the border of Seoul and Uijeongbu. Known for Gichabawi Rock, Eunryu Falls, and beautiful scenery all year.",mtTags:"🚇 Exit 3 nearby|🌊 Eunryu Falls|🪨 Gichabawi Rock|🏔️ Summit 638m|🦅 Hyangro Peak",wdTemp:"🌡️ Temp",secTrail:"🥾 Hiking Courses",secMt:"⛰️ About Suraksan",secHow:"How to Get Goods",secRoute:"🏔️ Journey",secCert:"📸 Cert Spots",secApp:"ℹ️ App Info",appName:"Suraksan Design Street",appAddr:"242-gil Dongil-ro Nowon-gu Seoul",appDesc:"Exit 3 → 2 min walk",appTag:"#Suraksan #DesignStreet"},
-  JP:{title:"スラクサン·デザイン通り",h1:"スラクサンから始まる\n特別な一日",hp:"登山道・ドゥレギル・光のランウェイ\nひとつの旅として楽しもう",surakiMsg:"山頂やドゥレギルでSNS認証して、📸\nデザイン通りでカテゴリ別にグッズをもらおう！",rc1:"登山道",rc1d:"山頂 638m",rc2:"ドゥレギル",rc2d:"約8km",rc3:"光のランウェイ",rc3d:"デザイン通り",gft:"🎒 グッズ受取方法（スラクサン認証1回＋カテゴリ支払）",gs1:"スラクサン\nどこでもSNS認証",gs2:"カテゴリ\n店舗訪問",gs3:"支払時\n認証提示",gs4:"グッズ\n贈呈！",hs1:"山頂",hs2:"ドゥレギル",hs3:"参加店舗",tmap:"地図",tlist:"店舗",tgoods:"グッズ",ttrail:"登山",all:"全て",food:"食事",cafe:"カフェ",gogi:"焼肉",outdoor:"アウトドア",sock:"ソックス",tumbler:"タンブラー",bandana:"バンダナ",keyring:"キーリング",cap:"キャップ",listttl:"店舗リスト",dir:"ルート案内",maplbl:"水落山駅3番出口",open:"営業中",closed:"営業終了",nostore:"該当グッズ取扱店なし",navInfo:"案内",bt1:"地図",bt2:"店舗",bt3:"グッズ",bt4:"登山",gvTitle:"グッズ受取ガイド",gvSub:"SNS認証後、カテゴリ別店舗で支払時グッズ贈呈",howTitle:"グッズ受取手順",hw1t:"スラクサンのどこでも — 山頂・コース・入口すべてOK",hw1d:"スラクサンのどこでも認証1枚でOK！何度訪問しても重複認定。",hw2t:"SNSアップロード",hw2d:"#スラクサン #スラクデザイン通り ハッシュタグ必須",hw3t:"カテゴリ店舗を訪問＆支払",hw3d:"支払時にSNS認証画面を見せてください",hw4t:"5種完集→名誉会員証発行！",hw4d:"5種類のグッズをコンプリートで名誉会員デジタル証明書発行",gvCats:"5大カテゴリグッズ",gvCatsSub:"カテゴリ別1種、計5種収集可能",gvPts:"SNS認証ポイント",gvPtsSub:"各ポイントを個別選択。認証数が達成率に反映されます",gvCol:"グッズコレクション",gvColSub:"スラクサン認証＋カテゴリ購入で収集したグッズ",cs1:"収集済",cs2:"認証完了",cs3:"達成率",have:"保有",nothave:"未取得",certBtn:"認証完了",certDone:"✓ 済み",gvVip:"名誉会員証",vipTitle:"スラクデザイン通り\n名誉会員証",vipSub:"5種完集時発行",vipLock:"グッズ5種全部集めると\n名誉会員証が発行されます！",vipBen1:"イベント優先招待",vipBen2:"限定グッズ提供",vipBen3:"提携店舗での特別優待",vipBen4:"スラキファンコミュニティ",tvTitle:"スラクサン登山情報",tvSub:"コース別難易度・距離・認証ポイント・連動グッズ",rwTitle:"光のランウェイ — シーズナル高輝度照明",rwSub:"スラクデザイン通りを飾る四季テーマ照明",rws1:"春·桜",rwsd1:"桜の照明で通り全体が春色に",rws2:"夏·渓谷",rwsd2:"涼しい水色の照明で夏の夜を",rws3:"秋·紅葉",rwsd3:"赤と黄色の紅葉照明で秋の浪漫を",rws4:"冬·雪花",rwsd4:"雪花照明でメルヘンの世界に",pgt:"このお店のグッズ受取方法",pcert:"📸 スラクサンのどこでもSNS認証1回後、支払時に贈呈",likes:"人がいいね",menuLbl:"おすすめメニュー",distHint:"3番出口から距離順",lg1:"SNS認証",lg2:"食事·焼肉→🧦",lg3:"カフェ→🥤",lg4:"アウトドア→🧢",feels:'体感',hikingGood:'🥾 登山に最適',hikingBad:'⚠️ 要確認',wdTitle:'🌤️ 現在の天気',wdHum:'💧 湿度',wdWind:'💨 風速',wdSunset:'🌅 日没',wdHiking:'🥾 登山コンディション',certLabel:'認証',goodsLabel:'グッズ',surakiDesc:'スラキ(水樂) — 水のある楽しい水落山',surakiMsg2:'📸 スラクサン山頂や둘레길でSNS認証し,<br>デザイン거리のお店でグッズをもらおう！',exit3:'3番出口',station:'スラクサン駅',designRd:'✨ デザイン거리',trailLbl:'🥾 登山口 ↑',summitLbl:'⛰️ 山頂638m ↑ (約2km)',fallsLbl:'💧 銀流滝 → 1.8km',ridgeLbl:'🏔️ 香炉峰稜線 → 2.5km',mtName:"水落山 638m",mtRegion:"ソウル盧原区 / 京畿議政府市",mtDesc:"水落山(638m)はソウル盧原区と京畿道議政府市の境界に位置する山。汽車岩・銀流瀑布など独特の地形が魅力です。",mtTags:"🚇 3番出口すぐ|🌊 銀流瀑布|🪨 汽車岩|🏔️ 山頂638m|🦅 香炉峰",wdTemp:"🌡️ 気温",secTrail:"🥾 登山コース",secMt:"⛰️ 水落山について",secHow:"グッズ受取方法",secRoute:"🏔️ 旅程紹介",secCert:"📸 認証スポット",secApp:"ℹ️ アプリ案内",appName:"水落山デザイン通り",appAddr:"ソウル盧原区同一路242キル",appDesc:"水落山駅3番出口 → 徒歩2分",appTag:"#水落山 #デザイン通り"},
-  CN:{title:"水落山·水落设计街",h1:"从水落山开始的\n特别一天",hp:"登山道·绕山步道·光之跑道\n尽在一次旅程",surakiMsg:"在山顶或绕山步道完成SNS认证 📸\n然后按类别在设计街店铺领取商品！",rc1:"登山道",rc1d:"山顶 638m",rc2:"绕山步道",rc2d:"约8km",rc3:"光之跑道",rc3d:"设计街",gft:"🎒 商品领取方法（水落山认证1次+类别付款）",gs1:"水落山\n任意地点认证",gs2:"前往\n类别店铺",gs3:"付款时\n出示认证",gs4:"商品\n赠送！",hs1:"水落山山顶",hs2:"绕山步道",hs3:"参与店铺",tmap:"地图",tlist:"店铺",tgoods:"商品",ttrail:"登山",all:"全部",food:"餐饮",cafe:"咖啡",gogi:"烤肉",outdoor:"户外",sock:"登山袜",tumbler:"保温杯",bandana:"头巾",keyring:"钥匙扣",cap:"露营帽",listttl:"店铺列表",dir:"导航",maplbl:"水落山站3号出口",open:"营业中",closed:"营业结束",nostore:"暂无相关商品店铺",navInfo:"向导",bt1:"地图",bt2:"店铺",bt3:"商品",bt4:"登山",gvTitle:"商品领取指南",gvSub:"SNS认证后，在类别店铺付款时赠送商品",howTitle:"商品领取流程",hw1t:"水落山任何地点均可 — 山顶、登山道、入口都行",hw1d:"在水落山任何地点拍一张认证照即可！多次访问均有效。",hw2t:"上传SNS",hw2d:"#水落山 #水落设计街 标签必须",hw3t:"前往类别店铺&付款",hw3d:"付款时出示SNS认证画面，即可领取相应类别商品",hw4t:"集齐5种→荣誉会员证！",hw4d:"集齐5种商品后，发放荣誉会员数字认证书",gvCats:"5大类别商品",gvCatsSub:"每个类别1种，共5种可收集",gvPts:"SNS认证地点",gvPtsSub:"各点单独选择。认证数量反映在达成率中",gvCol:"我的商品收藏",gvColSub:"通过水落山认证+类别付款收集的商品",cs1:"已收集",cs2:"已认证",cs3:"完成率",have:"已有",nothave:"未有",certBtn:"认证完成",certDone:"✓ 已认证",gvVip:"荣誉会员证",vipTitle:"水落设计街\n荣誉会员证",vipSub:"集齐5种商品后发放",vipLock:"集齐全部5种商品\n即可领取荣誉会员证！",vipBen1:"活动优先邀请",vipBen2:"限定商品提供",vipBen3:"合作店铺特别优待",vipBen4:"水落伊粉丝社区",tvTitle:"水落山登山信息",tvSub:"路线难度·距离·认证点·关联商品",rwTitle:"光之跑道——季节主题照明",rwSub:"装点水落设计街的四季主题灯光",rws1:"春·樱花",rwsd1:"樱花照明让街道染上春色",rws2:"夏·溪谷",rwsd2:"凉爽水蓝灯光带来夏夜清凉",rws3:"秋·红叶",rwsd3:"红黄枫叶灯光演绎秋日浪漫",rws4:"冬·雪花",rwsd4:"雪花照明打造童话世界",pgt:"此店商品领取方法",pcert:"📸 在水落山任意地点完成SNS认证，付款时出示即可领取",likes:"人点赞",menuLbl:"推荐菜单",distHint:"3号出口距离顺序",lg1:"SNS认证",lg2:"餐饮·烤肉→🧦",lg3:"咖啡→🥤",lg4:"户外→🧢",feels:'体感',hikingGood:'🥾 适合登山',hikingBad:'⚠️ 注意天气',wdTitle:'🌤️ 当前天气',wdHum:'💧 湿度',wdWind:'💨 风速',wdSunset:'🌅 日落',wdHiking:'🥾 登山状况',certLabel:'认证',goodsLabel:'商品',surakiDesc:'水乐(水樂) — 有水的快乐水落山',surakiMsg2:'📸 在水落山顶或둘레길认证后,<br>在设计街店铺领取纪念品！',exit3:'3号出口',station:'水落山站',designRd:'✨ 设计街',trailLbl:'🥾 登山入口 ↑',summitLbl:'⛰️ 山顶638m ↑ (约2km)',fallsLbl:'💧 银流瀑布 → 1.8km',ridgeLbl:'🏔️ 香炉峰山脊 → 2.5km',mtName:"水落山 638m",mtRegion:"首尔芦原区 / 京畿议政府市",mtDesc:"水落山(638m)位于首尔芦原区与京畿道议政府市交界处。以火车岩、银流瀑布等独特地貌和四季美景深受爱好者喜爱。",mtTags:"🚇 3号出口即到|🌊 银流瀑布|🪨 火车岩|🏔️ 山顶638m|🦅 香炉峰",wdTemp:"🌡️ 气温",secTrail:"🥾 登山路线",secMt:"⛰️ 水落山介绍",secHow:"领取商品方法",secRoute:"🏔️ 行程介绍",secCert:"📸 认证地点",secApp:"ℹ️ 应用说明",appName:"水落山设计街",appAddr:"首尔芦原区同一路242街",appDesc:"水落山站3号出口步行2分钟",appTag:"#水落山 #设计街"}
-};;;;
+  trailLbl:"🥾 등산로 입구 → 150m",lg1:"식사→🗝️",lg2:"카페→🥤",lg3:"고기→🧦",lg4:"편의·아웃도어→🧢",have:"개 보유",mtName:"수락산 (水樂山) 638m",mtRegion:"서울 노원구 · 경기 의정부시",mtDesc:"물이 있어 즐거운 산으로 기차바위·은류폭포 등 독특한 지형과 사계절 경관으로 사랑받는 명산입니다.",mtTags:"🚇 3번출구 바로|🌊 은류폭포|🪨 기차바위|🏔️ 정상 638m|🦅 향로봉",wdTemp:"🌡️ 기온",secTrail:"🥾 수락산 등산 코스",secMt:"⛰️ 수락산 소개",secHow:"굿즈 수령 방법",secRoute:"🏔️ 여정 소개",secCert:"📸 인증 장소",secApp:"ℹ️ 앱 안내",appName:"수락산 · 수락디자인거리",appAddr:"서울 노원구 동일로242길",appDesc:"수락산역 3번출구 → 도보 2분",appTag:"#수락산 #수락산역맛집 #수락디자인거리",dist3exit:"📍 수락산역 3번출구에서 ",popGoodsTit:"🎒 굿즈 수령 방법",popCertDesc:"수락산 어디서든 SNS 인증 1회 후 수령",certFirst:"📸 인증 먼저!",dsTitle:"🌟 수락디자인거리",ds41:"🍽️ 41개 매장",dsWalk:"🚶 역 도보 2분",dsBar:"🍺 포차·주점",dsCafe:"☕ 카페",dsFood:"🍜 식사",dsGoods:"🎒 굿즈",won:"원",menuLbl:"🍽️ 대표메뉴"},
+  EN:{title:"Suraksan · Design Street",h1:"A Special Day\nStarting at Suraksan",hp:"Trail · Dulle-gil · Light Runway\nAll in one journey",surakiMsg:"Get SNS certified at the summit or trail, 📸\nthen collect goods by category at Design Street stores!",rc1:"Trail",rc1d:"Summit 638m",rc2:"Dulle-gil",rc2d:"~8km",rc3:"Light Runway",rc3d:"Design Street",gft:"🎒 Goods: 1x Suraksan SNS cert + category store payment",gs1:"SNS Cert\nAnywhere",gs2:"Visit\nCategory Store",gs3:"Show Cert\nwhen Paying",gs4:"Goods\nReceived!",hs1:"Suraksan Summit",hs2:"Dulle-gil",hs3:"Stores",tmap:"Map",tlist:"Stores",tgoods:"Goods",ttrail:"Trail",all:"All",food:"Meal",cafe:"Café",gogi:"BBQ",outdoor:"Outdoor",sock:"Socks",tumbler:"Tumbler",bandana:"Bandana",keyring:"Keyring",cap:"Camp Cap",listttl:"Store List",dir:"Directions",maplbl:"Suraksan Station Exit 3",open:"Open",closed:"Closed",nostore:"No stores found",navInfo:"Guide",bt1:"Map",bt2:"Stores",bt3:"Goods",bt4:"Trail",gvTitle:"Goods Guide",gvSub:"Get goods by paying at category stores after SNS cert",howTitle:"How to Get Goods",hw1t:"Visit Suraksan anywhere — summit, trail, or entrance",hw1d:"Any single SNS photo from Suraksan counts! Repeat visits are also valid.",hw2t:"Upload to SNS",hw2d:"Use #Suraksan #SurakDesignStreet hashtags",hw3t:"Visit category store & pay",hw3d:"Show SNS cert when paying to receive 1 goods item",hw4t:"Collect all 5 → Honorary Membership!",hw4d:"Collect all 5 category goods to receive digital honorary membership",gvCats:"5 Category Goods",gvCatsSub:"1 item per category, 5 total",gvPts:"SNS Cert Points",gvPtsSub:"Select each point individually. Cert count adds to your progress",gvCol:"My Collection",gvColSub:"Goods from Suraksan cert + store purchases",cs1:"Collected",cs2:"Certified",cs3:"Progress",have:"Have",nothave:"Not Yet",certBtn:"Certified!",certDone:"✓ Done",gvVip:"Honorary Membership",vipTitle:"Surak Design Street\nHonorary Member",vipSub:"Issued after collecting all 5 goods",vipLock:"Collect all 5 goods to\nunlock your honorary membership!",vipBen1:"Priority event invites",vipBen2:"Limited edition goods",vipBen3:"Special store perks",vipBen4:"Surak-i fan community",tvTitle:"Suraksan Trail Info",tvSub:"Course difficulty, distance, cert points & linked goods",rwTitle:"Light Runway — Seasonal Gobo Lights",rwSub:"Seasonal themed lighting throughout Surak Design Street",rws1:"Spring · Cherry",rwsd1:"Cherry blossom gobo lights fill the street with spring",rws2:"Summer · Stream",rwsd2:"Cool blue lights bring summer night freshness",rws3:"Autumn · Maple",rwsd3:"Red and gold maple lights for autumn romance",rws4:"Winter · Snow",rwsd4:"Snowflake gobo lights create a fairytale street",pgt:"How to Get Goods Here",pcert:"📸 Any Suraksan SNS cert + payment at this store = goods received",likes:"people like this",menuLbl:"Recommended Menu",distHint:"From Exit 3 by distance",lg1:"SNS Cert",lg2:"Meal/BBQ→🧦",lg3:"Café→🥤",lg4:"Outdoor→🧢",feels:'Feels like',hikingGood:'🥾 Good for hiking',hikingBad:'⚠️ Check conditions',wdTitle:'🌤️ Current Weather',wdHum:'💧 Humidity',wdWind:'💨 Wind',wdSunset:'🌅 Sunset',wdHiking:'🥾 Hiking Conditions',certLabel:'Cert',goodsLabel:'Goods',surakiDesc:'Suraki(水樂) — Joy of Water at Suraksan',surakiMsg2:'📸 Certify at Suraksan summit or trail,<br>then get goods at Design Street shops!',exit3:'Exit 3',station:'Suraksan Stn.',designRd:'✨ Design Street',trailLbl:'🥾 Trail Entrance ↑',summitLbl:'⛰️ Summit 638m ↑ (~2km)',fallsLbl:'💧 Eunryu Falls → 1.8km',ridgeLbl:'🏔️ Hyangnobong Ridge → 2.5km',mtName:"Suraksan 638m",mtRegion:"Nowon-gu Seoul / Uijeongbu Gyeonggi",mtDesc:"Suraksan (638m) on the border of Seoul and Uijeongbu. Known for Gichabawi Rock, Eunryu Falls, and beautiful scenery all year.",mtTags:"🚇 Exit 3 nearby|🌊 Eunryu Falls|🪨 Gichabawi Rock|🏔️ Summit 638m|🦅 Hyangro Peak",wdTemp:"🌡️ Temp",secTrail:"🥾 Hiking Courses",secMt:"⛰️ About Suraksan",secHow:"How to Get Goods",secRoute:"🏔️ Journey",secCert:"📸 Cert Spots",secApp:"ℹ️ App Info",appName:"Suraksan Design Street",appAddr:"242-gil Dongil-ro Nowon-gu Seoul",appDesc:"Exit 3 → 2 min walk",appTag:"#Suraksan #DesignStreet",dist3exit:"📍 From Exit 3, ",popGoodsTit:"🎒 How to Get Goods",popCertDesc:"Get SNS certified at Suraksan, then receive goods",certFirst:"📸 Certify first!",dsTitle:"🌟 Surak Design Street",ds41:"🍽️ 41 Stores",dsWalk:"🚶 2 min walk",dsBar:"🍺 Bars",dsCafe:"☕ Cafes",dsFood:"🍜 Dining",dsGoods:"🎒 Goods",won:"KRW"},
+  JP:{title:"スラクサン·デザイン通り",h1:"スラクサンから始まる\n特別な一日",hp:"登山道・ドゥレギル・光のランウェイ\nひとつの旅として楽しもう",surakiMsg:"山頂やドゥレギルでSNS認証して、📸\nデザイン通りでカテゴリ別にグッズをもらおう！",rc1:"登山道",rc1d:"山頂 638m",rc2:"ドゥレギル",rc2d:"約8km",rc3:"光のランウェイ",rc3d:"デザイン通り",gft:"🎒 グッズ受取方法（スラクサン認証1回＋カテゴリ支払）",gs1:"スラクサン\nどこでもSNS認証",gs2:"カテゴリ\n店舗訪問",gs3:"支払時\n認証提示",gs4:"グッズ\n贈呈！",hs1:"山頂",hs2:"ドゥレギル",hs3:"参加店舗",tmap:"地図",tlist:"店舗",tgoods:"グッズ",ttrail:"登山",all:"全て",food:"食事",cafe:"カフェ",gogi:"焼肉",outdoor:"アウトドア",sock:"ソックス",tumbler:"タンブラー",bandana:"バンダナ",keyring:"キーリング",cap:"キャップ",listttl:"店舗リスト",dir:"ルート案内",maplbl:"水落山駅3番出口",open:"営業中",closed:"営業終了",nostore:"該当グッズ取扱店なし",navInfo:"案内",bt1:"地図",bt2:"店舗",bt3:"グッズ",bt4:"登山",gvTitle:"グッズ受取ガイド",gvSub:"SNS認証後、カテゴリ別店舗で支払時グッズ贈呈",howTitle:"グッズ受取手順",hw1t:"スラクサンのどこでも — 山頂・コース・入口すべてOK",hw1d:"スラクサンのどこでも認証1枚でOK！何度訪問しても重複認定。",hw2t:"SNSアップロード",hw2d:"#スラクサン #スラクデザイン通り ハッシュタグ必須",hw3t:"カテゴリ店舗を訪問＆支払",hw3d:"支払時にSNS認証画面を見せてください",hw4t:"5種完集→名誉会員証発行！",hw4d:"5種類のグッズをコンプリートで名誉会員デジタル証明書発行",gvCats:"5大カテゴリグッズ",gvCatsSub:"カテゴリ別1種、計5種収集可能",gvPts:"SNS認証ポイント",gvPtsSub:"各ポイントを個別選択。認証数が達成率に反映されます",gvCol:"グッズコレクション",gvColSub:"スラクサン認証＋カテゴリ購入で収集したグッズ",cs1:"収集済",cs2:"認証完了",cs3:"達成率",have:"保有",nothave:"未取得",certBtn:"認証完了",certDone:"✓ 済み",gvVip:"名誉会員証",vipTitle:"スラクデザイン通り\n名誉会員証",vipSub:"5種完集時発行",vipLock:"グッズ5種全部集めると\n名誉会員証が発行されます！",vipBen1:"イベント優先招待",vipBen2:"限定グッズ提供",vipBen3:"提携店舗での特別優待",vipBen4:"スラキファンコミュニティ",tvTitle:"スラクサン登山情報",tvSub:"コース別難易度・距離・認証ポイント・連動グッズ",rwTitle:"光のランウェイ — シーズナル高輝度照明",rwSub:"スラクデザイン通りを飾る四季テーマ照明",rws1:"春·桜",rwsd1:"桜の照明で通り全体が春色に",rws2:"夏·渓谷",rwsd2:"涼しい水色の照明で夏の夜を",rws3:"秋·紅葉",rwsd3:"赤と黄色の紅葉照明で秋の浪漫を",rws4:"冬·雪花",rwsd4:"雪花照明でメルヘンの世界に",pgt:"このお店のグッズ受取方法",pcert:"📸 スラクサンのどこでもSNS認証1回後、支払時に贈呈",likes:"人がいいね",menuLbl:"おすすめメニュー",distHint:"3番出口から距離順",lg1:"SNS認証",lg2:"食事·焼肉→🧦",lg3:"カフェ→🥤",lg4:"アウトドア→🧢",feels:'体感',hikingGood:'🥾 登山に最適',hikingBad:'⚠️ 要確認',wdTitle:'🌤️ 現在の天気',wdHum:'💧 湿度',wdWind:'💨 風速',wdSunset:'🌅 日没',wdHiking:'🥾 登山コンディション',certLabel:'認証',goodsLabel:'グッズ',surakiDesc:'スラキ(水樂) — 水のある楽しい水落山',surakiMsg2:'📸 スラクサン山頂や둘레길でSNS認証し,<br>デザイン거리のお店でグッズをもらおう！',exit3:'3番出口',station:'スラクサン駅',designRd:'✨ デザイン거리',trailLbl:'🥾 登山口 ↑',summitLbl:'⛰️ 山頂638m ↑ (約2km)',fallsLbl:'💧 銀流滝 → 1.8km',ridgeLbl:'🏔️ 香炉峰稜線 → 2.5km',mtName:"水落山 638m",mtRegion:"ソウル盧原区 / 京畿議政府市",mtDesc:"水落山(638m)はソウル盧原区と京畿道議政府市の境界に位置する山。汽車岩・銀流瀑布など独特の地形が魅力です。",mtTags:"🚇 3番出口すぐ|🌊 銀流瀑布|🪨 汽車岩|🏔️ 山頂638m|🦅 香炉峰",wdTemp:"🌡️ 気温",secTrail:"🥾 登山コース",secMt:"⛰️ 水落山について",secHow:"グッズ受取方法",secRoute:"🏔️ 旅程紹介",secCert:"📸 認証スポット",secApp:"ℹ️ アプリ案内",appName:"水落山デザイン通り",appAddr:"ソウル盧原区同一路242キル",appDesc:"水落山駅3番出口 → 徒歩2分",appTag:"#水落山 #デザイン通り",dist3exit:"📍 3番出口から",popGoodsTit:"🎒 グッズ受取方法",popCertDesc:"水落山でSNS認証後グッズ受取",certFirst:"📸 先に認証を!",dsTitle:"🌟 スラクデザイン通り",ds41:"🍽️ 41店舗",dsWalk:"🚶 駅徒歩2分",dsBar:"🍺 居酒屋",dsCafe:"☕ カフェ",dsFood:"🍜 食事",dsGoods:"🎒 グッズ",won:"ウォン"},
+  CN:{title:"水落山·水落设计街",h1:"从水落山开始的\n特别一天",hp:"登山道·绕山步道·光之跑道\n尽在一次旅程",surakiMsg:"在山顶或绕山步道完成SNS认证 📸\n然后按类别在设计街店铺领取商品！",rc1:"登山道",rc1d:"山顶 638m",rc2:"绕山步道",rc2d:"约8km",rc3:"光之跑道",rc3d:"设计街",gft:"🎒 商品领取方法（水落山认证1次+类别付款）",gs1:"水落山\n任意地点认证",gs2:"前往\n类别店铺",gs3:"付款时\n出示认证",gs4:"商品\n赠送！",hs1:"水落山山顶",hs2:"绕山步道",hs3:"参与店铺",tmap:"地图",tlist:"店铺",tgoods:"商品",ttrail:"登山",all:"全部",food:"餐饮",cafe:"咖啡",gogi:"烤肉",outdoor:"户外",sock:"登山袜",tumbler:"保温杯",bandana:"头巾",keyring:"钥匙扣",cap:"露营帽",listttl:"店铺列表",dir:"导航",maplbl:"水落山站3号出口",open:"营业中",closed:"营业结束",nostore:"暂无相关商品店铺",navInfo:"向导",bt1:"地图",bt2:"店铺",bt3:"商品",bt4:"登山",gvTitle:"商品领取指南",gvSub:"SNS认证后，在类别店铺付款时赠送商品",howTitle:"商品领取流程",hw1t:"水落山任何地点均可 — 山顶、登山道、入口都行",hw1d:"在水落山任何地点拍一张认证照即可！多次访问均有效。",hw2t:"上传SNS",hw2d:"#水落山 #水落设计街 标签必须",hw3t:"前往类别店铺&付款",hw3d:"付款时出示SNS认证画面，即可领取相应类别商品",hw4t:"集齐5种→荣誉会员证！",hw4d:"集齐5种商品后，发放荣誉会员数字认证书",gvCats:"5大类别商品",gvCatsSub:"每个类别1种，共5种可收集",gvPts:"SNS认证地点",gvPtsSub:"各点单独选择。认证数量反映在达成率中",gvCol:"我的商品收藏",gvColSub:"通过水落山认证+类别付款收集的商品",cs1:"已收集",cs2:"已认证",cs3:"完成率",have:"已有",nothave:"未有",certBtn:"认证完成",certDone:"✓ 已认证",gvVip:"荣誉会员证",vipTitle:"水落设计街\n荣誉会员证",vipSub:"集齐5种商品后发放",vipLock:"集齐全部5种商品\n即可领取荣誉会员证！",vipBen1:"活动优先邀请",vipBen2:"限定商品提供",vipBen3:"合作店铺特别优待",vipBen4:"水落伊粉丝社区",tvTitle:"水落山登山信息",tvSub:"路线难度·距离·认证点·关联商品",rwTitle:"光之跑道——季节主题照明",rwSub:"装点水落设计街的四季主题灯光",rws1:"春·樱花",rwsd1:"樱花照明让街道染上春色",rws2:"夏·溪谷",rwsd2:"凉爽水蓝灯光带来夏夜清凉",rws3:"秋·红叶",rwsd3:"红黄枫叶灯光演绎秋日浪漫",rws4:"冬·雪花",rwsd4:"雪花照明打造童话世界",pgt:"此店商品领取方法",pcert:"📸 在水落山任意地点完成SNS认证，付款时出示即可领取",likes:"人点赞",menuLbl:"推荐菜单",distHint:"3号出口距离顺序",lg1:"SNS认证",lg2:"餐饮·烤肉→🧦",lg3:"咖啡→🥤",lg4:"户外→🧢",feels:'体感',hikingGood:'🥾 适合登山',hikingBad:'⚠️ 注意天气',wdTitle:'🌤️ 当前天气',wdHum:'💧 湿度',wdWind:'💨 风速',wdSunset:'🌅 日落',wdHiking:'🥾 登山状况',certLabel:'认证',goodsLabel:'商品',surakiDesc:'水乐(水樂) — 有水的快乐水落山',surakiMsg2:'📸 在水落山顶或둘레길认证后,<br>在设计街店铺领取纪念品！',exit3:'3号出口',station:'水落山站',designRd:'✨ 设计街',trailLbl:'🥾 登山入口 ↑',summitLbl:'⛰️ 山顶638m ↑ (约2km)',fallsLbl:'💧 银流瀑布 → 1.8km',ridgeLbl:'🏔️ 香炉峰山脊 → 2.5km',mtName:"水落山 638m",mtRegion:"首尔芦原区 / 京畿议政府市",mtDesc:"水落山(638m)位于首尔芦原区与京畿道议政府市交界处。以火车岩、银流瀑布等独特地貌和四季美景深受爱好者喜爱。",mtTags:"🚇 3号出口即到|🌊 银流瀑布|🪨 火车岩|🏔️ 山顶638m|🦅 香炉峰",wdTemp:"🌡️ 气温",secTrail:"🥾 登山路线",secMt:"⛰️ 水落山介绍",secHow:"领取商品方法",secRoute:"🏔️ 行程介绍",secCert:"📸 认证地点",secApp:"ℹ️ 应用说明",appName:"水落山设计街",appAddr:"首尔芦原区同一路242街",appDesc:"水落山站3号出口步行2分钟",appTag:"#水落山 #设计街",dist3exit:"📍 距3号出口",popGoodsTit:"🎒 领取周边方法",popCertDesc:"在水落山SNS认证后领取周边",certFirst:"📸 先认证!",dsTitle:"🌟 水落设计街",ds41:"🍽️ 41家店铺",dsWalk:"🚶 地铁站步行2分",dsBar:"🍺 酒馆",dsCafe:"☕ 咖啡",dsFood:"🍜 餐饮",dsGoods:"🎒 周边",won:"韩元"}
+};;;;;
 var WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',71:'🌨️',80:'🌦️',95:'⛈️'};
 
 WD_MAP={
@@ -322,15 +336,13 @@ var STORES=[
   {id:41, ko:"수향숯불갈비",en:"Suhyang Charcoal Galbi",jp:"スヒャン炭火カルビ",cn:"水香炭火排骨",cat:"gogi",likes:1620,dist:490,open:true,color:"#804020",dko:"수향숯불갈비 전문. 참숯으로 직접 굽는 소갈비·돼지갈비. 수락산 고기 명소.",den:"Suhyang charcoal galbi. Beef and pork ribs grilled over charcoal. Suraksan BBQ landmark.",djp:"スヒャン炭火カルビ専門。炭火で焼く牛カルビ・豚カルビ。スラクサンの焼肉名所。",dcn:"水香炭火排骨专门店。炭火烤牛排骨和猪排骨。水落山烤肉地标。",menus:[{ko:"소갈비",en:"Beef Galbi",jp:"牛カルビ",cn:"牛排骨",p:"45,000원"},{ko:"돼지갈비",en:"Pork Galbi",jp:"豚カルビ",cn:"猪排骨",p:"19,000원"},{ko:"갈비탕",en:"Galbi Tang",jp:"カルビタン",cn:"排骨汤",p:"13,000원"},{ko:"냉면",en:"Cold Noodles",jp:"冷麺",cn:"冷面",p:"9,000원"}],lat:37.65735,lng:127.06227,mx:54,my:55}
 ];
 
-// ── 상태 ──
 var lang='KO',curGf='all',curPg=1,curV='map',actS=null;
 var myGoods={keyring:false,sock:false,tumbler:false,bandana:false,cap:false};
 var cert={},PER=10,_G={};
-var lastWCode=0,myPos=null;
 var SVG_W=900,SVG_H=480;
 var M={s:.7,x:-40,y:20,min:.4,max:4,drag:false,lx:0,ly:0,pd:0};
+var _wx=null; // 날씨 캐시
 
-// ── 유틸 ──
 function g(id){return _G[id]!==undefined?_G[id]:(_G[id]=document.getElementById(id));}
 function se(id,v){var e=g(id);if(e)e.textContent=v;}
 function sh(id,v){var e=g(id);if(e)e.innerHTML=v;}
@@ -346,63 +358,6 @@ function gfStore(){
   return STORES.filter(function(s){return curGf==='all'||gk(s)===curGf;})
     .sort(function(a,b){return(a.dist||0)-(b.dist||0);});
 }
-
-// ── 날씨 ──
-function getWD(code){ var m=WD_MAP[lang]||WD_MAP.KO; for(var k in m)if(parseInt(k)===code)return m[k]; return ''; }
-function applyWeather(code,temp,feels,hum,wind,sunset){
-  lastWCode=code;
-  var icon=WI[code]||'🌤️', desc=getWD(code);
-  se('wd-icon',icon);
-  se('wd-temp',temp+'°C');
-  se('wd-feels',(T('feels')||'체감')+' '+feels+'°C');
-  se('wd-desc',desc);
-  se('wd-hum',hum+'%');
-  se('wd-wind',wind+'m/s');
-  se('wd-sunset',sunset);
-  var good=code<30&&wind<10;
-  se('wd-hiking', good?T('hikingGood'):T('hikingBad'));
-  var hkEl=g('wd-hiking'); if(hkEl) hkEl.style.color=good?'#2A5038':'#C05000';
-  // 라벨도 현재 언어로
-  if(g('wd-lbl-sunset')) g('wd-lbl-sunset').textContent=T('wdSunset')||'🌄 일몰';
-  if(g('wd-lbl-hiking')) g('wd-lbl-hiking').textContent=T('wdHiking')||'등산 추천';
-}
-function loadWeather(){
-  var mo=new Date().getMonth();
-  var sb=mo<=1||mo===11?{t:-2,r:70,w:3,codes:[0,1,2,71]}
-         :mo<=4?{t:14,r:60,w:4,codes:[0,1,2,3,61]}
-         :mo<=8?{t:27,r:80,w:3,codes:[0,1,2,61,80]}
-               :{t:13,r:65,w:5,codes:[0,1,2,3]};
-  var code=sb.codes[Math.floor(Math.random()*sb.codes.length)];
-  var temp=sb.t+Math.round((Math.random()-.5)*6);
-  var feels=temp-Math.round(Math.random()*4+1);
-  var hum=Math.max(30,Math.min(99,sb.r+Math.round((Math.random()-.5)*20)));
-  var wind=+(sb.w+(Math.random()-.5)*2).toFixed(1);
-  var sunH=(mo>=3&&mo<=8)?19:17;
-  var sunset=sunH+':'+(Math.floor(Math.random()*30)+10);
-  applyWeather(code,temp,feels,hum,wind,sunset);
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=37.6543&longitude=127.0653&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code&daily=sunset&timezone=Asia%2FSeoul&forecast_days=1')
-    .then(function(r){return r.json();})
-    .then(function(d){
-      var c=d.current, ss=d.daily&&d.daily.sunset?d.daily.sunset[0].slice(11,16):sunset;
-      applyWeather(c.weather_code,Math.round(c.temperature_2m),Math.round(c.apparent_temperature),c.relative_humidity_2m,Math.round(c.wind_speed_10m*10)/10,ss);
-    }).catch(function(){});
-}
-
-// lang select handled in DOMContentLoaded
-
-// ── 탭 번역 적용 ──
-function applyT(){
-  se('t-map',T('tmap')); se('t-list',T('tlist')); se('t-goods',T('tgoods'));
-  se('t-trail',T('ttrail')); se('t-info',T('navInfo'));
-  se('nav-title',T('title'));
-  if(g('wd-title'))g('wd-title').textContent=T('wdTitle');
-  if(g('wd-lbl-hum'))g('wd-lbl-hum').textContent=T('wdHum');
-  if(g('wd-lbl-wind'))g('wd-lbl-wind').textContent=T('wdWind');
-  if(g('wd-lbl-sunset'))g('wd-lbl-sunset').textContent=T('wdSunset');
-  if(g('wd-lbl-hiking'))g('wd-lbl-hiking').textContent=T('wdHiking');
-}
-
-// ── 지도 ──
 function applyM(){
   var c=g('map-canvas');if(!c)return;
   c.style.transform='translate('+Math.round(M.x)+'px,'+Math.round(M.y)+'px) scale('+M.s+')';
@@ -455,8 +410,6 @@ function buildFilter(barId,cb){
     bar.appendChild(btn);
   });
 }
-
-// ── 매장 목록 ──
 function renderList(){
   var list=gfStore();
   var total=Math.max(1,Math.ceil(list.length/PER));
@@ -501,19 +454,34 @@ function renderList(){
     })(i);
   }
 }
-
-// ── 굿즈 ──
 function renderGoods(){
   var colCnt=Object.values(myGoods).filter(Boolean).length;
   var certCnt=Object.values(cert).filter(Boolean).length;
   se('cs-col',colCnt+'/5');se('cs-cert',certCnt+'/5');se('cs-pct',Math.round(colCnt/5*100)+'%');
+  // 굿즈 얻는 방법
+  var hlp=g('goods-help');
+  if(hlp){
+    hlp.innerHTML='';
+    var hcard=mk('div','goods-how-card');
+    var htit=mk('div','goods-how-tit');htit.textContent='\uD83C\uDF92 '+T('gft');hcard.appendChild(htit);
+    var hsteps=mk('div','goods-how-steps');
+    [T('gs1'),T('gs2'),T('gs3'),T('gs4')].forEach(function(s,i){
+      var step=mk('div','goods-mini-step');
+      var num=mk('span','goods-step-n');num.textContent=i+1;step.appendChild(num);
+      var txt=mk('span');txt.textContent=s.replace(/\n/g,' ');step.appendChild(txt);
+      if(i<3){var arr=mk('span');arr.style.cssText='color:rgba(255,255,255,.5);margin:0 4px';arr.textContent='\u2192';step.appendChild(arr);}
+      hsteps.appendChild(step);
+    });
+    hcard.appendChild(hsteps);hlp.appendChild(hcard);
+  }
+  // 컬렉션 그리드
   var grid=g('col-grid');if(!grid)return;
   grid.innerHTML='';
   ['keyring','sock','tumbler','bandana','cap'].forEach(function(k){
     var have=myGoods[k];
     var card=mk('div','col-card'+(have?' have':''));
     var top=mk('div','col-top');top.textContent=GICONS[k];
-    if(have){var chk=mk('span','col-chk');chk.textContent='✓';top.appendChild(chk);}
+    if(have){var chk=mk('span','col-chk');chk.textContent='\u2713';top.appendChild(chk);}
     card.appendChild(top);
     var bd=mk('div','col-body');
     var gn=mk('div','col-gname');gn.textContent=T(k);bd.appendChild(gn);
@@ -521,18 +489,16 @@ function renderGoods(){
     if(ci){var ct=mk('div','col-cat');ct.textContent=ci.ko_cat||'';bd.appendChild(ct);}
     var btn=mk('button','col-tbtn');
     btn.style.cssText='background:'+(have?'rgba(61,107,79,.14)':'rgba(0,0,0,.06)')+';color:'+(have?'#3D6B4F':'#888');
-    btn.textContent=have?'✓ '+T('have'):'+ '+T('have');
+    btn.textContent=have?'\u2713 \ubcf4\uc720':'+ \uc218\ub839';
     (function(key,b){
       b.addEventListener('click',function(){
-        if(!anyCert()&&!myGoods[key]){
-          var o=b.textContent;b.textContent='📸 인증 먼저!';b.style.color='#E85030';
-          setTimeout(function(){b.textContent=o;b.style.color='#888';},2000);return;
-        }
+        if(!anyCert()&&!myGoods[key]){var o=b.textContent;b.textContent='\uD83D\uDCF8 \uC778\uC99D \uBA3C\uC800!';b.style.color='#E85030';setTimeout(function(){b.textContent=o;b.style.color='#888';},2000);return;}
         myGoods[key]=!myGoods[key];renderGoods();
       });
     })(k,btn);
     bd.appendChild(btn);card.appendChild(bd);grid.appendChild(card);
   });
+  // 카테고리별 굿즈
   var cgl=g('cat-goods-list');if(!cgl)return;
   cgl.innerHTML='';
   CAT_GOODS_INFO.forEach(function(info){
@@ -543,15 +509,16 @@ function renderGoods(){
     var ct=mk('div','cg-cat');ct.textContent=info.ko_cat||'';ct.style.color=info.color||'#3D6B4F';inf.appendChild(ct);
     var gn=mk('div','cg-gname');gn.textContent=GICONS[info.goods]+' '+T(info.goods);inf.appendChild(gn);
     top.appendChild(inf);card.appendChild(top);
-    var desc=mk('div','cg-desc');desc.textContent=info.ko_desc||'';card.appendChild(desc);
+    var desc=mk('div','cg-desc');desc.textContent=info.ko_desc||T('pcert');card.appendChild(desc);
     var tags=mk('div','cg-stags');
-    STORES.filter(function(s){return gk(s)===info.goods;}).forEach(function(s){
-      var tag=mk('span','cg-stag');tag.textContent=sN(s);
-      (function(store){tag.addEventListener('click',function(){openPopup(store);});}) (s);
+    STORES.filter(function(s){return (CAT_GOODS[s.cat]||'keyring')===info.goods;}).slice(0,6).forEach(function(s){
+      var tag=mk('span','cg-stag');tag.textContent=CATICON[s.cat]+' '+sN(s);
+      (function(store){tag.addEventListener('click',function(){openPopup(store);});})(s);
       tags.appendChild(tag);
     });
     card.appendChild(tags);cgl.appendChild(card);
   });
+  // 인증 포인트
   var cpl=g('cert-pts-list');if(!cpl)return;
   cpl.innerHTML='';
   CERT_POINTS.forEach(function(cp){
@@ -559,40 +526,49 @@ function renderGoods(){
     var card=mk('div','sp-card');
     var bar=mk('div','sp-bar');bar.style.background=cp.color||'#3D6B4F';card.appendChild(bar);
     var bd=mk('div','sp-body');
-    var nm=mk('div','sp-name');nm.textContent=(cp.icon||'📍')+' '+cp.ko;bd.appendChild(nm);
-    var ds=mk('div','sp-desc');ds.textContent=cp.dko||'';bd.appendChild(ds);
+    var nm=mk('div','sp-name');nm.textContent=(cp.icon||'\uD83D\uDCCD')+' '+cp.ko;bd.appendChild(nm);
     var row=mk('div','sp-row');
-    var gds=mk('div','sp-gds');gds.textContent=(GICONS[cp.goods]||'🎁')+' '+T(cp.goods||'keyring');row.appendChild(gds);
+    var gds=mk('div','sp-gds');gds.textContent=(GICONS[cp.goods]||'\uD83C\uDF92')+' '+T(cp.goods||'keyring');row.appendChild(gds);
     var btn=mk('button','sp-btn'+(done?' done':''));btn.textContent=done?T('certDone'):T('certBtn');
-    (function(id){btn.addEventListener('click',function(){cert[id]=!cert[id];renderGoods();});}) (cp.id);
+    (function(id){btn.addEventListener('click',function(){cert[id]=!cert[id];renderGoods();});})(cp.id);
     row.appendChild(btn);bd.appendChild(row);card.appendChild(bd);cpl.appendChild(card);
   });
 }
-
-// ── 등산 ──
 function renderTrail(){
   var tc=g('trail-cards');if(!tc)return;
   tc.innerHTML='';
+  // 날씨 즉시 랜덤 출력
+  if(!_wx){
+    var mo=new Date().getMonth();
+    var sb=mo<=1||mo===11?{t:-3,r:68,w:3,code:71}:mo<=4?{t:13,r:58,w:4,code:1}:mo<=8?{t:28,r:78,w:2,code:80}:{t:12,r:62,w:5,code:3};
+    var _t=sb.t+Math.round((Math.random()-.5)*5);
+    var _f=_t-Math.round(Math.random()*3+1);
+    var _h=Math.max(35,Math.min(95,sb.r+Math.round((Math.random()-.5)*15)));
+    var _w=+(sb.w+(Math.random()-.5)*1.5).toFixed(1);
+    var _sH=(mo>=3&&mo<=8)?19:17;
+    var _ss=_sH+':'+(Math.floor(Math.random()*30)+10).toString().padStart(2,'0');
+    _wx={code:sb.code,temp:_t,feels:_f,hum:_h,wind:_w,sunset:_ss};
+  }
+  var wicon=WI[_wx.code]||'\u2601\uFE0F';
+  var temp=_wx.temp,feels=_wx.feels,hum=_wx.hum,wind=_wx.wind,sunset=_wx.sunset;
+  var good=_wx.code<30&&wind<10;
   var wc=mk('div','trail-card');
-  var whd=mk('div','trail-hd');var wic2=mk('div','trail-ic');wic2.textContent='🌤️';whd.appendChild(wic2);
-  var winf=mk('div');
-  var wtl=mk('div','trail-name');wtl.id='wd-title';wtl.textContent=T('wdTitle');winf.appendChild(wtl);
-  var whi=mk('div','trail-info');whi.id='wd-hiking';whi.textContent='--';winf.appendChild(whi);
+  var whd=mk('div','trail-hd');
+  var wic2=mk('div','trail-ic');wic2.style.fontSize='32px';wic2.textContent=icon;whd.appendChild(wic2);
+  var winf=mk('div');winf.style.flex='1';
+  var wtl=mk('div','trail-name');wtl.textContent=T('wdTitle')+' · '+temp+'\u00b0C';winf.appendChild(wtl);
+  var whi=mk('div','trail-info');whi.textContent=good?T('hikingGood'):T('hikingBad');
+  whi.style.color=good?'#2A8A50':'#C05000';whi.style.fontWeight='700';winf.appendChild(whi);
   whd.appendChild(winf);wc.appendChild(whd);
-  var wbd=mk('div','trail-body');
-  var wgr=mk('div','wd-grid');
-  function wI(lid,tk,vid){var it=mk('div','wd-item');var l=mk('span','wd-lbl');l.id=lid;l.textContent=T(tk);it.appendChild(l);var v=mk('span','wd-val');v.id=vid;v.textContent='--';it.appendChild(v);return it;}
-  wgr.appendChild(wI('wd-lbl-temp','wdTemp','wd-temp'));
-  wgr.appendChild(wI('wd-lbl-hum','wdHum','wd-hum'));
-  wgr.appendChild(wI('wd-lbl-wind','wdWind','wd-wind'));
-  wgr.appendChild(wI('wd-lbl-sunset','wdSunset','wd-sunset'));
-  wbd.appendChild(wgr);
-  var wfe=mk('div','wd-feel');wfe.id='wd-feels';wfe.textContent=T('feels')+' --°C';wbd.appendChild(wfe);
-  wc.appendChild(wbd);tc.appendChild(wc);
+  var wbd=mk('div','trail-body');var wgr=mk('div','wd-grid');
+  [{lbl:T('wdTemp'),val:temp+'\u00b0C'},{lbl:T('feels'),val:feels+'\u00b0C'},{lbl:T('wdHum'),val:hum+'%'},{lbl:T('wdWind'),val:wind+'m/s'},{lbl:T('wdSunset'),val:sunset}].forEach(function(it){
+    var item=mk('div','wd-item');var l=mk('span','wd-lbl');l.textContent=it.lbl;item.appendChild(l);var v=mk('span','wd-val');v.textContent=it.val;item.appendChild(v);wgr.appendChild(item);
+  });
+  wbd.appendChild(wgr);wc.appendChild(wbd);tc.appendChild(wc);
+  // 수락산 소개
   var ic2=mk('div','trail-card');
-  var ihd=mk('div','trail-hd');var iic=mk('div','trail-ic');iic.textContent='⛰️';ihd.appendChild(iic);
-  var iinf=mk('div');
-  var itn=mk('div','trail-name');itn.textContent=T('mtName');iinf.appendChild(itn);
+  var ihd=mk('div','trail-hd');var iic=mk('div','trail-ic');iic.textContent='\u26f0\ufe0f';ihd.appendChild(iic);
+  var iinf=mk('div');var itn=mk('div','trail-name');itn.textContent=T('mtName');iinf.appendChild(itn);
   var irg=mk('div','trail-info');irg.textContent=T('mtRegion');iinf.appendChild(irg);
   ihd.appendChild(iinf);ic2.appendChild(ihd);
   var ibd=mk('div','trail-body');
@@ -600,12 +576,8 @@ function renderTrail(){
   var tg=mk('div','trail-pts');
   T('mtTags').split('|').forEach(function(t){var sp=mk('span','trail-pt');sp.textContent=t;tg.appendChild(sp);});
   ibd.appendChild(tg);ic2.appendChild(ibd);tc.appendChild(ic2);
-  var LM={KO:'ko',EN:'en',JP:'jp',CN:'cn'};
-  var DT={KO:'distko',EN:'disten',JP:'distjp',CN:'distcn'};
-  var TM={KO:'timeko',EN:'timeen',JP:'timejp',CN:'timecn'};
-  var PT={KO:'ptko',EN:'pten',JP:'ptjp',CN:'ptcn'};
-  var CT={KO:'certko',EN:'certen',JP:'certjp',CN:'certcn'};
-  var LV={KO:'lk',EN:'le',JP:'lj',CN:'lc'};
+  // 코스
+  var LM={KO:'ko',EN:'en',JP:'jp',CN:'cn'},DT={KO:'distko',EN:'disten',JP:'distjp',CN:'distcn'},TM={KO:'timeko',EN:'timeen',JP:'timejp',CN:'timecn'},PT={KO:'ptko',EN:'pten',JP:'ptjp',CN:'ptcn'},CT={KO:'certko',EN:'certen',JP:'certjp',CN:'certcn'},LV={KO:'lk',EN:'le',JP:'lj',CN:'lc'};
   TRAILS.forEach(function(tr){
     var card=mk('div','trail-card');
     var top=mk('div','t-bar');top.style.background=tr.color;card.appendChild(top);
@@ -615,24 +587,44 @@ function renderTrail(){
     var lv2=mk('span','t-lv');lv2.textContent=tr[LV[lang]]||tr.lk;
     lv2.style.cssText='background:'+tr.color+'18;color:'+tr.color+';border:1px solid '+tr.color+'44';r1.appendChild(lv2);
     var r2=mk('div','t-row2');bd.appendChild(r2);
-    var d2=mk('span','t-stat');d2.textContent='📏 '+(tr[DT[lang]]||tr.distko);r2.appendChild(d2);
-    var t2=mk('span','t-stat');t2.textContent='⏱️ '+(tr[TM[lang]]||tr.timeko);r2.appendChild(t2);
+    var d2=mk('span','t-stat');d2.textContent='\uD83D\uDCCF '+(tr[DT[lang]]||tr.distko);r2.appendChild(d2);
+    var t2=mk('span','t-stat');t2.textContent='\u23F1\uFE0F '+(tr[TM[lang]]||tr.timeko);r2.appendChild(t2);
     var ro=mk('div','t-route');ro.textContent=tr[PT[lang]]||tr.ptko;bd.appendChild(ro);
-    var gd=mk('div','t-gds');gd.textContent='🎒 '+(tr[CT[lang]]||tr.certko);bd.appendChild(gd);
+    var gd=mk('div','t-gds');gd.textContent='\uD83C\uDF92 '+(tr[CT[lang]]||tr.certko);bd.appendChild(gd);
     tc.appendChild(card);
   });
-  loadWeather();
 }
 function renderInfo(){
   var el=g('info-inner');if(!el)return;
   el.innerHTML='';
+  // 헤더
   var hd=mk('div','info-hd');
   var h1e=mk('div','info-h1');h1e.textContent=T('h1').replace(/\n/g,' ');hd.appendChild(h1e);
   var hpe=mk('div','info-hp');hpe.textContent=T('hp').replace(/\n/g,' ');hd.appendChild(hpe);
   el.appendChild(hd);
-  var t1=mk('div','info-sec-tit');t1.textContent=T('secRoute');el.appendChild(t1);
+  // 수락산 소개
+  var t0=mk('div','info-sec-tit');t0.textContent=T('secMt');el.appendChild(t0);
+  var mtc=mk('div','mt-card');
+  var mhd=mk('div','mt-hd');var mic=mk('div','mt-ic');mic.textContent='\u26f0\ufe0f';mhd.appendChild(mic);
+  var minf=mk('div','mt-inf');var mnm=mk('div','mt-nm');mnm.textContent=T('mtName');minf.appendChild(mnm);
+  var mrg=mk('div','mt-rg');mrg.textContent=T('mtRegion');minf.appendChild(mrg);
+  mhd.appendChild(minf);mtc.appendChild(mhd);
+  var mdc=mk('div','mt-desc');mdc.textContent=T('mtDesc');mtc.appendChild(mdc);
+  var mtg=mk('div','trail-pts');mtg.style.padding='10px 14px';
+  T('mtTags').split('|').forEach(function(t){var sp=mk('span','trail-pt');sp.textContent=t;mtg.appendChild(sp);});
+  mtc.appendChild(mtg);el.appendChild(mtc);
+  // 수락디자인거리 소개
+  var t1=mk('div','info-sec-tit');t1.textContent='\uD83C\uDF1F \uC218\uB77D\uB514\uC790\uC778\uAC70\uB9AC';el.appendChild(t1);
+  var dscard=mk('div','ds-card');
+  var descs={KO:'\uC218\uB77D\uC0B0\uC5ED 3\uBC88\uCD9C\uAD6C \uBC14\uB85C \uC54C\uB77C\uC9C4 \uB3D9\uC77C\uB85C242\uAE38. \uB4F1\uC0B0\uAE38\uACFC \uC5F0\uACB0\uB418\uB294 \uC774 \uAC70\uB9AC\uC5D0\uB294 \uAC00\uC871\uC2DD\uB2F9\uBD80\uD130 \uD314\uB9AD \uCE74\uD398, \uC804\uD1B5\uD3EC\uCC28\uAE4C\uC9C0 41\uAC1C\uC758 \uB2E4\uC591\uD55C \uB9E4\uC7A5\uC774 \uBAA8\uC5EC \uB4F1\uC0B0 \uD6C4 \uD734\uC2DD\uACFC \uC2DD\uC0AC\uB97C \uC990\uAE38 \uC218 \uC788\uC2B5\uB2C8\uB2E4. \uD574\uBC14\uB77C\uAE30\uBD80\uD130 \uCC2C\uBC14\uB78C\uAE4C\uC9C0 \uC218\uB77D\uC0B0\uC758 \uBAA8\uB4E0 \uACC4\uC808\uC740 \uC774 \uAC70\uB9AC\uC5D0\uC11C \uC2DC\uC791\uB429\uB2C8\uB2E4.',EN:'Right at Suraksan Station Exit 3. 41 stores line Dongil-ro 242-gil, from hearty Korean BBQ and traditional pojangmacha to specialty cafes. The perfect spot to recover after your hike, whatever the season.',JP:'\uC218\uB77D\uC0B0\uC5ED3\uBC88\u51FA\u53E3\u304B\u3089\u3059\u3050\u306E\u540C\u4E00\u8DEF242\u30AD\u30EB\u3002\u767B\u5C71\u5F8C\u306E\u98df\u4e8b\u3084\u4f11\u61a9\u306b\u6700\u9069\u306a41\u5e97\u304c\u96c6\u307e\u308b\u30b9\u30c8\u30ea\u30fc\u30c8\u3067\u3059\u3002',CN:'\u7d27\u6328\u6c34\u843d\u5c71\u7ad93\u53f7\u51fa\u53e3\u7684\u540c\u4e00\u8def242\u8857\u3002\u767b\u5c71\u540e\u5c31\u9910\u7684\u7ecf\u5178\u9009\u62e9\uff0c41\u5bb6\u5404\u5177\u7279\u8272\u7684\u9910\u5385\u548c\u548c\u548c\u548c\u548c\u548c\u5496\u5561\u5e97\u5c3d\u5728\u6b64\u3002'};
+  var dsdesc=mk('div','ds-desc');dsdesc.textContent=descs[lang]||descs.KO;dscard.appendChild(dsdesc);
+  var dstags=mk('div','ds-tags');
+  [T('ds41'),T('dsWalk'),T('dsBar'),T('dsCafe'),T('dsFood'),T('dsGoods')].forEach(function(t){var sp=mk('span','ds-tag');sp.textContent=t;dstags.appendChild(sp);});
+  dscard.appendChild(dstags);el.appendChild(dscard);
+  // 여정 소개
+  var t2=mk('div','info-sec-tit');t2.textContent=T('secRoute');el.appendChild(t2);
   var rcg=mk('div','rc-grid');
-  [{k:'rc1',dk:'rc1d',ic:'🥾'},{k:'rc2',dk:'rc2d',ic:'🌿'},{k:'rc3',dk:'rc3d',ic:'✨'}].forEach(function(r){
+  [{k:'rc1',dk:'rc1d',ic:'\uD83E\uDD7E'},{k:'rc2',dk:'rc2d',ic:'\uD83C\uDF3F'},{k:'rc3',dk:'rc3d',ic:'\u2728'}].forEach(function(r){
     var c=mk('div','rc-card');
     var ri2=mk('div','rc-ic');ri2.textContent=r.ic;c.appendChild(ri2);
     var rt2=mk('div','rc-t');rt2.textContent=T(r.k);c.appendChild(rt2);
@@ -640,36 +632,15 @@ function renderInfo(){
     rcg.appendChild(c);
   });
   el.appendChild(rcg);
-  var t2=mk('div','info-sec-tit');t2.textContent=T('secHow');el.appendChild(t2);
-  var steps=[{n:'1',tk:'hw1t',dk:'hw1d',ic:'📸',c:'#E85030'},{n:'2',tk:'hw2t',dk:'hw2d',ic:'📱',c:'#3D6B4F'},{n:'3',tk:'hw3t',dk:'hw3d',ic:'🏪',c:'#2850A0'},{n:'4',tk:'hw4t',dk:'hw4d',ic:'🎁',c:'#8B4E9E'}];
-  var sd=mk('div','steps');
-  steps.forEach(function(s){
-    var row=mk('div','step-row');
-    var bg=mk('div','step-badge');bg.textContent=s.n;bg.style.background=s.c;row.appendChild(bg);
-    var si=mk('div','step-inf');
-    var st2=mk('div','step-t');st2.textContent=s.ic+' '+T(s.tk);si.appendChild(st2);
-    var sd2=mk('div','step-d');sd2.textContent=T(s.dk);si.appendChild(sd2);
-    row.appendChild(si);sd.appendChild(row);
-  });
-  el.appendChild(sd);
-  var t3=mk('div','info-sec-tit');t3.textContent=T('secCert');el.appendChild(t3);
-  var cpl=mk('div','cp-list');
-  CERT_POINTS.forEach(function(cp){
-    var LM2={KO:'ko',EN:'en',JP:'jp',CN:'cn'};
-    var DM2={KO:'dko',EN:'den',JP:'djp',CN:'dcn'};
-    var ci=mk('div','cp-item');
-    var cb=mk('div','cp-bar');cb.style.background=cp.color||'#3D6B4F';ci.appendChild(cb);
-    var cbd=mk('div','cp-bd');
-    var cn=mk('div','cp-n');cn.textContent=(cp.icon||'📍')+' '+(cp[LM2[lang]]||cp.ko);cbd.appendChild(cn);
-    var cd=mk('div','cp-d');cd.textContent=cp[DM2[lang]]||cp.dko||'';cbd.appendChild(cd);
-    ci.appendChild(cbd);cpl.appendChild(ci);
-  });
-  el.appendChild(cpl);
-  var t4=mk('div','info-sec-tit');t4.textContent=T('secApp');el.appendChild(t4);
+  // 앱 안내
+  var t5=mk('div','info-sec-tit');t5.textContent=T('secApp');el.appendChild(t5);
   var ac=mk('div','app-card');
-  var ai=mk('div');ai.style.cssText='font-size:32px;text-align:center;margin-bottom:8px';ai.textContent='🐿️';ac.appendChild(ai);
-  var an=mk('div');an.style.cssText='font-size:14px;font-weight:800;color:#1A3020;margin-bottom:4px;text-align:center';an.textContent=T('appName');ac.appendChild(an);
-  var aa=mk('div');aa.style.cssText='font-size:12px;color:#666;line-height:1.7;text-align:center;margin-bottom:8px';aa.textContent=T('appAddr')+' / '+T('appDesc');ac.appendChild(aa);
+  var arow=mk('div');arow.style.cssText='display:flex;align-items:center;gap:12px;margin-bottom:10px';
+  var aico=mk('div');aico.style.cssText='font-size:36px;flex-shrink:0';aico.textContent='\uD83D\uDC3F\uFE0F';arow.appendChild(aico);
+  var ainf=mk('div');ainf.style.flex='1';
+  var an=mk('div');an.style.cssText='font-size:14px;font-weight:800;color:#1A3020;margin-bottom:3px';an.textContent=T('appName');ainf.appendChild(an);
+  var aa=mk('div');aa.style.cssText='font-size:12px;color:#666;line-height:1.6';aa.textContent=T('appAddr')+' / '+T('appDesc');ainf.appendChild(aa);
+  arow.appendChild(ainf);ac.appendChild(arow);
   var at=mk('span');at.style.cssText='display:inline-block;background:#f0f6f0;padding:4px 10px;border-radius:16px;color:#3D6B4F;font-weight:700;font-size:11px';at.textContent=T('appTag');
   var tw=mk('div');tw.style.textAlign='center';tw.appendChild(at);ac.appendChild(tw);
   el.appendChild(ac);
@@ -704,9 +675,9 @@ function openPopup(s){
   }
   // 기존 pop-hdr 숨김
   var hdrEl=g('pop-hdr');if(hdrEl)hdrEl.style.display='none';
-  se('pop-likes','❤️ '+fL(s.likes)+' '+(T('likes')||'명이 좋아해'));
+  se('pop-likes','❤️ '+fL(s.likes)+' '+(T('likes')||T('likes')));
   se('pop-desc',sD(s));
-  se('pop-dist','📍 수락산역 3번출구에서 '+(s.dist||0)+'m');
+  se('pop-dist',T('dist3exit')+(s.dist||0)+'m');
   var bar=g('pop-bar');if(bar)bar.style.background=s.color;
   se('pop-menu-lbl','🍽️ '+T('tlist'));
   var ml=g('pop-menus');if(ml){
@@ -714,19 +685,19 @@ function openPopup(s){
     s.menus.forEach(function(m){
       var row=mk('div','pm-row');
       var n=mk('span','pm-n');n.textContent=mN(m);row.appendChild(n);
-      var p=mk('span','pm-p');p.textContent=m.price?m.price.toLocaleString()+'원':'';row.appendChild(p);
+      var p=mk('span','pm-p');p.textContent=m.price?m.price.toLocaleString()+T('won'):'';row.appendChild(p);
       ml.appendChild(row);
     });
   }
-  se('pop-gtit','🎒 굿즈 수령 방법');
-  se('pop-gcert',T('pcert')||'📸 수락산 SNS 인증 후 수령');
+  se('pop-gtit',T('popGoodsTit'));
+  se('pop-gcert',T('pcert')||T('popCertDesc'));
   var gi=g('pop-gitem');if(gi){
     gi.innerHTML='';
     var pill=mk('button','gpill'+(myGoods[k]?' have':''));
     pill.textContent=GICONS[k]+' '+T(k)+(myGoods[k]?' ✓':'');
     (function(key){
       pill.addEventListener('click',function(){
-        if(!anyCert()&&!myGoods[key]){pill.textContent='📸 인증 먼저!';setTimeout(function(){pill.textContent=GICONS[key]+' '+T(key);},2000);return;}
+        if(!anyCert()&&!myGoods[key]){pill.textContent=T('certFirst');setTimeout(function(){pill.textContent=GICONS[key]+' '+T(key);},2000);return;}
         myGoods[key]=!myGoods[key];renderGoods();openPopup(s);
       });
     })(k);
@@ -744,8 +715,16 @@ function closePopup(){
   var ov=g('pop-ov');if(ov)ov.style.display='none';
   actS=null;if(curV==='map')renderPins();
 }
-
-// ── 탭 전환 ──
+function applyT(){
+  se('t-map',T('tmap')); se('t-list',T('tlist')); se('t-goods',T('tgoods'));
+  se('t-trail',T('ttrail')); se('t-info',T('navInfo'));
+  se('nav-title',T('title'));
+  if(g('wd-title'))g('wd-title').textContent=T('wdTitle');
+  if(g('wd-lbl-hum'))g('wd-lbl-hum').textContent=T('wdHum');
+  if(g('wd-lbl-wind'))g('wd-lbl-wind').textContent=T('wdWind');
+  if(g('wd-lbl-sunset'))g('wd-lbl-sunset').textContent=T('wdSunset');
+  if(g('wd-lbl-hiking'))g('wd-lbl-hiking').textContent=T('wdHiking');
+}
 function sv(v){
   curV=v;
   document.querySelectorAll('.view').forEach(function(el){
@@ -760,8 +739,6 @@ function sv(v){
   else if(v==='trail')renderTrail();
   else if(v==='info')renderInfo();
 }
-
-// ── 드래그/줌 ──
 function initMapEvents(){
   var st=g('map-stage');if(!st)return;
   st.addEventListener('mousedown',function(e){
@@ -801,21 +778,19 @@ function initMapEvents(){
   if(zo)zo.addEventListener('click',function(){var s=g('map-stage');doZoom(1/1.5,s.offsetWidth/2,s.offsetHeight/2);});
 }
 
-// ── 시작 ──
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.vtab').forEach(function(btn){
-    btn.addEventListener('click',function(){sv(this.dataset.v);});
-    btn.addEventListener('touchend',function(e){e.preventDefault();sv(this.dataset.v);});
-  });
-  var lb=g('lang-btn');
-  if(lb)lb.addEventListener('change',function(){lang=this.value;applyT();sv(curV);});
-  var px=g('pop-x');if(px)px.addEventListener('click',closePopup);
-  var pov=g('pop-ov');if(pov)pov.addEventListener('click',function(e){if(e.target===pov)closePopup();});
-  initMapEvents();
-  sv('map');
+// 탭 이벤트
+document.querySelectorAll('.vtab').forEach(function(btn){
+  btn.addEventListener('click',function(){sv(this.dataset.v);});
+  btn.addEventListener('touchend',function(e){e.preventDefault();sv(this.dataset.v);});
 });
-
-})();
+var _lb=document.getElementById('lang-btn');
+if(_lb)_lb.addEventListener('change',function(){lang=this.value;applyT();sv(curV);});
+var _px=document.getElementById('pop-x');
+if(_px)_px.addEventListener('click',closePopup);
+var _pov=document.getElementById('pop-ov');
+if(_pov)_pov.addEventListener('click',function(e){if(e.target===_pov)closePopup();});
+initMapEvents();
+sv('map');
 </script>
 </body>
 </html>

@@ -708,7 +708,7 @@ function initMapEvents(){
     setTimeout(initMapEvents,200);
     return;
   }
-  window._lmap=L.map('leaflet-map',{center:[37.6583,127.0630],zoom:17,zoomControl:true});
+  window._lmap=L.map('leaflet-map',{center:[37.6578,127.0618],zoom:18,zoomControl:true});
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap',maxZoom:19}).addTo(window._lmap);
   setTimeout(function(){window._lmap.invalidateSize();renderPins();},400);
 }

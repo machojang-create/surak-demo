@@ -489,7 +489,7 @@ function renderGoods(){
     if(ci){var ct=mk('div','col-cat');ct.textContent=ci.ko_cat||'';bd.appendChild(ct);}
     var btn=mk('button','col-tbtn');
     btn.style.cssText='background:'+(have?'rgba(61,107,79,.14)':'rgba(0,0,0,.06)')+';color:'+(have?'#3D6B4F':'#888');
-    btn.textContent=have?'\u2713 \ubcf4\uc720':'+ \uc218\ub839';
+    btn.textContent=have?'\u2713 '+T('have'):('+ '+T('have'));
     (function(key,b){
       b.addEventListener('click',function(){
         if(!anyCert()&&!myGoods[key]){var o=b.textContent;b.textContent='\uD83D\uDCF8 \uC778\uC99D \uBA3C\uC800!';b.style.color='#E85030';setTimeout(function(){b.textContent=o;b.style.color='#888';},2000);return;}

@@ -51,6 +51,30 @@ html,body{width:100%;height:100%;font-family:'Nanum Gothic',sans-serif;overflow:
 .view-inner{flex:1;overflow-y:auto;padding:14px 14px 70px}
 .sec-tit{font-size:15px;font-weight:700;color:#222;margin:16px 0 8px}
 .info-card{background:#f8f9f8;border-radius:12px;padding:14px 16px;margin-bottom:10px;font-size:13px;color:#444;line-height:1.8}
+.trail-card{background:#f8f9f8;border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.trail-hd{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.trail-ic{font-size:28px}
+.trail-name{font-size:14px;font-weight:700;color:#222}
+.trail-info{font-size:12px;color:#666;margin-top:2px}
+.trail-body{font-size:12px;color:#555;line-height:1.8}
+.trail-pts{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.trail-pt{background:#e8f5ee;color:#2A6E4E;font-size:11px;padding:3px 9px;border-radius:20px}
+.t-bar{height:4px;border-radius:2px;margin-bottom:10px}
+.t-lv{font-size:10px;padding:2px 7px;border-radius:10px;margin-left:6px;font-weight:700}
+.hw-step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #f0f0f0}
+.hw-num{width:26px;height:26px;border-radius:50%;background:#2A6E4E;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hw-title{font-size:13px;font-weight:700;color:#222;margin-bottom:2px}
+.hw-desc{font-size:12px;color:#888}
+.cp-card{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f5f5f5}
+.cp-ic{font-size:24px;width:38px;text-align:center;flex-shrink:0}
+.cp-name{font-size:13px;font-weight:700;color:#222}
+.cp-desc{font-size:11px;color:#999;margin-top:2px}
+.goods-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.goods-item{background:#f8f9f8;border-radius:12px;padding:14px;text-align:center}
+.goods-ic{font-size:28px;margin-bottom:6px}
+.goods-name{font-size:13px;font-weight:700;color:#222}
+.goods-cat{font-size:11px;color:#888;margin-top:2px}
+.ds-tag{display:inline-block;background:#e8f5ee;color:#2A6E4E;font-size:11px;padding:3px 9px;border-radius:20px;margin:3px 2px}
 </style>
 </head>
 <body>
@@ -79,53 +103,180 @@ html,body{width:100%;height:100%;font-family:'Nanum Gothic',sans-serif;overflow:
       <div id="map-filter-bar"></div>
       <div id="map-wrap">
         <div id="naver-map"></div>
-        <div id="map-status">🔄 지도 로딩 중...</div>
-      </div>
-    </div>
-    <div class="view" id="list-view">
-      <div id="list-filter-bar"></div>
-      <div id="list-inner"></div>
-    </div>
-    <div class="view" id="goods-view">
-      <div class="view-inner">
-        <div class="sec-tit">🎒 굿즈 수령 방법</div>
-        <div class="info-card">수락산 어디서든 SNS 인증 1회 후<br>카테고리별 매장에서 결제 시 굿즈 증정!</div>
-        <div class="sec-tit">🗝️ 굿즈 종류</div>
-        <div class="info-card">🗝️ 키링 &nbsp;·&nbsp; 🧦 등산양말 &nbsp;·&nbsp; 🥤 텀블러<br>🪢 반다나 &nbsp;·&nbsp; 🧢 캠프캡</div>
-      </div>
-    </div>
-    <div class="view" id="trail-view">
-      <div class="view-inner">
-        <div class="sec-tit">⛰️ 수락산 638m</div>
-        <div class="info-card"><b>1코스 — 주등산로 (정상)</b><br>📏 약 3.2km · ⏱ 약 1시간 30분<br>3번출구 → 기차바위 → 정상(638m)</div>
-        <div class="info-card"><b>2코스 — 둘레길 (은류폭포)</b><br>📏 약 8km · ⏱ 약 3시간<br>3번출구 → 둘레길 → 은류폭포 → 순환</div>
-        <div class="info-card"><b>3코스 — 능선 (향로봉)</b><br>📏 약 5km · ⏱ 약 2시간<br>수락산 입구 → 향로봉 → 능선 조망</div>
-      </div>
-    </div>
-    <div class="view" id="info-view">
-      <div class="view-inner">
-        <div class="sec-tit">🌟 수락디자인거리</div>
-        <div class="info-card">수락산역 3번출구 바로 동일로242길.<br>등산 후 식사·카페·주점 51개 매장이 모여있습니다.</div>
-        <div class="sec-tit">📍 오시는 길</div>
-        <div class="info-card">🚇 4호선 수락산역 3번출구<br>🚶 동일로242길 방향 도보 1분</div>
-      </div>
-    </div>
-  </div>
-</div>
+        <div id="map-
+var TRAILS=[
+  {id:1,
+   ko:"1코스 — 주등산로",  en:"Course 1: Main Trail",  jp:"1コース — 主登山道",    cn:"1路线 — 主登山道",
+   lk:"중급",              le:"Intermediate",           lj:"中級",                  lc:"中级",
+   distko:"약 3.2km",     disten:"~3.2km",             distjp:"約3.2km",           distcn:"约3.2公里",
+   timeko:"약 1시간 30분", timeen:"~1.5 hours",         timejp:"約1時間30分",        timecn:"约1.5小时",
+   ptko:"3번출구 → 수락산 입구 → 기차바위 → 정상(638m)",
+   pten:"Exit 3 → Trail Entrance → Gichabawi Rock → Summit (638m)",
+   ptjp:"3番出口 → 登山口 → キチャバウィ岩 → 山頂(638m)",
+   ptcn:"3号出口 → 登山口 → 火车岩 → 山顶(638m)",
+   certko:"SNS 인증 후 캠프캡 🧢 수령 가능",
+   certen:"Camp Cap 🧢 available with SNS cert",
+   certjp:"SNS認証後キャンプキャップ🧢受取可",
+   certcn:"SNS认证后可领取露营帽🧢",
+   color:"#E85030"},
+  {id:2,
+   ko:"2코스 — 둘레길 (은류폭포)",  en:"Course 2: Dulle-gil Trail",  jp:"2コース — ドゥレギル（銀流滝）",  cn:"2路线 — 绕山步道（银流瀑布）",
+   lk:"초급",                       le:"Beginner",                   lj:"初級",                           lc:"初级",
+   distko:"약 8km",                 disten:"~8km",                   distjp:"約8km",                      distcn:"约8公里",
+   timeko:"약 3시간",               timeen:"~3 hours",               timejp:"約3時間",                    timecn:"约3小时",
+   ptko:"3번출구 등산로 옆 → 둘레길 입구 → 은류폭포 → 내원암 → 순환",
+   pten:"Trail side at Exit 3 → Dulle-gil entrance → Eunryu Falls → Naewon Temple → Loop",
+   ptjp:"3番出口登山道の横 → ドゥレギル入口 → 銀流滝 → 内院庵 → 周回",
+   ptcn:"3号出口登山道旁 → 绕山步道入口 → 银流瀑布 → 内院庵 → 环绕",
+   certko:"SNS 인증 후 반다나 🪢 수령 가능",
+   certen:"Bandana 🪢 available with SNS cert",
+   certjp:"SNS認証後バンダナ🪢受取可",
+   certcn:"SNS认证后可领取头巾🪢",
+   color:"#2A8AAA"},
+  {id:3,
+   ko:"3코스 — 능선 (향로봉)",  en:"Course 3: Ridge Trail",  jp:"3コース — 稜線（香炉峰）",  cn:"3路线 — 山脊（香炉峰）",
+   lk:"중급",                   le:"Intermediate",           lj:"中級",                      lc:"中级",
+   distko:"약 5km",             disten:"~5km",               distjp:"約5km",                 distcn:"约5公里",
+   timeko:"약 2시간",           timeen:"~2 hours",           timejp:"約2時間",               timecn:"约2小时",
+   ptko:"수락산 입구 → 향로봉 → 능선 조망 → 하산",
+   pten:"Trail Entrance → Hyangnobong Peak → Ridge View → Descent",
+   ptjp:"登山口 → 香炉峰 → 稜線展望 → 下山",
+   ptcn:"登山口 → 香炉峰 → 山脊景观 → 下山",
+   certko:"SNS 인증 후 등산양말 🧦 수령 가능",
+   certen:"Hiking Socks 🧦 available with SNS cert",
+   certjp:"SNS認証後ハイキングソックス🧦受取可",
+   certcn:"SNS认证后可领取登山袜🧦",
+   color:"#5A7A3A"}
+];
 
-<div id="pop-ov">
-  <div id="pop-sheet">
-    <button id="pop-x">✕</button>
-    <div class="pop-bar"></div>
-    <div id="pop-badge" class="pop-badge"></div>
-    <div id="pop-title" class="pop-title"></div>
-    <div id="pop-addr" class="pop-addr"></div>
-    <div id="pop-menus"></div>
-    <button class="pop-cta" id="pop-cta">🗺️ 네이버 지도에서 보기</button>
-  </div>
-</div>
+var CERT_POINTS=[
+  {id:"cp1",ko:"수락산 정상 (638m)",en:"Suraksan Summit",jp:"スラクサン山頂(638m)",cn:"水落山山顶(638m)",dko:"수락산 최고봉. 서울 북부 파노라마 뷰. 정상석 앞 인증샷!",goods:"cap",color:"#E85030",icon:"⛰️"},
+  {id:"cp2",ko:"은류폭포 (둘레길 중간)",en:"Eunryu Falls",jp:"銀流滝（コース中間）",cn:"银流瀑布（路线中间）",dko:"수락산 둘레길 중간 은류폭포. 시원한 폭포 앞 인증샷!",goods:"bandana",color:"#2A8AAA",icon:"💧"},
+  {id:"cp3",ko:"향로봉 능선",en:"Hyangnobong Ridge",jp:"香炉峰稜線",cn:"香炉峰山脊",dko:"수락산 주능선 향로봉. 능선 위 절경.",goods:"sock",color:"#5A7A3A",icon:"🌄"},
+  {id:"cp4",ko:"3번출구 등산로 입구",en:"Trail Entrance Exit 3",jp:"3番出口登山口",cn:"3号出口登山道入口",dko:"수락산역 3번출구 앞 등산로 입구. 수락디자인거리 시작점!",goods:"tumbler",color:"#3D6B4F",icon:"🥾"},
+  {id:"cp5",ko:"내원암 전망대",en:"Naewon Temple Viewpoint",jp:"内院庵展望台",cn:"内院庵观景台",dko:"내원암 위 전망대. 노원구 전경 한눈에.",goods:"keyring",color:"#8A6A3A",icon:"🏯"}
+];
 
-<script>
+var CAT_GOODS_INFO=[
+  {cat:'food', goods:'keyring', icon:'🗝️', name_ko:'키링',     name_en:'Keyring'},
+  {cat:'cafe', goods:'tumbler', icon:'🥤', name_ko:'텀블러',   name_en:'Tumbler'},
+  {cat:'gogi', goods:'sock',    icon:'🧦', name_ko:'등산양말', name_en:'Hiking Socks'},
+  {cat:'bar',  goods:'bandana', icon:'🪢', name_ko:'반다나',   name_en:'Bandana'},
+];
+
+function renderGoods(){
+  var el=document.getElementById('goods-inner');
+  if(!el||el.dataset.done)return;
+  el.dataset.done='1';
+  // 굿즈 수령 방법
+  el.innerHTML='<div class="sec-tit">🎒 굿즈 수령 방법</div>';
+  var steps=[
+    {t:"수락산 어디서든 SNS 인증",d:"정상·둘레길·입구 모두 OK! 인증샷 1장이면 충분!"},
+    {t:"SNS 업로드",d:"#수락산 #수락디자인거리 해시태그 필수"},
+    {t:"카테고리 매장 방문 & 결제",d:"식사·카페·고기·포차 중 원하는 카테고리 매장에서 결제"},
+    {t:"굿즈 수령",d:"결제 시 SNS 인증 화면 제시하면 굿즈 증정!"}
+  ];
+  steps.forEach(function(s,i){
+    var d=document.createElement('div');
+    d.className='hw-step';
+    d.innerHTML='<div class="hw-num">'+(i+1)+'</div><div><div class="hw-title">'+s.t+'</div><div class="hw-desc">'+s.d+'</div></div>';
+    el.appendChild(d);
+  });
+  // 굿즈 종류
+  var tit2=document.createElement('div');
+  tit2.className='sec-tit';
+  tit2.textContent='🗝️ 굿즈 종류';
+  el.appendChild(tit2);
+  var grid=document.createElement('div');
+  grid.className='goods-grid';
+  CAT_GOODS_INFO.forEach(function(g){
+    var cat=CATS[g.cat]||CATS.food;
+    var d=document.createElement('div');
+    d.className='goods-item';
+    d.innerHTML='<div class="goods-ic">'+g.icon+'</div>'
+      +'<div class="goods-name">'+g.name_ko+'</div>'
+      +'<div class="goods-cat" style="color:'+cat.color+'">'+cat.label+' 결제 시</div>';
+    grid.appendChild(d);
+  });
+  el.appendChild(grid);
+  // SNS 인증 포인트
+  var tit3=document.createElement('div');
+  tit3.className='sec-tit';
+  tit3.textContent='📸 SNS 인증 포인트';
+  el.appendChild(tit3);
+  CERT_POINTS.forEach(function(cp){
+    var d=document.createElement('div');
+    d.className='cp-card';
+    d.innerHTML='<div class="cp-ic">'+cp.icon+'</div>'
+      +'<div><div class="cp-name">'+cp.ko+'</div><div class="cp-desc">'+cp.dko+'</div></div>';
+    el.appendChild(d);
+  });
+}
+
+function renderTrail(){
+  var el=document.getElementById('trail-inner');
+  if(!el||el.dataset.done)return;
+  el.dataset.done='1';
+  // 수락산 소개
+  el.innerHTML='<div class="sec-tit">⛰️ 수락산 638m</div>';
+  var mtCard=document.createElement('div');
+  mtCard.className='trail-card';
+  mtCard.innerHTML='<div class="trail-hd"><div class="trail-ic">⛰️</div>'
+    +'<div><div class="trail-name">수락산 (水樂山) 638m</div>'
+    +'<div class="trail-info">서울 노원구 · 경기 의정부시</div></div></div>'
+    +'<div class="trail-body">물이 있어 즐거운 산으로 기차바위·은류폭포 등 독특한 지형과 사계절 경관으로 사랑받는 명산입니다.</div>'
+    +'<div class="trail-pts"><span class="trail-pt">🚇 3번출구 바로</span><span class="trail-pt">🌊 은류폭포</span><span class="trail-pt">🪨 기차바위</span><span class="trail-pt">🏔️ 정상 638m</span><span class="trail-pt">🦅 향로봉</span></div>';
+  el.appendChild(mtCard);
+  // 코스
+  var tit2=document.createElement('div');
+  tit2.className='sec-tit';
+  tit2.textContent='🥾 등산 코스';
+  el.appendChild(tit2);
+  TRAILS.forEach(function(tr){
+    var card=document.createElement('div');
+    card.className='trail-card';
+    var bar=document.createElement('div');
+    bar.className='t-bar';
+    bar.style.background=tr.color;
+    card.appendChild(bar);
+    var hd=document.createElement('div');
+    hd.className='trail-hd';
+    hd.innerHTML='<div style="flex:1"><div class="trail-name">'+tr.ko
+      +'<span class="t-lv" style="background:'+tr.color+'22;color:'+tr.color+'">'+tr.lk+'</span></div>'
+      +'<div class="trail-info">📏 '+tr.distko+' · ⏱ '+tr.timeko+'</div>'
+      +'<div class="trail-info" style="margin-top:4px">'+tr.ptko+'</div>'
+      +'<div class="trail-info" style="margin-top:4px;color:#2A6E4E">🎒 '+tr.certko+'</div></div>';
+    card.appendChild(hd);
+    el.appendChild(card);
+  });
+}
+
+function renderInfo(){
+  var el=document.getElementById('info-inner');
+  if(!el||el.dataset.done)return;
+  el.dataset.done='1';
+  el.innerHTML=
+    '<div class="sec-tit">🌟 수락디자인거리</div>'
+    +'<div class="info-card">수락산역 3번출구 바로 동일로242길. 등산 후 식사·카페·주점 51개 매장이 모여있습니다.'
+    +'<div style="margin-top:8px"><span class="ds-tag">🍽️ 41개 매장</span><span class="ds-tag">🚶 역 도보 2분</span><span class="ds-tag">🍺 포차·주점</span><span class="ds-tag">☕ 카페</span><span class="ds-tag">🍜 식사</span><span class="ds-tag">🎒 굿즈</span></div></div>'
+    +'<div class="sec-tit">🏔️ 여정 소개</div>'
+    +'<div class="info-card">'
+    +'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center">'
+    +'<div><div style="font-size:24px">🥾</div><div style="font-size:12px;font-weight:700;margin-top:4px">등산길</div><div style="font-size:11px;color:#999">정상 638m</div></div>'
+    +'<div><div style="font-size:24px">🌿</div><div style="font-size:12px;font-weight:700;margin-top:4px">둘레길</div><div style="font-size:11px;color:#999">약 8km</div></div>'
+    +'<div><div style="font-size:24px">✨</div><div style="font-size:12px;font-weight:700;margin-top:4px">빛의 런웨이</div><div style="font-size:11px;color:#999">디자인거리</div></div>'
+    +'</div></div>'
+    +'<div class="sec-tit">📍 오시는 길</div>'
+    +'<div class="info-card">🚇 4호선 수락산역 3번출구<br>🚶 동일로242길 방향 도보 1분</div>'
+    +'<div class="sec-tit">ℹ️ 앱 안내</div>'
+    +'<div class="info-card">'
+    +'<div style="font-weight:700;margin-bottom:4px">수락산 · 수락디자인거리</div>'
+    +'<div style="font-size:12px;color:#999">서울 노원구 동일로242길</div>'
+    +'<div style="font-size:12px;color:#999;margin-top:4px">수락산역 3번출구 → 도보 2분</div>'
+    +'<div style="margin-top:8px"><span class="ds-tag">#수락산</span><span class="ds-tag">#수락디자인거리</span><span class="ds-tag">#수락산역맛집</span></div>'
+    +'</div>';
+}
+
 var STORES=[
   {id:1, ko:"오공김밥 수락산점",       addr:"서울 노원구 동일로 1689",      cat:"food",menus:[{n:"참치김밥",p:"4,500원"},{n:"소고기김밥",p:"5,000원"},{n:"치즈김밥",p:"4,000원"}]},
   {id:2, ko:"화로화 수락본점",          addr:"서울 노원구 동일로 1689",      cat:"gogi",menus:[{n:"삼겹살",p:"16,000원"},{n:"목살",p:"16,000원"}]},
@@ -372,6 +523,29 @@ function openPopup(s){
     window.open('https://map.naver.com/v5/search/'+encodeURIComponent(s.ko));
   };
   document.getElementById('pop-ov').classList.add('on');
+}
+
+document.getElementById('pop-x').onclick=function(){document.getElementById('pop-ov').classList.remove('on');};
+document.getElementById('pop-ov').onclick=function(e){if(e.target===this)this.classList.remove('on');};
+
+document.querySelectorAll('.vtab').forEach(function(b){
+  b.addEventListener('click',function(){
+    var v=this.dataset.v;
+    document.querySelectorAll('.view').forEach(function(el){el.classList.remove('on');});
+    document.querySelectorAll('.vtab').forEach(function(x){x.classList.remove('on');});
+    document.getElementById(v+'-view').classList.add('on');
+    this.classList.add('on');
+    if(v==='map'){
+      if(_mapReady&&!_map)startMap();
+      else if(_map)setTimeout(function(){naver.maps.Event.trigger(_map,'resize');},100);
+    }
+    if(v==='list'){buildListFilter();renderList('all');}
+    if(v==='goods')renderGoods();
+    if(v==='trail')renderTrail();
+    if(v==='info')renderInfo();
+  });
+});
+ElementById('pop-ov').classList.add('on');
 }
 
 document.getElementById('pop-x').onclick=function(){document.getElementById('pop-ov').classList.remove('on');};

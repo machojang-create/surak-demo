@@ -4,19 +4,16 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
 <title>수락산 · 수락디자인거리</title>
-<script type="text/javascript"
-  src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=d7ufdpoww3&submodules=geocoder">
-</script>
+<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=d7ufdpoww3&submodules=geocoder"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;font-family:'Nanum Gothic',sans-serif;overflow:hidden}
 #wrap{display:flex;flex-direction:column;height:100vh;max-width:480px;margin:0 auto;background:#fff}
 #nav{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #eee;flex-shrink:0}
 #nav-title{font-size:15px;font-weight:700;color:#222}
-#nav-sub{font-size:10px;color:#999}
-#lang-btn{font-size:12px;border:1px solid #ddd;border-radius:6px;padding:4px 8px;background:#fff}
+#nav-sub{font-size:10px;color:#999;margin-top:1px}
 #vtabs{display:flex;border-bottom:1px solid #eee;flex-shrink:0}
-.vtab{flex:1;padding:8px 0;text-align:center;font-size:11px;color:#aaa;cursor:pointer;border:none;background:#fff;border-bottom:2px solid transparent}
+.vtab{flex:1;padding:8px 0;text-align:center;font-size:11px;color:#aaa;cursor:pointer;border:none;background:#fff;border-bottom:2px solid transparent;transition:color .2s}
 .vtab.on{color:#2A6E4E;border-bottom:2px solid #2A6E4E;font-weight:700}
 .vtab-ic{display:block;font-size:18px;margin-bottom:1px}
 #views{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0}
@@ -26,34 +23,39 @@ html,body{width:100%;height:100%;font-family:'Nanum Gothic',sans-serif;overflow:
 #map-view{overflow:hidden}
 #map-filter-bar{flex-shrink:0;display:flex;gap:6px;padding:8px 10px;overflow-x:auto;background:#fff;border-bottom:1px solid #f0f0f0}
 #map-filter-bar::-webkit-scrollbar{display:none}
-.fcat{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid #ddd;background:#fff;white-space:nowrap;cursor:pointer;color:#555}
+.fcat{font-size:11px;padding:5px 11px;border-radius:20px;border:1px solid #ddd;background:#fff;white-space:nowrap;cursor:pointer;color:#555}
 .fcat.on{background:#2A6E4E;color:#fff;border-color:#2A6E4E}
 #map-wrap{flex:1;min-height:0;position:relative}
 #naver-map{width:100%;height:100%}
-#map-status{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:4px 12px;border-radius:20px;pointer-events:none;white-space:nowrap}
+#map-status{
+  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  background:rgba(0,0,0,.65);color:#fff;font-size:12px;
+  padding:6px 16px;border-radius:20px;pointer-events:none;white-space:nowrap;
+  transition:opacity .5s;z-index:100
+}
 /* 매장 리스트 */
 #list-filter-bar{flex-shrink:0;display:flex;gap:6px;padding:8px 10px;overflow-x:auto;background:#fff;border-bottom:1px solid #f0f0f0}
 #list-filter-bar::-webkit-scrollbar{display:none}
-#list-inner{flex:1;overflow-y:auto;padding:8px 12px 70px}
-.l-card{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f5f5f5;cursor:pointer}
-.l-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+#list-inner{flex:1;overflow-y:auto;padding:8px 14px 70px}
+.l-card{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #f5f5f5;cursor:pointer}
+.l-dot{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
 .l-name{font-size:14px;font-weight:700;color:#222}
-.l-sub{font-size:11px;color:#999;margin-top:2px}
+.l-sub{font-size:11px;color:#aaa;margin-top:2px}
 /* 팝업 */
-#pop-ov{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:9999;align-items:flex-end;justify-content:center}
+#pop-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;align-items:flex-end;justify-content:center}
 #pop-ov.on{display:flex}
-#pop-sheet{background:#fff;width:100%;max-width:480px;border-radius:18px 18px 0 0;padding:20px 18px 32px;max-height:75vh;overflow-y:auto;position:relative}
-#pop-x{position:absolute;top:14px;right:16px;font-size:20px;background:none;border:none;cursor:pointer;color:#aaa}
-.pop-bar{width:36px;height:4px;background:#eee;border-radius:2px;margin:0 auto 16px}
-.pop-cat{font-size:11px;padding:2px 8px;border-radius:4px;color:#fff;display:inline-block;margin-bottom:8px}
-.pop-title{font-size:17px;font-weight:700;color:#222;margin-bottom:4px}
-.pop-addr{font-size:12px;color:#999;margin-bottom:14px}
-.pop-menu-row{display:flex;justify-content:space-between;font-size:13px;color:#444;padding:6px 0;border-bottom:1px solid #f5f5f5}
-.pop-cta{width:100%;padding:13px;background:#2A6E4E;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px}
+#pop-sheet{background:#fff;width:100%;max-width:480px;border-radius:20px 20px 0 0;padding:20px 18px 34px;max-height:78vh;overflow-y:auto;position:relative}
+#pop-x{position:absolute;top:14px;right:16px;font-size:20px;background:none;border:none;cursor:pointer;color:#bbb}
+.pop-bar{width:36px;height:4px;background:#eee;border-radius:2px;margin:0 auto 18px}
+.pop-badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:6px;color:#fff;margin-bottom:10px}
+.pop-title{font-size:18px;font-weight:700;color:#222;margin-bottom:4px}
+.pop-addr{font-size:12px;color:#aaa;margin-bottom:14px}
+.pop-menu-row{display:flex;justify-content:space-between;font-size:13px;color:#444;padding:7px 0;border-bottom:1px solid #f5f5f5}
+.pop-cta{width:100%;padding:14px;background:#2A6E4E;color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;margin-top:16px}
 /* 기타 탭 */
-.view-inner{padding:14px 14px 70px;overflow-y:auto;flex:1}
-.sec-tit{font-size:15px;font-weight:700;color:#222;margin:14px 0 8px}
-.info-card{background:#f8f8f8;border-radius:12px;padding:14px;margin-bottom:10px;font-size:13px;color:#444;line-height:1.7}
+.view-inner{flex:1;overflow-y:auto;padding:14px 14px 70px}
+.sec-tit{font-size:15px;font-weight:700;color:#222;margin:16px 0 8px}
+.info-card{background:#f8f9f8;border-radius:12px;padding:14px 16px;margin-bottom:10px;font-size:13px;color:#444;line-height:1.8}
 </style>
 </head>
 <body>
@@ -63,7 +65,7 @@ html,body{width:100%;height:100%;font-family:'Nanum Gothic',sans-serif;overflow:
       <div id="nav-title">🐻 수락산 · 수락디자인거리</div>
       <div id="nav-sub">SURAKSAN TRAIL &amp; DESIGN STREET</div>
     </div>
-    <select id="lang-btn">
+    <select id="lang-btn" style="font-size:12px;border:1px solid #ddd;border-radius:6px;padding:4px 8px;background:#fff">
       <option value="KO">🌐 KO</option>
       <option value="EN">EN</option>
       <option value="JP">JP</option>
@@ -80,42 +82,37 @@ html,body{width:100%;height:100%;font-family:'Nanum Gothic',sans-serif;overflow:
   </div>
 
   <div id="views">
-    <!-- 지도 탭 -->
     <div class="view on" id="map-view">
       <div id="map-filter-bar"></div>
       <div id="map-wrap">
         <div id="naver-map"></div>
-        <div id="map-status">주소 변환 중... 0 / 51</div>
+        <div id="map-status">🔄 주소 변환 중... 0 / 51</div>
       </div>
     </div>
 
-    <!-- 매장 탭 -->
     <div class="view" id="list-view">
       <div id="list-filter-bar"></div>
       <div id="list-inner"></div>
     </div>
 
-    <!-- 굿즈 탭 -->
     <div class="view" id="goods-view">
       <div class="view-inner">
         <div class="sec-tit">🎒 굿즈 수령 방법</div>
         <div class="info-card">수락산 어디서든 SNS 인증 1회 후<br>카테고리별 매장에서 결제 시 굿즈 증정!</div>
         <div class="sec-tit">🗝️ 굿즈 종류</div>
-        <div class="info-card">키링 · 등산양말 · 텀블러 · 반다나 · 캠프캡</div>
+        <div class="info-card">🗝️ 키링 &nbsp;·&nbsp; 🧦 등산양말 &nbsp;·&nbsp; 🥤 텀블러<br>🪢 반다나 &nbsp;·&nbsp; 🧢 캠프캡</div>
       </div>
     </div>
 
-    <!-- 등산 탭 -->
     <div class="view" id="trail-view">
       <div class="view-inner">
         <div class="sec-tit">⛰️ 수락산 638m</div>
-        <div class="info-card"><b>1코스 - 주등산로 (정상)</b><br>📏 약 3.2km · ⏱ 약 1시간 30분<br>3번출구 → 기차바위 → 정상(638m)</div>
-        <div class="info-card"><b>2코스 - 둘레길 (은류폭포)</b><br>📏 약 8km · ⏱ 약 3시간<br>3번출구 → 둘레길 → 은류폭포 → 순환</div>
-        <div class="info-card"><b>3코스 - 능선 (향로봉)</b><br>📏 약 5km · ⏱ 약 2시간<br>수락산 입구 → 향로봉 → 능선 조망</div>
+        <div class="info-card"><b>1코스 — 주등산로 (정상)</b><br>📏 약 3.2km &nbsp;·&nbsp; ⏱ 약 1시간 30분<br>3번출구 → 기차바위 → 정상(638m)</div>
+        <div class="info-card"><b>2코스 — 둘레길 (은류폭포)</b><br>📏 약 8km &nbsp;·&nbsp; ⏱ 약 3시간<br>3번출구 → 둘레길 → 은류폭포 → 순환</div>
+        <div class="info-card"><b>3코스 — 능선 (향로봉)</b><br>📏 약 5km &nbsp;·&nbsp; ⏱ 약 2시간<br>수락산 입구 → 향로봉 → 능선 조망</div>
       </div>
     </div>
 
-    <!-- 안내 탭 -->
     <div class="view" id="info-view">
       <div class="view-inner">
         <div class="sec-tit">🌟 수락디자인거리</div>
@@ -127,12 +124,11 @@ html,body{width:100%;height:100%;font-family:'Nanum Gothic',sans-serif;overflow:
   </div>
 </div>
 
-<!-- 팝업 -->
 <div id="pop-ov">
   <div id="pop-sheet">
     <button id="pop-x">✕</button>
     <div class="pop-bar"></div>
-    <div id="pop-cat" class="pop-cat"></div>
+    <div id="pop-badge" class="pop-badge"></div>
     <div id="pop-title" class="pop-title"></div>
     <div id="pop-addr" class="pop-addr"></div>
     <div id="pop-menus"></div>
@@ -141,138 +137,155 @@ html,body{width:100%;height:100%;font-family:'Nanum Gothic',sans-serif;overflow:
 </div>
 
 <script>
-var STORES = [
-  {id:1,  ko:"오공김밥 수락산점",         addr:"서울 노원구 동일로 1689",          cat:"food", menus:[{n:"참치김밥",p:"4,500원"},{n:"소고기김밥",p:"5,000원"},{n:"치즈김밥",p:"4,000원"}]},
-  {id:2,  ko:"화로화 수락본점",            addr:"서울 노원구 동일로 1689",          cat:"gogi", menus:[{n:"삼겹살",p:"16,000원"},{n:"목살",p:"16,000원"}]},
-  {id:3,  ko:"평양칼국수",                 addr:"서울 노원구 동일로242길 103",      cat:"food", menus:[{n:"닭칼국수",p:"9,000원"},{n:"김치칼국수",p:"8,000원"}]},
-  {id:4,  ko:"가재골수제비",               addr:"서울 노원구 동일로242길 100",      cat:"food", menus:[{n:"수제비",p:"8,000원"},{n:"칼국수",p:"8,000원"}]},
-  {id:5,  ko:"보미네박국수순대국",          addr:"서울 노원구 동일로242길 96",       cat:"food", menus:[{n:"순대국",p:"9,000원"},{n:"박국수",p:"8,000원"}]},
-  {id:6,  ko:"용가네동태찜",               addr:"서울 노원구 동일로242길 91",       cat:"food", menus:[{n:"동태찜",p:"35,000원"}]},
-  {id:7,  ko:"족발야시장 수락산역점",       addr:"서울 노원구 동일로242길 88",       cat:"food", menus:[{n:"오리지널족발",p:"30,000원"},{n:"냉채족발",p:"32,000원"}]},
-  {id:8,  ko:"꼬믹포차",                   addr:"서울 노원구 동일로242길 83",       cat:"bar",  menus:[{n:"모듬안주",p:"15,000원"}]},
-  {id:9,  ko:"수락산양동이찌개마을",        addr:"서울 노원구 동일로242길 77",       cat:"food", menus:[{n:"양동이찌개",p:"30,000원"}]},
-  {id:10, ko:"대구달구벌막창",              addr:"서울 노원구 동일로242길 60",       cat:"gogi", menus:[{n:"막창",p:"14,000원"},{n:"대창",p:"16,000원"}]},
-  {id:11, ko:"맥주조이",                   addr:"서울 노원구 동일로242길 51",       cat:"bar",  menus:[{n:"생맥주500cc",p:"4,000원"}]},
-  {id:12, ko:"옥순네곱창순대국",            addr:"서울 노원구 동일로242길 46",       cat:"food", menus:[{n:"곱창순대국",p:"10,000원"}]},
-  {id:13, ko:"마린보이 코다리1번가",        addr:"서울 노원구 동일로242길 45",       cat:"food", menus:[{n:"코다리조림",p:"13,000원"}]},
-  {id:14, ko:"가장맛있는족발 수락산점",     addr:"서울 노원구 동일로242길 43",       cat:"food", menus:[{n:"족발(소)",p:"28,000원"},{n:"족발(대)",p:"38,000원"}]},
-  {id:15, ko:"싱싱식당",                   addr:"서울 노원구 동일로242길 41",       cat:"food", menus:[{n:"해물파전",p:"12,000원"},{n:"간장게장",p:"18,000원"}]},
-  {id:16, ko:"묘미서울",                   addr:"서울 노원구 동일로242길 42",       cat:"cafe", menus:[{n:"아메리카노",p:"4,500원"}]},
-  {id:17, ko:"노원골제주흑돼지",            addr:"서울 노원구 동일로242길 42",       cat:"gogi", menus:[{n:"흑돼지삼겹살",p:"18,000원"},{n:"흑돼지목살",p:"18,000원"}]},
-  {id:18, ko:"수향숯불갈비",               addr:"서울 노원구 동일로242길 42",       cat:"gogi", menus:[{n:"소갈비",p:"45,000원"},{n:"돼지갈비",p:"19,000원"}]},
-  {id:19, ko:"미가솥뚜껑삼겹살",           addr:"서울 노원구 동일로242길 36",       cat:"gogi", menus:[{n:"삼겹살",p:"15,000원"},{n:"목살",p:"15,000원"}]},
-  {id:20, ko:"BBQ치킨 노원수락산역점",      addr:"서울 노원구 동일로242길 31",       cat:"food", menus:[{n:"황금올리브치킨",p:"22,000원"}]},
-  {id:21, ko:"한국통닭",                   addr:"서울 노원구 동일로242길 31",       cat:"food", menus:[{n:"한국통닭",p:"16,000원"},{n:"양념통닭",p:"17,000원"}]},
-  {id:22, ko:"수락산풍천장어",              addr:"서울 노원구 동일로242길 31",       cat:"food", menus:[{n:"양념장어구이",p:"35,000원"},{n:"소금장어구이",p:"35,000원"}]},
-  {id:23, ko:"임금님보쌈",                 addr:"서울 노원구 동일로242길 31",       cat:"food", menus:[{n:"보쌈(소)",p:"28,000원"},{n:"보쌈(대)",p:"38,000원"}]},
-  {id:24, ko:"순대일번지 수락산점",         addr:"서울 노원구 동일로242길 31",       cat:"food", menus:[{n:"순대",p:"8,000원"},{n:"순대국",p:"9,000원"}]},
-  {id:25, ko:"딥크루아상",                 addr:"서울 노원구 동일로242길 32",       cat:"cafe", menus:[{n:"크루아상",p:"4,500원"},{n:"아메리카노",p:"4,000원"}]},
-  {id:26, ko:"자매반찬",                   addr:"서울 노원구 동일로242길 32",       cat:"food", menus:[{n:"반찬세트",p:"5,000원~"}]},
-  {id:27, ko:"포아이니 수락산역점",         addr:"서울 노원구 동일로242길 29",       cat:"bar",  menus:[{n:"모듬안주",p:"15,000원"},{n:"소주",p:"4,000원"}]},
-  {id:28, ko:"백송춘천닭갈비",              addr:"서울 노원구 동일로242길 27",       cat:"gogi", menus:[{n:"닭갈비",p:"12,000원"},{n:"치즈닭갈비",p:"13,000원"}]},
-  {id:29, ko:"진1926 수락산역점",           addr:"서울 노원구 동일로242길 23",       cat:"gogi", menus:[{n:"프렌치랙",p:"36,000원"},{n:"양갈비",p:"30,000원"}]},
-  {id:30, ko:"설빙 서울수락산점",           addr:"서울 노원구 동일로242길 22",       cat:"cafe", menus:[{n:"인절미빙수",p:"12,000원"},{n:"딸기빙수",p:"13,000원"}]},
-  {id:31, ko:"달콤한커피방앗간",            addr:"서울 노원구 동일로242길 22",       cat:"cafe", menus:[{n:"달콤라떼",p:"5,000원"}]},
-  {id:32, ko:"빛나는바다 수락산점",         addr:"서울 노원구 동일로242길 15",       cat:"food", menus:[{n:"해물탕",p:"35,000원"},{n:"꽃게찜",p:"40,000원"}]},
-  {id:33, ko:"쪽갈비대통령 수락산점",       addr:"서울 노원구 동일로242길 15",       cat:"gogi", menus:[{n:"쪽갈비",p:"18,000원"}]},
-  {id:34, ko:"박가네부대찌개 수락산점",     addr:"서울 노원구 동일로242길 13",       cat:"food", menus:[{n:"부대찌개1인",p:"9,000원"},{n:"부대찌개2인",p:"18,000원"}]},
-  {id:35, ko:"수락이오냉면",               addr:"서울 노원구 동일로242길 13",       cat:"food", menus:[{n:"물냉면",p:"9,000원"},{n:"비빔냉면",p:"9,000원"}]},
-  {id:36, ko:"최가네손두부",               addr:"서울 노원구 동일로242길 24",       cat:"food", menus:[{n:"순두부찌개",p:"9,000원"},{n:"두부전골",p:"25,000원"}]},
-  {id:37, ko:"진미초밥",                   addr:"서울 노원구 동일로242길 26",       cat:"food", menus:[{n:"초밥세트",p:"15,000원"}]},
-  {id:38, ko:"공감커피정원",               addr:"서울 노원구 동일로242길 26",       cat:"cafe", menus:[{n:"아메리카노",p:"4,000원"},{n:"카페라떼",p:"4,500원"}]},
-  {id:39, ko:"일주일",                     addr:"서울 노원구 동일로242길 28",       cat:"cafe", menus:[{n:"커피",p:"4,500원"}]},
-  {id:40, ko:"짜장과우동",                 addr:"서울 노원구 동일로242길 25",       cat:"food", menus:[{n:"짜장면",p:"7,000원"},{n:"우동",p:"7,000원"}]},
-  {id:41, ko:"우지커피 수락산점",           addr:"서울 노원구 동일로242길 7",        cat:"cafe", menus:[{n:"드립커피",p:"6,000원"},{n:"아메리카노",p:"4,500원"}]},
-  {id:42, ko:"응다방",                     addr:"서울 노원구 동일로242길 37",       cat:"cafe", menus:[{n:"커피",p:"3,500원"}]},
-  {id:43, ko:"신오반점 수락산본점",         addr:"서울 노원구 동일로242길 16",       cat:"food", menus:[{n:"짜장면",p:"7,000원"},{n:"짬뽕",p:"8,000원"}]},
-  {id:44, ko:"산두막",                     addr:"서울 노원구 동일로242길 15",       cat:"bar",  menus:[{n:"두루치기",p:"13,000원"},{n:"모듬전",p:"12,000원"}]},
-  {id:45, ko:"호남해물탕",                 addr:"서울 노원구 동일로242길 40",       cat:"food", menus:[{n:"해물탕",p:"35,000원"}]},
-  {id:46, ko:"별이빛나는밤에",              addr:"서울 노원구 동일로 1689",          cat:"bar",  menus:[{n:"하이볼",p:"8,000원"}]},
-  {id:47, ko:"이화수전통육개장",            addr:"서울 노원구 동일로 1689",          cat:"food", menus:[{n:"육개장",p:"10,000원"}]},
-  {id:48, ko:"봉평산골메밀촌",              addr:"서울 노원구 동일로 1689",          cat:"food", menus:[{n:"메밀국수",p:"9,000원"}]},
-  {id:49, ko:"산과맥주",                   addr:"서울 노원구 동일로 1689",          cat:"bar",  menus:[{n:"생맥주",p:"4,000원"}]},
-  {id:50, ko:"팔선당",                     addr:"서울 노원구 동일로 1689",          cat:"food", menus:[{n:"짜장면",p:"7,000원"},{n:"짬뽕",p:"8,000원"}]},
-  {id:51, ko:"어부생선구이",               addr:"서울 노원구 동일로242길 40",       cat:"food", menus:[{n:"생선구이",p:"12,000원"}]}
+var STORES=[
+  {id:1, ko:"오공김밥 수락산점",        addr:"서울 노원구 동일로 1689",       cat:"food",menus:[{n:"참치김밥",p:"4,500원"},{n:"소고기김밥",p:"5,000원"},{n:"치즈김밥",p:"4,000원"}]},
+  {id:2, ko:"화로화 수락본점",           addr:"서울 노원구 동일로 1689",       cat:"gogi",menus:[{n:"삼겹살",p:"16,000원"},{n:"목살",p:"16,000원"}]},
+  {id:3, ko:"평양칼국수",                addr:"서울 노원구 동일로242길 103",   cat:"food",menus:[{n:"닭칼국수",p:"9,000원"},{n:"김치칼국수",p:"8,000원"}]},
+  {id:4, ko:"가재골수제비",              addr:"서울 노원구 동일로242길 100",   cat:"food",menus:[{n:"수제비",p:"8,000원"},{n:"칼국수",p:"8,000원"}]},
+  {id:5, ko:"보미네박국수순대국",         addr:"서울 노원구 동일로242길 96",    cat:"food",menus:[{n:"순대국",p:"9,000원"},{n:"박국수",p:"8,000원"}]},
+  {id:6, ko:"용가네동태찜",              addr:"서울 노원구 동일로242길 91",    cat:"food",menus:[{n:"동태찜",p:"35,000원"}]},
+  {id:7, ko:"족발야시장 수락산역점",      addr:"서울 노원구 동일로242길 88",    cat:"food",menus:[{n:"오리지널족발",p:"30,000원"},{n:"냉채족발",p:"32,000원"}]},
+  {id:8, ko:"꼬믹포차",                  addr:"서울 노원구 동일로242길 83",    cat:"bar", menus:[{n:"모듬안주",p:"15,000원"}]},
+  {id:9, ko:"수락산양동이찌개마을",       addr:"서울 노원구 동일로242길 77",    cat:"food",menus:[{n:"양동이찌개",p:"30,000원"}]},
+  {id:10,ko:"대구달구벌막창",            addr:"서울 노원구 동일로242길 60",    cat:"gogi",menus:[{n:"막창",p:"14,000원"},{n:"대창",p:"16,000원"}]},
+  {id:11,ko:"맥주조이",                  addr:"서울 노원구 동일로242길 51",    cat:"bar", menus:[{n:"생맥주500cc",p:"4,000원"}]},
+  {id:12,ko:"옥순네곱창순대국",           addr:"서울 노원구 동일로242길 46",    cat:"food",menus:[{n:"곱창순대국",p:"10,000원"}]},
+  {id:13,ko:"마린보이 코다리1번가",       addr:"서울 노원구 동일로242길 45",    cat:"food",menus:[{n:"코다리조림",p:"13,000원"}]},
+  {id:14,ko:"가장맛있는족발 수락산점",    addr:"서울 노원구 동일로242길 43",    cat:"food",menus:[{n:"족발(소)",p:"28,000원"},{n:"족발(대)",p:"38,000원"}]},
+  {id:15,ko:"싱싱식당",                  addr:"서울 노원구 동일로242길 41",    cat:"food",menus:[{n:"해물파전",p:"12,000원"},{n:"간장게장",p:"18,000원"}]},
+  {id:16,ko:"묘미서울",                  addr:"서울 노원구 동일로242길 42",    cat:"cafe",menus:[{n:"아메리카노",p:"4,500원"}]},
+  {id:17,ko:"노원골제주흑돼지",           addr:"서울 노원구 동일로242길 42",    cat:"gogi",menus:[{n:"흑돼지삼겹살",p:"18,000원"},{n:"흑돼지목살",p:"18,000원"}]},
+  {id:18,ko:"수향숯불갈비",              addr:"서울 노원구 동일로242길 42",    cat:"gogi",menus:[{n:"소갈비",p:"45,000원"},{n:"돼지갈비",p:"19,000원"}]},
+  {id:19,ko:"미가솥뚜껑삼겹살",          addr:"서울 노원구 동일로242길 36",    cat:"gogi",menus:[{n:"삼겹살",p:"15,000원"},{n:"목살",p:"15,000원"}]},
+  {id:20,ko:"BBQ치킨 노원수락산역점",     addr:"서울 노원구 동일로242길 31",    cat:"food",menus:[{n:"황금올리브치킨",p:"22,000원"}]},
+  {id:21,ko:"한국통닭",                  addr:"서울 노원구 동일로242길 31",    cat:"food",menus:[{n:"한국통닭",p:"16,000원"},{n:"양념통닭",p:"17,000원"}]},
+  {id:22,ko:"수락산풍천장어",             addr:"서울 노원구 동일로242길 31",    cat:"food",menus:[{n:"양념장어구이",p:"35,000원"},{n:"소금장어구이",p:"35,000원"}]},
+  {id:23,ko:"임금님보쌈",                addr:"서울 노원구 동일로242길 31",    cat:"food",menus:[{n:"보쌈(소)",p:"28,000원"},{n:"보쌈(대)",p:"38,000원"}]},
+  {id:24,ko:"순대일번지 수락산점",        addr:"서울 노원구 동일로242길 31",    cat:"food",menus:[{n:"순대",p:"8,000원"},{n:"순대국",p:"9,000원"}]},
+  {id:25,ko:"딥크루아상",                addr:"서울 노원구 동일로242길 32",    cat:"cafe",menus:[{n:"크루아상",p:"4,500원"},{n:"아메리카노",p:"4,000원"}]},
+  {id:26,ko:"자매반찬",                  addr:"서울 노원구 동일로242길 32",    cat:"food",menus:[{n:"반찬세트",p:"5,000원~"}]},
+  {id:27,ko:"포아이니 수락산역점",        addr:"서울 노원구 동일로242길 29",    cat:"bar", menus:[{n:"모듬안주",p:"15,000원"},{n:"소주",p:"4,000원"}]},
+  {id:28,ko:"백송춘천닭갈비",             addr:"서울 노원구 동일로242길 27",    cat:"gogi",menus:[{n:"닭갈비",p:"12,000원"},{n:"치즈닭갈비",p:"13,000원"}]},
+  {id:29,ko:"진1926 수락산역점",          addr:"서울 노원구 동일로242길 23",    cat:"gogi",menus:[{n:"프렌치랙",p:"36,000원"},{n:"양갈비",p:"30,000원"}]},
+  {id:30,ko:"설빙 서울수락산점",          addr:"서울 노원구 동일로242길 22",    cat:"cafe",menus:[{n:"인절미빙수",p:"12,000원"},{n:"딸기빙수",p:"13,000원"}]},
+  {id:31,ko:"달콤한커피방앗간",           addr:"서울 노원구 동일로242길 22",    cat:"cafe",menus:[{n:"달콤라떼",p:"5,000원"}]},
+  {id:32,ko:"빛나는바다 수락산점",        addr:"서울 노원구 동일로242길 15",    cat:"food",menus:[{n:"해물탕",p:"35,000원"},{n:"꽃게찜",p:"40,000원"}]},
+  {id:33,ko:"쪽갈비대통령 수락산점",      addr:"서울 노원구 동일로242길 15",    cat:"gogi",menus:[{n:"쪽갈비",p:"18,000원"}]},
+  {id:34,ko:"박가네부대찌개 수락산점",    addr:"서울 노원구 동일로242길 13",    cat:"food",menus:[{n:"부대찌개1인",p:"9,000원"},{n:"부대찌개2인",p:"18,000원"}]},
+  {id:35,ko:"수락이오냉면",              addr:"서울 노원구 동일로242길 13",    cat:"food",menus:[{n:"물냉면",p:"9,000원"},{n:"비빔냉면",p:"9,000원"}]},
+  {id:36,ko:"최가네손두부",              addr:"서울 노원구 동일로242길 24",    cat:"food",menus:[{n:"순두부찌개",p:"9,000원"},{n:"두부전골",p:"25,000원"}]},
+  {id:37,ko:"진미초밥",                  addr:"서울 노원구 동일로242길 26",    cat:"food",menus:[{n:"초밥세트",p:"15,000원"}]},
+  {id:38,ko:"공감커피정원",              addr:"서울 노원구 동일로242길 26",    cat:"cafe",menus:[{n:"아메리카노",p:"4,000원"},{n:"카페라떼",p:"4,500원"}]},
+  {id:39,ko:"일주일",                    addr:"서울 노원구 동일로242길 28",    cat:"cafe",menus:[{n:"커피",p:"4,500원"}]},
+  {id:40,ko:"짜장과우동",                addr:"서울 노원구 동일로242길 25",    cat:"food",menus:[{n:"짜장면",p:"7,000원"},{n:"우동",p:"7,000원"}]},
+  {id:41,ko:"우지커피 수락산점",          addr:"서울 노원구 동일로242길 7",     cat:"cafe",menus:[{n:"드립커피",p:"6,000원"},{n:"아메리카노",p:"4,500원"}]},
+  {id:42,ko:"응다방",                    addr:"서울 노원구 동일로242길 37",    cat:"cafe",menus:[{n:"커피",p:"3,500원"}]},
+  {id:43,ko:"신오반점 수락산본점",        addr:"서울 노원구 동일로242길 16",    cat:"food",menus:[{n:"짜장면",p:"7,000원"},{n:"짬뽕",p:"8,000원"}]},
+  {id:44,ko:"산두막",                    addr:"서울 노원구 동일로242길 15",    cat:"bar", menus:[{n:"두루치기",p:"13,000원"},{n:"모듬전",p:"12,000원"}]},
+  {id:45,ko:"호남해물탕",                addr:"서울 노원구 동일로242길 40",    cat:"food",menus:[{n:"해물탕",p:"35,000원"}]},
+  {id:46,ko:"별이빛나는밤에",             addr:"서울 노원구 동일로 1689",       cat:"bar", menus:[{n:"하이볼",p:"8,000원"}]},
+  {id:47,ko:"이화수전통육개장",           addr:"서울 노원구 동일로 1689",       cat:"food",menus:[{n:"육개장",p:"10,000원"}]},
+  {id:48,ko:"봉평산골메밀촌",             addr:"서울 노원구 동일로 1689",       cat:"food",menus:[{n:"메밀국수",p:"9,000원"}]},
+  {id:49,ko:"산과맥주",                  addr:"서울 노원구 동일로 1689",       cat:"bar", menus:[{n:"생맥주",p:"4,000원"}]},
+  {id:50,ko:"팔선당",                    addr:"서울 노원구 동일로 1689",       cat:"food",menus:[{n:"짜장면",p:"7,000원"},{n:"짬뽕",p:"8,000원"}]},
+  {id:51,ko:"어부생선구이",              addr:"서울 노원구 동일로242길 40",    cat:"food",menus:[{n:"생선구이",p:"12,000원"}]}
 ];
 
-var CATS = {
-  food:{label:"식사",    color:"#E8A030", icon:"🍽️"},
-  gogi:{label:"고기구이", color:"#D04030", icon:"🥩"},
-  bar: {label:"주점·포차",color:"#5050C0", icon:"🍺"},
+var CATS={
+  food:{label:"식사",     color:"#E8A030",icon:"🍽️"},
+  gogi:{label:"고기구이", color:"#D04030",icon:"🥩"},
+  bar: {label:"주점·포차",color:"#5050C0",icon:"🍺"},
   cafe:{label:"카페·디저트",color:"#20A070",icon:"☕"}
 };
 
-var _map=null, _markers=[], _iw=null, _curFilter='all', _loaded=0;
+var _map=null,_iw=null,_markers=[],_curFilter='all',_doneCount=0;
 
-function initNaverMap(){
-  if(typeof naver==='undefined'||!naver.maps){setTimeout(initNaverMap,300);return;}
+function initMap(){
+  if(typeof naver==='undefined'||!naver.maps){setTimeout(initMap,300);return;}
   _map=new naver.maps.Map('naver-map',{
-    center:new naver.maps.LatLng(37.65790,127.06010),
+    center:new naver.maps.LatLng(37.6579,127.0601),
     zoom:16,
     mapTypeId:naver.maps.MapTypeId.NORMAL
   });
   _iw=new naver.maps.InfoWindow({
-    backgroundColor:'#fff',
-    borderColor:'#2A6E4E',
+    backgroundColor:"#fff",
+    borderColor:"#2A6E4E",
     borderWidth:2,
-    pixelOffset:new naver.maps.Point(0,-10)
+    anchorSkew:true,
+    pixelOffset:new naver.maps.Point(0,-8)
   });
   buildMapFilter();
   geocodeAll();
 }
 
 function geocodeAll(){
-  var statusEl=document.getElementById('map-status');
-  _loaded=0;
-  STORES.forEach(function(s,idx){
+  var status=document.getElementById('map-status');
+  _doneCount=0;
+  // 같은 주소 중복 처리용 캐시
+  var addrCache={};
+  STORES.forEach(function(s,i){
     setTimeout(function(){
-      naver.maps.Service.geocode({query:s.addr},function(status,res){
-        if(status===naver.maps.Service.Status.OK&&res.v2.addresses.length>0){
+      naver.maps.Service.geocode({query:s.addr},function(st,res){
+        if(st===naver.maps.Service.Status.OK&&res.v2.addresses.length>0){
           var r=res.v2.addresses[0];
-          // 같은 주소 여러 매장 오프셋 처리
-          var sameAddr=STORES.filter(function(x){return x.addr===s.addr&&x.lat;});
-          var angle=sameAddr.length*(Math.PI/4);
-          var offset=sameAddr.length>0?0.00006:0;
-          s.lat=parseFloat(r.y)+offset*Math.sin(angle);
-          s.lng=parseFloat(r.x)+offset*Math.cos(angle);
-          addMarker(s);
+          var baseLat=parseFloat(r.y);
+          var baseLng=parseFloat(r.x);
+          // 같은 주소 핀 겹침 방지
+          var key=r.y+'_'+r.x;
+          if(!addrCache[key])addrCache[key]=0;
+          var offset=addrCache[key];
+          addrCache[key]++;
+          var angle=offset*(Math.PI*2/8);
+          var dist=offset>0?0.00008:0;
+          s.lat=baseLat+dist*Math.cos(angle);
+          s.lng=baseLng+dist*Math.sin(angle);
+          if(_curFilter==='all'||s.cat===_curFilter)placeMarker(s);
         }
-        _loaded++;
-        statusEl.textContent='주소 변환 중... '+_loaded+' / '+STORES.length;
-        if(_loaded===STORES.length){
-          statusEl.textContent='✅ '+STORES.length+'개 매장';
-          setTimeout(function(){statusEl.style.display='none';},2000);
+        _doneCount++;
+        status.textContent='🔄 주소 변환 중... '+_doneCount+' / '+STORES.length;
+        if(_doneCount===STORES.length){
+          status.textContent='✅ '+STORES.length+'개 매장 로드 완료';
+          fitAll();
+          setTimeout(function(){status.style.opacity='0';},2500);
         }
       });
-    },idx*100);
+    },i*120);
   });
 }
 
-function addMarker(s){
-  if(_curFilter!=='all'&&s.cat!==_curFilter)return;
+function placeMarker(s){
   var cat=CATS[s.cat]||CATS.food;
-  var marker=new naver.maps.Marker({
+  var m=new naver.maps.Marker({
     position:new naver.maps.LatLng(s.lat,s.lng),
     map:_map,
     icon:{
-      content:'<div style="background:'+cat.color+';width:30px;height:30px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35)">'
-        +'<span style="transform:rotate(45deg);font-size:13px">'+cat.icon+'</span></div>',
-      anchor:new naver.maps.Point(15,30)
+      content:'<div style="cursor:pointer;width:32px;height:32px;background:'+cat.color+';border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3)">'
+        +'<span style="transform:rotate(45deg);font-size:14px;line-height:1">'+cat.icon+'</span></div>',
+      anchor:new naver.maps.Point(16,32)
     },
     title:s.ko
   });
-  naver.maps.Event.addListener(marker,'click',function(){
+  naver.maps.Event.addListener(m,'click',function(){
     _iw.setContent(
-      '<div style="padding:10px 14px;min-width:180px;max-width:240px">'
-      +'<div style="font-size:14px;font-weight:700;color:#222;margin-bottom:4px">'+s.ko+'</div>'
-      +'<div style="font-size:11px;color:#999;margin-bottom:8px">'+s.addr+'</div>'
-      +'<span style="font-size:11px;background:'+cat.color+';color:#fff;padding:2px 8px;border-radius:4px">'+cat.label+'</span>'
+      '<div style="padding:12px 14px;min-width:190px">'
+      +'<div style="font-size:15px;font-weight:700;color:#222;margin-bottom:5px">'+s.ko+'</div>'
+      +'<div style="font-size:12px;color:#999;margin-bottom:8px">'+s.addr+'</div>'
+      +'<span style="font-size:11px;background:'+cat.color+';color:#fff;padding:3px 9px;border-radius:5px">'+cat.icon+' '+cat.label+'</span>'
       +'</div>'
     );
-    _iw.open(_map,marker);
+    _iw.open(_map,m);
   });
-  s._marker=marker;
-  _markers.push(marker);
+  s._marker=m;
+  _markers.push(m);
+}
+
+function fitAll(){
+  var lats=STORES.filter(function(s){return s.lat;}).map(function(s){return s.lat;});
+  var lngs=STORES.filter(function(s){return s.lng;}).map(function(s){return s.lng;});
+  if(!lats.length)return;
+  var sw=new naver.maps.LatLng(Math.min.apply(null,lats),Math.min.apply(null,lngs));
+  var ne=new naver.maps.LatLng(Math.max.apply(null,lats),Math.max.apply(null,lngs));
+  _map.fitBounds(new naver.maps.LatLngBounds(sw,ne),{top:40,right:20,bottom:40,left:20});
 }
 
 function renderMarkers(){
@@ -281,39 +294,37 @@ function renderMarkers(){
   STORES.forEach(function(s){
     if(!s.lat||!s.lng)return;
     if(_curFilter!=='all'&&s.cat!==_curFilter)return;
-    addMarker(s);
+    placeMarker(s);
   });
 }
 
 function buildMapFilter(){
   var bar=document.getElementById('map-filter-bar');
   bar.innerHTML='';
-  function makeBtn(k,label){
-    var btn=document.createElement('button');
-    btn.className='fcat'+(k===_curFilter?' on':'');
-    btn.textContent=label;
-    btn.onclick=function(){_curFilter=k;buildMapFilter();renderMarkers();};
-    bar.appendChild(btn);
+  function btn(k,label){
+    var b=document.createElement('button');
+    b.className='fcat'+(k===_curFilter?' on':'');
+    b.textContent=label;
+    b.onclick=function(){_curFilter=k;buildMapFilter();renderMarkers();};
+    bar.appendChild(b);
   }
-  makeBtn('all','전체 '+STORES.length);
+  btn('all','전체 '+STORES.length);
   Object.keys(CATS).forEach(function(k){
-    var cnt=STORES.filter(function(s){return s.cat===k;}).length;
-    makeBtn(k,CATS[k].icon+' '+CATS[k].label+' '+cnt);
+    btn(k,CATS[k].icon+' '+CATS[k].label+' '+STORES.filter(function(s){return s.cat===k;}).length);
   });
 }
 
-function renderList(filter){
-  var inner=document.getElementById('list-inner');
-  inner.innerHTML='';
-  var list=(!filter||filter==='all')?STORES:STORES.filter(function(s){return s.cat===filter;});
-  list.forEach(function(s){
+function renderList(f){
+  var el=document.getElementById('list-inner');
+  el.innerHTML='';
+  (f&&f!=='all'?STORES.filter(function(s){return s.cat===f;}):STORES).forEach(function(s){
     var cat=CATS[s.cat]||CATS.food;
     var d=document.createElement('div');
     d.className='l-card';
     d.innerHTML='<div class="l-dot" style="background:'+cat.color+'22">'+cat.icon+'</div>'
       +'<div><div class="l-name">'+s.ko+'</div><div class="l-sub">'+s.addr+' · '+cat.label+'</div></div>';
     d.onclick=function(){openPopup(s);};
-    inner.appendChild(d);
+    el.appendChild(d);
   });
 }
 
@@ -321,29 +332,24 @@ function buildListFilter(){
   var bar=document.getElementById('list-filter-bar');
   bar.innerHTML='';
   var cur='all';
-  function makeBtn(k,label){
-    var btn=document.createElement('button');
-    btn.className='fcat'+(k===cur?' on':'');
-    btn.onclick=function(){
-      cur=k;
-      bar.querySelectorAll('.fcat').forEach(function(b){b.classList.remove('on');});
-      btn.classList.add('on');
-      renderList(k);
-    };
-    btn.textContent=label;
-    bar.appendChild(btn);
+  function btn(k,label){
+    var b=document.createElement('button');
+    b.className='fcat'+(k===cur?' on':'');
+    b.onclick=function(){cur=k;bar.querySelectorAll('.fcat').forEach(function(x){x.classList.remove('on');});b.classList.add('on');renderList(k);};
+    b.textContent=label;
+    bar.appendChild(b);
   }
-  makeBtn('all','전체 '+STORES.length);
+  btn('all','전체 '+STORES.length);
   Object.keys(CATS).forEach(function(k){
-    var cnt=STORES.filter(function(s){return s.cat===k;}).length;
-    makeBtn(k,CATS[k].icon+' '+CATS[k].label+' '+cnt);
+    btn(k,CATS[k].icon+' '+CATS[k].label+' '+STORES.filter(function(s){return s.cat===k;}).length);
   });
 }
 
 function openPopup(s){
   var cat=CATS[s.cat]||CATS.food;
-  document.getElementById('pop-cat').style.background=cat.color;
-  document.getElementById('pop-cat').textContent=cat.icon+' '+cat.label;
+  var badge=document.getElementById('pop-badge');
+  badge.style.background=cat.color;
+  badge.textContent=cat.icon+' '+cat.label;
   document.getElementById('pop-title').textContent=s.ko;
   document.getElementById('pop-addr').textContent=s.addr;
   var menus=document.getElementById('pop-menus');
@@ -351,11 +357,11 @@ function openPopup(s){
   (s.menus||[]).forEach(function(m){
     var r=document.createElement('div');
     r.className='pop-menu-row';
-    r.innerHTML='<span>'+m.n+'</span><span>'+m.p+'</span>';
+    r.innerHTML='<span>'+m.n+'</span><span style="color:#2A6E4E;font-weight:700">'+m.p+'</span>';
     menus.appendChild(r);
   });
   document.getElementById('pop-cta').onclick=function(){
-    window.open('https://map.naver.com/v5/search/'+encodeURIComponent(s.ko+' '+s.addr));
+    window.open('https://map.naver.com/v5/search/'+encodeURIComponent(s.ko));
   };
   document.getElementById('pop-ov').classList.add('on');
 }
@@ -363,23 +369,22 @@ function openPopup(s){
 document.getElementById('pop-x').onclick=function(){document.getElementById('pop-ov').classList.remove('on');};
 document.getElementById('pop-ov').onclick=function(e){if(e.target===this)this.classList.remove('on');};
 
-function sv(v){
-  document.querySelectorAll('.view').forEach(function(el){el.classList.remove('on');});
-  document.querySelectorAll('.vtab').forEach(function(b){b.classList.remove('on');});
-  document.getElementById(v+'-view').classList.add('on');
-  document.querySelector('[data-v="'+v+'"]').classList.add('on');
-  if(v==='map'){
-    if(!_map)initNaverMap();
-    else setTimeout(function(){naver.maps.Event.trigger(_map,'resize');},100);
-  }
-  if(v==='list'){buildListFilter();renderList('all');}
-}
-
-document.querySelectorAll('.vtab').forEach(function(btn){
-  btn.addEventListener('click',function(){sv(this.dataset.v);});
+document.querySelectorAll('.vtab').forEach(function(b){
+  b.addEventListener('click',function(){
+    var v=this.dataset.v;
+    document.querySelectorAll('.view').forEach(function(el){el.classList.remove('on');});
+    document.querySelectorAll('.vtab').forEach(function(x){x.classList.remove('on');});
+    document.getElementById(v+'-view').classList.add('on');
+    this.classList.add('on');
+    if(v==='map'){
+      if(!_map)initMap();
+      else setTimeout(function(){naver.maps.Event.trigger(_map,'resize');},100);
+    }
+    if(v==='list'){buildListFilter();renderList('all');}
+  });
 });
 
-initNaverMap();
+initMap();
 </script>
 </body>
 </html>

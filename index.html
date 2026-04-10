@@ -880,245 +880,128 @@ function buildFilter(barId,cb){
 }
 
 function renderList(){
+  var el=document.getElementById('list-items');
+  if(!el)return;
+  el.innerHTML='';
   var list=gfStore();
-  var total=Math.max(1,Math.ceil(list.length/PER));
-  if(curPg>total)curPg=1;
-  var paged=list.slice((curPg-1)*PER,curPg*PER);
-  var sl=g('store-list');if(!sl)return;
-  sl.innerHTML='';
-  paged.forEach(function(s){
-    var card=mk('div','scard');
-    var bar=mk('div','scard-bar');bar.style.background=s.color;card.appendChild(bar);
-    var th=mk('div','scard-thumb');
-    th.style.background='linear-gradient(135deg,'+s.color+'28,'+s.color+'08)';
-    var ti=mk('span');ti.textContent=CATICON[s.cat];ti.style.fontSize='28px';th.appendChild(ti);
-    var gi=mk('span','scard-gic');gi.textContent=GICONS[gk(s)];th.appendChild(gi);
-    card.appendChild(th);
-    var bd=mk('div','scard-body');card.appendChild(bd);
-    var meta=mk('div','scard-meta');bd.appendChild(meta);
-    var cat=mk('span','scard-cat');cat.textContent=T(s.cat);cat.style.color=s.color;meta.appendChild(cat);
-    var op=mk('span','scard-status');
-    op.textContent=s.open?T('open'):T('closed');
-    op.style.cssText='background:'+(s.open?'rgba(42,138,80,.1)':'rgba(212,58,42,.1)')+';color:'+(s.open?'#2A8A50':'#D43A2A');
-    meta.appendChild(op);
-    var gb=mk('span','scard-gbadge');gb.textContent=GICONS[gk(s)]+' '+T(gk(s));
-    gb.style.background='rgba(61,107,79,.08)';meta.appendChild(gb);
-    var nm=mk('div','scard-name');nm.textContent=sN(s);bd.appendChild(nm);
-    var mp=mk('div','scard-menu');mp.textContent=s.menus.slice(0,2).map(mN).join(' · ');bd.appendChild(mp);
-    var ft=mk('div','scard-foot');
-    var di=mk('span');di.style.color='#3D6B4F';di.style.fontWeight='700';di.textContent='📍'+(s.dist||0)+'m';ft.appendChild(di);
-    var lk=mk('span');lk.style.color='#e74c3c';lk.textContent='❤️ '+fL(s.likes);ft.appendChild(lk);
-    bd.appendChild(ft);
-    (function(store){card.addEventListener('click',function(){openPopup(store);});}) (s);
-    sl.appendChild(card);
+  list.forEach(function(s){
+    var cat=CATS[s.cat]||CATS.food;
+    var nm=lang==='KO'?s.ko:lang==='EN'?s.en:lang==='JP'?s.jp:s.cn;
+    var d=document.createElement('div');
+    d.className='l-card';
+    d.innerHTML='<div class="l-dot" style="background:'+cat.color+'22">'+cat.icon+'</div>'
+      +'<div style="flex:1;min-width:0"><div class="l-name">'+nm+'</div>'
+      +'<div class="l-sub">'+s.addr+' · '+cat.label+'</div></div>';
+    d.onclick=function(){openPopup(s);};
+    el.appendChild(d);
   });
-  var pg=g('paging');if(!pg)return;
-  pg.innerHTML='';
-  for(var i=1;i<=Math.min(total,7);i++){
-    (function(pp){
-      var btn=mk('button','pgb'+(pp===curPg?' on':''));
-      btn.textContent=pp;
-      btn.addEventListener('click',function(){curPg=pp;renderList();});
-      pg.appendChild(btn);
-    })(i);
-  }
 }
 
 // ── 굿즈 탭 ──
 function renderGoods(){
-  var colCnt=Object.values(myGoods).filter(Boolean).length;
-  var certCnt=Object.values(cert).filter(Boolean).length;
-  se('cs-col',colCnt+'/5');se('cs-cert',certCnt+'/5');se('cs-pct',Math.round(colCnt/5*100)+'%');
-  // 굿즈 얻는 방법
-  var hlp=g('goods-help');
-  if(hlp){
-    hlp.innerHTML='';
-    var hcard=mk('div','goods-how-card');
-    var htit=mk('div','goods-how-tit');htit.textContent='\uD83C\uDF92 '+T('gft');hcard.appendChild(htit);
-    var hsteps=mk('div','goods-how-steps');
-    [T('gs1'),T('gs2'),T('gs3'),T('gs4')].forEach(function(s,i){
-      var step=mk('div','goods-mini-step');
-      var num=mk('span','goods-step-n');num.textContent=i+1;step.appendChild(num);
-      var txt=mk('span');txt.textContent=s.replace(/\n/g,' ');step.appendChild(txt);
-      if(i<3){var arr=mk('span');arr.style.cssText='color:rgba(255,255,255,.5);margin:0 4px';arr.textContent='\u2192';step.appendChild(arr);}
-      hsteps.appendChild(step);
-    });
-    hcard.appendChild(hsteps);hlp.appendChild(hcard);
-  }
-  // 컬렉션 그리드
-  var grid=g('col-grid');if(!grid)return;
-  grid.innerHTML='';
-  ['keyring','sock','tumbler','bandana','cap'].forEach(function(k){
-    var have=myGoods[k];
-    var card=mk('div','col-card'+(have?' have':''));
-    var top=mk('div','col-top');top.textContent=GICONS[k];
-    if(have){var chk=mk('span','col-chk');chk.textContent='\u2713';top.appendChild(chk);}
-    card.appendChild(top);
-    var bd=mk('div','col-body');
-    var gn=mk('div','col-gname');gn.textContent=T(k);bd.appendChild(gn);
-    var ci=CAT_GOODS_INFO.find(function(c){return c.goods===k;});
-    if(ci){var ct=mk('div','col-cat');ct.textContent=ci.ko_cat||'';bd.appendChild(ct);}
-    var btn=mk('button','col-tbtn');
-    btn.style.cssText='background:'+(have?'rgba(61,107,79,.14)':'rgba(0,0,0,.06)')+';color:'+(have?'#3D6B4F':'#888');
-    btn.textContent=have?'\u2713 '+T('have'):('+ '+T('have'));
-    (function(key,b){
-      b.addEventListener('click',function(){
-        if(!anyCert()&&!myGoods[key]){var o=b.textContent;b.textContent='\uD83D\uDCF8 \uC778\uC99D \uBA3C\uC800!';b.style.color='#E85030';setTimeout(function(){b.textContent=o;b.style.color='#888';},2000);return;}
-        myGoods[key]=!myGoods[key];renderGoods();
-      });
-    })(k,btn);
-    bd.appendChild(btn);card.appendChild(bd);grid.appendChild(card);
+  var el=document.getElementById('goods-inner');
+  if(!el)return;
+  if(el.dataset.done)return;
+  el.dataset.done='1';
+  var h='';
+  // 수령 방법
+  h+='<div class="sec-tit">🎒 '+T('gft')+'</div>';
+  var steps=[
+    {t:'🏔️ '+T('hw1t'),d:T('hw1d')},
+    {t:'📸 '+T('hw2t'),d:T('hw2d')},
+    {t:'🏪 '+T('hw3t'),d:T('hw3d')},
+    {t:'🎁 '+T('hw4t'),d:T('hw4d')}
+  ];
+  steps.forEach(function(s,i){
+    h+='<div class="hw-step"><div class="hw-num">'+(i+1)+'</div><div><div class="hw-t">'+s.t+'</div><div class="hw-d">'+s.d+'</div></div></div>';
   });
-  // 카테고리별 굿즈
-  var cgl=g('cat-goods-list');if(!cgl)return;
-  cgl.innerHTML='';
-  CAT_GOODS_INFO.forEach(function(info){
-    var card=mk('div','cg-card');
-    var top=mk('div','cg-top');
-    var ic=mk('div','cg-ic');ic.textContent=GICONS[info.goods];top.appendChild(ic);
-    var inf=mk('div');
-    var ct=mk('div','cg-cat');ct.textContent=info.ko_cat||'';ct.style.color=info.color||'#3D6B4F';inf.appendChild(ct);
-    var gn=mk('div','cg-gname');gn.textContent=GICONS[info.goods]+' '+T(info.goods);inf.appendChild(gn);
-    top.appendChild(inf);card.appendChild(top);
-    var desc=mk('div','cg-desc');desc.textContent=info.ko_desc||T('pcert');card.appendChild(desc);
-    var tags=mk('div','cg-stags');
-    STORES.filter(function(s){return (CAT_GOODS[s.cat]||'keyring')===info.goods;}).slice(0,6).forEach(function(s){
-      var tag=mk('span','cg-stag');tag.textContent=CATICON[s.cat]+' '+sN(s);
-      (function(store){tag.addEventListener('click',function(){openPopup(store);});})(s);
-      tags.appendChild(tag);
-    });
-    card.appendChild(tags);cgl.appendChild(card);
+  // 굿즈 종류
+  h+='<div class="sec-tit">🗝️ '+T('gcat')+'</div>';
+  h+='<div class="goods-grid">';
+  var glist=[
+    {icon:'🗝️',name:T('g_kr'),cat:'food', desc:T('cat_food')},
+    {icon:'🥤',name:T('g_tb'),cat:'cafe', desc:T('cat_cafe')},
+    {icon:'🧦',name:T('g_sk'),cat:'gogi', desc:T('cat_gogi')},
+    {icon:'🪢',name:T('g_bn'),cat:'bar',  desc:T('cat_bar')},
+    {icon:'🧢',name:T('g_cp'),cat:'outdoor',desc:T('cat_out')}
+  ];
+  glist.forEach(function(g){
+    var col=g.cat==='food'?'#E8A030':g.cat==='cafe'?'#20A070':g.cat==='gogi'?'#D04030':g.cat==='bar'?'#5050C0':'#3D6B4F';
+    h+='<div class="goods-item"><div class="goods-ic">'+g.icon+'</div><div class="goods-name">'+g.name+'</div><div class="goods-sub" style="color:'+col+'">'+g.desc+'</div></div>';
   });
+  h+='</div>';
   // 인증 포인트
-  var cpl=g('cert-pts-list');if(!cpl)return;
-  cpl.innerHTML='';
+  h+='<div class="sec-tit">📸 '+T('spot')+'</div>';
   CERT_POINTS.forEach(function(cp){
-    var done=cert[cp.id];
-    var card=mk('div','sp-card');
-    var bar=mk('div','sp-bar');bar.style.background=cp.color||'#3D6B4F';card.appendChild(bar);
-    var bd=mk('div','sp-body');
-    var nm=mk('div','sp-name');var _lm={KO:'ko',EN:'en',JP:'jp',CN:'cn'};nm.textContent=(cp.icon||'\uD83D\uDCCD')+' '+(cp[_lm[lang]]||cp.ko);bd.appendChild(nm);
-    var row=mk('div','sp-row');
-    var gds=mk('div','sp-gds');gds.textContent=(GICONS[cp.goods]||'\uD83C\uDF92')+' '+T(cp.goods||'keyring');row.appendChild(gds);
-    var btn=mk('button','sp-btn'+(done?' done':''));btn.textContent=done?T('certDone'):T('certBtn');
-    (function(id){btn.addEventListener('click',function(){cert[id]=!cert[id];renderGoods();});})(cp.id);
-    row.appendChild(btn);bd.appendChild(row);card.appendChild(bd);cpl.appendChild(card);
+    var nm=lang==='KO'?cp.ko:lang==='EN'?cp.en:lang==='JP'?cp.jp:cp.cn;
+    var dc=lang==='KO'?cp.dko:lang==='EN'?cp.den:lang==='JP'?cp.djp:cp.dcn;
+    var gds=cp.goods==='cap'?'🧢':cp.goods==='bandana'?'🪢':cp.goods==='sock'?'🧦':cp.goods==='tumbler'?'🥤':'🗝️';
+    h+='<div class="sp-card"><div class="sp-ic">'+cp.icon+'</div><div><div class="sp-name">'+nm+'</div><div class="sp-desc">'+dc+'</div><div class="sp-goods">'+gds+' '+T('certget')+'</div></div></div>';
   });
+  el.innerHTML=h;
 }
 
 // ── 등산 탭 ──
 function renderTrail(){
-  var tc=g('trail-cards');if(!tc)return;
-  tc.innerHTML='';
-  // 날씨 즉시 랜덤 출력
-  if(!_wx){
-    var mo=new Date().getMonth();
-    var sb=mo<=1||mo===11?{t:-3,r:68,w:3,code:71}:mo<=4?{t:13,r:58,w:4,code:1}:mo<=8?{t:28,r:78,w:2,code:80}:{t:12,r:62,w:5,code:3};
-    var _t=sb.t+Math.round((Math.random()-.5)*5);
-    var _f=_t-Math.round(Math.random()*3+1);
-    var _h=Math.max(35,Math.min(95,sb.r+Math.round((Math.random()-.5)*15)));
-    var _w=+(sb.w+(Math.random()-.5)*1.5).toFixed(1);
-    var _sH=(mo>=3&&mo<=8)?19:17;
-    var _ss=_sH+':'+(Math.floor(Math.random()*30)+10).toString().padStart(2,'0');
-    _wx={code:sb.code,temp:_t,feels:_f,hum:_h,wind:_w,sunset:_ss};
-  }
-  var wicon=WI[_wx.code]||'\u2601\uFE0F';
-  var temp=_wx.temp,feels=_wx.feels,hum=_wx.hum,wind=_wx.wind,sunset=_wx.sunset;
-  var good=_wx.code<30&&wind<10;
-  var wc=mk('div','trail-card');
-  var whd=mk('div','trail-hd');
-  var wic2=mk('div','trail-ic');wic2.style.fontSize='32px';wic2.textContent=wicon;whd.appendChild(wic2);
-  var winf=mk('div');winf.style.flex='1';
-  var wtl=mk('div','trail-name');wtl.textContent=T('wdTitle')+' · '+temp+'\u00b0C';winf.appendChild(wtl);
-  var whi=mk('div','trail-info');whi.textContent=good?T('hikingGood'):T('hikingBad');
-  whi.style.color=good?'#2A8A50':'#C05000';whi.style.fontWeight='700';winf.appendChild(whi);
-  whd.appendChild(winf);wc.appendChild(whd);
-  var wbd=mk('div','trail-body');var wgr=mk('div','wd-grid');
-  [{lbl:T('wdTemp'),val:temp+'\u00b0C'},{lbl:T('feels'),val:feels+'\u00b0C'},{lbl:T('wdHum'),val:hum+'%'},{lbl:T('wdWind'),val:wind+'m/s'},{lbl:T('wdSunset'),val:sunset}].forEach(function(it){
-    var item=mk('div','wd-item');var l=mk('span','wd-lbl');l.textContent=it.lbl;item.appendChild(l);var v=mk('span','wd-val');v.textContent=it.val;item.appendChild(v);wgr.appendChild(item);
-  });
-  wbd.appendChild(wgr);wc.appendChild(wbd);tc.appendChild(wc);
+  var el=document.getElementById('trail-inner');
+  if(!el)return;
+  if(el.dataset.done)return;
+  el.dataset.done='1';
+  var h='';
   // 수락산 소개
-  var ic2=mk('div','trail-card');
-  var ihd=mk('div','trail-hd');var iic=mk('div','trail-ic');iic.textContent='\u26f0\ufe0f';ihd.appendChild(iic);
-  var iinf=mk('div');var itn=mk('div','trail-name');itn.textContent=T('mtName');iinf.appendChild(itn);
-  var irg=mk('div','trail-info');irg.textContent=T('mtRegion');iinf.appendChild(irg);
-  ihd.appendChild(iinf);ic2.appendChild(ihd);
-  var ibd=mk('div','trail-body');
-  var idc=mk('div','trail-desc');idc.textContent=T('mtDesc');ibd.appendChild(idc);
-  var tg=mk('div','trail-pts');
-  T('mtTags').split('|').forEach(function(t){var sp=mk('span','trail-pt');sp.textContent=t;tg.appendChild(sp);});
-  ibd.appendChild(tg);ic2.appendChild(ibd);tc.appendChild(ic2);
-  // 코스
-  var LM={KO:'ko',EN:'en',JP:'jp',CN:'cn'},DT={KO:'distko',EN:'disten',JP:'distjp',CN:'distcn'},TM={KO:'timeko',EN:'timeen',JP:'timejp',CN:'timecn'},PT={KO:'ptko',EN:'pten',JP:'ptjp',CN:'ptcn'},CT={KO:'certko',EN:'certen',JP:'certjp',CN:'certcn'},LV={KO:'lk',EN:'le',JP:'lj',CN:'lc'};
+  h+='<div class="sec-tit">⛰️ '+T('mtName')+'</div>';
+  h+='<div class="mt-card">';
+  h+='<div class="mt-hd"><div class="mt-ic">⛰️</div><div><div class="mt-name">'+T('mtName')+'</div><div class="mt-region">서울 노원구 · 경기 의정부시</div></div></div>';
+  h+='<div class="mt-desc">'+T('mtDesc')+'</div>';
+  var tags=T('mtTags').split('|');
+  h+='<div class="mt-tags">';
+  tags.forEach(function(t){h+='<span class="mt-tag">'+t+'</span>';});
+  h+='</div></div>';
+  // 등산 코스
+  h+='<div class="sec-tit">🥾 '+T('courseT')+'</div>';
   TRAILS.forEach(function(tr){
-    var card=mk('div','trail-card');
-    var top=mk('div','t-bar');top.style.background=tr.color;card.appendChild(top);
-    var bd=mk('div','t-body');card.appendChild(bd);
-    var r1=mk('div','t-row1');bd.appendChild(r1);
-    var nm=mk('div','t-name');nm.textContent=tr[LM[lang]]||tr.ko;r1.appendChild(nm);
-    var lv2=mk('span','t-lv');lv2.textContent=tr[LV[lang]]||tr.lk;
-    lv2.style.cssText='background:'+tr.color+'18;color:'+tr.color+';border:1px solid '+tr.color+'44';r1.appendChild(lv2);
-    var r2=mk('div','t-row2');bd.appendChild(r2);
-    var d2=mk('span','t-stat');d2.textContent='\uD83D\uDCCF '+(tr[DT[lang]]||tr.distko);r2.appendChild(d2);
-    var t2=mk('span','t-stat');t2.textContent='\u23F1\uFE0F '+(tr[TM[lang]]||tr.timeko);r2.appendChild(t2);
-    var ro=mk('div','t-route');ro.textContent=tr[PT[lang]]||tr.ptko;bd.appendChild(ro);
-    var gd=mk('div','t-gds');gd.textContent='\uD83C\uDF92 '+(tr[CT[lang]]||tr.certko);bd.appendChild(gd);
-    tc.appendChild(card);
+    var nm=lang==='KO'?tr.ko:lang==='EN'?tr.en:lang==='JP'?tr.jp:tr.cn;
+    var lv=lang==='KO'?tr.lk:lang==='EN'?tr.le:lang==='JP'?tr.lj:tr.lc;
+    var dist=lang==='KO'?tr.distko:lang==='EN'?tr.disten:lang==='JP'?tr.distjp:tr.distcn;
+    var time=lang==='KO'?tr.timeko:lang==='EN'?tr.timeen:lang==='JP'?tr.timejp:tr.timecn;
+    var route=lang==='KO'?tr.ptko:lang==='EN'?tr.pten:lang==='JP'?tr.ptjp:tr.ptcn;
+    var cert=lang==='KO'?tr.certko:lang==='EN'?tr.certen:lang==='JP'?tr.certjp:tr.certcn;
+    h+='<div class="t-card"><div class="t-bar" style="background:'+tr.color+'"></div>';
+    h+='<div class="t-body"><div class="t-row1"><span class="t-name">'+nm+'</span><span class="t-lv" style="background:'+tr.color+'22;color:'+tr.color+'">'+lv+'</span></div>';
+    h+='<div class="t-row2"><span class="t-stat">📏 '+dist+'</span><span class="t-stat">⏱ '+time+'</span></div>';
+    h+='<div class="t-route">'+route+'</div>';
+    h+='<div class="t-gds">🎒 '+cert+'</div></div></div>';
   });
+  el.innerHTML=h;
 }
 
 // ── 안내 탭 ──
 function renderInfo(){
-  var el=g('info-inner');if(!el)return;
-  el.innerHTML='';
-  // 헤더
-  var hd=mk('div','info-hd');
-  var h1e=mk('div','info-h1');h1e.textContent=T('h1').replace(/\n/g,' ');hd.appendChild(h1e);
-  var hpe=mk('div','info-hp');hpe.textContent=T('hp').replace(/\n/g,' ');hd.appendChild(hpe);
-  el.appendChild(hd);
-  // 수락산 소개
-  var t0=mk('div','info-sec-tit');t0.textContent=T('secMt');el.appendChild(t0);
-  var mtc=mk('div','mt-card');
-  var mhd=mk('div','mt-hd');var mic=mk('div','mt-ic');mic.textContent='\u26f0\ufe0f';mhd.appendChild(mic);
-  var minf=mk('div','mt-inf');var mnm=mk('div','mt-nm');mnm.textContent=T('mtName');minf.appendChild(mnm);
-  var mrg=mk('div','mt-rg');mrg.textContent=T('mtRegion');minf.appendChild(mrg);
-  mhd.appendChild(minf);mtc.appendChild(mhd);
-  var mdc=mk('div','mt-desc');mdc.textContent=T('mtDesc');mtc.appendChild(mdc);
-  var mtg=mk('div','trail-pts');mtg.style.padding='10px 14px';
-  T('mtTags').split('|').forEach(function(t){var sp=mk('span','trail-pt');sp.textContent=t;mtg.appendChild(sp);});
-  mtc.appendChild(mtg);el.appendChild(mtc);
-  // 수락디자인거리 소개
-  var t1=mk('div','info-sec-tit');t1.textContent='\uD83C\uDF1F \uC218\uB77D\uB514\uC790\uC778\uAC70\uB9AC';el.appendChild(t1);
-  var dscard=mk('div','ds-card');
-  var descs={KO:'수락산역 3번출구 바로 동일로242길. 등산 후 식사와 휴식에 어울리는 식당, 카페, 포차 41개 매장이 모여 있습니다.',EN:'Right at Suraksan Station Exit 3. 41 stores from Korean BBQ and pojangmacha to specialty cafes. Perfect for recovery after your hike.',JP:'수락산역3番出口からすぐの同一路242キル。登山後の食事や休憩に最適な41店が集まるストリートです。',CN:'紧领水落山3号出口的同一路242街。登山后的美食之选，41家各具特色的餐厅、和咖啡店尽在此。'};
-  var dsdesc=mk('div','ds-desc');dsdesc.textContent=descs[lang]||descs.KO;dscard.appendChild(dsdesc);
-  var dstags=mk('div','ds-tags');
-  [T('ds41'),T('dsWalk'),T('dsBar'),T('dsCafe'),T('dsFood'),T('dsGoods')].forEach(function(t){var sp=mk('span','ds-tag');sp.textContent=t;dstags.appendChild(sp);});
-  dscard.appendChild(dstags);el.appendChild(dscard);
-  // 여정 소개
-  var t2=mk('div','info-sec-tit');t2.textContent=T('secRoute');el.appendChild(t2);
-  var rcg=mk('div','rc-grid');
-  [{k:'rc1',dk:'rc1d',ic:'\uD83E\uDD7E'},{k:'rc2',dk:'rc2d',ic:'\uD83C\uDF3F'},{k:'rc3',dk:'rc3d',ic:'\u2728'}].forEach(function(r){
-    var c=mk('div','rc-card');
-    var ri2=mk('div','rc-ic');ri2.textContent=r.ic;c.appendChild(ri2);
-    var rt2=mk('div','rc-t');rt2.textContent=T(r.k);c.appendChild(rt2);
-    var rd=mk('div','rc-d');rd.textContent=T(r.dk);c.appendChild(rd);
-    rcg.appendChild(c);
+  var el=document.getElementById('info-inner');
+  if(!el)return;
+  if(el.dataset.done)return;
+  el.dataset.done='1';
+  var h='';
+  h+='<div class="sec-tit">🌟 '+T('dsTitle')+'</div>';
+  h+='<div class="info-card">'+T('dsDesc')+'<div style="margin-top:8px">';
+  ['🍽️ 51'+T('stores'),'🚶 '+T('walkMin'),'🍺 '+T('cat_bar'),'☕ '+T('cat_cafe'),'🍜 '+T('cat_food'),'🎒 '+T('goods')].forEach(function(tag){
+    h+='<span class="ds-tag">'+tag+'</span>';
   });
-  el.appendChild(rcg);
-  // 앱 안내
-  var t5=mk('div','info-sec-tit');t5.textContent=T('secApp');el.appendChild(t5);
-  var ac=mk('div','app-card');
-  var arow=mk('div');arow.style.cssText='display:flex;align-items:center;gap:12px;margin-bottom:10px';
-  var aico=mk('div');aico.style.cssText='font-size:36px;flex-shrink:0';aico.textContent='\uD83D\uDC3F\uFE0F';arow.appendChild(aico);
-  var ainf=mk('div');ainf.style.flex='1';
-  var an=mk('div');an.style.cssText='font-size:14px;font-weight:800;color:#1A3020;margin-bottom:3px';an.textContent=T('appName');ainf.appendChild(an);
-  var aa=mk('div');aa.style.cssText='font-size:12px;color:#666;line-height:1.6';aa.textContent=T('appAddr')+' / '+T('appDesc');ainf.appendChild(aa);
-  arow.appendChild(ainf);ac.appendChild(arow);
-  var at=mk('span');at.style.cssText='display:inline-block;background:#f0f6f0;padding:4px 10px;border-radius:16px;color:#3D6B4F;font-weight:700;font-size:11px';at.textContent=T('appTag');
-  var tw=mk('div');tw.style.textAlign='center';tw.appendChild(at);ac.appendChild(tw);
-  el.appendChild(ac);
+  h+='</div></div>';
+  h+='<div class="sec-tit">🏔️ '+T('journeyT')+'</div>';
+  h+='<div class="info-card"><div class="rc-grid">';
+  [{ic:'🥾',t:T('rc1'),d:T('rc1d')},{ic:'🌿',t:T('rc2'),d:T('rc2d')},{ic:'✨',t:T('rc3'),d:T('rc3d')}].forEach(function(r){
+    h+='<div><div class="rc-ic">'+r.ic+'</div><div class="rc-t">'+r.t+'</div><div class="rc-d">'+r.d+'</div></div>';
+  });
+  h+='</div></div>';
+  h+='<div class="sec-tit">📍 '+T('accessT')+'</div>';
+  h+='<div class="info-card">🚇 '+T('access1')+'<br>🚶 '+T('access2')+'</div>';
+  h+='<div class="sec-tit">ℹ️ '+T('appT')+'</div>';
+  h+='<div class="info-card"><div style="font-weight:700;margin-bottom:4px">🐻 수락산 · 수락디자인거리</div>';
+  h+='<div style="font-size:12px;color:#999">서울 노원구 동일로242길</div>';
+  h+='<div style="font-size:12px;color:#999;margin-top:2px">수락산역 3번출구 → 도보 2분</div>';
+  h+='<div style="margin-top:8px"><span class="ds-tag">#수락산</span><span class="ds-tag">#수락디자인거리</span><span class="ds-tag">#수락산역맛집</span></div></div>';
+  el.innerHTML=h;
 }
 
 // ── 팝업 ──
@@ -1228,7 +1111,7 @@ function sv(v){
     if(_mapReady&&!_map) _initMap();
     else if(_map) setTimeout(function(){naver.maps.Event.trigger(_map,'resize');},150);
   }
-  if(v==='list'){ buildFilter('list-filter-bar',function(){buildFilter('list-filter-bar',arguments.callee);renderList();}); renderList(); }
+  if(v==='list'){ buildFilter('list-filter-bar',function(){renderList();}); renderList(); }
   if(v==='goods') renderGoods();
   if(v==='trail') renderTrail();
   if(v==='info')  renderInfo();

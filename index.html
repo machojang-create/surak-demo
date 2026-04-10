@@ -152,6 +152,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
 var lang='KO', _wx=null;
 
 // ── 번역 ──
+var _G={};
+function g(id){return _G[id]!==undefined?_G[id]:(_G[id]=document.getElementById(id));}
+function se(id,v){var e=g(id);if(e)e.textContent=v;}
+function sh(id,v){var e=g(id);if(e)e.innerHTML=v;}
+function mN(m){return(lang==='EN'&&m.en)||(lang==='JP'&&m.jp)||(lang==='CN'&&m.cn)||m.ko||'';}
+function sD(s){return(lang==='EN'&&s.den)||(lang==='JP'&&s.djp)||(lang==='CN'&&s.dcn)||s.dko||'';}
+function fL(n){if(!n)return'0';return n>=1000?(n/1000).toFixed(1).replace('.0','')+'k':String(n);}
 var LANGS={
   KO:{title:"수락산 · 수락디자인거리",h1:"수락산에서 시작되는\n특별한 하루",
   hp:"등산길 · 둘레길 · 빛의 런웨이\n수락디자인거리를 하나의 여정으로",

@@ -1122,7 +1122,14 @@ document.querySelectorAll('.vtab').forEach(function(b){
   b.addEventListener('click',function(){sv(this.dataset.v);});
 });
 document.getElementById('lang-btn').addEventListener('change',function(){
-  lang=this.value; applyT(); sv('map');
+  lang=this.value;
+  ['goods-inner','trail-inner','info-inner'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) delete el.dataset.done;
+  });
+  applyT();
+  var cur=document.querySelector('.vtab.on');
+  if(cur) sv(cur.dataset.v);
 });
 document.getElementById('pop-x').onclick=closePopup;
 document.getElementById('pop-ov').onclick=function(e){if(e.target===this)closePopup();};

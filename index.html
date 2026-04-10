@@ -900,43 +900,37 @@ function renderList(){
 // ── 굿즈 탭 ──
 function renderGoods(){
   var el=document.getElementById('goods-inner');
-  if(!el)return;
-  if(el.dataset.done)return;
+  if(!el||el.dataset.done)return;
   el.dataset.done='1';
   var h='';
   // 수령 방법
-  h+='<div class="sec-tit">🎒 '+T('gft')+'</div>';
-  var steps=[
-    {t:'🏔️ '+T('hw1t'),d:T('hw1d')},
-    {t:'📸 '+T('hw2t'),d:T('hw2d')},
-    {t:'🏪 '+T('hw3t'),d:T('hw3d')},
-    {t:'🎁 '+T('hw4t'),d:T('hw4d')}
-  ];
-  steps.forEach(function(s,i){
+  h+='<div class="sec-tit">'+T('howTitle')+'</div>';
+  [{t:T('hw1t'),d:T('hw1d')},
+   {t:T('hw2t'),d:T('hw2d')},
+   {t:T('hw3t'),d:T('hw3d')},
+   {t:T('hw4t'),d:T('hw4d')}
+  ].forEach(function(s,i){
     h+='<div class="hw-step"><div class="hw-num">'+(i+1)+'</div><div><div class="hw-t">'+s.t+'</div><div class="hw-d">'+s.d+'</div></div></div>';
   });
   // 굿즈 종류
-  h+='<div class="sec-tit">🗝️ '+T('gcat')+'</div>';
+  h+='<div class="sec-tit">'+T('goodsCatTit')+'</div>';
   h+='<div class="goods-grid">';
-  var glist=[
-    {icon:'🗝️',name:T('g_kr'),cat:'food', desc:T('cat_food')},
-    {icon:'🥤',name:T('g_tb'),cat:'cafe', desc:T('cat_cafe')},
-    {icon:'🧦',name:T('g_sk'),cat:'gogi', desc:T('cat_gogi')},
-    {icon:'🪢',name:T('g_bn'),cat:'bar',  desc:T('cat_bar')},
-    {icon:'🧢',name:T('g_cp'),cat:'outdoor',desc:T('cat_out')}
-  ];
-  glist.forEach(function(g){
-    var col=g.cat==='food'?'#E8A030':g.cat==='cafe'?'#20A070':g.cat==='gogi'?'#D04030':g.cat==='bar'?'#5050C0':'#3D6B4F';
-    h+='<div class="goods-item"><div class="goods-ic">'+g.icon+'</div><div class="goods-name">'+g.name+'</div><div class="goods-sub" style="color:'+col+'">'+g.desc+'</div></div>';
+  [{icon:'🗝️',name:T('keyring'), cat:'food',  col:'#E8A030', desc:T('food')},
+   {icon:'🥤',name:T('tumbler'), cat:'cafe',  col:'#20A070', desc:T('cafe')},
+   {icon:'🧦',name:T('sock'),    cat:'gogi',  col:'#D04030', desc:T('gogi')},
+   {icon:'🪢',name:T('bandana'), cat:'bar',   col:'#5050C0', desc:T('bar')},
+   {icon:'🧢',name:T('cap'),     cat:'outdoor',col:'#3D6B4F',desc:T('outdoor')}
+  ].forEach(function(g){
+    h+='<div class="goods-item"><div class="goods-ic">'+g.icon+'</div><div class="goods-name">'+g.name+'</div><div class="goods-sub" style="color:'+g.col+'">'+g.desc+'</div></div>';
   });
   h+='</div>';
   // 인증 포인트
-  h+='<div class="sec-tit">📸 '+T('spot')+'</div>';
+  h+='<div class="sec-tit">'+T('certPtsTit')+'</div>';
   CERT_POINTS.forEach(function(cp){
     var nm=lang==='KO'?cp.ko:lang==='EN'?cp.en:lang==='JP'?cp.jp:cp.cn;
     var dc=lang==='KO'?cp.dko:lang==='EN'?cp.den:lang==='JP'?cp.djp:cp.dcn;
-    var gds=cp.goods==='cap'?'🧢':cp.goods==='bandana'?'🪢':cp.goods==='sock'?'🧦':cp.goods==='tumbler'?'🥤':'🗝️';
-    h+='<div class="sp-card"><div class="sp-ic">'+cp.icon+'</div><div><div class="sp-name">'+nm+'</div><div class="sp-desc">'+dc+'</div><div class="sp-goods">'+gds+' '+T('certget')+'</div></div></div>';
+    var gico=cp.goods==='cap'?'🧢':cp.goods==='bandana'?'🪢':cp.goods==='sock'?'🧦':cp.goods==='tumbler'?'🥤':'🗝️';
+    h+='<div class="sp-card"><div class="sp-ic">'+cp.icon+'</div><div><div class="sp-name">'+nm+'</div><div class="sp-desc">'+dc+'</div><div class="sp-goods">'+gico+' '+T('certBtn')+'</div></div></div>';
   });
   el.innerHTML=h;
 }
@@ -944,21 +938,19 @@ function renderGoods(){
 // ── 등산 탭 ──
 function renderTrail(){
   var el=document.getElementById('trail-inner');
-  if(!el)return;
-  if(el.dataset.done)return;
+  if(!el||el.dataset.done)return;
   el.dataset.done='1';
   var h='';
   // 수락산 소개
-  h+='<div class="sec-tit">⛰️ '+T('mtName')+'</div>';
+  h+='<div class="sec-tit">'+T('secMt')+'</div>';
   h+='<div class="mt-card">';
-  h+='<div class="mt-hd"><div class="mt-ic">⛰️</div><div><div class="mt-name">'+T('mtName')+'</div><div class="mt-region">서울 노원구 · 경기 의정부시</div></div></div>';
+  h+='<div class="mt-hd"><div class="mt-ic">⛰️</div><div><div class="mt-name">'+T('mtName')+'</div><div class="mt-region">'+T('mtRegion')+'</div></div></div>';
   h+='<div class="mt-desc">'+T('mtDesc')+'</div>';
-  var tags=T('mtTags').split('|');
   h+='<div class="mt-tags">';
-  tags.forEach(function(t){h+='<span class="mt-tag">'+t+'</span>';});
+  T('mtTags').split('|').forEach(function(t){h+='<span class="mt-tag">'+t+'</span>';});
   h+='</div></div>';
   // 등산 코스
-  h+='<div class="sec-tit">🥾 '+T('courseT')+'</div>';
+  h+='<div class="sec-tit">'+T('secTrail')+'</div>';
   TRAILS.forEach(function(tr){
     var nm=lang==='KO'?tr.ko:lang==='EN'?tr.en:lang==='JP'?tr.jp:tr.cn;
     var lv=lang==='KO'?tr.lk:lang==='EN'?tr.le:lang==='JP'?tr.lj:tr.lc;
@@ -967,10 +959,12 @@ function renderTrail(){
     var route=lang==='KO'?tr.ptko:lang==='EN'?tr.pten:lang==='JP'?tr.ptjp:tr.ptcn;
     var cert=lang==='KO'?tr.certko:lang==='EN'?tr.certen:lang==='JP'?tr.certjp:tr.certcn;
     h+='<div class="t-card"><div class="t-bar" style="background:'+tr.color+'"></div>';
-    h+='<div class="t-body"><div class="t-row1"><span class="t-name">'+nm+'</span><span class="t-lv" style="background:'+tr.color+'22;color:'+tr.color+'">'+lv+'</span></div>';
+    h+='<div class="t-body">';
+    h+='<div class="t-row1"><span class="t-name">'+nm+'</span><span class="t-lv" style="background:'+tr.color+'22;color:'+tr.color+'">'+lv+'</span></div>';
     h+='<div class="t-row2"><span class="t-stat">📏 '+dist+'</span><span class="t-stat">⏱ '+time+'</span></div>';
     h+='<div class="t-route">'+route+'</div>';
-    h+='<div class="t-gds">🎒 '+cert+'</div></div></div>';
+    h+='<div class="t-gds">🎒 '+cert+'</div>';
+    h+='</div></div>';
   });
   el.innerHTML=h;
 }
@@ -978,29 +972,28 @@ function renderTrail(){
 // ── 안내 탭 ──
 function renderInfo(){
   var el=document.getElementById('info-inner');
-  if(!el)return;
-  if(el.dataset.done)return;
+  if(!el||el.dataset.done)return;
   el.dataset.done='1';
   var h='';
-  h+='<div class="sec-tit">🌟 '+T('dsTitle')+'</div>';
-  h+='<div class="info-card">'+T('dsDesc')+'<div style="margin-top:8px">';
-  ['🍽️ 51'+T('stores'),'🚶 '+T('walkMin'),'🍺 '+T('cat_bar'),'☕ '+T('cat_cafe'),'🍜 '+T('cat_food'),'🎒 '+T('goods')].forEach(function(tag){
+  h+='<div class="sec-tit">'+T('dsTitle')+'</div>';
+  h+='<div class="info-card">서울 노원구 동일로242길. 등산 후 식사·카페·주점 51개 매장.<div style="margin-top:8px">';
+  [T('ds41'),T('dsWalk'),T('dsBar'),T('dsCafe'),T('dsFood'),T('dsGoods')].forEach(function(tag){
     h+='<span class="ds-tag">'+tag+'</span>';
   });
   h+='</div></div>';
-  h+='<div class="sec-tit">🏔️ '+T('journeyT')+'</div>';
+  h+='<div class="sec-tit">'+T('secRoute')+'</div>';
   h+='<div class="info-card"><div class="rc-grid">';
   [{ic:'🥾',t:T('rc1'),d:T('rc1d')},{ic:'🌿',t:T('rc2'),d:T('rc2d')},{ic:'✨',t:T('rc3'),d:T('rc3d')}].forEach(function(r){
     h+='<div><div class="rc-ic">'+r.ic+'</div><div class="rc-t">'+r.t+'</div><div class="rc-d">'+r.d+'</div></div>';
   });
   h+='</div></div>';
-  h+='<div class="sec-tit">📍 '+T('accessT')+'</div>';
-  h+='<div class="info-card">🚇 '+T('access1')+'<br>🚶 '+T('access2')+'</div>';
-  h+='<div class="sec-tit">ℹ️ '+T('appT')+'</div>';
-  h+='<div class="info-card"><div style="font-weight:700;margin-bottom:4px">🐻 수락산 · 수락디자인거리</div>';
-  h+='<div style="font-size:12px;color:#999">서울 노원구 동일로242길</div>';
-  h+='<div style="font-size:12px;color:#999;margin-top:2px">수락산역 3번출구 → 도보 2분</div>';
-  h+='<div style="margin-top:8px"><span class="ds-tag">#수락산</span><span class="ds-tag">#수락디자인거리</span><span class="ds-tag">#수락산역맛집</span></div></div>';
+  h+='<div class="sec-tit">📍 '+T('dist3exit')+'</div>';
+  h+='<div class="info-card">🚇 4호선 '+T('station')+' 3번출구<br>🚶 '+T('designRd')+' 방향 도보 1분</div>';
+  h+='<div class="sec-tit">'+T('secApp')+'</div>';
+  h+='<div class="info-card"><div style="font-weight:700;margin-bottom:4px">🐻 '+T('appName')+'</div>';
+  h+='<div style="font-size:12px;color:#999">'+T('appAddr')+'</div>';
+  h+='<div style="font-size:12px;color:#999;margin-top:2px">'+T('appDesc')+'</div>';
+  h+='<div style="margin-top:8px">'+T('appTag').split(' ').map(function(t){return '<span class="ds-tag">'+t+'</span>';}).join('')+'</div></div>';
   el.innerHTML=h;
 }
 

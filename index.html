@@ -149,7 +149,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
 <script>
 
 // ── 상태 ──
-var lang='KO', _wx=null, curGf='all';
+var lang='KO', _wx=null, curGf='all', curListFilter='all';
 
 // ── 번역 ──
 var _G={};
@@ -857,7 +857,9 @@ function _renderMarkers(){
 }
 
 function _buildMapFilter(){
-  var bar=document.getElementById('map-filter-bar'); bar.innerHTML='';
+  var bar=document.getElementById('map-filter-bar');
+  if(!bar)return;
+  bar.innerHTML='';
   function btn(k,label){
     var b=document.createElement('button');
     b.className='fcat'+(k===_curFilter?' on':'');
@@ -865,10 +867,10 @@ function _buildMapFilter(){
     b.onclick=function(){_curFilter=k;_buildMapFilter();_renderMarkers();};
     bar.appendChild(b);
   }
-  btn('all','전체 '+STORES.length);
+  btn('all',T('all')+' '+STORES.length);
   Object.keys(CATS).forEach(function(k){
     var cnt=STORES.filter(function(s){return s.cat===k;}).length;
-    if(cnt>0) btn(k,CATS[k].icon+' '+CATS[k].label+' '+cnt);
+    if(cnt>0) btn(k,CATS[k].icon+' '+T(k)+' '+cnt);
   });
 }
 
@@ -886,19 +888,43 @@ function buildFilter(barId,cb){
   });
 }
 
+function buildListFilter(){
+  var bar=document.getElementById('list-filter-bar');
+  if(!bar)return;
+  bar.innerHTML='';
+  var cats=['all','food','gogi','cafe','bar'];
+  cats.forEach(function(k){
+    var cnt=k==='all'?STORES.length:STORES.filter(function(s){return s.cat===k;}).length;
+    if(k!=='all'&&cnt===0)return;
+    var btn=document.createElement('button');
+    btn.className='fcat'+(curListFilter===k?' on':'');
+    var label=k==='all'?(T('all')+' '+cnt):(CATS[k].icon+' '+T(k)+' '+cnt);
+    btn.textContent=label;
+    btn.addEventListener('click',function(){
+      curListFilter=k;
+      buildListFilter();
+      renderList();
+    });
+    bar.appendChild(btn);
+  });
+}
 function renderList(){
   var el=document.getElementById('list-items');
   if(!el)return;
   el.innerHTML='';
-  var list=gfStore();
+  var list=STORES.filter(function(s){
+    return curListFilter==='all'||s.cat===curListFilter;
+  }).sort(function(a,b){return(a.dist||0)-(b.dist||0);});
   list.forEach(function(s){
     var cat=CATS[s.cat]||CATS.food;
-    var nm=lang==='KO'?s.ko:lang==='EN'?s.en:lang==='JP'?s.jp:s.cn;
+    var nm=lang==='KO'?s.ko:lang==='EN'?(s.en||s.ko):lang==='JP'?(s.jp||s.ko):(s.cn||s.ko);
     var d=document.createElement('div');
     d.className='l-card';
     d.innerHTML='<div class="l-dot" style="background:'+cat.color+'22">'+cat.icon+'</div>'
-      +'<div style="flex:1;min-width:0"><div class="l-name">'+nm+'</div>'
-      +'<div class="l-sub">'+s.addr+' · '+cat.label+'</div></div>';
+      +'<div style="flex:1;min-width:0">'
+      +'<div class="l-name">'+nm+'</div>'
+      +'<div class="l-sub">'+s.addr+' · '+T(s.cat)+'</div>'
+      +'</div>';
     d.onclick=function(){openPopup(s);};
     el.appendChild(d);
   });
@@ -983,7 +1009,7 @@ function renderInfo(){
   el.dataset.done='1';
   var h='';
   h+='<div class="sec-tit">'+T('dsTitle')+'</div>';
-  h+='<div class="info-card">서울 노원구 동일로242길. 등산 후 식사·카페·주점 51개 매장.<div style="margin-top:8px">';
+  h+='<div class="info-card">'+T('appAddr')+'. '+T('surakiMsg2')+'<div style="margin-top:8px">';
   [T('ds41'),T('dsWalk'),T('dsBar'),T('dsCafe'),T('dsFood'),T('dsGoods')].forEach(function(tag){
     h+='<span class="ds-tag">'+tag+'</span>';
   });
@@ -994,13 +1020,13 @@ function renderInfo(){
     h+='<div><div class="rc-ic">'+r.ic+'</div><div class="rc-t">'+r.t+'</div><div class="rc-d">'+r.d+'</div></div>';
   });
   h+='</div></div>';
-  h+='<div class="sec-tit">📍 '+T('dist3exit')+'</div>';
-  h+='<div class="info-card">🚇 4호선 '+T('station')+' 3번출구<br>🚶 '+T('designRd')+' 방향 도보 1분</div>';
   h+='<div class="sec-tit">'+T('secApp')+'</div>';
-  h+='<div class="info-card"><div style="font-weight:700;margin-bottom:4px">🐻 '+T('appName')+'</div>';
+  h+='<div class="info-card">';
+  h+='<div style="font-weight:700;margin-bottom:4px">🐻 '+T('appName')+'</div>';
   h+='<div style="font-size:12px;color:#999">'+T('appAddr')+'</div>';
   h+='<div style="font-size:12px;color:#999;margin-top:2px">'+T('appDesc')+'</div>';
-  h+='<div style="margin-top:8px">'+T('appTag').split(' ').map(function(t){return '<span class="ds-tag">'+t+'</span>';}).join('')+'</div></div>';
+  h+='<div style="margin-top:8px">'+T('appTag').split(' ').map(function(t){return '<span class="ds-tag">'+t+'</span>';}).join('')+'</div>';
+  h+='</div>';
   el.innerHTML=h;
 }
 
@@ -1077,7 +1103,7 @@ function sv(v){
     if(_mapReady&&!_map) _initMap();
     else if(_map) setTimeout(function(){naver.maps.Event.trigger(_map,'resize');},150);
   }
-  if(v==='list'){ buildFilter('list-filter-bar',function(){renderList();}); renderList(); }
+  if(v==='list'){ buildListFilter(); renderList(); }
   if(v==='goods') renderGoods();
   if(v==='trail') renderTrail();
   if(v==='info')  renderInfo();
@@ -1095,6 +1121,7 @@ document.getElementById('lang-btn').addEventListener('change',function(){
     if(el) delete el.dataset.done;
   });
   applyT();
+  if(_map) _buildMapFilter();
   // 현재 열린 탭 재렌더
   var cur=document.querySelector('.vtab.on');
   if(!cur) return;
@@ -1102,7 +1129,7 @@ document.getElementById('lang-btn').addEventListener('change',function(){
   if(v==='goods') renderGoods();
   else if(v==='trail') renderTrail();
   else if(v==='info') renderInfo();
-  else if(v==='list') renderList();
+  else if(v==='list'){ buildListFilter(); renderList(); }
 });
 document.getElementById('pop-x').onclick=closePopup;
 document.getElementById('pop-ov').onclick=function(e){if(e.target===this)closePopup();};

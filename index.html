@@ -139,9 +139,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
   <div id="pop-sheet">
     <button id="pop-x">✕</button>
     <div class="pop-bar"></div>
-    <div id="pop-badge" class="pop-badge"></div>
-    <div id="pop-name" class="pop-name"></div>
-    <div id="pop-addr" class="pop-addr"></div>
+    <div id="pop-header" class="pop-header"></div>
     <div id="pop-desc" class="pop-desc"></div>
     <div id="pop-menus" class="pop-menus"></div>
   </div>
@@ -225,6 +223,22 @@ var CAT_GOODS_INFO=[
 
 
 // ── 매장/등산 데이터 ──
+function transAddr(addr){
+  if(lang==='KO') return addr;
+  var a=addr
+    .replace('서울 노원구 동일로242길','Dongil-ro 242-gil, Nowon-gu, Seoul')
+    .replace('서울 노원구 동일로','Dongil-ro, Nowon-gu, Seoul');
+  if(lang==='EN') return a;
+  if(lang==='JP') return addr
+    .replace('서울 노원구 동일로242길','ソウル盧原区東一路242キル')
+    .replace('서울 노원구 동일로','ソウル盧原区東一路')
+    .replace(' (수락상가)','（スラク商街）');
+  if(lang==='CN') return addr
+    .replace('서울 노원구 동일로242길','首尔芦原区同一路242街')
+    .replace('서울 노원구 동일로','首尔芦原区同一路')
+    .replace(' (수락상가)','（水落商业街）');
+  return addr;
+}
 var STORES=[
   {id:1,ko:"오공김밥 수락산점",en:"Ogong Gimbap",jp:"オゴンキムパプ",cn:"五公紫菜卷",
    addr:"서울 노원구 동일로 1689",cat:"food",likes:1840,dist:30,open:true,color:"#E8A030",
@@ -923,7 +937,7 @@ function renderList(){
     d.innerHTML='<div class="l-dot" style="background:'+cat.color+'22">'+cat.icon+'</div>'
       +'<div style="flex:1;min-width:0">'
       +'<div class="l-name">'+nm+'</div>'
-      +'<div class="l-sub">'+s.addr+' · '+T(s.cat)+'</div>'
+      +'<div class="l-sub">'+transAddr(s.addr)+' · '+T(s.cat)+'</div>'
       +'</div>';
     d.onclick=function(){openPopup(s);};
     el.appendChild(d);
@@ -1007,7 +1021,50 @@ function renderInfo(){
   var el=document.getElementById('info-inner');
   if(!el||el.dataset.done)return;
   el.dataset.done='1';
+  var squirrel='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" width="140" height="154" style="display:block;margin:0 auto 16px">'
+    // 꼬리
+    +'<path d="M130 160 Q190 120 185 60 Q180 30 155 40 Q175 55 168 85 Q160 115 125 130 Z" fill="#8B5E3C"/>'
+    +'<path d="M130 160 Q185 125 180 68 Q176 42 158 48 Q172 62 166 88 Q158 116 128 133 Z" fill="#C4874A"/>'
+    // 몸통
+    +'<ellipse cx="105" cy="165" rx="38" ry="45" fill="#C4874A"/>'
+    +'<ellipse cx="105" cy="160" rx="28" ry="35" fill="#F2C98A"/>'
+    // 앞발
+    +'<ellipse cx="78" cy="195" rx="12" ry="8" fill="#C4874A"/>'
+    +'<ellipse cx="132" cy="195" rx="12" ry="8" fill="#C4874A"/>'
+    // 머리
+    +'<ellipse cx="105" cy="108" rx="32" ry="30" fill="#C4874A"/>'
+    // 귀
+    +'<ellipse cx="82" cy="84" rx="10" ry="14" fill="#C4874A" transform="rotate(-15,82,84)"/>'
+    +'<ellipse cx="128" cy="84" rx="10" ry="14" fill="#C4874A" transform="rotate(15,128,84)"/>'
+    +'<ellipse cx="82" cy="84" rx="6" ry="9" fill="#F2C98A" transform="rotate(-15,82,84)"/>'
+    +'<ellipse cx="128" cy="84" rx="6" ry="9" fill="#F2C98A" transform="rotate(15,128,84)"/>'
+    // 얼굴
+    +'<ellipse cx="105" cy="112" rx="22" ry="18" fill="#F2C98A"/>'
+    // 눈
+    +'<circle cx="96" cy="104" r="5" fill="#333"/>'
+    +'<circle cx="114" cy="104" r="5" fill="#333"/>'
+    +'<circle cx="97.5" cy="102.5" r="1.5" fill="#fff"/>'
+    +'<circle cx="115.5" cy="102.5" r="1.5" fill="#fff"/>'
+    // 코
+    +'<ellipse cx="105" cy="113" rx="4" ry="3" fill="#E8735A"/>'
+    // 입
+    +'<path d="M100 117 Q105 121 110 117" stroke="#333" stroke-width="1.5" fill="none" stroke-linecap="round"/>'
+    // 볼
+    +'<ellipse cx="90" cy="112" rx="8" ry="5" fill="#F4A0A0" opacity="0.5"/>'
+    +'<ellipse cx="120" cy="112" rx="8" ry="5" fill="#F4A0A0" opacity="0.5"/>'
+    // 도토리
+    +'<ellipse cx="105" cy="188" rx="10" ry="8" fill="#8B5E3C"/>'
+    +'<ellipse cx="105" cy="181" rx="12" ry="7" fill="#C4874A"/>'
+    +'<rect x="103" y="175" width="4" height="7" rx="2" fill="#8B5E3C"/>'
+    +'</svg>';
+
   var h='';
+  h+='<div style="background:linear-gradient(135deg,#e8f5ee,#f0f8f0);border-radius:16px;padding:20px 16px 16px;margin-bottom:16px;text-align:center">';
+  h+=squirrel;
+  h+='<div style="font-size:16px;font-weight:800;color:#2A6E4E;margin-bottom:4px">🐿️ 수락이</div>';
+  h+='<div style="font-size:12px;color:#666">수락산 · 수락디자인거리 마스코트</div>';
+  h+='</div>';
+
   h+='<div class="sec-tit">'+T('dsTitle')+'</div>';
   h+='<div class="info-card">'+T('appAddr')+'. '+T('surakiMsg2')+'<div style="margin-top:8px">';
   [T('ds41'),T('dsWalk'),T('dsBar'),T('dsCafe'),T('dsFood'),T('dsGoods')].forEach(function(tag){
@@ -1022,7 +1079,7 @@ function renderInfo(){
   h+='</div></div>';
   h+='<div class="sec-tit">'+T('secApp')+'</div>';
   h+='<div class="info-card">';
-  h+='<div style="font-weight:700;margin-bottom:4px">🐻 '+T('appName')+'</div>';
+  h+='<div style="font-weight:700;margin-bottom:4px">🐿️ '+T('appName')+'</div>';
   h+='<div style="font-size:12px;color:#999">'+T('appAddr')+'</div>';
   h+='<div style="font-size:12px;color:#999;margin-top:2px">'+T('appDesc')+'</div>';
   h+='<div style="margin-top:8px">'+T('appTag').split(' ').map(function(t){return '<span class="ds-tag">'+t+'</span>';}).join('')+'</div>';
@@ -1037,26 +1094,32 @@ function openPopup(s){
   var cat=CATS[s.cat]||CATS.food;
   var nm=lang==='KO'?s.ko:lang==='EN'?(s.en||s.ko):lang==='JP'?(s.jp||s.ko):(s.cn||s.ko);
   var dc=lang==='KO'?s.dko:lang==='EN'?(s.den||s.dko):lang==='JP'?(s.djp||s.dko):(s.dcn||s.dko);
-  var badge=document.getElementById('pop-badge');
-  if(badge){badge.style.background=cat.color;badge.textContent=cat.icon+' '+cat.label;}
-  var nameEl=document.getElementById('pop-name');
-  if(nameEl)nameEl.textContent=nm;
-  var addrEl=document.getElementById('pop-addr');
-  if(addrEl)addrEl.textContent=s.addr;
+  var hdr=document.getElementById('pop-header');
+  if(hdr){
+    hdr.innerHTML=
+      '<div class="pop-cat-row">'
+      +'<span class="pop-cat-ic">'+cat.icon+'</span>'
+      +'<span class="pop-cat-badge" style="background:'+cat.color+'">'+cat.label+'</span>'
+      +'</div>'
+      +'<div class="pop-name">'+nm+'</div>'
+      +'<div class="pop-addr">'+transAddr(s.addr)+'</div>'
+      +'<div class="pop-stats">'
+      +'<span class="pop-stat">📍 '+T('exit3')+' '+(s.dist||0)+'m</span>'
+      +'</div>';
+  }
   var descEl=document.getElementById('pop-desc');
   if(descEl)descEl.textContent=dc||'';
   var menusEl=document.getElementById('pop-menus');
   if(menusEl){
-    menusEl.innerHTML='<div style="font-size:12px;font-weight:700;color:#999;margin-bottom:6px">'+T('menuLbl')+'</div>';
+    menusEl.innerHTML='<div class="pop-menu-tit">'+T('menuLbl')+'</div>';
     (s.menus||[]).forEach(function(m){
       var mn=lang==='KO'?m.ko:lang==='EN'?(m.en||m.ko):lang==='JP'?(m.jp||m.ko):(m.cn||m.ko);
       var row=document.createElement('div');
       row.className='pop-menu-row';
-      row.innerHTML='<span>'+mn+'</span><span style="color:#2A6E4E;font-weight:700">'+m.p+'</span>';
+      row.innerHTML='<span class="pop-menu-nm">'+mn+'</span><span class="pop-menu-pr">'+m.p+'</span>';
       menusEl.appendChild(row);
     });
   }
-  // 인라인 style 초기화 후 클래스로 열기
   ov.style.display='';
   ov.classList.add('on');
 }

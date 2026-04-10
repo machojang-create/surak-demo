@@ -97,7 +97,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
 <div id="app">
   <div id="nav">
     <div>
-      <div id="nav-title">🐻 수락산 · 수락디자인거리</div>
+      <div id="nav-title">🐿️ 수락산 · 수락디자인거리</div>
       <div id="nav-sub">SURAKSAN TRAIL &amp; DESIGN STREET</div>
     </div>
     <select id="lang-btn" style="font-size:12px;border:1px solid #ddd;border-radius:6px;padding:4px 8px;background:#fff">
@@ -1035,37 +1035,34 @@ function openPopup(s){
   var ov=document.getElementById('pop-ov');
   if(!ov)return;
   var cat=CATS[s.cat]||CATS.food;
-  var nm=lang==='KO'?s.ko:lang==='EN'?s.en:lang==='JP'?s.jp:s.cn;
-  var dc=lang==='KO'?s.dko:lang==='EN'?s.den:lang==='JP'?s.djp:s.dcn;
-  // 배지
+  var nm=lang==='KO'?s.ko:lang==='EN'?(s.en||s.ko):lang==='JP'?(s.jp||s.ko):(s.cn||s.ko);
+  var dc=lang==='KO'?s.dko:lang==='EN'?(s.den||s.dko):lang==='JP'?(s.djp||s.dko):(s.dcn||s.dko);
   var badge=document.getElementById('pop-badge');
   if(badge){badge.style.background=cat.color;badge.textContent=cat.icon+' '+cat.label;}
-  // 이름
   var nameEl=document.getElementById('pop-name');
   if(nameEl)nameEl.textContent=nm;
-  // 주소
   var addrEl=document.getElementById('pop-addr');
   if(addrEl)addrEl.textContent=s.addr;
-  // 소개글
   var descEl=document.getElementById('pop-desc');
   if(descEl)descEl.textContent=dc||'';
-  // 메뉴
   var menusEl=document.getElementById('pop-menus');
   if(menusEl){
     menusEl.innerHTML='<div style="font-size:12px;font-weight:700;color:#999;margin-bottom:6px">'+T('menuLbl')+'</div>';
     (s.menus||[]).forEach(function(m){
-      var nm2=lang==='KO'?m.ko:lang==='EN'?m.en:lang==='JP'?m.jp:m.cn;
+      var mn=lang==='KO'?m.ko:lang==='EN'?(m.en||m.ko):lang==='JP'?(m.jp||m.ko):(m.cn||m.ko);
       var row=document.createElement('div');
       row.className='pop-menu-row';
-      row.innerHTML='<span>'+nm2+'</span><span style="color:#2A6E4E;font-weight:700">'+m.p+'</span>';
+      row.innerHTML='<span>'+mn+'</span><span style="color:#2A6E4E;font-weight:700">'+m.p+'</span>';
       menusEl.appendChild(row);
     });
   }
+  // 인라인 style 초기화 후 클래스로 열기
+  ov.style.display='';
   ov.classList.add('on');
 }
 function closePopup(){
-  var ov=g('pop-ov');if(ov)ov.style.display='none';
-  actS=null;if(curV==='map')renderPins();
+  var ov=document.getElementById('pop-ov');
+  if(ov){ov.classList.remove('on');ov.style.display='';}
 }
 
 // ── 번역 적용 ──

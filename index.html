@@ -91,6 +91,22 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
 .l-name{font-size:14px;font-weight:700;color:#222}
 .l-sub{font-size:11px;color:#aaa;margin-top:2px}
 
+
+.pop-tabs{display:flex;gap:0;margin-bottom:14px;border-bottom:2px solid #f0f0f0}
+.pop-tab{flex:1;padding:11px 4px;font-size:13px;font-weight:700;border:none;background:none;color:#aaa;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;line-height:1.2}
+.pop-tab.on{color:#2A6E4E;border-bottom:3px solid #2A6E4E}
+.pop-tab-panel{min-height:60px}
+.l-dot{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.l-name{font-size:15px;font-weight:800;color:#222}
+.l-sub{font-size:12px;color:#aaa;margin-top:2px}
+#pop-sheet{background:#fff;width:100%;max-width:480px;border-radius:24px 24px 0 0;padding:22px 20px 40px;max-height:86vh;overflow-y:auto;position:relative}
+.fcat{font-size:13px;padding:7px 14px;border-radius:20px;border:1.5px solid #ddd;background:#fff;white-space:nowrap;cursor:pointer;color:#555;font-weight:600}
+.fcat.on{background:#2A6E4E;color:#fff;border-color:#2A6E4E}
+.sec-tit{font-size:17px;font-weight:800;color:#222;margin:18px 0 10px}
+.vtab-ic{display:block;font-size:22px;margin-bottom:2px}
+.vtab{flex:1;padding:10px 0;text-align:center;font-size:12px;color:#aaa;cursor:pointer;border:none;background:#fff;border-bottom:2px solid transparent;font-weight:600}
+.vtab.on{color:#2A6E4E;border-bottom:2px solid #2A6E4E;font-weight:800}
+#nav-title{font-size:16px;font-weight:800;color:#222}
 </style>
 </head>
 <body>
@@ -140,8 +156,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
     <button id="pop-x">✕</button>
     <div class="pop-bar"></div>
     <div id="pop-header" class="pop-header"></div>
-    <div id="pop-desc" class="pop-desc"></div>
-    <div id="pop-menus" class="pop-menus"></div>
+    <div id="pop-body"></div>
   </div>
 </div>
 <script>
@@ -249,7 +264,7 @@ var STORES=[
    menus:[{ko:"참치김밥",en:"Tuna Gimbap",jp:"ツナキムパプ",cn:"金枪鱼紫菜卷",p:"4,500원"},
           {ko:"소고기김밥",en:"Beef Gimbap",jp:"牛肉キムパプ",cn:"牛肉紫菜卷",p:"5,000원"},
           {ko:"치즈김밥",en:"Cheese Gimbap",jp:"チーズキムパプ",cn:"芝士紫菜卷",p:"4,000원"},
-          {ko:"순대국",en:"Sundae Soup",jp:"スンデクッ",cn:"血肠汤",p:"7,000원"}]},
+          {ko:"순대국",en:"Sundae Soup",jp:"スンデクッ",cn:"血肠汤",p:"7,000원"}],badge:"nopo",hours:"07:00~21:00"},
   {id:2,ko:"화로화 수락본점",en:"Hwarohwa",jp:"ファロファ本店",cn:"火炉花本店",
    addr:"서울 노원구 동일로 1689",cat:"gogi",likes:1230,dist:40,open:true,color:"#C04030",
    dko:"참숯 직화 프리미엄 고기집. 신선한 국내산 고기.",
@@ -258,7 +273,7 @@ var STORES=[
    dcn:"精选国产肉质，炭火直烤高端烤肉店。",
    menus:[{ko:"삼겹살",en:"Pork Belly",jp:"サムギョプサル",cn:"五花肉",p:"16,000원"},
           {ko:"목살",en:"Pork Neck",jp:"モクサル",cn:"颈肉",p:"16,000원"},
-          {ko:"항정살",en:"Cheek Meat",jp:"ハンジョンサル",cn:"猪颊肉",p:"18,000원"}]},
+          {ko:"항정살",en:"Cheek Meat",jp:"ハンジョンサル",cn:"猪颊肉",p:"18,000원"}],badge:"rec",hours:"11:00~23:00"},
   {id:3,ko:"평양칼국수",en:"Pyongyang Kalguksu",jp:"平壌カルグクス",cn:"平壤刀削面",
    addr:"서울 노원구 동일로242길 103",cat:"food",likes:980,dist:850,open:true,color:"#4080C0",
    dko:"등산로 입구 터줏대감. 30년 전통 닭칼국수.",
@@ -267,7 +282,7 @@ var STORES=[
    dcn:"登山口老字号，30年传统鸡肉刀削面。",
    menus:[{ko:"닭칼국수",en:"Chicken Noodle",jp:"チキンカルグクス",cn:"鸡肉刀削面",p:"9,000원"},
           {ko:"김치칼국수",en:"Kimchi Noodle",jp:"キムチカルグクス",cn:"泡菜刀削面",p:"8,000원"},
-          {ko:"수제비",en:"Sujebi",jp:"スジェビ",cn:"疙瘩汤",p:"8,000원"}]},
+          {ko:"수제비",en:"Sujebi",jp:"スジェビ",cn:"疙瘩汤",p:"8,000원"}],badge:"nopo",hours:"10:00~21:00"},
   {id:4,ko:"가재골수제비",en:"Gajae Sujebi",jp:"ガジェスジェビ",cn:"螃蟹谷疙瘩汤",
    addr:"서울 노원구 동일로242길 100",cat:"food",likes:750,dist:820,open:true,color:"#6090A0",
    dko:"직접 반죽하는 손수제비. 진한 육수가 일품.",
@@ -276,7 +291,7 @@ var STORES=[
    dcn:"手工疙瘩汤，浓郁汤底一绝。",
    menus:[{ko:"수제비",en:"Sujebi",jp:"スジェビ",cn:"疙瘩汤",p:"8,000원"},
           {ko:"칼국수",en:"Kalguksu",jp:"カルグクス",cn:"刀削面",p:"8,000원"},
-          {ko:"수제비+칼국수",en:"Combo",jp:"コンボ",cn:"套餐",p:"8,500원"}]},
+          {ko:"수제비+칼국수",en:"Combo",jp:"コンボ",cn:"套餐",p:"8,500원"}],badge:"nopo",hours:"10:00~21:00"},
   {id:5,ko:"보미네박국수순대국",en:"Bomie Noodle",jp:"ボミネ麺",cn:"宝美家面条",
    addr:"서울 노원구 동일로242길 96",cat:"food",likes:620,dist:780,open:true,color:"#A06040",
    dko:"든든한 순대국과 박국수. 등산 후 속 채우기 딱!",
@@ -285,7 +300,7 @@ var STORES=[
    dcn:"丰盛血肠汤，登山后补充体力首选！",
    menus:[{ko:"순대국",en:"Sundae Soup",jp:"スンデクク",cn:"血肠汤",p:"9,000원"},
           {ko:"박국수",en:"Noodle Soup",jp:"パッククス",cn:"面条汤",p:"8,000원"},
-          {ko:"순대국+공기밥",en:"Soup+Rice",jp:"スープ+ライス",cn:"汤+米饭",p:"9,500원"}]},
+          {ko:"순대국+공기밥",en:"Soup+Rice",jp:"スープ+ライス",cn:"汤+米饭",p:"9,500원"}],badge:"hot",hours:"09:00~21:00"},
   {id:6,ko:"용가네동태찜",en:"Yonggane Pollock",jp:"ヨンガネ明太蒸し",cn:"龙家明太鱼",
    addr:"서울 노원구 동일로242길 91",cat:"food",likes:580,dist:740,open:true,color:"#3070A0",
    dko:"얼큰하고 시원한 동태찜 전문점. 해장에 최고!",
@@ -293,7 +308,7 @@ var STORES=[
    djp:"ピリ辛でさっぱりの明太蒸し専門店。二日酔いに最高！",
    dcn:"麻辣爽口明太鱼蒸锅专门店，解酒首选！",
    menus:[{ko:"동태찜(소)",en:"Pollock(S)",jp:"明太蒸し(小)",cn:"明太鱼(小)",p:"35,000원"},
-          {ko:"동태찜(대)",en:"Pollock(L)",jp:"明太蒸し(大)",cn:"明太鱼(大)",p:"45,000원"}]},
+          {ko:"동태찜(대)",en:"Pollock(L)",jp:"明太蒸し(大)",cn:"明太鱼(大)",p:"45,000원"}],badge:"hot",hours:"11:00~22:00"},
   {id:7,ko:"족발야시장 수락산역점",en:"Jokbal Night Market",jp:"足ヤシジャン",cn:"猪蹄夜市",
    addr:"서울 노원구 동일로242길 88",cat:"food",likes:890,dist:700,open:true,color:"#8050B0",
    dko:"야시장 분위기의 족발 전문점. 다양한 족발 메뉴.",
@@ -302,7 +317,7 @@ var STORES=[
    dcn:"夜市风格猪蹄专门店，菜品丰富多样。",
    menus:[{ko:"오리지널족발",en:"Original Jokbal",jp:"オリジナルチョッパル",cn:"原味猪蹄",p:"30,000원"},
           {ko:"냉채족발",en:"Cold Jokbal",jp:"冷菜チョッパル",cn:"凉拌猪蹄",p:"32,000원"},
-          {ko:"불족발",en:"Spicy Jokbal",jp:"ピリ辛チョッパル",cn:"麻辣猪蹄",p:"33,000원"}]},
+          {ko:"불족발",en:"Spicy Jokbal",jp:"ピリ辛チョッパル",cn:"麻辣猪蹄",p:"33,000원"}],badge:"hot",hours:"17:00~24:00"},
   {id:8,ko:"꼬믹포차",en:"Comic Pojangmacha",jp:"コミックポチャ",cn:"漫画路边摊",
    addr:"서울 노원구 동일로242길 83",cat:"bar",likes:540,dist:660,open:true,color:"#D06020",
    dko:"만화 콘셉트 감성 포차. 등산 후 한잔!",
@@ -311,7 +326,7 @@ var STORES=[
    dcn:"漫画主题特色路边摊，登山后小酌一杯！",
    menus:[{ko:"모듬안주",en:"Assorted Snacks",jp:"盛り合わせ",cn:"拼盘小吃",p:"15,000원"},
           {ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"},
-          {ko:"맥주",en:"Beer",jp:"ビール",cn:"啤酒",p:"4,500원"}]},
+          {ko:"맥주",en:"Beer",jp:"ビール",cn:"啤酒",p:"4,500원"}],badge:"rec",hours:"17:00~01:00"},
   {id:9,ko:"수락산양동이찌개마을",en:"Bucket Stew",jp:"バケツチゲ",cn:"水桶锅村",
    addr:"서울 노원구 동일로242길 77",cat:"food",likes:710,dist:610,open:true,color:"#C03040",
    dko:"양동이에 담아 주는 개성 넘치는 찌개 전문점.",
@@ -319,7 +334,7 @@ var STORES=[
    djp:"バケツに入れて提供するユニークなチゲ専門店。",
    dcn:"以水桶盛汤的特色锅专门店，独树一帜。",
    menus:[{ko:"양동이부대찌개",en:"Bucket Budae",jp:"バケツ部隊チゲ",cn:"水桶部队锅",p:"30,000원"},
-          {ko:"양동이김치찌개",en:"Bucket Kimchi",jp:"バケツキムチチゲ",cn:"水桶泡菜锅",p:"28,000원"}]},
+          {ko:"양동이김치찌개",en:"Bucket Kimchi",jp:"バケツキムチチゲ",cn:"水桶泡菜锅",p:"28,000원"}],badge:"hot",hours:"11:00~22:00"},
   {id:10,ko:"대구달구벌막창",en:"Daegu Makchang",jp:"大邱マクチャン",cn:"大邱大肠",
    addr:"서울 노원구 동일로242길 60",cat:"gogi",likes:830,dist:480,open:true,color:"#A03030",
    dko:"대구 정통 막창구이. 직화로 바삭하게!",
@@ -328,7 +343,7 @@ var STORES=[
    dcn:"大邱正宗大肠烤，直火烤制香脆可口！",
    menus:[{ko:"막창",en:"Makchang",jp:"マクチャン",cn:"大肠",p:"14,000원"},
           {ko:"대창",en:"Daechang",jp:"デチャン",cn:"大肠",p:"16,000원"},
-          {ko:"껍데기",en:"Skin",jp:"皮",cn:"猪皮",p:"13,000원"}]},
+          {ko:"껍데기",en:"Skin",jp:"皮",cn:"猪皮",p:"13,000원"}],badge:"rec",hours:"17:00~23:00"},
   {id:11,ko:"맥주조이",en:"Beer Joy",jp:"ビールジョイ",cn:"啤酒乐",
    addr:"서울 노원구 동일로242길 51",cat:"bar",likes:490,dist:390,open:true,color:"#F0A010",
    dko:"다양한 수제·생맥주와 안주. 시원하게 한잔!",
@@ -337,7 +352,7 @@ var STORES=[
    dcn:"多种精酿生啤与小吃，痛快喝一杯！",
    menus:[{ko:"생맥주",en:"Draft Beer",jp:"生ビール",cn:"生啤酒",p:"4,000원"},
           {ko:"수제맥주",en:"Craft Beer",jp:"クラフトビール",cn:"精酿啤酒",p:"6,000원"},
-          {ko:"치킨",en:"Chicken",jp:"チキン",cn:"炸鸡",p:"19,000원"}]},
+          {ko:"치킨",en:"Chicken",jp:"チキン",cn:"炸鸡",p:"19,000원"}],badge:"rec",hours:"16:00~24:00"},
   {id:12,ko:"옥순네곱창순대국",en:"Oksoone Gopchang",jp:"곱창スンデクク",cn:"玉顺家곱창",
    addr:"서울 노원구 동일로242길 46",cat:"food",likes:670,dist:340,open:true,color:"#805030",
    dko:"진한 곱창과 순대국. 든든한 한 끼.",
@@ -345,7 +360,7 @@ var STORES=[
    djp:"濃厚なホルモンとスンデクク。ボリューム満点。",
    dcn:"浓郁牛肠血肠汤，丰盛一餐。",
    menus:[{ko:"곱창순대국",en:"Tripe Soup",jp:"ホルモンスンデクク",cn:"牛肠血肠汤",p:"10,000원"},
-          {ko:"곱창전골",en:"Tripe Hot Pot",jp:"ホルモン鍋",cn:"牛肠火锅",p:"35,000원"}]},
+          {ko:"곱창전골",en:"Tripe Hot Pot",jp:"ホルモン鍋",cn:"牛肠火锅",p:"35,000원"}],badge:"hot",hours:"10:00~22:00"},
   {id:13,ko:"마린보이 코다리1번가",en:"Marine Boy Kodari",jp:"マリンボーイコダリ",cn:"海洋小子明太鱼",
    addr:"서울 노원구 동일로242길 45",cat:"food",likes:560,dist:325,open:true,color:"#2060A0",
    dko:"코다리조림 전문. 짭조름하고 쫀득한 맛.",
@@ -353,7 +368,7 @@ var STORES=[
    djp:"コダリ煮付け専門。塩気と弾力のある絶品。",
    dcn:"明太鱼干红烧专门店，咸鲜劲道好滋味。",
    menus:[{ko:"코다리조림",en:"Braised Kodari",jp:"コダリ煮",cn:"红烧明太鱼干",p:"13,000원"},
-          {ko:"코다리냉면",en:"Cold Noodles",jp:"コダリ冷麺",cn:"明太鱼冷面",p:"9,000원"}]},
+          {ko:"코다리냉면",en:"Cold Noodles",jp:"コダリ冷麺",cn:"明太鱼冷面",p:"9,000원"}],badge:"hot",hours:"11:00~21:00"},
   {id:14,ko:"가장맛있는족발 수락산점",en:"Best Jokbal",jp:"一番旨い足",cn:"最好吃猪蹄",
    addr:"서울 노원구 동일로242길 43",cat:"food",likes:920,dist:310,open:true,color:"#703080",
    dko:"부드럽고 쫄깃한 족발. 보쌈과 냉채도 인기.",
@@ -362,7 +377,7 @@ var STORES=[
    dcn:"嫩滑弹牙猪蹄，包饭凉拌同样受欢迎。",
    menus:[{ko:"족발(소)",en:"Jokbal(S)",jp:"チョッパル(小)",cn:"猪蹄(小)",p:"28,000원"},
           {ko:"족발(대)",en:"Jokbal(L)",jp:"チョッパル(大)",cn:"猪蹄(大)",p:"38,000원"},
-          {ko:"보쌈",en:"Bossam",jp:"ポッサム",cn:"包饭",p:"28,000원"}]},
+          {ko:"보쌈",en:"Bossam",jp:"ポッサム",cn:"包饭",p:"28,000원"}],badge:"rec",hours:"11:00~22:00"},
   {id:15,ko:"싱싱식당",en:"Fresh Restaurant",jp:"シンシン食堂",cn:"新鲜食堂",
    addr:"서울 노원구 동일로242길 41",cat:"food",likes:680,dist:295,open:true,color:"#2080A0",
    dko:"신선한 해산물 요리. 해물파전·간장게장 맛집.",
@@ -371,7 +386,7 @@ var STORES=[
    dcn:"新鲜海鲜料理，海鲜葱饼、酱油蟹远近闻名。",
    menus:[{ko:"해물파전",en:"Seafood Pancake",jp:"海鮮チヂミ",cn:"海鲜葱饼",p:"12,000원"},
           {ko:"간장게장",en:"Soy Crab",jp:"醤油ガニ",cn:"酱油螃蟹",p:"18,000원"},
-          {ko:"낙지볶음",en:"Stir-fried Octopus",jp:"タコ炒め",cn:"炒章鱼",p:"13,000원"}]},
+          {ko:"낙지볶음",en:"Stir-fried Octopus",jp:"タコ炒め",cn:"炒章鱼",p:"13,000원"}],badge:"hot",hours:"11:00~22:00"},
   {id:16,ko:"묘미서울",en:"Myomi Seoul",jp:"ミョミソウル",cn:"妙味首尔",
    addr:"서울 노원구 동일로242길 42",cat:"cafe",likes:420,dist:290,open:true,color:"#B06080",
    dko:"감성 넘치는 카페. 예쁜 인테리어로 SNS 명소.",
@@ -380,7 +395,7 @@ var STORES=[
    dcn:"格调满满的网红咖啡厅，打卡圣地。",
    menus:[{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,500원"},
           {ko:"라떼",en:"Latte",jp:"ラテ",cn:"拿铁",p:"5,500원"},
-          {ko:"시그니처음료",en:"Signature Drink",jp:"シグネチャードリンク",cn:"招牌饮品",p:"7,000원"}]},
+          {ko:"시그니처음료",en:"Signature Drink",jp:"シグネチャードリンク",cn:"招牌饮品",p:"7,000원"}],badge:"new",hours:"10:00~22:00"},
   {id:17,ko:"노원골제주흑돼지",en:"Jeju Black Pork",jp:"済州黒豚",cn:"济州黑猪",
    addr:"서울 노원구 동일로242길 42",cat:"gogi",likes:1050,dist:285,open:true,color:"#404040",
    dko:"제주 흑돼지 직송. 고소하고 쫄깃한 식감.",
@@ -389,7 +404,7 @@ var STORES=[
    dcn:"济州黑猪直运，醇香劲道口感绝佳。",
    menus:[{ko:"흑돼지삼겹살",en:"Black Pork Belly",jp:"黒豚サムギョプサル",cn:"黑猪五花肉",p:"18,000원"},
           {ko:"흑돼지목살",en:"Black Pork Neck",jp:"黒豚モクサル",cn:"黑猪颈肉",p:"18,000원"},
-          {ko:"흑돼지항정살",en:"Black Pork Cheek",jp:"黒豚ハンジョン",cn:"黑猪颊肉",p:"20,000원"}]},
+          {ko:"흑돼지항정살",en:"Black Pork Cheek",jp:"黒豚ハンジョン",cn:"黑猪颊肉",p:"20,000원"}],badge:"rec",hours:"17:00~23:00"},
   {id:18,ko:"수향숯불갈비",en:"Suhyang Charcoal Ribs",jp:"スヒャン炭火カルビ",cn:"水香炭火排骨",
    addr:"서울 노원구 동일로242길 42",cat:"gogi",likes:870,dist:280,open:true,color:"#803020",
    dko:"참숯 직화 소갈비·돼지갈비. 달콤한 양념.",
@@ -398,7 +413,7 @@ var STORES=[
    dcn:"炭火直烤牛排骨猪排骨，甜蜜腌料入味。",
    menus:[{ko:"소갈비",en:"Beef Ribs",jp:"牛カルビ",cn:"牛排骨",p:"45,000원"},
           {ko:"돼지갈비",en:"Pork Ribs",jp:"豚カルビ",cn:"猪排骨",p:"19,000원"},
-          {ko:"갈비찜",en:"Braised Ribs",jp:"カルビチム",cn:"排骨炖",p:"35,000원"}]},
+          {ko:"갈비찜",en:"Braised Ribs",jp:"カルビチム",cn:"排骨炖",p:"35,000원"}],badge:"nopo",hours:"17:00~23:00"},
   {id:19,ko:"미가솥뚜껑삼겹살",en:"Miga Pot Lid Pork",jp:"鍋蓋サムギョプサル",cn:"锅盖五花肉",
    addr:"서울 노원구 동일로242길 36",cat:"gogi",likes:760,dist:230,open:true,color:"#C05030",
    dko:"솥뚜껑 위에서 바삭하게 굽는 삼겹살.",
@@ -406,7 +421,7 @@ var STORES=[
    djp:"鍋の蓋の上でカリカリに焼くサムギョプサル。",
    dcn:"锅盖上烤得香脆的五花肉，别具风味。",
    menus:[{ko:"삼겹살",en:"Pork Belly",jp:"サムギョプサル",cn:"五花肉",p:"15,000원"},
-          {ko:"목살",en:"Pork Neck",jp:"モクサル",cn:"颈肉",p:"15,000원"}]},
+          {ko:"목살",en:"Pork Neck",jp:"モクサル",cn:"颈肉",p:"15,000원"}],badge:"hot",hours:"17:00~23:00"},
   {id:20,ko:"BBQ치킨 노원수락산역점",en:"BBQ Chicken",jp:"BBQチキン",cn:"BBQ炸鸡",
    addr:"서울 노원구 동일로242길 31",cat:"food",likes:640,dist:190,open:true,color:"#E06010",
    dko:"황금올리브치킨 원조 BBQ. 바삭한 치킨.",
@@ -414,7 +429,7 @@ var STORES=[
    djp:"ゴールデンオリーブチキンの元祖BBQ。",
    dcn:"金橄榄炸鸡原创BBQ，香脆可口。",
    menus:[{ko:"황금올리브치킨",en:"Golden Olive Chicken",jp:"ゴールデンオリーブ",cn:"金橄榄炸鸡",p:"22,000원"},
-          {ko:"양념치킨",en:"Seasoned Chicken",jp:"ヤンニョムチキン",cn:"调味炸鸡",p:"22,000원"}]},
+          {ko:"양념치킨",en:"Seasoned Chicken",jp:"ヤンニョムチキン",cn:"调味炸鸡",p:"22,000원"}],badge:"rec",hours:"11:00~23:00"},
   {id:21,ko:"한국통닭",en:"Korean Fried Chicken",jp:"韓国トンダク",cn:"韩国炸鸡",
    addr:"서울 노원구 동일로242길 31",cat:"food",likes:590,dist:185,open:true,color:"#D04010",
    dko:"옛날식 바삭한 한국 통닭. 추억의 맛.",
@@ -422,7 +437,7 @@ var STORES=[
    djp:"昔ながらのサクサク韓国チキン。懐かしの味。",
    dcn:"经典韩式炸鸡，满满老味道。",
    menus:[{ko:"후라이드통닭",en:"Fried Chicken",jp:"フライドチキン",cn:"原味炸鸡",p:"16,000원"},
-          {ko:"양념통닭",en:"Seasoned Chicken",jp:"ヤンニョムチキン",cn:"调味炸鸡",p:"17,000원"}]},
+          {ko:"양념통닭",en:"Seasoned Chicken",jp:"ヤンニョムチキン",cn:"调味炸鸡",p:"17,000원"}],badge:"nopo",hours:"11:00~22:00"},
   {id:22,ko:"수락산풍천장어",en:"Suraksan Eel",jp:"水落山プンチョンウナギ",cn:"水落山丰川鳗鱼",
    addr:"서울 노원구 동일로242길 31",cat:"food",likes:810,dist:180,open:true,color:"#407040",
    dko:"풍천장어 전문. 양념·소금구이 모두 일품.",
@@ -431,7 +446,7 @@ var STORES=[
    dcn:"丰川鳗鱼专门店，酱烤盐烤皆为佳品。",
    menus:[{ko:"양념장어구이",en:"Seasoned Eel",jp:"タレウナギ焼き",cn:"酱烤鳗鱼",p:"35,000원"},
           {ko:"소금장어구이",en:"Salt-grilled Eel",jp:"塩ウナギ焼き",cn:"盐烤鳗鱼",p:"35,000원"},
-          {ko:"장어탕",en:"Eel Soup",jp:"ウナギスープ",cn:"鳗鱼汤",p:"12,000원"}]},
+          {ko:"장어탕",en:"Eel Soup",jp:"ウナギスープ",cn:"鳗鱼汤",p:"12,000원"}],badge:"hot",hours:"12:00~22:00"},
   {id:23,ko:"임금님보쌈",en:"King Bossam",jp:"王様ポッサム",cn:"国王包饭",
    addr:"서울 노원구 동일로242길 31",cat:"food",likes:940,dist:175,open:true,color:"#8040A0",
    dko:"부드럽고 촉촉한 보쌈. 새우젓과 함께!",
@@ -440,7 +455,7 @@ var STORES=[
    dcn:"嫩滑多汁包饭，搭配咸虾酱更美味！",
    menus:[{ko:"보쌈(소)",en:"Bossam(S)",jp:"ポッサム(小)",cn:"包饭(小)",p:"28,000원"},
           {ko:"보쌈(대)",en:"Bossam(L)",jp:"ポッサム(大)",cn:"包饭(大)",p:"38,000원"},
-          {ko:"족보세트",en:"Jokbo Set",jp:"チョッポセット",cn:"猪蹄包饭套餐",p:"45,000원"}]},
+          {ko:"족보세트",en:"Jokbo Set",jp:"チョッポセット",cn:"猪蹄包饭套餐",p:"45,000원"}],badge:"rec",hours:"11:00~22:00"},
   {id:24,ko:"순대일번지 수락산점",en:"Sundae No.1",jp:"スンデ一番地",cn:"血肠一番地",
    addr:"서울 노원구 동일로242길 31",cat:"food",likes:550,dist:170,open:true,color:"#906030",
    dko:"신선한 순대 전문점. 순대국밥도 인기.",
@@ -449,7 +464,7 @@ var STORES=[
    dcn:"新鲜血肠专门店，血肠汤饭同样受欢迎。",
    menus:[{ko:"순대",en:"Sundae",jp:"スンデ",cn:"血肠",p:"8,000원"},
           {ko:"순대국밥",en:"Sundae Soup",jp:"スンデククパ",cn:"血肠汤饭",p:"9,000원"},
-          {ko:"모듬순대",en:"Mixed Sundae",jp:"盛り合わせスンデ",cn:"混合血肠",p:"12,000원"}]},
+          {ko:"모듬순대",en:"Mixed Sundae",jp:"盛り合わせスンデ",cn:"混合血肠",p:"12,000원"}],badge:"hot",hours:"10:00~22:00"},
   {id:25,ko:"딥크루아상",en:"Deep Croissant",jp:"ディープクロワッサン",cn:"深层可颂",
    addr:"서울 노원구 동일로242길 32",cat:"cafe",likes:480,dist:165,open:true,color:"#C09040",
    dko:"바삭한 크루아상 전문 베이커리 카페.",
@@ -458,7 +473,7 @@ var STORES=[
    dcn:"酥脆可颂专门烘焙咖啡厅。",
    menus:[{ko:"버터크루아상",en:"Butter Croissant",jp:"バタークロワッサン",cn:"黄油可颂",p:"4,500원"},
           {ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,000원"},
-          {ko:"크루아상샌드위치",en:"Croissant Sandwich",jp:"クロワッサンサンド",cn:"可颂三明治",p:"7,500원"}]},
+          {ko:"크루아상샌드위치",en:"Croissant Sandwich",jp:"クロワッサンサンド",cn:"可颂三明治",p:"7,500원"}],badge:"new",hours:"09:00~21:00"},
   {id:26,ko:"자매반찬",en:"Sisters Banchan",jp:"姉妹おかず",cn:"姐妹小菜",
    addr:"서울 노원구 동일로242길 32",cat:"food",likes:310,dist:160,open:true,color:"#70A040",
    dko:"정갈하고 맛있는 집반찬 전문점.",
@@ -466,7 +481,7 @@ var STORES=[
    djp:"丁寧で美味しい家庭風おかず専門店。",
    dcn:"精致美味家常小菜专门店。",
    menus:[{ko:"반찬 3찬",en:"3 Side Dishes",jp:"おかず3種",cn:"3种小菜",p:"5,000원"},
-          {ko:"반찬 5찬",en:"5 Side Dishes",jp:"おかず5種",cn:"5种小菜",p:"8,000원"}]},
+          {ko:"반찬 5찬",en:"5 Side Dishes",jp:"おかず5種",cn:"5种小菜",p:"8,000원"}],badge:"hot",hours:"09:00~20:00"},
   {id:27,ko:"포아이니 수락산역점",en:"Poaini",jp:"ポアイニ",cn:"包爱尼",
    addr:"서울 노원구 동일로242길 29",cat:"bar",likes:630,dist:150,open:true,color:"#D050A0",
    dko:"아시안 퓨전 포차. 이국적인 안주와 분위기.",
@@ -475,7 +490,7 @@ var STORES=[
    dcn:"亚洲融合路边摊，异域风情小吃与氛围。",
    menus:[{ko:"팟타이",en:"Pad Thai",jp:"パッタイ",cn:"泰式炒面",p:"13,000원"},
           {ko:"모듬안주",en:"Assorted",jp:"盛り合わせ",cn:"拼盘",p:"15,000원"},
-          {ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}]},
+          {ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}],badge:"rec",hours:"17:00~01:00"},
   {id:28,ko:"백송춘천닭갈비",en:"Baeksong Dakgalbi",jp:"ペクソンタッカルビ",cn:"白松春川鸡排",
    addr:"서울 노원구 동일로242길 27",cat:"gogi",likes:870,dist:130,open:true,color:"#E04020",
    dko:"춘천 정통 닭갈비. 매콤달콤 볶음이 일품.",
@@ -484,7 +499,7 @@ var STORES=[
    dcn:"春川正宗辣炒鸡排，甜辣口感一绝。",
    menus:[{ko:"닭갈비",en:"Dakgalbi",jp:"タッカルビ",cn:"辣炒鸡排",p:"12,000원"},
           {ko:"치즈닭갈비",en:"Cheese Dakgalbi",jp:"チーズタッカルビ",cn:"芝士辣炒鸡排",p:"13,000원"},
-          {ko:"볶음밥",en:"Fried Rice",jp:"チャーハン",cn:"炒饭",p:"3,000원"}]},
+          {ko:"볶음밥",en:"Fried Rice",jp:"チャーハン",cn:"炒饭",p:"3,000원"}],badge:"hot",hours:"11:00~22:00"},
   {id:29,ko:"진1926 수락산역점",en:"Jin1926",jp:"ジン1926",cn:"真1926",
    addr:"서울 노원구 동일로242길 23",cat:"gogi",likes:790,dist:110,open:true,color:"#C04040",
    dko:"1926년 레시피 양갈비 전문. 로즈마리향 가득.",
@@ -493,7 +508,7 @@ var STORES=[
    dcn:"1926年配方羊排专门店，迷迭香香气浓郁。",
    menus:[{ko:"프렌치랙",en:"French Rack",jp:"フレンチラック",cn:"法式羊排",p:"36,000원"},
           {ko:"양갈비",en:"Lamb Ribs",jp:"ラムリブ",cn:"羊排",p:"30,000원"},
-          {ko:"양고기스테이크",en:"Lamb Steak",jp:"ラムステーキ",cn:"羊肉排",p:"28,000원"}]},
+          {ko:"양고기스테이크",en:"Lamb Steak",jp:"ラムステーキ",cn:"羊肉排",p:"28,000원"}],badge:"rec",hours:"17:00~23:00"},
   {id:30,ko:"설빙 서울수락산점",en:"Sulbing Suraksan",jp:"ソルビン水落山",cn:"雪冰水落山",
    addr:"서울 노원구 동일로242길 22",cat:"cafe",likes:720,dist:95,open:true,color:"#60B0D0",
    dko:"인기 빙수 프랜차이즈. 등산 후 시원하게!",
@@ -502,7 +517,7 @@ var STORES=[
    dcn:"人气刨冰连锁，登山后清凉一下！",
    menus:[{ko:"인절미빙수",en:"Injeolmi Bingsu",jp:"インジョルミかき氷",cn:"糯米糕刨冰",p:"12,000원"},
           {ko:"딸기빙수",en:"Strawberry Bingsu",jp:"いちごかき氷",cn:"草莓刨冰",p:"13,000원"},
-          {ko:"망고빙수",en:"Mango Bingsu",jp:"マンゴーかき氷",cn:"芒果刨冰",p:"13,000원"}]},
+          {ko:"망고빙수",en:"Mango Bingsu",jp:"マンゴーかき氷",cn:"芒果刨冰",p:"13,000원"}],badge:"hot",hours:"11:00~22:00"},
   {id:31,ko:"달콤한커피방앗간",en:"Sweet Coffee Mill",jp:"甘いコーヒー工場",cn:"甜蜜咖啡磨坊",
    addr:"서울 노원구 동일로242길 22",cat:"cafe",likes:380,dist:90,open:true,color:"#A07050",
    dko:"전통 방앗간 컨셉 카페. 달달한 음료가 가득.",
@@ -511,7 +526,7 @@ var STORES=[
    dcn:"传统磨坊主题咖啡厅，甜蜜饮品应有尽有。",
    menus:[{ko:"달콤라떼",en:"Sweet Latte",jp:"甘いラテ",cn:"甜拿铁",p:"5,000원"},
           {ko:"인절미라떼",en:"Rice Cake Latte",jp:"インジョルミラテ",cn:"糯米糕拿铁",p:"5,500원"},
-          {ko:"수제과자",en:"Homemade Snack",jp:"手作りお菓子",cn:"手工点心",p:"3,000원"}]},
+          {ko:"수제과자",en:"Homemade Snack",jp:"手作りお菓子",cn:"手工点心",p:"3,000원"}],badge:"new",hours:"09:00~21:00"},
   {id:32,ko:"빛나는바다 수락산점",en:"Shining Sea",jp:"輝く海",cn:"闪耀的海",
    addr:"서울 노원구 동일로242길 15",cat:"food",likes:650,dist:75,open:true,color:"#2060C0",
    dko:"신선한 해산물 전문. 해물탕·꽃게찜 최고.",
@@ -520,7 +535,7 @@ var STORES=[
    dcn:"新鲜海鲜专门店，海鲜汤花蟹蒸无出其右。",
    menus:[{ko:"해물탕",en:"Seafood Stew",jp:"海鮮鍋",cn:"海鲜汤",p:"35,000원"},
           {ko:"꽃게찜",en:"Steamed Crab",jp:"花ガニ蒸し",cn:"花蟹蒸",p:"40,000원"},
-          {ko:"새우구이",en:"Grilled Shrimp",jp:"海老焼き",cn:"烤虾",p:"25,000원"}]},
+          {ko:"새우구이",en:"Grilled Shrimp",jp:"海老焼き",cn:"烤虾",p:"25,000원"}],badge:"hot",hours:"11:00~22:00"},
   {id:33,ko:"쪽갈비대통령 수락산점",en:"Rib President",jp:"チョクカルビ大統領",cn:"排骨总统",
    addr:"서울 노원구 동일로242길 15",cat:"gogi",likes:810,dist:70,open:true,color:"#B03030",
    dko:"쫄깃하고 맛있는 쪽갈비 전문점.",
@@ -528,7 +543,7 @@ var STORES=[
    djp:"モチモチ美味しいチョクカルビ専門店。",
    dcn:"劲道美味短排骨专门店。",
    menus:[{ko:"쪽갈비",en:"Short Ribs",jp:"チョクカルビ",cn:"短排骨",p:"18,000원"},
-          {ko:"쪽갈비+냉면",en:"Ribs+Noodles",jp:"カルビ+冷麺",cn:"排骨+冷面",p:"25,000원"}]},
+          {ko:"쪽갈비+냉면",en:"Ribs+Noodles",jp:"カルビ+冷麺",cn:"排骨+冷面",p:"25,000원"}],badge:"rec",hours:"17:00~23:00"},
   {id:34,ko:"박가네부대찌개 수락산점",en:"Bakgane Budae",jp:"パクガネ部隊チゲ",cn:"朴家部队锅",
    addr:"서울 노원구 동일로242길 13",cat:"food",likes:590,dist:62,open:true,color:"#C06030",
    dko:"푸짐한 재료의 부대찌개. 라면사리 추가 필수!",
@@ -537,7 +552,7 @@ var STORES=[
    dcn:"食材丰富部队锅，必加拉面条！",
    menus:[{ko:"부대찌개1인",en:"Budae(1)",jp:"部隊チゲ(1人)",cn:"部队锅(1人)",p:"9,000원"},
           {ko:"부대찌개2인",en:"Budae(2)",jp:"部隊チゲ(2人)",cn:"部队锅(2人)",p:"18,000원"},
-          {ko:"라면사리",en:"Ramen Add-on",jp:"ラーメン麺追加",cn:"加拉面",p:"1,000원"}]},
+          {ko:"라면사리",en:"Ramen Add-on",jp:"ラーメン麺追加",cn:"加拉面",p:"1,000원"}],badge:"hot",hours:"11:00~22:00"},
   {id:35,ko:"수락이오냉면",en:"Suraki Cold Noodle",jp:"スラキ冷麺",cn:"水落儿冷面",
    addr:"서울 노원구 동일로242길 13",cat:"food",likes:440,dist:58,open:true,color:"#4080B0",
    dko:"시원한 평양냉면 스타일. 육수가 깔끔.",
@@ -546,7 +561,7 @@ var STORES=[
    dcn:"清爽平壤风冷面，汤底干净利落。",
    menus:[{ko:"물냉면",en:"Mul Naengmyeon",jp:"水冷麺",cn:"水冷面",p:"9,000원"},
           {ko:"비빔냉면",en:"Bibim Naengmyeon",jp:"ビビム冷麺",cn:"拌冷面",p:"9,000원"},
-          {ko:"온면",en:"Hot Noodles",jp:"温麺",cn:"热面",p:"9,000원"}]},
+          {ko:"온면",en:"Hot Noodles",jp:"温麺",cn:"热面",p:"9,000원"}],badge:"hot",hours:"11:00~22:00"},
   {id:36,ko:"최가네손두부",en:"Choi Tofu",jp:"チョイガネ豆腐",cn:"崔家手豆腐",
    addr:"서울 노원구 동일로242길 24",cat:"food",likes:520,dist:105,open:true,color:"#60A060",
    dko:"손으로 만든 두부 전문. 국산 콩 100%.",
@@ -555,7 +570,7 @@ var STORES=[
    dcn:"手工豆腐专门店，100%国产大豆。",
    menus:[{ko:"순두부찌개",en:"Soft Tofu Stew",jp:"スンドゥブチゲ",cn:"嫩豆腐锅",p:"9,000원"},
           {ko:"두부전골",en:"Tofu Hot Pot",jp:"豆腐チゲ",cn:"豆腐火锅",p:"25,000원"},
-          {ko:"모두부",en:"Block Tofu",jp:"木綿豆腐",cn:"老豆腐",p:"8,000원"}]},
+          {ko:"모두부",en:"Block Tofu",jp:"木綿豆腐",cn:"老豆腐",p:"8,000원"}],badge:"nopo",hours:"10:00~21:00"},
   {id:37,ko:"진미초밥",en:"Jinmi Sushi",jp:"珍味寿司",cn:"珍味寿司",
    addr:"서울 노원구 동일로242길 26",cat:"food",likes:480,dist:118,open:true,color:"#E05050",
    dko:"신선한 재료로 만드는 초밥. 오마카세도 운영.",
@@ -564,7 +579,7 @@ var STORES=[
    dcn:"新鲜食材制作寿司，也提供主厨套餐。",
    menus:[{ko:"초밥세트",en:"Sushi Set",jp:"寿司セット",cn:"寿司套餐",p:"15,000원"},
           {ko:"사시미",en:"Sashimi",jp:"刺身",cn:"刺身",p:"20,000원"},
-          {ko:"오마카세",en:"Omakase",jp:"おまかせ",cn:"主厨套餐",p:"35,000원"}]},
+          {ko:"오마카세",en:"Omakase",jp:"おまかせ",cn:"主厨套餐",p:"35,000원"}],badge:"rec",hours:"11:00~22:00"},
   {id:38,ko:"공감커피정원",en:"Sympathy Coffee Garden",jp:"共感コーヒー庭園",cn:"共鸣咖啡花园",
    addr:"서울 노원구 동일로242길 26",cat:"cafe",likes:350,dist:115,open:true,color:"#70A070",
    dko:"정원 같은 분위기의 감성 카페. 힐링 공간.",
@@ -573,7 +588,7 @@ var STORES=[
    dcn:"如花园般氛围的格调咖啡厅，疗愈身心之所。",
    menus:[{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,000원"},
           {ko:"정원라떼",en:"Garden Latte",jp:"ガーデンラテ",cn:"花园拿铁",p:"5,500원"},
-          {ko:"케이크",en:"Cake",jp:"ケーキ",cn:"蛋糕",p:"6,500원"}]},
+          {ko:"케이크",en:"Cake",jp:"ケーキ",cn:"蛋糕",p:"6,500원"}],badge:"new",hours:"10:00~22:00"},
   {id:39,ko:"일주일",en:"Iljuil Cafe",jp:"一週間",cn:"一周咖啡",
    addr:"서울 노원구 동일로242길 28",cat:"cafe",likes:390,dist:122,open:true,color:"#9060B0",
    dko:"한 주의 쉼터 같은 감성 카페.",
@@ -582,7 +597,7 @@ var STORES=[
    dcn:"如每周休憩地般的格调咖啡厅。",
    menus:[{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,500원"},
           {ko:"플랫화이트",en:"Flat White",jp:"フラットホワイト",cn:"馥芮白",p:"5,500원"},
-          {ko:"시그니처라떼",en:"Signature Latte",jp:"シグネチャーラテ",cn:"招牌拿铁",p:"6,000원"}]},
+          {ko:"시그니처라떼",en:"Signature Latte",jp:"シグネチャーラテ",cn:"招牌拿铁",p:"6,000원"}],badge:"new",hours:"10:00~22:00"},
   {id:40,ko:"짜장과우동",en:"Jjajang & Udon",jp:"ジャジャンとうどん",cn:"炸酱与乌冬",
    addr:"서울 노원구 동일로242길 25",cat:"food",likes:420,dist:112,open:true,color:"#404080",
    dko:"짜장면과 우동 전문. 가성비 좋은 한 끼.",
@@ -591,7 +606,7 @@ var STORES=[
    dcn:"炸酱面乌冬专门店，性价比超高一餐。",
    menus:[{ko:"짜장면",en:"Jjajangmyeon",jp:"ジャジャン麺",cn:"炸酱面",p:"7,000원"},
           {ko:"우동",en:"Udon",jp:"うどん",cn:"乌冬面",p:"7,000원"},
-          {ko:"짬뽕",en:"Jjambbong",jp:"チャンポン",cn:"辣海鲜汤面",p:"8,000원"}]},
+          {ko:"짬뽕",en:"Jjambbong",jp:"チャンポン",cn:"辣海鲜汤面",p:"8,000원"}],badge:"hot",hours:"10:00~21:00"},
   {id:41,ko:"우지커피 수락산점",en:"Uji Coffee",jp:"ウジコーヒー",cn:"宇治咖啡",
    addr:"서울 노원구 동일로242길 7",cat:"cafe",likes:560,dist:42,open:true,color:"#604020",
    dko:"정통 드립커피와 말차 전문. 일본식 감성.",
@@ -600,7 +615,7 @@ var STORES=[
    dcn:"正宗手冲咖啡与抹茶专门，日式格调。",
    menus:[{ko:"드립커피",en:"Drip Coffee",jp:"ドリップコーヒー",cn:"手冲咖啡",p:"6,000원"},
           {ko:"말차라떼",en:"Matcha Latte",jp:"抹茶ラテ",cn:"抹茶拿铁",p:"6,500원"},
-          {ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,500원"}]},
+          {ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,500원"}],badge:"rec",hours:"09:00~21:00"},
   {id:42,ko:"응다방",en:"Eungda Cafe",jp:"ウンダカフェ",cn:"应答茶馆",
    addr:"서울 노원구 동일로242길 37",cat:"cafe",likes:310,dist:245,open:true,color:"#B07050",
    dko:"옛날 다방 감성. 따뜻한 쌍화차와 커피.",
@@ -609,7 +624,7 @@ var STORES=[
    dcn:"复古茶馆感，温暖双花茶与咖啡。",
    menus:[{ko:"쌍화차",en:"Ssanghwa Tea",jp:"サンファ茶",cn:"双花茶",p:"4,500원"},
           {ko:"커피",en:"Coffee",jp:"コーヒー",cn:"咖啡",p:"3,500원"},
-          {ko:"식혜",en:"Sikhye",jp:"シッケ",cn:"甜米汁",p:"3,500원"}]},
+          {ko:"식혜",en:"Sikhye",jp:"シッケ",cn:"甜米汁",p:"3,500원"}],badge:"nopo",hours:"09:00~21:00"},
   {id:43,ko:"신오반점 수락산본점",en:"Sino Chinese",jp:"新五飯店本店",cn:"新五饭店本店",
    addr:"서울 노원구 동일로242길 16",cat:"food",likes:680,dist:80,open:true,color:"#C03050",
    dko:"수락산 터줏대감 중화요리. 가성비 최고.",
@@ -618,7 +633,7 @@ var STORES=[
    dcn:"水落山老字号中华料理，性价比最佳。",
    menus:[{ko:"짜장면",en:"Jjajangmyeon",jp:"ジャジャン麺",cn:"炸酱面",p:"7,000원"},
           {ko:"짬뽕",en:"Jjambbong",jp:"チャンポン",cn:"辣海鲜汤面",p:"8,000원"},
-          {ko:"탕수육",en:"Sweet & Sour",jp:"タンスユク",cn:"糖醋肉",p:"18,000원"}]},
+          {ko:"탕수육",en:"Sweet & Sour",jp:"タンスユク",cn:"糖醋肉",p:"18,000원"}],badge:"nopo",hours:"11:00~21:00"},
   {id:44,ko:"산두막",en:"Sandumaak",jp:"サンドゥマク",cn:"山棚酒馆",
    addr:"서울 노원구 동일로242길 15",cat:"bar",likes:740,dist:68,open:true,color:"#508030",
    dko:"등산객들의 성지 포차. 두루치기·모듬전 최고.",
@@ -627,7 +642,7 @@ var STORES=[
    dcn:"登山者圣地路边摊，炒肉拼盘煎饼称绝。",
    menus:[{ko:"두루치기",en:"Spicy Pork",jp:"豚炒め",cn:"辣炒猪肉",p:"13,000원"},
           {ko:"모듬전",en:"Assorted Pancake",jp:"チヂミ盛り合わせ",cn:"拼盘煎饼",p:"12,000원"},
-          {ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"3,000원"}]},
+          {ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"3,000원"}],badge:"rec",hours:"14:00~23:00"},
   {id:45,ko:"호남해물탕",en:"Honam Seafood",jp:"ホナム海鮮鍋",cn:"湖南海鲜锅",
    addr:"서울 노원구 동일로242길 40",cat:"food",likes:590,dist:278,open:true,color:"#2070B0",
    dko:"전라도 정통 해물탕. 신선한 해산물 가득.",
@@ -635,7 +650,7 @@ var STORES=[
    djp:"全羅道伝統の海鮮鍋。新鮮な海産物たっぷり。",
    dcn:"全罗道正宗海鲜汤，新鲜海鲜满满当当。",
    menus:[{ko:"해물탕",en:"Seafood Stew",jp:"海鮮鍋",cn:"海鲜汤",p:"35,000원"},
-          {ko:"조개구이",en:"Grilled Clams",jp:"ハマグリ焼き",cn:"烤蛤蜊",p:"20,000원"}]},
+          {ko:"조개구이",en:"Grilled Clams",jp:"ハマグリ焼き",cn:"烤蛤蜊",p:"20,000원"}],badge:"hot",hours:"11:00~22:00"},
   {id:46,ko:"별이빛나는밤에",en:"Starry Night",jp:"星が輝く夜に",cn:"繁星夜",
    addr:"서울 노원구 동일로 1689",cat:"bar",likes:490,dist:35,open:true,color:"#303070",
    dko:"별빛 아래 감성 주점. 하이볼과 와인이 인기.",
@@ -644,7 +659,7 @@ var STORES=[
    dcn:"繁星下感性酒馆，高球酒与红酒深受欢迎。",
    menus:[{ko:"하이볼",en:"Highball",jp:"ハイボール",cn:"高球酒",p:"8,000원"},
           {ko:"와인",en:"Wine",jp:"ワイン",cn:"红酒",p:"8,000원"},
-          {ko:"안주플레이트",en:"Snack Plate",jp:"おつまみプレート",cn:"小吃拼盘",p:"15,000원"}]},
+          {ko:"안주플레이트",en:"Snack Plate",jp:"おつまみプレート",cn:"小吃拼盘",p:"15,000원"}],badge:"new",hours:"18:00~02:00"},
   {id:47,ko:"이화수전통육개장",en:"Ihwasu Yukgaejang",jp:"梨花水伝統ユッケジャン",cn:"梨花水传统肉丝汤",
    addr:"서울 노원구 동일로 1689",cat:"food",likes:830,dist:32,open:true,color:"#C04030",
    dko:"진하고 얼큰한 전통 육개장. 등산 후 해장.",
@@ -652,7 +667,7 @@ var STORES=[
    djp:"濃厚でピリ辛な伝統ユッケジャン。登山後の二日酔い解消。",
    dcn:"浓郁辛辣传统肉丝汤，登山后解酒首选。",
    menus:[{ko:"육개장",en:"Yukgaejang",jp:"ユッケジャン",cn:"肉丝汤",p:"10,000원"},
-          {ko:"육개장+공기밥",en:"Yukgaejang+Rice",jp:"ユッケジャン+ライス",cn:"肉丝汤+米饭",p:"11,000원"}]},
+          {ko:"육개장+공기밥",en:"Yukgaejang+Rice",jp:"ユッケジャン+ライス",cn:"肉丝汤+米饭",p:"11,000원"}],badge:"rec",hours:"09:00~21:00"},
   {id:48,ko:"봉평산골메밀촌",en:"Bongpyeong Buckwheat",jp:"峰平山里そば村",cn:"峰平山村荞麦",
    addr:"서울 노원구 동일로 1689",cat:"food",likes:610,dist:30,open:true,color:"#70A050",
    dko:"강원도 봉평 메밀 전문. 건강한 한 끼.",
@@ -661,7 +676,7 @@ var STORES=[
    dcn:"江原道峰平荞麦专门，健康一餐。",
    menus:[{ko:"메밀국수",en:"Buckwheat Noodles",jp:"そば",cn:"荞麦面",p:"9,000원"},
           {ko:"메밀전병",en:"Buckwheat Crepe",jp:"そばクレープ",cn:"荞麦薄饼",p:"8,000원"},
-          {ko:"메밀묵",en:"Buckwheat Jelly",jp:"そば餅",cn:"荞麦凉粉",p:"7,000원"}]},
+          {ko:"메밀묵",en:"Buckwheat Jelly",jp:"そば餅",cn:"荞麦凉粉",p:"7,000원"}],badge:"nopo",hours:"10:00~21:00"},
   {id:49,ko:"산과맥주",en:"Mountain & Beer",jp:"山とビール",cn:"山与啤酒",
    addr:"서울 노원구 동일로 1689",cat:"bar",likes:720,dist:28,open:true,color:"#408050",
    dko:"등산객 필수 코스! 시원한 생맥주 한 잔.",
@@ -670,7 +685,7 @@ var STORES=[
    dcn:"登山者必经之地！冰爽生啤一杯。",
    menus:[{ko:"생맥주",en:"Draft Beer",jp:"生ビール",cn:"生啤酒",p:"4,000원"},
           {ko:"수제안주",en:"Homemade Snack",jp:"手作りおつまみ",cn:"手工小吃",p:"10,000원"},
-          {ko:"소시지",en:"Sausage",jp:"ソーセージ",cn:"香肠",p:"8,000원"}]},
+          {ko:"소시지",en:"Sausage",jp:"ソーセージ",cn:"香肠",p:"8,000원"}],badge:"rec",hours:"13:00~24:00"},
   {id:50,ko:"팔선당",en:"Palsundang",jp:"八仙堂",cn:"八仙堂",
    addr:"서울 노원구 동일로 1689",cat:"food",likes:750,dist:25,open:true,color:"#A03030",
    dko:"8가지 신선한 재료로 만드는 중화요리.",
@@ -679,7 +694,7 @@ var STORES=[
    dcn:"以8种新鲜食材烹制的中华料理。",
    menus:[{ko:"짜장면",en:"Jjajangmyeon",jp:"ジャジャン麺",cn:"炸酱面",p:"7,000원"},
           {ko:"짬뽕",en:"Jjambbong",jp:"チャンポン",cn:"辣海鲜汤面",p:"8,000원"},
-          {ko:"팔선탕수육",en:"Palsun Sweet & Sour",jp:"八仙タンスユク",cn:"八仙糖醋肉",p:"20,000원"}]},
+          {ko:"팔선탕수육",en:"Palsun Sweet & Sour",jp:"八仙タンスユク",cn:"八仙糖醋肉",p:"20,000원"}],badge:"nopo",hours:"11:00~21:00"},
   {id:51,ko:"어부생선구이",en:"Fisher's Grilled Fish",jp:"漁夫の焼き魚",cn:"渔夫烤鱼",
    addr:"서울 노원구 동일로242길 40",cat:"food",likes:430,dist:275,open:true,color:"#2060A0",
    dko:"당일 수산시장 직송 신선한 생선구이.",
@@ -688,7 +703,7 @@ var STORES=[
    dcn:"当日水产市场直送，新鲜烤鱼美味。",
    menus:[{ko:"고등어구이",en:"Grilled Mackerel",jp:"サバ焼き",cn:"烤鲭鱼",p:"12,000원"},
           {ko:"삼치구이",en:"Grilled Spanish Mackerel",jp:"サワラ焼き",cn:"烤马鲛鱼",p:"13,000원"},
-          {ko:"생선구이 정식",en:"Fish Set",jp:"焼き魚定食",cn:"烤鱼套餐",p:"15,000원"}]}
+          {ko:"생선구이 정식",en:"Fish Set",jp:"焼き魚定食",cn:"烤鱼套餐",p:"15,000원"}],badge:"hot",hours:"11:00~21:00"}
 ];
 var TRAILS=[
   {id:1,
@@ -844,13 +859,16 @@ function _placeMarker(s){
   var m=new naver.maps.Marker({
     position:new naver.maps.LatLng(s.lat,s.lng),map:_map,
     icon:{
-      content:'<div style="cursor:pointer;width:30px;height:30px;background:'+cat.color+';border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3)"><span style="transform:rotate(45deg);font-size:13px;line-height:1">'+cat.icon+'</span></div>',
-      anchor:new naver.maps.Point(15,30)
+      content:'<div style="cursor:pointer;width:36px;height:36px;background:'+cat.color
+        +';border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center'
+        +';justify-content:center;border:2.5px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.35)">'
+        +'<span style="transform:rotate(45deg);font-size:16px;line-height:1">'+cat.icon+'</span></div>',
+      anchor:new naver.maps.Point(18,36)
     },title:s.ko
   });
   naver.maps.Event.addListener(m,'click',function(){
-    _iw.setContent('<div style="padding:10px 14px;min-width:180px"><b style="font-size:14px;color:#222">'+s.ko+'</b><br><span style="font-size:11px;color:#999">'+s.addr+'</span><br><span style="font-size:11px;background:'+cat.color+';color:#fff;padding:2px 8px;border-radius:4px;margin-top:6px;display:inline-block">'+cat.icon+' '+cat.label+'</span></div>');
-    _iw.open(_map,m);
+    _map.panTo(new naver.maps.LatLng(s.lat,s.lng));
+    openPopup(s);
   });
   s._marker=m; _markers.push(m);
 }
@@ -929,16 +947,22 @@ function renderList(){
   var list=STORES.filter(function(s){
     return curListFilter==='all'||s.cat===curListFilter;
   }).sort(function(a,b){return(a.dist||0)-(b.dist||0);});
+  var bCol={nopo:'#8B5E3C',rec:'#2A6E4E',hot:'#E85030',new:'#5050C0'};
+  var bLbl={nopo:'노포',rec:'추천',hot:'인기',new:'신규'};
   list.forEach(function(s){
     var cat=CATS[s.cat]||CATS.food;
     var nm=lang==='KO'?s.ko:lang==='EN'?(s.en||s.ko):lang==='JP'?(s.jp||s.ko):(s.cn||s.ko);
     var d=document.createElement('div');
     d.className='l-card';
-    d.innerHTML='<div class="l-dot" style="background:'+cat.color+'22">'+cat.icon+'</div>'
+    var badgeHtml=s.badge&&bLbl[s.badge]
+      ?'<span style="display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;background:'+bCol[s.badge]+';color:#fff;margin-top:4px">'+bLbl[s.badge]+'</span>'
+      :'';
+    d.innerHTML='<div class="l-dot" style="background:'+cat.color+'22;font-size:24px">'+cat.icon+'</div>'
       +'<div style="flex:1;min-width:0">'
       +'<div class="l-name">'+nm+'</div>'
-      +'<div class="l-sub">'+transAddr(s.addr)+' · '+T(s.cat)+'</div>'
-      +'</div>';
+      +'<div class="l-sub">'+T(s.cat)+(s.hours?' · '+s.hours:'')+'</div>'
+      +badgeHtml+'</div>'
+      +'<div style="font-size:12px;color:#bbb;flex-shrink:0;margin-left:6px">'+(s.dist||0)+'m</div>';
     d.onclick=function(){openPopup(s);};
     el.appendChild(d);
   });
@@ -1094,30 +1118,59 @@ function openPopup(s){
   var cat=CATS[s.cat]||CATS.food;
   var nm=lang==='KO'?s.ko:lang==='EN'?(s.en||s.ko):lang==='JP'?(s.jp||s.ko):(s.cn||s.ko);
   var dc=lang==='KO'?s.dko:lang==='EN'?(s.den||s.dko):lang==='JP'?(s.djp||s.dko):(s.dcn||s.dko);
+  var bMap={nopo:'🏛 수락산 노포',rec:'⭐ 상인회 추천',hot:'🔥 인기',new:'✨ 신규'};
+  var bCol={nopo:'#8B5E3C',rec:'#2A6E4E',hot:'#E85030',new:'#5050C0'};
+  var badgeHtml=s.badge&&bMap[s.badge]?'<span style="display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;background:'+bCol[s.badge]+';color:#fff;margin-bottom:8px">'+bMap[s.badge]+'</span><br>':'';
   var hdr=document.getElementById('pop-header');
-  if(hdr){
-    hdr.innerHTML=
-      '<div class="pop-cat-row">'
-      +'<span class="pop-cat-ic">'+cat.icon+'</span>'
-      +'<span class="pop-cat-badge" style="background:'+cat.color+'">'+cat.label+'</span>'
-      +'</div>'
-      +'<div class="pop-name">'+nm+'</div>'
-      +'<div class="pop-addr">'+transAddr(s.addr)+'</div>'
-      +'<div class="pop-stats">'
-      +'<span class="pop-stat">📍 '+T('exit3')+' '+(s.dist||0)+'m</span>'
-      +'</div>';
-  }
-  var descEl=document.getElementById('pop-desc');
-  if(descEl)descEl.textContent=dc||'';
-  var menusEl=document.getElementById('pop-menus');
-  if(menusEl){
-    menusEl.innerHTML='<div class="pop-menu-tit">'+T('menuLbl')+'</div>';
-    (s.menus||[]).forEach(function(m){
-      var mn=lang==='KO'?m.ko:lang==='EN'?(m.en||m.ko):lang==='JP'?(m.jp||m.ko):(m.cn||m.ko);
-      var row=document.createElement('div');
-      row.className='pop-menu-row';
-      row.innerHTML='<span class="pop-menu-nm">'+mn+'</span><span class="pop-menu-pr">'+m.p+'</span>';
-      menusEl.appendChild(row);
+  if(hdr){hdr.innerHTML=
+    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">'
+    +'<span style="font-size:48px;line-height:1">'+cat.icon+'</span>'
+    +'<div style="flex:1">'+badgeHtml
+    +'<div style="font-size:20px;font-weight:800;color:#222;line-height:1.3">'+nm+'</div>'
+    +'<div style="font-size:12px;color:#888;margin-top:4px">'+transAddr(s.addr)+'</div>'
+    +'<div style="margin-top:6px">'
+    +'<span style="font-size:12px;background:'+cat.color+'22;color:'+cat.color+';padding:3px 10px;border-radius:20px;font-weight:700">'+cat.icon+' '+cat.label+'</span>'
+    +' <span style="font-size:12px;color:#888">📍 역에서 '+(s.dist||0)+'m</span>'
+    +'</div></div></div>';}
+  var tabILbl=lang==='EN'?'📋 Info':lang==='JP'?'📋 情報':lang==='CN'?'📋 信息':'📋 정보';
+  var tabMLbl=lang==='EN'?'🍽 Menu':lang==='JP'?'🍽 メニュー':lang==='CN'?'🍽 菜单':'🍽 메뉴';
+  var tabGLbl=lang==='EN'?'🎒 Goods':lang==='JP'?'🎒 グッズ':lang==='CN'?'🎒 商品':'🎒 굿즈';
+  var infoHtml='<div>'
+    +'<div style="font-size:15px;color:#444;line-height:1.7;padding:14px;background:#f8f9f8;border-radius:10px;margin-bottom:14px">'+dc+'</div>'
+    +(s.hours?'<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f0f0f0">'
+      +'<span style="font-size:24px">🕐</span>'
+      +'<div><div style="font-size:11px;color:#999;margin-bottom:2px">영업시간</div>'
+      +'<div style="font-size:16px;font-weight:700;color:#222">'+s.hours+'</div></div></div>':'')
+    +'</div>';
+  var menusHtml='<div>';
+  (s.menus||[]).forEach(function(m,i){
+    var mn=lang==='KO'?m.ko:lang==='EN'?(m.en||m.ko):lang==='JP'?(m.jp||m.ko):(m.cn||m.ko);
+    menusHtml+='<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f5f5f5">'
+      +'<span style="font-size:15px;color:#333">'+(i===0?'✨ ':'')+mn+'</span>'
+      +'<span style="font-size:16px;font-weight:800;color:#2A6E4E">'+m.p+'</span></div>';
+  });
+  menusHtml+='</div>';
+  var gKey=CAT_GOODS[s.cat]||'keyring';
+  var gIco={keyring:'🗝️',tumbler:'🥤',sock:'🧦',bandana:'🪢',cap:'🧢'};
+  var gNm={keyring:T('keyring'),tumbler:T('tumbler'),sock:T('sock'),bandana:T('bandana'),cap:T('cap')};
+  var goodsHtml='<div><div style="background:linear-gradient(135deg,#e8f5ee,#f0f9f4);border-radius:14px;padding:22px;text-align:center">'
+    +'<div style="font-size:52px;margin-bottom:12px">'+gIco[gKey]+'</div>'
+    +'<div style="font-size:18px;font-weight:800;color:#2A6E4E;margin-bottom:8px">'+gNm[gKey]+'</div>'
+    +'<div style="font-size:13px;color:#555;line-height:1.7">'+T('pcert')+'</div></div></div>';
+  var pb=document.getElementById('pop-body');
+  if(pb){
+    pb.innerHTML='<div class="pop-tabs" id="pop-tabs-row"></div>'
+      +'<div id="pop-tab-info" class="pop-tab-panel">'+infoHtml+'</div>'
+      +'<div id="pop-tab-menu" class="pop-tab-panel" style="display:none">'+menusHtml+'</div>'
+      +'<div id="pop-tab-goods" class="pop-tab-panel" style="display:none">'+goodsHtml+'</div>';
+    var tabsRow=document.getElementById('pop-tabs-row');
+    [{lbl:tabILbl,id:'info'},{lbl:tabMLbl,id:'menu'},{lbl:tabGLbl,id:'goods'}].forEach(function(t,i){
+      var b=document.createElement('button');
+      b.className='pop-tab'+(i===0?' on':'');
+      b.textContent=t.lbl;
+      b.setAttribute('data-tab',t.id);
+      b.addEventListener('click',function(){switchPopTab(this);});
+      tabsRow.appendChild(b);
     });
   }
   ov.style.display='';
@@ -1197,6 +1250,16 @@ document.getElementById('pop-ov').onclick=function(e){if(e.target===this)closePo
 // ── 시작 ──
 applyT();
 
+
+function switchPopTab(btn){
+  var tab=btn.getAttribute('data-tab');
+  document.querySelectorAll('.pop-tab').forEach(function(b){b.classList.remove('on');});
+  ['info','menu','goods'].forEach(function(id){
+    var el=document.getElementById('pop-tab-'+id);
+    if(el)el.style.display=id===tab?'block':'none';
+  });
+  btn.classList.add('on');
+}
 </script>
 </body>
 </html>

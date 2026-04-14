@@ -107,6 +107,78 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
 .vtab{flex:1;padding:10px 0;text-align:center;font-size:12px;color:#aaa;cursor:pointer;border:none;background:#fff;border-bottom:2px solid transparent;font-weight:600}
 .vtab.on{color:#2A6E4E;border-bottom:2px solid #2A6E4E;font-weight:800}
 #nav-title{font-size:16px;font-weight:800;color:#222}
+
+/* 언어 버튼 */
+.lang-btn{font-size:11px;padding:5px 8px;border-radius:8px;border:1.5px solid #ddd;background:#fff;color:#666;cursor:pointer;font-weight:600;white-space:nowrap}
+.lang-btn.on{background:#2A6E4E;color:#fff;border-color:#2A6E4E}
+/* bottom sheet */
+#pop-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:9999;align-items:flex-end;justify-content:center;transition:background .3s}
+#pop-ov.on{display:flex}
+#pop-sheet{background:#fff;width:100%;max-width:480px;border-radius:28px 28px 0 0;padding:0 0 40px;max-height:88vh;overflow-y:auto;position:relative;animation:slideUp .3s ease}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.pop-drag-bar{width:48px;height:5px;background:#e0e0e0;border-radius:3px;margin:14px auto 0}
+#pop-x{position:absolute;top:12px;right:16px;font-size:22px;background:none;border:none;cursor:pointer;color:#ccc;z-index:10}
+.pop-header{padding:16px 20px 12px}
+#pop-body{padding:0 20px 10px}
+/* 팝업 탭 */
+.pop-tabs{display:flex;gap:0;margin-bottom:16px;border-bottom:2px solid #f0f0f0}
+.pop-tab{flex:1;padding:12px 4px;font-size:14px;font-weight:700;border:none;background:none;color:#bbb;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
+.pop-tab.on{color:#2A6E4E;border-bottom:3px solid #2A6E4E}
+.pop-tab-panel{min-height:80px}
+/* 매장 카드 */
+.l-card{display:flex;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid #f0f0f0;cursor:pointer}
+.l-dot{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:26px}
+.l-name{font-size:16px;font-weight:800;color:#1a1a1a;line-height:1.3}
+.l-sub{font-size:13px;color:#999;margin-top:3px}
+/* 필터 */
+.fcat{font-size:13px;padding:8px 16px;border-radius:22px;border:1.5px solid #e0e0e0;background:#fff;white-space:nowrap;cursor:pointer;color:#555;font-weight:600}
+.fcat.on{background:#2A6E4E;color:#fff;border-color:#2A6E4E}
+/* 탭 */
+.vtab{flex:1;padding:10px 0;text-align:center;font-size:12px;color:#bbb;cursor:pointer;border:none;background:#fff;border-bottom:2px solid transparent;font-weight:600}
+.vtab.on{color:#2A6E4E;border-bottom:2px solid #2A6E4E;font-weight:800}
+.vtab-ic{display:block;font-size:24px;margin-bottom:2px}
+/* 섹션 제목 */
+.sec-tit{font-size:18px;font-weight:800;color:#1a1a1a;margin:20px 0 12px}
+/* 카드 */
+.info-card{background:#f8f9f8;border-radius:14px;padding:16px 18px;margin-bottom:12px;font-size:14px;color:#444;line-height:1.9}
+.trail-card,.t-card,.mt-card{background:#f8f9f8;border-radius:14px;padding:16px 18px;margin-bottom:12px}
+.t-name{font-size:15px;font-weight:800;color:#1a1a1a}
+.t-stat{font-size:13px;color:#888}
+.t-route{font-size:13px;color:#555;margin:6px 0;line-height:1.7}
+.t-gds{font-size:13px;color:#2A6E4E;font-weight:700;margin-top:6px}
+.t-lv{font-size:11px;padding:3px 9px;border-radius:10px;font-weight:700}
+.mt-name{font-size:16px;font-weight:800;color:#1a1a1a}
+.mt-region{font-size:13px;color:#888;margin-top:3px}
+.mt-desc{font-size:14px;color:#555;line-height:1.8;margin:10px 0}
+.mt-tag{background:#e8f5ee;color:#2A6E4E;font-size:12px;padding:4px 10px;border-radius:20px}
+.mt-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.mt-hd{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.mt-ic{font-size:32px}
+.ds-tag{display:inline-block;background:#e8f5ee;color:#2A6E4E;font-size:12px;padding:4px 10px;border-radius:20px;margin:3px 2px}
+.rc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;padding:6px 0}
+.rc-ic{font-size:26px}
+.rc-t{font-size:13px;font-weight:800;color:#1a1a1a;margin-top:5px}
+.rc-d{font-size:12px;color:#999;margin-top:3px}
+.hw-step{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid #f0f0f0}
+.hw-num{width:30px;height:30px;border-radius:50%;background:#2A6E4E;color:#fff;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hw-t{font-size:14px;font-weight:800;color:#1a1a1a;margin-bottom:3px}
+.hw-d{font-size:13px;color:#888;line-height:1.6}
+.goods-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:12px 0}
+.goods-item{background:#f8f9f8;border-radius:14px;padding:18px;text-align:center}
+.goods-ic{font-size:36px;margin-bottom:8px}
+.goods-name{font-size:15px;font-weight:800;color:#1a1a1a}
+.goods-sub{font-size:12px;color:#888;margin-top:4px}
+.sp-card{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid #f5f5f5}
+.sp-ic{font-size:28px;flex-shrink:0;margin-top:2px}
+.sp-name{font-size:14px;font-weight:800;color:#1a1a1a}
+.sp-desc{font-size:13px;color:#888;margin-top:3px;line-height:1.6}
+.sp-goods{font-size:13px;color:#2A6E4E;margin-top:4px;font-weight:700}
+/* 안내 */
+#nav{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #eee;flex-shrink:0;gap:8px}
+#nav-title{font-size:16px;font-weight:800;color:#1a1a1a}
+#nav-sub{font-size:11px;color:#999;margin-top:1px}
+/* 지도 상태바 */
+#map-status{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(30,30,30,.75);color:#fff;font-size:13px;padding:8px 20px;border-radius:24px;z-index:100;white-space:nowrap;pointer-events:none;transition:opacity .5s}
 </style>
 </head>
 <body>
@@ -116,10 +188,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
       <div id="nav-title">🐿️ 수락산 · 수락디자인거리</div>
       <div id="nav-sub">SURAKSAN TRAIL &amp; DESIGN STREET</div>
     </div>
-    <select id="lang-btn" style="font-size:12px;border:1px solid #ddd;border-radius:6px;padding:4px 8px;background:#fff">
-      <option value="KO">🌐 KO</option><option value="EN">EN</option>
-      <option value="JP">JP</option><option value="CN">CN</option>
-    </select>
+    <div id="lang-btns" style="display:flex;gap:4px">
+      <button class="lang-btn on" data-lang="KO">한국어</button>
+      <button class="lang-btn" data-lang="EN">EN</button>
+      <button class="lang-btn" data-lang="JP">日本語</button>
+      <button class="lang-btn" data-lang="CN">中文</button>
+    </div>
   </div>
   <div id="vtabs">
     <button class="vtab on" data-v="map"><span class="vtab-ic">🗺️</span><span id="t-map">지도</span></button>
@@ -153,8 +227,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
 </div>
 <div id="pop-ov">
   <div id="pop-sheet">
+    <div class="pop-drag-bar"></div>
     <button id="pop-x">✕</button>
-    <div class="pop-bar"></div>
     <div id="pop-header" class="pop-header"></div>
     <div id="pop-body"></div>
   </div>
@@ -255,455 +329,57 @@ function transAddr(addr){
   return addr;
 }
 var STORES=[
-  {id:1,ko:"오공김밥 수락산점",en:"Ogong Gimbap",jp:"オゴンキムパプ",cn:"五公紫菜卷",
-   addr:"서울 노원구 동일로 1689",cat:"food",likes:1840,dist:30,open:true,color:"#E8A030",
-   dko:"1998년부터 이어온 손맛! 50여 가지 김밥과 분식.",
-   den:"Handcrafted gimbap since 1998. 50+ varieties.",
-   djp:"1998年から続く手作りキムパプ専門店。50種以上。",
-   dcn:"自1998年传承手工紫菜卷，50多种口味。",
-   menus:[{ko:"참치김밥",en:"Tuna Gimbap",jp:"ツナキムパプ",cn:"金枪鱼紫菜卷",p:"4,500원"},
-          {ko:"소고기김밥",en:"Beef Gimbap",jp:"牛肉キムパプ",cn:"牛肉紫菜卷",p:"5,000원"},
-          {ko:"치즈김밥",en:"Cheese Gimbap",jp:"チーズキムパプ",cn:"芝士紫菜卷",p:"4,000원"},
-          {ko:"순대국",en:"Sundae Soup",jp:"スンデクッ",cn:"血肠汤",p:"7,000원"}],badge:"nopo",hours:"07:00~21:00"},
-  {id:2,ko:"화로화 수락본점",en:"Hwarohwa",jp:"ファロファ本店",cn:"火炉花本店",
-   addr:"서울 노원구 동일로 1689",cat:"gogi",likes:1230,dist:40,open:true,color:"#C04030",
-   dko:"참숯 직화 프리미엄 고기집. 신선한 국내산 고기.",
-   den:"Premium charcoal grill with fresh domestic meat.",
-   djp:"炭火直火のプレミアム焼肉店。新鮮な国産肉。",
-   dcn:"精选国产肉质，炭火直烤高端烤肉店。",
-   menus:[{ko:"삼겹살",en:"Pork Belly",jp:"サムギョプサル",cn:"五花肉",p:"16,000원"},
-          {ko:"목살",en:"Pork Neck",jp:"モクサル",cn:"颈肉",p:"16,000원"},
-          {ko:"항정살",en:"Cheek Meat",jp:"ハンジョンサル",cn:"猪颊肉",p:"18,000원"}],badge:"rec",hours:"11:00~23:00"},
-  {id:3,ko:"평양칼국수",en:"Pyongyang Kalguksu",jp:"平壌カルグクス",cn:"平壤刀削面",
-   addr:"서울 노원구 동일로242길 103",cat:"food",likes:980,dist:850,open:true,color:"#4080C0",
-   dko:"등산로 입구 터줏대감. 30년 전통 닭칼국수.",
-   den:"30-year tradition noodle shop at trail entrance.",
-   djp:"登山口の老舗。30年伝統のチキンカルグクス。",
-   dcn:"登山口老字号，30年传统鸡肉刀削面。",
-   menus:[{ko:"닭칼국수",en:"Chicken Noodle",jp:"チキンカルグクス",cn:"鸡肉刀削面",p:"9,000원"},
-          {ko:"김치칼국수",en:"Kimchi Noodle",jp:"キムチカルグクス",cn:"泡菜刀削面",p:"8,000원"},
-          {ko:"수제비",en:"Sujebi",jp:"スジェビ",cn:"疙瘩汤",p:"8,000원"}],badge:"nopo",hours:"10:00~21:00"},
-  {id:4,ko:"가재골수제비",en:"Gajae Sujebi",jp:"ガジェスジェビ",cn:"螃蟹谷疙瘩汤",
-   addr:"서울 노원구 동일로242길 100",cat:"food",likes:750,dist:820,open:true,color:"#6090A0",
-   dko:"직접 반죽하는 손수제비. 진한 육수가 일품.",
-   den:"Handmade dough soup with rich broth.",
-   djp:"手作りスジェビ。濃厚な出汁が絶品。",
-   dcn:"手工疙瘩汤，浓郁汤底一绝。",
-   menus:[{ko:"수제비",en:"Sujebi",jp:"スジェビ",cn:"疙瘩汤",p:"8,000원"},
-          {ko:"칼국수",en:"Kalguksu",jp:"カルグクス",cn:"刀削面",p:"8,000원"},
-          {ko:"수제비+칼국수",en:"Combo",jp:"コンボ",cn:"套餐",p:"8,500원"}],badge:"nopo",hours:"10:00~21:00"},
-  {id:5,ko:"보미네박국수순대국",en:"Bomie Noodle",jp:"ボミネ麺",cn:"宝美家面条",
-   addr:"서울 노원구 동일로242길 96",cat:"food",likes:620,dist:780,open:true,color:"#A06040",
-   dko:"든든한 순대국과 박국수. 등산 후 속 채우기 딱!",
-   den:"Hearty blood sausage soup perfect after hiking.",
-   djp:"ボリューム満点のスンデクク。登山後にぴったり！",
-   dcn:"丰盛血肠汤，登山后补充体力首选！",
-   menus:[{ko:"순대국",en:"Sundae Soup",jp:"スンデクク",cn:"血肠汤",p:"9,000원"},
-          {ko:"박국수",en:"Noodle Soup",jp:"パッククス",cn:"面条汤",p:"8,000원"},
-          {ko:"순대국+공기밥",en:"Soup+Rice",jp:"スープ+ライス",cn:"汤+米饭",p:"9,500원"}],badge:"hot",hours:"09:00~21:00"},
-  {id:6,ko:"용가네동태찜",en:"Yonggane Pollock",jp:"ヨンガネ明太蒸し",cn:"龙家明太鱼",
-   addr:"서울 노원구 동일로242길 91",cat:"food",likes:580,dist:740,open:true,color:"#3070A0",
-   dko:"얼큰하고 시원한 동태찜 전문점. 해장에 최고!",
-   den:"Spicy steamed pollock. Best hangover cure!",
-   djp:"ピリ辛でさっぱりの明太蒸し専門店。二日酔いに最高！",
-   dcn:"麻辣爽口明太鱼蒸锅专门店，解酒首选！",
-   menus:[{ko:"동태찜(소)",en:"Pollock(S)",jp:"明太蒸し(小)",cn:"明太鱼(小)",p:"35,000원"},
-          {ko:"동태찜(대)",en:"Pollock(L)",jp:"明太蒸し(大)",cn:"明太鱼(大)",p:"45,000원"}],badge:"hot",hours:"11:00~22:00"},
-  {id:7,ko:"족발야시장 수락산역점",en:"Jokbal Night Market",jp:"足ヤシジャン",cn:"猪蹄夜市",
-   addr:"서울 노원구 동일로242길 88",cat:"food",likes:890,dist:700,open:true,color:"#8050B0",
-   dko:"야시장 분위기의 족발 전문점. 다양한 족발 메뉴.",
-   den:"Night market-style pig feet specialist.",
-   djp:"夜市風のチョッパル専門店。多彩なメニュー。",
-   dcn:"夜市风格猪蹄专门店，菜品丰富多样。",
-   menus:[{ko:"오리지널족발",en:"Original Jokbal",jp:"オリジナルチョッパル",cn:"原味猪蹄",p:"30,000원"},
-          {ko:"냉채족발",en:"Cold Jokbal",jp:"冷菜チョッパル",cn:"凉拌猪蹄",p:"32,000원"},
-          {ko:"불족발",en:"Spicy Jokbal",jp:"ピリ辛チョッパル",cn:"麻辣猪蹄",p:"33,000원"}],badge:"hot",hours:"17:00~24:00"},
-  {id:8,ko:"꼬믹포차",en:"Comic Pojangmacha",jp:"コミックポチャ",cn:"漫画路边摊",
-   addr:"서울 노원구 동일로242길 83",cat:"bar",likes:540,dist:660,open:true,color:"#D06020",
-   dko:"만화 콘셉트 감성 포차. 등산 후 한잔!",
-   den:"Comic-themed cozy bar. Perfect post-hike drink!",
-   djp:"漫画コンセプトの感性ポチャ。登山後の一杯！",
-   dcn:"漫画主题特色路边摊，登山后小酌一杯！",
-   menus:[{ko:"모듬안주",en:"Assorted Snacks",jp:"盛り合わせ",cn:"拼盘小吃",p:"15,000원"},
-          {ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"},
-          {ko:"맥주",en:"Beer",jp:"ビール",cn:"啤酒",p:"4,500원"}],badge:"rec",hours:"17:00~01:00"},
-  {id:9,ko:"수락산양동이찌개마을",en:"Bucket Stew",jp:"バケツチゲ",cn:"水桶锅村",
-   addr:"서울 노원구 동일로242길 77",cat:"food",likes:710,dist:610,open:true,color:"#C03040",
-   dko:"양동이에 담아 주는 개성 넘치는 찌개 전문점.",
-   den:"Unique stew served in a bucket.",
-   djp:"バケツに入れて提供するユニークなチゲ専門店。",
-   dcn:"以水桶盛汤的特色锅专门店，独树一帜。",
-   menus:[{ko:"양동이부대찌개",en:"Bucket Budae",jp:"バケツ部隊チゲ",cn:"水桶部队锅",p:"30,000원"},
-          {ko:"양동이김치찌개",en:"Bucket Kimchi",jp:"バケツキムチチゲ",cn:"水桶泡菜锅",p:"28,000원"}],badge:"hot",hours:"11:00~22:00"},
-  {id:10,ko:"대구달구벌막창",en:"Daegu Makchang",jp:"大邱マクチャン",cn:"大邱大肠",
-   addr:"서울 노원구 동일로242길 60",cat:"gogi",likes:830,dist:480,open:true,color:"#A03030",
-   dko:"대구 정통 막창구이. 직화로 바삭하게!",
-   den:"Authentic Daegu-style grilled intestines.",
-   djp:"大邱伝統のマクチャン焼き。直火でカリッと！",
-   dcn:"大邱正宗大肠烤，直火烤制香脆可口！",
-   menus:[{ko:"막창",en:"Makchang",jp:"マクチャン",cn:"大肠",p:"14,000원"},
-          {ko:"대창",en:"Daechang",jp:"デチャン",cn:"大肠",p:"16,000원"},
-          {ko:"껍데기",en:"Skin",jp:"皮",cn:"猪皮",p:"13,000원"}],badge:"rec",hours:"17:00~23:00"},
-  {id:11,ko:"맥주조이",en:"Beer Joy",jp:"ビールジョイ",cn:"啤酒乐",
-   addr:"서울 노원구 동일로242길 51",cat:"bar",likes:490,dist:390,open:true,color:"#F0A010",
-   dko:"다양한 수제·생맥주와 안주. 시원하게 한잔!",
-   den:"Craft and draft beers with snacks.",
-   djp:"クラフトビール&生ビールとおつまみ。爽やかに一杯！",
-   dcn:"多种精酿生啤与小吃，痛快喝一杯！",
-   menus:[{ko:"생맥주",en:"Draft Beer",jp:"生ビール",cn:"生啤酒",p:"4,000원"},
-          {ko:"수제맥주",en:"Craft Beer",jp:"クラフトビール",cn:"精酿啤酒",p:"6,000원"},
-          {ko:"치킨",en:"Chicken",jp:"チキン",cn:"炸鸡",p:"19,000원"}],badge:"rec",hours:"16:00~24:00"},
-  {id:12,ko:"옥순네곱창순대국",en:"Oksoone Gopchang",jp:"곱창スンデクク",cn:"玉顺家곱창",
-   addr:"서울 노원구 동일로242길 46",cat:"food",likes:670,dist:340,open:true,color:"#805030",
-   dko:"진한 곱창과 순대국. 든든한 한 끼.",
-   den:"Rich tripe and blood sausage soup.",
-   djp:"濃厚なホルモンとスンデクク。ボリューム満点。",
-   dcn:"浓郁牛肠血肠汤，丰盛一餐。",
-   menus:[{ko:"곱창순대국",en:"Tripe Soup",jp:"ホルモンスンデクク",cn:"牛肠血肠汤",p:"10,000원"},
-          {ko:"곱창전골",en:"Tripe Hot Pot",jp:"ホルモン鍋",cn:"牛肠火锅",p:"35,000원"}],badge:"hot",hours:"10:00~22:00"},
-  {id:13,ko:"마린보이 코다리1번가",en:"Marine Boy Kodari",jp:"マリンボーイコダリ",cn:"海洋小子明太鱼",
-   addr:"서울 노원구 동일로242길 45",cat:"food",likes:560,dist:325,open:true,color:"#2060A0",
-   dko:"코다리조림 전문. 짭조름하고 쫀득한 맛.",
-   den:"Braised semi-dried pollack specialist.",
-   djp:"コダリ煮付け専門。塩気と弾力のある絶品。",
-   dcn:"明太鱼干红烧专门店，咸鲜劲道好滋味。",
-   menus:[{ko:"코다리조림",en:"Braised Kodari",jp:"コダリ煮",cn:"红烧明太鱼干",p:"13,000원"},
-          {ko:"코다리냉면",en:"Cold Noodles",jp:"コダリ冷麺",cn:"明太鱼冷面",p:"9,000원"}],badge:"hot",hours:"11:00~21:00"},
-  {id:14,ko:"가장맛있는족발 수락산점",en:"Best Jokbal",jp:"一番旨い足",cn:"最好吃猪蹄",
-   addr:"서울 노원구 동일로242길 43",cat:"food",likes:920,dist:310,open:true,color:"#703080",
-   dko:"부드럽고 쫄깃한 족발. 보쌈과 냉채도 인기.",
-   den:"Tender and chewy pig feet. Bossam also popular.",
-   djp:"柔らかくモチモチの足。ポッサムも人気。",
-   dcn:"嫩滑弹牙猪蹄，包饭凉拌同样受欢迎。",
-   menus:[{ko:"족발(소)",en:"Jokbal(S)",jp:"チョッパル(小)",cn:"猪蹄(小)",p:"28,000원"},
-          {ko:"족발(대)",en:"Jokbal(L)",jp:"チョッパル(大)",cn:"猪蹄(大)",p:"38,000원"},
-          {ko:"보쌈",en:"Bossam",jp:"ポッサム",cn:"包饭",p:"28,000원"}],badge:"rec",hours:"11:00~22:00"},
-  {id:15,ko:"싱싱식당",en:"Fresh Restaurant",jp:"シンシン食堂",cn:"新鲜食堂",
-   addr:"서울 노원구 동일로242길 41",cat:"food",likes:680,dist:295,open:true,color:"#2080A0",
-   dko:"신선한 해산물 요리. 해물파전·간장게장 맛집.",
-   den:"Fresh seafood dishes. Famous for seafood pancake.",
-   djp:"新鮮な海産物料理。海鮮チヂミ・醤油ガニが絶品。",
-   dcn:"新鲜海鲜料理，海鲜葱饼、酱油蟹远近闻名。",
-   menus:[{ko:"해물파전",en:"Seafood Pancake",jp:"海鮮チヂミ",cn:"海鲜葱饼",p:"12,000원"},
-          {ko:"간장게장",en:"Soy Crab",jp:"醤油ガニ",cn:"酱油螃蟹",p:"18,000원"},
-          {ko:"낙지볶음",en:"Stir-fried Octopus",jp:"タコ炒め",cn:"炒章鱼",p:"13,000원"}],badge:"hot",hours:"11:00~22:00"},
-  {id:16,ko:"묘미서울",en:"Myomi Seoul",jp:"ミョミソウル",cn:"妙味首尔",
-   addr:"서울 노원구 동일로242길 42",cat:"cafe",likes:420,dist:290,open:true,color:"#B06080",
-   dko:"감성 넘치는 카페. 예쁜 인테리어로 SNS 명소.",
-   den:"Aesthetic cafe. Famous Instagram spot.",
-   djp:"感性あふれるカフェ。インスタ映えスポット。",
-   dcn:"格调满满的网红咖啡厅，打卡圣地。",
-   menus:[{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,500원"},
-          {ko:"라떼",en:"Latte",jp:"ラテ",cn:"拿铁",p:"5,500원"},
-          {ko:"시그니처음료",en:"Signature Drink",jp:"シグネチャードリンク",cn:"招牌饮品",p:"7,000원"}],badge:"new",hours:"10:00~22:00"},
-  {id:17,ko:"노원골제주흑돼지",en:"Jeju Black Pork",jp:"済州黒豚",cn:"济州黑猪",
-   addr:"서울 노원구 동일로242길 42",cat:"gogi",likes:1050,dist:285,open:true,color:"#404040",
-   dko:"제주 흑돼지 직송. 고소하고 쫄깃한 식감.",
-   den:"Direct-shipped Jeju black pork. Rich and chewy.",
-   djp:"済州黒豚直送。コクがありモチモチ食感。",
-   dcn:"济州黑猪直运，醇香劲道口感绝佳。",
-   menus:[{ko:"흑돼지삼겹살",en:"Black Pork Belly",jp:"黒豚サムギョプサル",cn:"黑猪五花肉",p:"18,000원"},
-          {ko:"흑돼지목살",en:"Black Pork Neck",jp:"黒豚モクサル",cn:"黑猪颈肉",p:"18,000원"},
-          {ko:"흑돼지항정살",en:"Black Pork Cheek",jp:"黒豚ハンジョン",cn:"黑猪颊肉",p:"20,000원"}],badge:"rec",hours:"17:00~23:00"},
-  {id:18,ko:"수향숯불갈비",en:"Suhyang Charcoal Ribs",jp:"スヒャン炭火カルビ",cn:"水香炭火排骨",
-   addr:"서울 노원구 동일로242길 42",cat:"gogi",likes:870,dist:280,open:true,color:"#803020",
-   dko:"참숯 직화 소갈비·돼지갈비. 달콤한 양념.",
-   den:"Charcoal-grilled beef and pork ribs.",
-   djp:"炭火直焼き牛・豚カルビ。甘いタレが絶品。",
-   dcn:"炭火直烤牛排骨猪排骨，甜蜜腌料入味。",
-   menus:[{ko:"소갈비",en:"Beef Ribs",jp:"牛カルビ",cn:"牛排骨",p:"45,000원"},
-          {ko:"돼지갈비",en:"Pork Ribs",jp:"豚カルビ",cn:"猪排骨",p:"19,000원"},
-          {ko:"갈비찜",en:"Braised Ribs",jp:"カルビチム",cn:"排骨炖",p:"35,000원"}],badge:"nopo",hours:"17:00~23:00"},
-  {id:19,ko:"미가솥뚜껑삼겹살",en:"Miga Pot Lid Pork",jp:"鍋蓋サムギョプサル",cn:"锅盖五花肉",
-   addr:"서울 노원구 동일로242길 36",cat:"gogi",likes:760,dist:230,open:true,color:"#C05030",
-   dko:"솥뚜껑 위에서 바삭하게 굽는 삼겹살.",
-   den:"Pork belly grilled crispy on a pot lid.",
-   djp:"鍋の蓋の上でカリカリに焼くサムギョプサル。",
-   dcn:"锅盖上烤得香脆的五花肉，别具风味。",
-   menus:[{ko:"삼겹살",en:"Pork Belly",jp:"サムギョプサル",cn:"五花肉",p:"15,000원"},
-          {ko:"목살",en:"Pork Neck",jp:"モクサル",cn:"颈肉",p:"15,000원"}],badge:"hot",hours:"17:00~23:00"},
-  {id:20,ko:"BBQ치킨 노원수락산역점",en:"BBQ Chicken",jp:"BBQチキン",cn:"BBQ炸鸡",
-   addr:"서울 노원구 동일로242길 31",cat:"food",likes:640,dist:190,open:true,color:"#E06010",
-   dko:"황금올리브치킨 원조 BBQ. 바삭한 치킨.",
-   den:"Original BBQ golden olive chicken.",
-   djp:"ゴールデンオリーブチキンの元祖BBQ。",
-   dcn:"金橄榄炸鸡原创BBQ，香脆可口。",
-   menus:[{ko:"황금올리브치킨",en:"Golden Olive Chicken",jp:"ゴールデンオリーブ",cn:"金橄榄炸鸡",p:"22,000원"},
-          {ko:"양념치킨",en:"Seasoned Chicken",jp:"ヤンニョムチキン",cn:"调味炸鸡",p:"22,000원"}],badge:"rec",hours:"11:00~23:00"},
-  {id:21,ko:"한국통닭",en:"Korean Fried Chicken",jp:"韓国トンダク",cn:"韩国炸鸡",
-   addr:"서울 노원구 동일로242길 31",cat:"food",likes:590,dist:185,open:true,color:"#D04010",
-   dko:"옛날식 바삭한 한국 통닭. 추억의 맛.",
-   den:"Classic Korean fried chicken. Nostalgic taste.",
-   djp:"昔ながらのサクサク韓国チキン。懐かしの味。",
-   dcn:"经典韩式炸鸡，满满老味道。",
-   menus:[{ko:"후라이드통닭",en:"Fried Chicken",jp:"フライドチキン",cn:"原味炸鸡",p:"16,000원"},
-          {ko:"양념통닭",en:"Seasoned Chicken",jp:"ヤンニョムチキン",cn:"调味炸鸡",p:"17,000원"}],badge:"nopo",hours:"11:00~22:00"},
-  {id:22,ko:"수락산풍천장어",en:"Suraksan Eel",jp:"水落山プンチョンウナギ",cn:"水落山丰川鳗鱼",
-   addr:"서울 노원구 동일로242길 31",cat:"food",likes:810,dist:180,open:true,color:"#407040",
-   dko:"풍천장어 전문. 양념·소금구이 모두 일품.",
-   den:"Pungcheon eel specialist. Both seasoned and salt-grilled.",
-   djp:"プンチョンウナギ専門。タレ・塩焼きともに絶品。",
-   dcn:"丰川鳗鱼专门店，酱烤盐烤皆为佳品。",
-   menus:[{ko:"양념장어구이",en:"Seasoned Eel",jp:"タレウナギ焼き",cn:"酱烤鳗鱼",p:"35,000원"},
-          {ko:"소금장어구이",en:"Salt-grilled Eel",jp:"塩ウナギ焼き",cn:"盐烤鳗鱼",p:"35,000원"},
-          {ko:"장어탕",en:"Eel Soup",jp:"ウナギスープ",cn:"鳗鱼汤",p:"12,000원"}],badge:"hot",hours:"12:00~22:00"},
-  {id:23,ko:"임금님보쌈",en:"King Bossam",jp:"王様ポッサム",cn:"国王包饭",
-   addr:"서울 노원구 동일로242길 31",cat:"food",likes:940,dist:175,open:true,color:"#8040A0",
-   dko:"부드럽고 촉촉한 보쌈. 새우젓과 함께!",
-   den:"Tender and moist pork bossam. Best with salted shrimp!",
-   djp:"柔らかくしっとりのポッサム。塩エビと一緒に！",
-   dcn:"嫩滑多汁包饭，搭配咸虾酱更美味！",
-   menus:[{ko:"보쌈(소)",en:"Bossam(S)",jp:"ポッサム(小)",cn:"包饭(小)",p:"28,000원"},
-          {ko:"보쌈(대)",en:"Bossam(L)",jp:"ポッサム(大)",cn:"包饭(大)",p:"38,000원"},
-          {ko:"족보세트",en:"Jokbo Set",jp:"チョッポセット",cn:"猪蹄包饭套餐",p:"45,000원"}],badge:"rec",hours:"11:00~22:00"},
-  {id:24,ko:"순대일번지 수락산점",en:"Sundae No.1",jp:"スンデ一番地",cn:"血肠一番地",
-   addr:"서울 노원구 동일로242길 31",cat:"food",likes:550,dist:170,open:true,color:"#906030",
-   dko:"신선한 순대 전문점. 순대국밥도 인기.",
-   den:"Fresh sundae specialist. Soup also popular.",
-   djp:"新鮮なスンデ専門店。スンデククパも人気。",
-   dcn:"新鲜血肠专门店，血肠汤饭同样受欢迎。",
-   menus:[{ko:"순대",en:"Sundae",jp:"スンデ",cn:"血肠",p:"8,000원"},
-          {ko:"순대국밥",en:"Sundae Soup",jp:"スンデククパ",cn:"血肠汤饭",p:"9,000원"},
-          {ko:"모듬순대",en:"Mixed Sundae",jp:"盛り合わせスンデ",cn:"混合血肠",p:"12,000원"}],badge:"hot",hours:"10:00~22:00"},
-  {id:25,ko:"딥크루아상",en:"Deep Croissant",jp:"ディープクロワッサン",cn:"深层可颂",
-   addr:"서울 노원구 동일로242길 32",cat:"cafe",likes:480,dist:165,open:true,color:"#C09040",
-   dko:"바삭한 크루아상 전문 베이커리 카페.",
-   den:"Crispy croissant specialty bakery cafe.",
-   djp:"サクサクのクロワッサン専門ベーカリーカフェ。",
-   dcn:"酥脆可颂专门烘焙咖啡厅。",
-   menus:[{ko:"버터크루아상",en:"Butter Croissant",jp:"バタークロワッサン",cn:"黄油可颂",p:"4,500원"},
-          {ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,000원"},
-          {ko:"크루아상샌드위치",en:"Croissant Sandwich",jp:"クロワッサンサンド",cn:"可颂三明治",p:"7,500원"}],badge:"new",hours:"09:00~21:00"},
-  {id:26,ko:"자매반찬",en:"Sisters Banchan",jp:"姉妹おかず",cn:"姐妹小菜",
-   addr:"서울 노원구 동일로242길 32",cat:"food",likes:310,dist:160,open:true,color:"#70A040",
-   dko:"정갈하고 맛있는 집반찬 전문점.",
-   den:"Clean and delicious homestyle side dishes.",
-   djp:"丁寧で美味しい家庭風おかず専門店。",
-   dcn:"精致美味家常小菜专门店。",
-   menus:[{ko:"반찬 3찬",en:"3 Side Dishes",jp:"おかず3種",cn:"3种小菜",p:"5,000원"},
-          {ko:"반찬 5찬",en:"5 Side Dishes",jp:"おかず5種",cn:"5种小菜",p:"8,000원"}],badge:"hot",hours:"09:00~20:00"},
-  {id:27,ko:"포아이니 수락산역점",en:"Poaini",jp:"ポアイニ",cn:"包爱尼",
-   addr:"서울 노원구 동일로242길 29",cat:"bar",likes:630,dist:150,open:true,color:"#D050A0",
-   dko:"아시안 퓨전 포차. 이국적인 안주와 분위기.",
-   den:"Asian fusion bar with exotic dishes.",
-   djp:"アジアンフュージョンポチャ。異国情緒あふれるおつまみ。",
-   dcn:"亚洲融合路边摊，异域风情小吃与氛围。",
-   menus:[{ko:"팟타이",en:"Pad Thai",jp:"パッタイ",cn:"泰式炒面",p:"13,000원"},
-          {ko:"모듬안주",en:"Assorted",jp:"盛り合わせ",cn:"拼盘",p:"15,000원"},
-          {ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}],badge:"rec",hours:"17:00~01:00"},
-  {id:28,ko:"백송춘천닭갈비",en:"Baeksong Dakgalbi",jp:"ペクソンタッカルビ",cn:"白松春川鸡排",
-   addr:"서울 노원구 동일로242길 27",cat:"gogi",likes:870,dist:130,open:true,color:"#E04020",
-   dko:"춘천 정통 닭갈비. 매콤달콤 볶음이 일품.",
-   den:"Authentic Chuncheon spicy chicken.",
-   djp:"春川伝統タッカルビ。甘辛炒めが絶品。",
-   dcn:"春川正宗辣炒鸡排，甜辣口感一绝。",
-   menus:[{ko:"닭갈비",en:"Dakgalbi",jp:"タッカルビ",cn:"辣炒鸡排",p:"12,000원"},
-          {ko:"치즈닭갈비",en:"Cheese Dakgalbi",jp:"チーズタッカルビ",cn:"芝士辣炒鸡排",p:"13,000원"},
-          {ko:"볶음밥",en:"Fried Rice",jp:"チャーハン",cn:"炒饭",p:"3,000원"}],badge:"hot",hours:"11:00~22:00"},
-  {id:29,ko:"진1926 수락산역점",en:"Jin1926",jp:"ジン1926",cn:"真1926",
-   addr:"서울 노원구 동일로242길 23",cat:"gogi",likes:790,dist:110,open:true,color:"#C04040",
-   dko:"1926년 레시피 양갈비 전문. 로즈마리향 가득.",
-   den:"Lamb ribs from 1926 recipe. Full of rosemary aroma.",
-   djp:"1926年レシピのラム専門。ローズマリーの香り。",
-   dcn:"1926年配方羊排专门店，迷迭香香气浓郁。",
-   menus:[{ko:"프렌치랙",en:"French Rack",jp:"フレンチラック",cn:"法式羊排",p:"36,000원"},
-          {ko:"양갈비",en:"Lamb Ribs",jp:"ラムリブ",cn:"羊排",p:"30,000원"},
-          {ko:"양고기스테이크",en:"Lamb Steak",jp:"ラムステーキ",cn:"羊肉排",p:"28,000원"}],badge:"rec",hours:"17:00~23:00"},
-  {id:30,ko:"설빙 서울수락산점",en:"Sulbing Suraksan",jp:"ソルビン水落山",cn:"雪冰水落山",
-   addr:"서울 노원구 동일로242길 22",cat:"cafe",likes:720,dist:95,open:true,color:"#60B0D0",
-   dko:"인기 빙수 프랜차이즈. 등산 후 시원하게!",
-   den:"Popular shaved ice. Cool down after hiking!",
-   djp:"人気かき氷フランチャイズ。登山後にひんやり！",
-   dcn:"人气刨冰连锁，登山后清凉一下！",
-   menus:[{ko:"인절미빙수",en:"Injeolmi Bingsu",jp:"インジョルミかき氷",cn:"糯米糕刨冰",p:"12,000원"},
-          {ko:"딸기빙수",en:"Strawberry Bingsu",jp:"いちごかき氷",cn:"草莓刨冰",p:"13,000원"},
-          {ko:"망고빙수",en:"Mango Bingsu",jp:"マンゴーかき氷",cn:"芒果刨冰",p:"13,000원"}],badge:"hot",hours:"11:00~22:00"},
-  {id:31,ko:"달콤한커피방앗간",en:"Sweet Coffee Mill",jp:"甘いコーヒー工場",cn:"甜蜜咖啡磨坊",
-   addr:"서울 노원구 동일로242길 22",cat:"cafe",likes:380,dist:90,open:true,color:"#A07050",
-   dko:"전통 방앗간 컨셉 카페. 달달한 음료가 가득.",
-   den:"Traditional mill concept cafe with sweet drinks.",
-   djp:"伝統的な製粉所コンセプトカフェ。甘い飲み物満載。",
-   dcn:"传统磨坊主题咖啡厅，甜蜜饮品应有尽有。",
-   menus:[{ko:"달콤라떼",en:"Sweet Latte",jp:"甘いラテ",cn:"甜拿铁",p:"5,000원"},
-          {ko:"인절미라떼",en:"Rice Cake Latte",jp:"インジョルミラテ",cn:"糯米糕拿铁",p:"5,500원"},
-          {ko:"수제과자",en:"Homemade Snack",jp:"手作りお菓子",cn:"手工点心",p:"3,000원"}],badge:"new",hours:"09:00~21:00"},
-  {id:32,ko:"빛나는바다 수락산점",en:"Shining Sea",jp:"輝く海",cn:"闪耀的海",
-   addr:"서울 노원구 동일로242길 15",cat:"food",likes:650,dist:75,open:true,color:"#2060C0",
-   dko:"신선한 해산물 전문. 해물탕·꽃게찜 최고.",
-   den:"Fresh seafood specialist. Best seafood stew.",
-   djp:"新鮮な海産物専門店。海鮮鍋・花ガニ蒸しが最高。",
-   dcn:"新鲜海鲜专门店，海鲜汤花蟹蒸无出其右。",
-   menus:[{ko:"해물탕",en:"Seafood Stew",jp:"海鮮鍋",cn:"海鲜汤",p:"35,000원"},
-          {ko:"꽃게찜",en:"Steamed Crab",jp:"花ガニ蒸し",cn:"花蟹蒸",p:"40,000원"},
-          {ko:"새우구이",en:"Grilled Shrimp",jp:"海老焼き",cn:"烤虾",p:"25,000원"}],badge:"hot",hours:"11:00~22:00"},
-  {id:33,ko:"쪽갈비대통령 수락산점",en:"Rib President",jp:"チョクカルビ大統領",cn:"排骨总统",
-   addr:"서울 노원구 동일로242길 15",cat:"gogi",likes:810,dist:70,open:true,color:"#B03030",
-   dko:"쫄깃하고 맛있는 쪽갈비 전문점.",
-   den:"Chewy and delicious short rib specialist.",
-   djp:"モチモチ美味しいチョクカルビ専門店。",
-   dcn:"劲道美味短排骨专门店。",
-   menus:[{ko:"쪽갈비",en:"Short Ribs",jp:"チョクカルビ",cn:"短排骨",p:"18,000원"},
-          {ko:"쪽갈비+냉면",en:"Ribs+Noodles",jp:"カルビ+冷麺",cn:"排骨+冷面",p:"25,000원"}],badge:"rec",hours:"17:00~23:00"},
-  {id:34,ko:"박가네부대찌개 수락산점",en:"Bakgane Budae",jp:"パクガネ部隊チゲ",cn:"朴家部队锅",
-   addr:"서울 노원구 동일로242길 13",cat:"food",likes:590,dist:62,open:true,color:"#C06030",
-   dko:"푸짐한 재료의 부대찌개. 라면사리 추가 필수!",
-   den:"Hearty army stew. Must-add ramen noodles!",
-   djp:"具沢山の部隊チゲ。ラーメンの麺追加必須！",
-   dcn:"食材丰富部队锅，必加拉面条！",
-   menus:[{ko:"부대찌개1인",en:"Budae(1)",jp:"部隊チゲ(1人)",cn:"部队锅(1人)",p:"9,000원"},
-          {ko:"부대찌개2인",en:"Budae(2)",jp:"部隊チゲ(2人)",cn:"部队锅(2人)",p:"18,000원"},
-          {ko:"라면사리",en:"Ramen Add-on",jp:"ラーメン麺追加",cn:"加拉面",p:"1,000원"}],badge:"hot",hours:"11:00~22:00"},
-  {id:35,ko:"수락이오냉면",en:"Suraki Cold Noodle",jp:"スラキ冷麺",cn:"水落儿冷面",
-   addr:"서울 노원구 동일로242길 13",cat:"food",likes:440,dist:58,open:true,color:"#4080B0",
-   dko:"시원한 평양냉면 스타일. 육수가 깔끔.",
-   den:"Cool Pyongyang-style cold noodles. Clean broth.",
-   djp:"さっぱり平壌冷麺スタイル。出汁がすっきり。",
-   dcn:"清爽平壤风冷面，汤底干净利落。",
-   menus:[{ko:"물냉면",en:"Mul Naengmyeon",jp:"水冷麺",cn:"水冷面",p:"9,000원"},
-          {ko:"비빔냉면",en:"Bibim Naengmyeon",jp:"ビビム冷麺",cn:"拌冷面",p:"9,000원"},
-          {ko:"온면",en:"Hot Noodles",jp:"温麺",cn:"热面",p:"9,000원"}],badge:"hot",hours:"11:00~22:00"},
-  {id:36,ko:"최가네손두부",en:"Choi Tofu",jp:"チョイガネ豆腐",cn:"崔家手豆腐",
-   addr:"서울 노원구 동일로242길 24",cat:"food",likes:520,dist:105,open:true,color:"#60A060",
-   dko:"손으로 만든 두부 전문. 국산 콩 100%.",
-   den:"Handmade tofu. 100% domestic soybeans.",
-   djp:"手作り豆腐専門。国産大豆100%。",
-   dcn:"手工豆腐专门店，100%国产大豆。",
-   menus:[{ko:"순두부찌개",en:"Soft Tofu Stew",jp:"スンドゥブチゲ",cn:"嫩豆腐锅",p:"9,000원"},
-          {ko:"두부전골",en:"Tofu Hot Pot",jp:"豆腐チゲ",cn:"豆腐火锅",p:"25,000원"},
-          {ko:"모두부",en:"Block Tofu",jp:"木綿豆腐",cn:"老豆腐",p:"8,000원"}],badge:"nopo",hours:"10:00~21:00"},
-  {id:37,ko:"진미초밥",en:"Jinmi Sushi",jp:"珍味寿司",cn:"珍味寿司",
-   addr:"서울 노원구 동일로242길 26",cat:"food",likes:480,dist:118,open:true,color:"#E05050",
-   dko:"신선한 재료로 만드는 초밥. 오마카세도 운영.",
-   den:"Fresh sushi. Omakase course available.",
-   djp:"新鮮な食材で作る寿司。おまかせコースも運営。",
-   dcn:"新鲜食材制作寿司，也提供主厨套餐。",
-   menus:[{ko:"초밥세트",en:"Sushi Set",jp:"寿司セット",cn:"寿司套餐",p:"15,000원"},
-          {ko:"사시미",en:"Sashimi",jp:"刺身",cn:"刺身",p:"20,000원"},
-          {ko:"오마카세",en:"Omakase",jp:"おまかせ",cn:"主厨套餐",p:"35,000원"}],badge:"rec",hours:"11:00~22:00"},
-  {id:38,ko:"공감커피정원",en:"Sympathy Coffee Garden",jp:"共感コーヒー庭園",cn:"共鸣咖啡花园",
-   addr:"서울 노원구 동일로242길 26",cat:"cafe",likes:350,dist:115,open:true,color:"#70A070",
-   dko:"정원 같은 분위기의 감성 카페. 힐링 공간.",
-   den:"Garden-style aesthetic cafe. Healing space.",
-   djp:"庭園のような雰囲気の感性カフェ。癒しの空間。",
-   dcn:"如花园般氛围的格调咖啡厅，疗愈身心之所。",
-   menus:[{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,000원"},
-          {ko:"정원라떼",en:"Garden Latte",jp:"ガーデンラテ",cn:"花园拿铁",p:"5,500원"},
-          {ko:"케이크",en:"Cake",jp:"ケーキ",cn:"蛋糕",p:"6,500원"}],badge:"new",hours:"10:00~22:00"},
-  {id:39,ko:"일주일",en:"Iljuil Cafe",jp:"一週間",cn:"一周咖啡",
-   addr:"서울 노원구 동일로242길 28",cat:"cafe",likes:390,dist:122,open:true,color:"#9060B0",
-   dko:"한 주의 쉼터 같은 감성 카페.",
-   den:"A weekly retreat-like aesthetic cafe.",
-   djp:"一週間の憩いの場のような感性カフェ。",
-   dcn:"如每周休憩地般的格调咖啡厅。",
-   menus:[{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,500원"},
-          {ko:"플랫화이트",en:"Flat White",jp:"フラットホワイト",cn:"馥芮白",p:"5,500원"},
-          {ko:"시그니처라떼",en:"Signature Latte",jp:"シグネチャーラテ",cn:"招牌拿铁",p:"6,000원"}],badge:"new",hours:"10:00~22:00"},
-  {id:40,ko:"짜장과우동",en:"Jjajang & Udon",jp:"ジャジャンとうどん",cn:"炸酱与乌冬",
-   addr:"서울 노원구 동일로242길 25",cat:"food",likes:420,dist:112,open:true,color:"#404080",
-   dko:"짜장면과 우동 전문. 가성비 좋은 한 끼.",
-   den:"Jjajang and udon specialist. Great value.",
-   djp:"ジャジャン麺とうどん専門。コスパ抜群の一食。",
-   dcn:"炸酱面乌冬专门店，性价比超高一餐。",
-   menus:[{ko:"짜장면",en:"Jjajangmyeon",jp:"ジャジャン麺",cn:"炸酱面",p:"7,000원"},
-          {ko:"우동",en:"Udon",jp:"うどん",cn:"乌冬面",p:"7,000원"},
-          {ko:"짬뽕",en:"Jjambbong",jp:"チャンポン",cn:"辣海鲜汤面",p:"8,000원"}],badge:"hot",hours:"10:00~21:00"},
-  {id:41,ko:"우지커피 수락산점",en:"Uji Coffee",jp:"ウジコーヒー",cn:"宇治咖啡",
-   addr:"서울 노원구 동일로242길 7",cat:"cafe",likes:560,dist:42,open:true,color:"#604020",
-   dko:"정통 드립커피와 말차 전문. 일본식 감성.",
-   den:"Authentic drip coffee and matcha. Japanese style.",
-   djp:"本格ドリップコーヒーと抹茶専門。日本式感性。",
-   dcn:"正宗手冲咖啡与抹茶专门，日式格调。",
-   menus:[{ko:"드립커피",en:"Drip Coffee",jp:"ドリップコーヒー",cn:"手冲咖啡",p:"6,000원"},
-          {ko:"말차라떼",en:"Matcha Latte",jp:"抹茶ラテ",cn:"抹茶拿铁",p:"6,500원"},
-          {ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,500원"}],badge:"rec",hours:"09:00~21:00"},
-  {id:42,ko:"응다방",en:"Eungda Cafe",jp:"ウンダカフェ",cn:"应答茶馆",
-   addr:"서울 노원구 동일로242길 37",cat:"cafe",likes:310,dist:245,open:true,color:"#B07050",
-   dko:"옛날 다방 감성. 따뜻한 쌍화차와 커피.",
-   den:"Retro cafe vibes. Warm ssanghwa tea and coffee.",
-   djp:"昔の喫茶店の感性。温かいサンファ茶とコーヒー。",
-   dcn:"复古茶馆感，温暖双花茶与咖啡。",
-   menus:[{ko:"쌍화차",en:"Ssanghwa Tea",jp:"サンファ茶",cn:"双花茶",p:"4,500원"},
-          {ko:"커피",en:"Coffee",jp:"コーヒー",cn:"咖啡",p:"3,500원"},
-          {ko:"식혜",en:"Sikhye",jp:"シッケ",cn:"甜米汁",p:"3,500원"}],badge:"nopo",hours:"09:00~21:00"},
-  {id:43,ko:"신오반점 수락산본점",en:"Sino Chinese",jp:"新五飯店本店",cn:"新五饭店本店",
-   addr:"서울 노원구 동일로242길 16",cat:"food",likes:680,dist:80,open:true,color:"#C03050",
-   dko:"수락산 터줏대감 중화요리. 가성비 최고.",
-   den:"Long-standing Chinese restaurant. Best value.",
-   djp:"水落山の老舗中華料理。コスパ最高。",
-   dcn:"水落山老字号中华料理，性价比最佳。",
-   menus:[{ko:"짜장면",en:"Jjajangmyeon",jp:"ジャジャン麺",cn:"炸酱面",p:"7,000원"},
-          {ko:"짬뽕",en:"Jjambbong",jp:"チャンポン",cn:"辣海鲜汤面",p:"8,000원"},
-          {ko:"탕수육",en:"Sweet & Sour",jp:"タンスユク",cn:"糖醋肉",p:"18,000원"}],badge:"nopo",hours:"11:00~21:00"},
-  {id:44,ko:"산두막",en:"Sandumaak",jp:"サンドゥマク",cn:"山棚酒馆",
-   addr:"서울 노원구 동일로242길 15",cat:"bar",likes:740,dist:68,open:true,color:"#508030",
-   dko:"등산객들의 성지 포차. 두루치기·모듬전 최고.",
-   den:"Hiker's favorite bar. Best durutchigi and pancakes.",
-   djp:"登山者の聖地ポチャ。豚炒めとチヂミが最高。",
-   dcn:"登山者圣地路边摊，炒肉拼盘煎饼称绝。",
-   menus:[{ko:"두루치기",en:"Spicy Pork",jp:"豚炒め",cn:"辣炒猪肉",p:"13,000원"},
-          {ko:"모듬전",en:"Assorted Pancake",jp:"チヂミ盛り合わせ",cn:"拼盘煎饼",p:"12,000원"},
-          {ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"3,000원"}],badge:"rec",hours:"14:00~23:00"},
-  {id:45,ko:"호남해물탕",en:"Honam Seafood",jp:"ホナム海鮮鍋",cn:"湖南海鲜锅",
-   addr:"서울 노원구 동일로242길 40",cat:"food",likes:590,dist:278,open:true,color:"#2070B0",
-   dko:"전라도 정통 해물탕. 신선한 해산물 가득.",
-   den:"Authentic Jeolla-style seafood stew.",
-   djp:"全羅道伝統の海鮮鍋。新鮮な海産物たっぷり。",
-   dcn:"全罗道正宗海鲜汤，新鲜海鲜满满当当。",
-   menus:[{ko:"해물탕",en:"Seafood Stew",jp:"海鮮鍋",cn:"海鲜汤",p:"35,000원"},
-          {ko:"조개구이",en:"Grilled Clams",jp:"ハマグリ焼き",cn:"烤蛤蜊",p:"20,000원"}],badge:"hot",hours:"11:00~22:00"},
-  {id:46,ko:"별이빛나는밤에",en:"Starry Night",jp:"星が輝く夜に",cn:"繁星夜",
-   addr:"서울 노원구 동일로 1689",cat:"bar",likes:490,dist:35,open:true,color:"#303070",
-   dko:"별빛 아래 감성 주점. 하이볼과 와인이 인기.",
-   den:"Atmospheric bar under the stars. Highball and wine.",
-   djp:"星空の下の感性バー。ハイボールとワインが人気。",
-   dcn:"繁星下感性酒馆，高球酒与红酒深受欢迎。",
-   menus:[{ko:"하이볼",en:"Highball",jp:"ハイボール",cn:"高球酒",p:"8,000원"},
-          {ko:"와인",en:"Wine",jp:"ワイン",cn:"红酒",p:"8,000원"},
-          {ko:"안주플레이트",en:"Snack Plate",jp:"おつまみプレート",cn:"小吃拼盘",p:"15,000원"}],badge:"new",hours:"18:00~02:00"},
-  {id:47,ko:"이화수전통육개장",en:"Ihwasu Yukgaejang",jp:"梨花水伝統ユッケジャン",cn:"梨花水传统肉丝汤",
-   addr:"서울 노원구 동일로 1689",cat:"food",likes:830,dist:32,open:true,color:"#C04030",
-   dko:"진하고 얼큰한 전통 육개장. 등산 후 해장.",
-   den:"Rich and spicy traditional yukgaejang. Post-hike cure.",
-   djp:"濃厚でピリ辛な伝統ユッケジャン。登山後の二日酔い解消。",
-   dcn:"浓郁辛辣传统肉丝汤，登山后解酒首选。",
-   menus:[{ko:"육개장",en:"Yukgaejang",jp:"ユッケジャン",cn:"肉丝汤",p:"10,000원"},
-          {ko:"육개장+공기밥",en:"Yukgaejang+Rice",jp:"ユッケジャン+ライス",cn:"肉丝汤+米饭",p:"11,000원"}],badge:"rec",hours:"09:00~21:00"},
-  {id:48,ko:"봉평산골메밀촌",en:"Bongpyeong Buckwheat",jp:"峰平山里そば村",cn:"峰平山村荞麦",
-   addr:"서울 노원구 동일로 1689",cat:"food",likes:610,dist:30,open:true,color:"#70A050",
-   dko:"강원도 봉평 메밀 전문. 건강한 한 끼.",
-   den:"Gangwon Bongpyeong buckwheat. Healthy meal.",
-   djp:"江原道峰平のそば専門。ヘルシーな一食。",
-   dcn:"江原道峰平荞麦专门，健康一餐。",
-   menus:[{ko:"메밀국수",en:"Buckwheat Noodles",jp:"そば",cn:"荞麦面",p:"9,000원"},
-          {ko:"메밀전병",en:"Buckwheat Crepe",jp:"そばクレープ",cn:"荞麦薄饼",p:"8,000원"},
-          {ko:"메밀묵",en:"Buckwheat Jelly",jp:"そば餅",cn:"荞麦凉粉",p:"7,000원"}],badge:"nopo",hours:"10:00~21:00"},
-  {id:49,ko:"산과맥주",en:"Mountain & Beer",jp:"山とビール",cn:"山与啤酒",
-   addr:"서울 노원구 동일로 1689",cat:"bar",likes:720,dist:28,open:true,color:"#408050",
-   dko:"등산객 필수 코스! 시원한 생맥주 한 잔.",
-   den:"Hiker's must-stop! Cold draft beer.",
-   djp:"登山者必須コース！冷たい生ビール一杯。",
-   dcn:"登山者必经之地！冰爽生啤一杯。",
-   menus:[{ko:"생맥주",en:"Draft Beer",jp:"生ビール",cn:"生啤酒",p:"4,000원"},
-          {ko:"수제안주",en:"Homemade Snack",jp:"手作りおつまみ",cn:"手工小吃",p:"10,000원"},
-          {ko:"소시지",en:"Sausage",jp:"ソーセージ",cn:"香肠",p:"8,000원"}],badge:"rec",hours:"13:00~24:00"},
-  {id:50,ko:"팔선당",en:"Palsundang",jp:"八仙堂",cn:"八仙堂",
-   addr:"서울 노원구 동일로 1689",cat:"food",likes:750,dist:25,open:true,color:"#A03030",
-   dko:"8가지 신선한 재료로 만드는 중화요리.",
-   den:"Chinese cuisine with 8 fresh ingredients.",
-   djp:"8つの新鮮な食材で作る中華料理。",
-   dcn:"以8种新鲜食材烹制的中华料理。",
-   menus:[{ko:"짜장면",en:"Jjajangmyeon",jp:"ジャジャン麺",cn:"炸酱面",p:"7,000원"},
-          {ko:"짬뽕",en:"Jjambbong",jp:"チャンポン",cn:"辣海鲜汤面",p:"8,000원"},
-          {ko:"팔선탕수육",en:"Palsun Sweet & Sour",jp:"八仙タンスユク",cn:"八仙糖醋肉",p:"20,000원"}],badge:"nopo",hours:"11:00~21:00"},
-  {id:51,ko:"어부생선구이",en:"Fisher's Grilled Fish",jp:"漁夫の焼き魚",cn:"渔夫烤鱼",
-   addr:"서울 노원구 동일로242길 40",cat:"food",likes:430,dist:275,open:true,color:"#2060A0",
-   dko:"당일 수산시장 직송 신선한 생선구이.",
-   den:"Fresh grilled fish from daily market delivery.",
-   djp:"当日水産市場直送の新鮮な焼き魚。",
-   dcn:"当日水产市场直送，新鲜烤鱼美味。",
-   menus:[{ko:"고등어구이",en:"Grilled Mackerel",jp:"サバ焼き",cn:"烤鲭鱼",p:"12,000원"},
-          {ko:"삼치구이",en:"Grilled Spanish Mackerel",jp:"サワラ焼き",cn:"烤马鲛鱼",p:"13,000원"},
-          {ko:"생선구이 정식",en:"Fish Set",jp:"焼き魚定食",cn:"烤鱼套餐",p:"15,000원"}],badge:"hot",hours:"11:00~21:00"}
+  {id:1,ko:"오공김밥 수락산점",en:"Ogong Gimbap",jp:"オゴンキムパプ",cn:"五公紫菜卷",addr:"서울 노원구 동일로 1689",cat:"food",dist:30,hours:"07:00~21:00",dko:"1998년부터 이어온 손맛! 수락산 등산객들의 아침을 책임지는 김밥 전문점.\n50여 가지 다양한 김밥과 분식을 합리적인 가격에 즐길 수 있습니다.\n등산 전 든든하게, 등산 후 가볍게 — 어느 때나 딱 맞는 한 끼입니다.",den:"Gimbap specialist since 1998, beloved by Suraksan hikers.\nOver 50 varieties of gimbap and Korean snacks at great prices.\nPerfect for a hearty pre-hike meal or a light post-hike bite.",djp:"1998年から続く手作りキムパプ専門店。水落山登山者の朝食を支える名店。\n50種以上の多彩なキムパプと軽食をリーズナブルな価格で楽しめます。\n登山前のしっかり食事にも、登山後の軽食にも最適な一軒です。",dcn:"自1998年传承手工紫菜卷，是水落山登山者的早餐首选。\n50多种多样的紫菜卷和小吃，价格实惠。\n无论登山前饱餐一顿，还是登山后轻松小吃，都是绝佳选择。",menus:[{ko:"참치김밥",en:"Tuna Gimbap",jp:"ツナキムパプ",cn:"金枪鱼紫菜卷",p:"4,500원"},{ko:"소고기김밥",en:"Beef Gimbap",jp:"牛肉キムパプ",cn:"牛肉紫菜卷",p:"5,000원"},{ko:"치즈김밥",en:"Cheese Gimbap",jp:"チーズキムパプ",cn:"芝士紫菜卷",p:"4,000원"},{ko:"오공스페셜김밥",en:"Ogong Special",jp:"オゴンスペシャル",cn:"五公特色紫菜卷",p:"5,500원"},{ko:"야채김밥",en:"Veggie Gimbap",jp:"野菜キムパプ",cn:"蔬菜紫菜卷",p:"3,500원"},{ko:"순대국",en:"Sundae Soup",jp:"スンデクッ",cn:"血肠汤",p:"7,000원"}]},
+  {id:2,ko:"화로화 수락본점",en:"Hwarohwa",jp:"ファロファ本店",cn:"火炉花本店",addr:"서울 노원구 동일로 1689",cat:"gogi",dist:40,hours:"11:00~23:00",dko:"참숯 직화로 구워내는 프리미엄 고기집. 국내산 신선육만 고집합니다.\n수락산 등산 후 시원한 한잔과 함께 즐기는 고기 한 점의 행복.\n두꺼운 고기가 연기 속에 익어가는 향기가 거리까지 퍼지는 맛집입니다.",den:"Premium charcoal BBQ using only fresh domestic meat.\nNothing beats a slice of grilled pork after conquering Suraksan.\nThe smoky aroma drifting down the street tells you exactly where to go.",djp:"国産新鮮肉のみを使ったプレミアム炭火焼き肉店。\n水落山登山後、冷たい一杯と一緒に楽しむ焼き肉の幸せ。\n炭の香りが거리まで漂う、本格派焼き肉の名店です。",dcn:"只用国产新鲜肉的高端炭火烤肉店。\n水落山登山后，配上一杯冰啤酒的烤肉享受。\n炭香弥漫整条街道，是正宗炭火烤肉的名店。",menus:[{ko:"삼겹살",en:"Pork Belly",jp:"サムギョプサル",cn:"五花肉",p:"16,000원"},{ko:"목살",en:"Pork Neck",jp:"モクサル",cn:"颈肉",p:"16,000원"},{ko:"항정살",en:"Cheek Meat",jp:"ハンジョンサル",cn:"猪颊肉",p:"18,000원"},{ko:"갈매기살",en:"Skirt Meat",jp:"ガルメギサル",cn:"横膈肌",p:"17,000원"},{ko:"된장찌개",en:"Doenjang Jjigae",jp:"味噌チゲ",cn:"大酱汤",p:"3,000원"},{ko:"공기밥",en:"Steamed Rice",jp:"ご飯",cn:"米饭",p:"1,000원"}]},
+  {id:3,ko:"평양칼국수",en:"Pyongyang Kalguksu",jp:"平壌カルグクス",cn:"平壤刀削面",addr:"서울 노원구 동일로242길 103",cat:"food",dist:850,hours:"10:00~21:00",dko:"등산로 입구 터줏대감, 30년 전통의 닭칼국수 전문점입니다.\n직접 뽑은 면과 진하게 우린 닭 육수로 만든 깊은 맛이 일품입니다.\n등산 전후 가장 많이 찾는 수락산 대표 국수 맛집으로 사랑받고 있습니다.",den:"A 30-year institution at the Suraksan trailhead.\nFresh hand-pulled noodles in a rich, slow-simmered chicken broth.\nThe most beloved noodle spot in Suraksan, popular before and after hikes.",djp:"登山口の30年老舗、鶏カルグクス専門店。\n自家製麺と濃厚な鶏だしで作った深みのある味が絶品。\n登山前後に最も人気の水落山代表のうどん名店として愛されています。",dcn:"登山口30年老字号，鸡肉刀削面专门店。\n手工拉面配上浓郁慢炖鸡汤，味道深厚鲜美。\n是水落山登山前后最受欢迎的面条名店。",menus:[{ko:"닭칼국수",en:"Chicken Kalguksu",jp:"チキンカルグクス",cn:"鸡肉刀削面",p:"9,000원"},{ko:"김치칼국수",en:"Kimchi Kalguksu",jp:"キムチカルグクス",cn:"泡菜刀削面",p:"8,000원"},{ko:"수제비",en:"Sujebi",jp:"スジェビ",cn:"疙瘩汤",p:"8,000원"},{ko:"닭볶음",en:"Braised Chicken",jp:"タッポックム",cn:"辣炒鸡",p:"30,000원"},{ko:"보쌈",en:"Bossam",jp:"ポッサム",cn:"包饭",p:"25,000원"},{ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"4,000원"}]},
+  {id:4,ko:"가재골수제비",en:"Gajae Sujebi",jp:"ガジェスジェビ",cn:"螃蟹谷疙瘩汤",addr:"서울 노원구 동일로242길 100",cat:"food",dist:820,hours:"10:00~21:00",dko:"직접 반죽해 손으로 뜯어내는 정통 손수제비 전문점입니다.\n진하고 구수한 육수에 쫄깃한 수제비가 한데 어우러진 깊은 맛입니다.\n어머니의 손맛 그대로, 정성이 담긴 한 그릇으로 몸과 마음을 따뜻하게 합니다.",den:"Traditional hand-torn dough soup made fresh every day.\nChewy dough pieces in a rich, savory broth — pure comfort food.\nLike mother's cooking, every bowl warms both body and soul.",djp:"毎日手作りの本格手打ちスジェビ専門店。\n濃厚で香ばしいスープにもちもちのスジェビが絶妙に絡み合います。\n母の味そのまま、心のこもった一杯で体も心も温まります。",dcn:"每天手工制作的正宗手撕疙瘩汤专门店。\n劲道疙瘩配上浓郁香醇的汤底，令人回味无穷。\n如母亲的手艺，每一碗都暖胃又暖心。",menus:[{ko:"수제비",en:"Sujebi",jp:"スジェビ",cn:"疙瘩汤",p:"8,000원"},{ko:"칼국수",en:"Kalguksu",jp:"カルグクス",cn:"刀削面",p:"8,000원"},{ko:"수제비+칼국수",en:"Combo",jp:"コンボ",cn:"套餐",p:"8,500원"},{ko:"감자전",en:"Potato Pancake",jp:"ジャガイモチヂミ",cn:"土豆煎饼",p:"8,000원"},{ko:"김치전",en:"Kimchi Pancake",jp:"キムチチヂミ",cn:"泡菜煎饼",p:"8,000원"},{ko:"동동주",en:"Dongdongju",jp:"ドンドンジュ",cn:"米酒",p:"5,000원"}]},
+  {id:5,ko:"보미네박국수순대국",en:"Bomie Noodle",jp:"ボミネ麺",cn:"宝美家面条",addr:"서울 노원구 동일로242길 96",cat:"food",dist:780,hours:"09:00~21:00",dko:"든든한 순대국과 박국수로 등산객의 허기를 채워주는 곳입니다.\n매일 아침 직접 끓이는 진한 국물이 피로를 싹 풀어줍니다.\n수락산 등산 후 따뜻한 국밥 한 그릇으로 여독을 풀기 좋은 맛집입니다.",den:"Satisfying sundae soup and noodles beloved by Suraksan hikers.\nRich broth simmered fresh every morning melts away fatigue.\nThe perfect warm bowl after a long hike on Suraksan.",djp:"登山客の空腹を満たす、ボリューム満点のスンデククと麺の店。\n毎朝丁寧に煮込んだ濃厚なスープが疲れを癒してくれます。\n水落山登山後の温かい一杯で旅の疲れを癒すのに最適な名店。",dcn:"丰盛血肠汤和面条，是水落山登山者解饿的好去处。\n每天早晨新鲜熬制的浓汤能快速消除疲劳。\n水落山登山后，一碗热腾腾的汤饭是最好的恢复。",menus:[{ko:"순대국",en:"Sundae Soup",jp:"スンデクク",cn:"血肠汤",p:"9,000원"},{ko:"박국수",en:"Gourd Noodle",jp:"パッククス",cn:"葫芦面",p:"8,000원"},{ko:"순대국+공기밥",en:"Soup+Rice",jp:"スープ+ライス",cn:"汤+米饭",p:"9,500원"},{ko:"수육",en:"Boiled Pork",jp:"スユク",cn:"白切猪肉",p:"15,000원"},{ko:"모듬순대",en:"Mixed Sundae",jp:"盛り合わせ",cn:"混合血肠",p:"12,000원"},{ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"4,000원"}]},
+  {id:6,ko:"용가네동태찜",en:"Yonggane Pollock",jp:"ヨンガネ明太蒸し",cn:"龙家明太鱼",addr:"서울 노원구 동일로242길 91",cat:"food",dist:740,hours:"11:00~22:00",dko:"얼큰하고 시원한 동태찜 전문점으로 해장 음식의 대명사입니다.\n싱싱한 동태를 매콤한 양념으로 조린 깊은 맛이 일품입니다.\n겨울철 등산 후 온몸을 녹여주는 뜨끈한 동태찜 한 상 차려보세요.",den:"The go-to spot for spicy steamed pollock — perfect hangover food.\nFresh pollock slow-braised in a rich, spicy seasoning sauce.\nA steaming pot of dongtagjjim after a winter hike warms you to the bone.",djp:"ピリ辛さっぱりの明太蒸し専門店、二日酔い解消の代名詞。\n新鮮な明太を辛みのあるタレでじっくり煮込んだ深みのある味。\n冬の登山後に全身を温めてくれる熱々の明太蒸し鍋をどうぞ。",dcn:"麻辣爽口的明太鱼蒸锅专门店，是解酒食品的代名词。\n新鲜明太鱼用香辣调料慢炖，味道浓郁鲜美。\n冬季登山后，一锅热气腾腾的明太鱼蒸锅暖遍全身。",menus:[{ko:"동태찜(소)",en:"Pollock Stew(S)",jp:"明太蒸し(小)",cn:"明太鱼蒸(小)",p:"35,000원"},{ko:"동태찜(대)",en:"Pollock Stew(L)",jp:"明太蒸し(大)",cn:"明太鱼蒸(大)",p:"45,000원"},{ko:"동태탕",en:"Pollock Soup",jp:"明太スープ",cn:"明太鱼汤",p:"10,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"},{ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"4,000원"}]},
+  {id:7,ko:"족발야시장 수락산역점",en:"Jokbal Night Market",jp:"チョッパル夜市",cn:"猪蹄夜市",addr:"서울 노원구 동일로242길 88",cat:"food",dist:700,hours:"17:00~24:00",dko:"야시장 분위기를 물씬 풍기는 족발 전문점입니다.\n부드럽고 쫄깃한 족발을 다양한 스타일로 즐길 수 있습니다.\n저녁 시간 수락디자인거리를 걸으며 야시장의 낭만을 느껴보세요.",den:"A night market-style restaurant specializing in pig's trotters.\nTender and chewy jokbal served in various delicious styles.\nSoak in the night market romance while strolling Surak Design Street.",djp:"夜市の雰囲気たっぷりのチョッパル専門店。\n柔らかくモチモチの足料理を様々なスタイルで楽しめます。\n夕方のスラクデザイン거리を散歩しながら夜市のロマンを感じてください。",dcn:"充满夜市气氛的猪蹄专门店。\n嫩滑劲道的猪蹄提供多种精彩吃法。\n傍晚漫步水落设计街，感受夜市的浪漫氛围。",menus:[{ko:"오리지널족발",en:"Original Jokbal",jp:"オリジナルチョッパル",cn:"原味猪蹄",p:"30,000원"},{ko:"냉채족발",en:"Cold Jokbal",jp:"冷菜チョッパル",cn:"凉拌猪蹄",p:"32,000원"},{ko:"불족발",en:"Spicy Jokbal",jp:"ピリ辛チョッパル",cn:"麻辣猪蹄",p:"33,000원"},{ko:"쟁반국수",en:"Noodle Platter",jp:"プレート麺",cn:"拼盘面",p:"8,000원"},{ko:"보쌈",en:"Bossam",jp:"ポッサム",cn:"包饭",p:"28,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}]},
+  {id:8,ko:"꼬믹포차",en:"Comic Pojangmacha",jp:"コミックポチャ",cn:"漫画路边摊",addr:"서울 노원구 동일로242길 83",cat:"bar",dist:660,hours:"17:00~01:00",dko:"만화 콘셉트의 독특한 감성 포차입니다.\n등산 후 한잔하기 딱 좋은 분위기와 다양한 안주가 준비되어 있습니다.\n유쾌한 만화 캐릭터들과 함께 즐거운 시간을 보내세요.",den:"A uniquely charming comic-themed pojangmacha (street bar).\nPerfect post-hike atmosphere with a wide range of snacks.\nEnjoy a fun evening surrounded by playful comic characters.",djp:"漫画コンセプトのユニークな感性ポチャです。\n登山後の一杯に最適な雰囲気と豊富なおつまみが揃っています。\n楽しい漫画キャラクターたちと一緒に楽しい時間をお過ごしください。",dcn:"独具特色的漫画主题路边摊。\n登山后小酌一杯的绝佳去处，各种小吃应有尽有。\n和欢乐的漫画角色们一起度过愉快的夜晚。",menus:[{ko:"모듬안주",en:"Assorted Snacks",jp:"盛り合わせ",cn:"拼盘小吃",p:"15,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"},{ko:"맥주",en:"Beer",jp:"ビール",cn:"啤酒",p:"4,500원"},{ko:"오뎅탕",en:"Fish Cake Soup",jp:"おでん",cn:"鱼饼汤",p:"8,000원"},{ko:"떡볶이",en:"Tteokbokki",jp:"トッポッキ",cn:"炒年糕",p:"7,000원"},{ko:"순대",en:"Sundae",jp:"スンデ",cn:"血肠",p:"7,000원"}]},
+  {id:9,ko:"수락산양동이찌개마을",en:"Bucket Stew Village",jp:"バケツチゲ村",cn:"水桶锅村",addr:"서울 노원구 동일로242길 77",cat:"food",dist:610,hours:"11:00~22:00",dko:"양동이에 담아 주는 개성 넘치는 찌개 전문점입니다.\n푸짐하게 담긴 부대찌개와 김치찌개가 시선을 압도합니다.\n단체 손님에게 특히 인기 있는 이색 맛집으로 수락거리의 명물입니다.",den:"Famous for stew served in an eye-catching bucket pot.\nOverflowing budae jjigae and kimchi jjigae that dazzle the eyes.\nA landmark of Surak Street, especially popular for group dining.",djp:"バケツに盛られた個性あふれるチゲ専門店。\nたっぷり盛られた部隊チゲとキムチチゲが目を引きます。\n団体客に特に人気の珍しいグルメスポット、スラク거리の名物です。",dcn:"以水桶盛放的个性十足的锅物专门店。\n满满当当的部队锅和泡菜锅令人目不暇接。\n团体客特别喜爱，是水落街的著名特色餐厅。",menus:[{ko:"양동이부대찌개",en:"Bucket Budae Jjigae",jp:"バケツ部隊チゲ",cn:"水桶部队锅",p:"30,000원"},{ko:"양동이김치찌개",en:"Bucket Kimchi Jjigae",jp:"バケツキムチチゲ",cn:"水桶泡菜锅",p:"28,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"},{ko:"라면사리",en:"Ramen Add-on",jp:"ラーメン追加",cn:"加拉面",p:"1,000원"},{ko:"치즈추가",en:"Cheese Add-on",jp:"チーズ追加",cn:"加芝士",p:"2,000원"}]},
+  {id:10,ko:"대구달구벌막창",en:"Daegu Makchang",jp:"大邱マクチャン",cn:"大邱大肠",addr:"서울 노원구 동일로242길 60",cat:"gogi",dist:480,hours:"17:00~23:00",dko:"대구 정통 방식의 막창구이 전문점입니다.\n참숯 직화로 바삭하게 구운 막창과 대창이 일품입니다.\n고소하고 쫄깃한 내장 구이로 수락거리의 야식 명소로 자리 잡았습니다.",den:"Authentic Daegu-style grilled intestines specialist.\nCrispy makchang and daechang grilled over charcoal fire.\nA beloved late-night dining spot on Surak Street.",djp:"大邱伝統スタイルのマクチャン焼き専門店。\n炭火でカリッと焼いたマクチャンとデチャンが絶品。\nコクとモチモチのホルモン焼きで스라쿠거리의夜食名所として定着。",dcn:"大邱正宗风格的大肠烤专门店。\n炭火直烤香脆的大肠和牛肠，令人回味无穷。\n以其醇香劲道的内脏烤成为水落街夜宵名所。",menus:[{ko:"막창",en:"Makchang",jp:"マクチャン",cn:"猪直肠",p:"14,000원"},{ko:"대창",en:"Daechang",jp:"デチャン",cn:"牛大肠",p:"16,000원"},{ko:"껍데기",en:"Pork Skin",jp:"皮",cn:"猪皮",p:"13,000원"},{ko:"곱창",en:"Gopchang",jp:"コプチャン",cn:"小肠",p:"15,000원"},{ko:"볶음밥",en:"Fried Rice",jp:"チャーハン",cn:"炒饭",p:"3,000원"},{ko:"된장찌개",en:"Doenjang Jjigae",jp:"味噌チゲ",cn:"大酱汤",p:"3,000원"}]},
+  {id:11,ko:"맥주조이",en:"Beer Joy",jp:"ビールジョイ",cn:"啤酒乐",addr:"서울 노원구 동일로242길 51",cat:"bar",dist:390,hours:"16:00~24:00",dko:"수제맥주와 생맥주를 전문으로 하는 감성 맥주 전문점입니다.\n등산 후 시원하게 한 잔 들이키기에 최적의 공간입니다.\n다양한 수제맥주와 함께 즐기는 치킨, 안주가 일품입니다.",den:"A craft beer specialist with a cozy vibe.\nThe perfect place to cool down after a Suraksan hike.\nGreat craft beers paired with delicious fried chicken and snacks.",djp:"クラフトビールと生ビールの感性ビール専門店。登山後に爽やかに一杯飲むのに最適な空間。多彩なクラフトビールと楽しむチキン・おつまみが絶品。",dcn:"专营精酿啤酒和生啤的特色啤酒专门店。登山后爽快喝一杯的最佳去处。多种精酿啤酒配上炸鸡和小吃，堪称一绝。",menus:[{ko:"생맥주",en:"Draft Beer",jp:"生ビール",cn:"生啤酒",p:"4,000원"},{ko:"수제맥주",en:"Craft Beer",jp:"クラフトビール",cn:"精酿啤酒",p:"6,000원"},{ko:"치킨",en:"Fried Chicken",jp:"チキン",cn:"炸鸡",p:"19,000원"},{ko:"감자튀김",en:"French Fries",jp:"フライドポテト",cn:"薯条",p:"6,000원"},{ko:"소시지플레이트",en:"Sausage Plate",jp:"ソーセージプレート",cn:"香肠拼盘",p:"12,000원"},{ko:"나초",en:"Nachos",jp:"ナチョス",cn:"玉米片",p:"8,000원"}]},
+  {id:12,ko:"옥순네곱창순대국",en:"Oksoone Gopchang",jp:"곱창スンデクク",cn:"玉顺家곱창",addr:"서울 노원구 동일로242길 46",cat:"food",dist:340,hours:"10:00~22:00",dko:"진한 곱창과 순대국으로 속을 든든하게 채워주는 곳입니다.\n오랜 단골 손님들이 찾는 깊고 구수한 국물 맛이 자랑입니다.\n수락거리에서 오랜 역사를 자랑하는 국밥 전문점입니다.",den:"Rich tripe and blood sausage soup that fills you up warm.\nRegular customers keep coming back for the deep, savory broth.\nA time-honored soup restaurant with a long history on Surak Street.",djp:"濃厚なホルモンとスンデククで体をしっかり温めるお店。常連客が通い続ける深くコクのある出汁が自慢。水落거리で長い歴史を誇るクッパ専門店。",dcn:"浓郁牛肠和血肠汤让人暖胃又满足。老主顾回头率极高的深厚醇香汤底是招牌。是水落街历史悠久的汤饭专门店。",menus:[{ko:"곱창순대국",en:"Tripe&Sundae Soup",jp:"ホルモンスンデクク",cn:"牛肠血肠汤",p:"10,000원"},{ko:"곱창전골",en:"Tripe Hot Pot",jp:"ホルモン鍋",cn:"牛肠火锅",p:"35,000원"},{ko:"순대국밥",en:"Sundae Soup Rice",jp:"スンデソップ",cn:"血肠汤饭",p:"9,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"수육",en:"Boiled Pork",jp:"スユク",cn:"白切肉",p:"18,000원"}]},
+  {id:13,ko:"마린보이 코다리1번가",en:"Marine Boy Kodari",jp:"マリンボーイコダリ",cn:"海洋小子明太鱼",addr:"서울 노원구 동일로242길 45",cat:"food",dist:325,hours:"11:00~21:00",dko:"코다리조림 전문점으로 짭조름하고 쫄깃한 맛이 일품입니다.\n신선한 반건조 명태를 직접 양념에 조려내는 정성이 담긴 요리입니다.\n밥도둑 코다리조림으로 등산 후 입맛을 확 돋워드립니다.",den:"Kodari (semi-dried pollock) braised to salty, chewy perfection.\nFresh semi-dried pollock slow-cooked in house seasoning with care.\nThe ultimate rice-stealer — perfect for working up appetite after hiking.",djp:"コダリ煮付け専門店、塩気と弾力ある味が絶品。新鮮な半乾燥明太を自家製タレでじっくり煮込んだ丁寧な一品。ご飯泥棒コダリ煮付けで登山後の食欲を一気に高めます。",dcn:"明太鱼干红烧专门店，咸鲜劲道的口感令人称绝。用新鲜半干明太鱼精心腌制慢炖而成。被称为'米饭杀手'的红烧明太鱼，登山后最能开胃。",menus:[{ko:"코다리조림",en:"Braised Kodari",jp:"コダリ煮",cn:"红烧明太鱼干",p:"13,000원"},{ko:"코다리냉면",en:"Kodari Cold Noodle",jp:"コダリ冷麺",cn:"明太鱼干冷面",p:"9,000원"},{ko:"코다리구이",en:"Grilled Kodari",jp:"コダリ焼き",cn:"烤明太鱼干",p:"12,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"된장국",en:"Doenjang Soup",jp:"味噌汁",cn:"大酱汤",p:"1,000원"}]},
+  {id:14,ko:"가장맛있는족발 수락산점",en:"Best Jokbal Suraksan",jp:"一番旨い足",cn:"最好吃猪蹄",addr:"서울 노원구 동일로242길 43",cat:"food",dist:310,hours:"11:00~22:00",dko:"이름 그대로 가장 맛있는 족발을 자신하는 전문점입니다.\n부드럽고 쫄깃한 족발과 보쌈이 손님들의 마음을 사로잡습니다.\n냉채족발, 불족발 등 다양한 변주로 즐기는 족발의 진수를 경험하세요.",den:"The name says it all — proudly serving the tastiest jokbal around.\nTender and chewy pig trotters and bossam win hearts every visit.\nFrom cold jokbal to spicy versions — experience jokbal at its finest.",djp:"名前の通り、最も美味しいチョッパルを自信を持って提供する専門店。柔らかくモチモチの豚足とポッサムがお客様の心を掴みます。冷菜・ピリ辛など多彩なアレンジで楽しむチョッパルの真髄を。",dcn:"名如其实，自信提供最美味猪蹄的专门店。嫩滑弹牙的猪蹄和包饭令每位顾客心满意足。凉拌、麻辣等多种变化，体验猪蹄的极致美味。",menus:[{ko:"족발(소)",en:"Jokbal(S)",jp:"チョッパル(小)",cn:"猪蹄(小)",p:"28,000원"},{ko:"족발(대)",en:"Jokbal(L)",jp:"チョッパル(大)",cn:"猪蹄(大)",p:"38,000원"},{ko:"보쌈(소)",en:"Bossam(S)",jp:"ポッサム(小)",cn:"包饭(小)",p:"25,000원"},{ko:"냉채족발",en:"Cold Jokbal",jp:"冷菜チョッパル",cn:"凉拌猪蹄",p:"32,000원"},{ko:"불족발",en:"Spicy Jokbal",jp:"ピリ辛チョッパル",cn:"麻辣猪蹄",p:"33,000원"},{ko:"쟁반국수",en:"Noodle Platter",jp:"プレート麺",cn:"拼盘面",p:"8,000원"}]},
+  {id:15,ko:"싱싱식당",en:"Fresh Restaurant",jp:"シンシン食堂",cn:"新鲜食堂",addr:"서울 노원구 동일로242길 41",cat:"food",dist:295,hours:"11:00~22:00",dko:"신선한 해산물을 직접 손질해 요리하는 해산물 전문 식당입니다.\n해물파전과 간장게장이 특히 유명한 수락거리 대표 맛집입니다.\n신선도를 최우선으로 하는 정직한 재료로 만드는 건강한 한 상입니다.",den:"Fresh seafood restaurant where every dish is prepared in-house.\nEspecially famous for seafood pancake and soy-marinated crab.\nHonest ingredients, prioritizing freshness above all — a healthy feast.",djp:"新鮮な海産物を自家仕込みで料理する海鮮専門食堂。海鮮チヂミと醤油ガニが特に有名な水落거리の代表グルメ。新鮮さを最優先した正直な食材で作る健康的な一膳。",dcn:"使用新鲜海鲜亲自处理制作的海鲜专门餐厅。海鲜葱饼和酱油螃蟹尤为著名，是水落街代表美食。以新鲜度为首要原则，食材诚实，健康美味。",menus:[{ko:"해물파전",en:"Seafood Pancake",jp:"海鮮チヂミ",cn:"海鲜葱饼",p:"12,000원"},{ko:"간장게장",en:"Soy Sauce Crab",jp:"醤油ガニ",cn:"酱油螃蟹",p:"18,000원"},{ko:"낙지볶음",en:"Stir-fried Octopus",jp:"タコ炒め",cn:"炒章鱼",p:"13,000원"},{ko:"해물탕",en:"Seafood Stew",jp:"海鮮鍋",cn:"海鲜汤",p:"35,000원"},{ko:"모둠회",en:"Assorted Sashimi",jp:"刺身盛り合わせ",cn:"综合刺身",p:"30,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}]},
+  {id:16,ko:"묘미서울",en:"Myomi Seoul",jp:"ミョミソウル",cn:"妙味首尔",addr:"서울 노원구 동일로242길 42",cat:"cafe",dist:290,hours:"10:00~22:00",dko:"감각적인 인테리어로 SNS 명소가 된 트렌디 카페입니다.\n정성스럽게 내린 커피와 직접 만든 디저트가 손님을 맞이합니다.\n수락거리 산책 중 잠시 쉬어가기 딱 좋은 힐링 카페입니다.",den:"A trendy café turned SNS hotspot thanks to its stylish interior.\nCareully brewed coffee and homemade desserts greet every guest.\nThe perfect pit stop for a relaxing break during your Surak Street stroll.",djp:"センスあるインテリアでSNSスポットになったトレンディカフェ。丁寧に淹れたコーヒーと自家製デザートがお客様をお迎えします。スラク거리の散策中に一息つくのにぴったりのヒーリングカフェ。",dcn:"凭借时尚装潢成为网红打卡地的潮流咖啡厅。精心冲泡的咖啡和自制甜点迎接每位顾客。水落街散步途中小憩片刻的完美疗愈咖啡厅。",menus:[{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,500원"},{ko:"카페라떼",en:"Café Latte",jp:"カフェラテ",cn:"拿铁咖啡",p:"5,500원"},{ko:"시그니처음료",en:"Signature Drink",jp:"シグネチャードリンク",cn:"招牌饮品",p:"7,000원"},{ko:"케이크",en:"Cake",jp:"ケーキ",cn:"蛋糕",p:"7,500원"},{ko:"에이드",en:"Ade",jp:"エイド",cn:"气泡饮",p:"6,000원"}]},
+  {id:17,ko:"노원골제주흑돼지",en:"Jeju Black Pork Nowon",jp:"済州黒豚盧原",cn:"济州黑猪芦原",addr:"서울 노원구 동일로242길 42",cat:"gogi",dist:285,hours:"17:00~23:00",dko:"제주도에서 직접 공수한 흑돼지를 전문으로 하는 고기집입니다.\n고소하고 쫄깃한 제주 흑돼지 특유의 풍미가 일품입니다.\n육지에서 제주의 맛을 그대로 느낄 수 있는 수락거리 명소입니다.",den:"Specializing in black pork shipped directly from Jeju Island.\nRich flavor and chewy texture unique to Jeju black pork.\nTaste the authentic flavors of Jeju right here on Surak Street.",djp:"済州島から直送した黒豚を専門とする焼き肉店。コクがありモチモチとした済州黒豚特有の風味が絶品。内地で済州の味をそのまま感じられる水落거리の名所。",dcn:"专营从济州岛直运黑猪的烤肉店。醇香劲道的济州黑猪独特风味堪称一绝。在首尔也能原汁原味品尝济州美食的水落街名所。",menus:[{ko:"흑돼지삼겹살",en:"Black Pork Belly",jp:"黒豚サムギョプサル",cn:"黑猪五花肉",p:"18,000원"},{ko:"흑돼지목살",en:"Black Pork Neck",jp:"黒豚モクサル",cn:"黑猪颈肉",p:"18,000원"},{ko:"흑돼지항정살",en:"Black Pork Cheek",jp:"黒豚ハンジョン",cn:"黑猪颊肉",p:"20,000원"},{ko:"흑돼지갈비",en:"Black Pork Ribs",jp:"黒豚カルビ",cn:"黑猪排骨",p:"20,000원"},{ko:"냉면",en:"Cold Noodles",jp:"冷麺",cn:"冷面",p:"7,000원"},{ko:"된장찌개",en:"Doenjang Jjigae",jp:"味噌チゲ",cn:"大酱汤",p:"3,000원"}]},
+  {id:18,ko:"수향숯불갈비",en:"Suhyang Charcoal Ribs",jp:"スヒャン炭火カルビ",cn:"水香炭火排骨",addr:"서울 노원구 동일로242길 42",cat:"gogi",dist:280,hours:"17:00~23:00",dko:"참숯 직화로 구워내는 소갈비·돼지갈비 전문점입니다.\n달콤한 양념이 베인 갈비가 불 위에서 노릇노릇 익어가는 향이 매력적입니다.\n수락거리에서 특별한 저녁을 원한다면 수향 숯불갈비를 추천합니다.",den:"Beef and pork ribs grilled over real charcoal fire.\nSweet marinated ribs sizzling golden over the flame — irresistible aroma.\nFor a special evening on Surak Street, Suhyang Charcoal Ribs is the choice.",djp:"炭火直焼きの牛・豚カルビ専門店。甘いタレが染み込んだカルビが火の上でこんがり焼ける香りが魅力。スラク거리で特別な夜を過ごしたいなら水香炭火カルビがおすすめ。",dcn:"炭火直烤牛排骨猪排骨专门店。甜腌入味的排骨在炭火上烤得金黄，香气四溢。若想在水落街度过特别的夜晚，水香炭火排骨是首选。",menus:[{ko:"소갈비",en:"Beef Ribs",jp:"牛カルビ",cn:"牛排骨",p:"45,000원"},{ko:"돼지갈비",en:"Pork Ribs",jp:"豚カルビ",cn:"猪排骨",p:"19,000원"},{ko:"갈비찜",en:"Braised Ribs",jp:"カルビチム",cn:"排骨炖",p:"35,000원"},{ko:"냉면",en:"Cold Noodles",jp:"冷麺",cn:"冷面",p:"7,000원"},{ko:"된장찌개",en:"Doenjang Jjigae",jp:"味噌チゲ",cn:"大酱汤",p:"3,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"}]},
+  {id:19,ko:"미가솥뚜껑삼겹살",en:"Miga Pot Lid BBQ",jp:"鍋蓋サムギョプサル",cn:"锅盖五花肉",addr:"서울 노원구 동일로242길 36",cat:"gogi",dist:230,hours:"17:00~23:00",dko:"묵직한 솥뚜껑 위에서 바삭하게 구워내는 삼겹살 전문점입니다.\n솥뚜껑의 뜨거운 열기로 육즙을 가득 품은 고기가 완성됩니다.\n독특한 조리 방식으로 수락거리에서 이색적인 고기 경험을 선사합니다.",den:"Pork belly grilled crispy on a heavy iron pot lid.\nThe intense heat locks in all the juicy flavor of the meat.\nA unique cooking style that offers an unforgettable BBQ experience on Surak Street.",djp:"重い鍋の蓋の上でカリカリに焼くサムギョプサル専門店。鍋蓋の強い熱で肉汁をたっぷり閉じ込めた肉が完成。独特の調理法でスラク거리ならではのユニークな焼き肉体験を。",dcn:"在厚重锅盖上烤制香脆的五花肉专门店。锅盖的强烈热力锁住肉汁，造就美味。独特的烹饪方式在水落街带来别具一格的烤肉体验。",menus:[{ko:"삼겹살",en:"Pork Belly",jp:"サムギョプサル",cn:"五花肉",p:"15,000원"},{ko:"목살",en:"Pork Neck",jp:"モクサル",cn:"颈肉",p:"15,000원"},{ko:"항정살",en:"Cheek Meat",jp:"ハンジョン",cn:"颊肉",p:"17,000원"},{ko:"된장찌개",en:"Doenjang Jjigae",jp:"味噌チゲ",cn:"大酱汤",p:"3,000원"},{ko:"냉면",en:"Cold Noodles",jp:"冷麺",cn:"冷面",p:"7,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"}]},
+  {id:20,ko:"BBQ치킨 노원수락산역점",en:"BBQ Chicken Suraksan",jp:"BBQチキン水落山",cn:"BBQ炸鸡水落山",addr:"서울 노원구 동일로242길 31",cat:"food",dist:190,hours:"11:00~23:00",dko:"황금올리브치킨 원조 BBQ의 수락산역 직영점입니다.\n바삭하고 고소한 황금올리브 치킨이 대표 메뉴입니다.\n치킨과 맥주 한 잔으로 등산의 피로를 싹 풀어보세요.",den:"The Suraksan branch of the original BBQ Golden Olive Chicken.\nCrispy and savory Golden Olive Chicken is the signature dish.\nWash away your hiking fatigue with chicken and a cold beer.",djp:"ゴールデンオリーブチキン元祖BBQの水落山駅直営店。カリカリ香ばしいゴールデンオリーブチキンが看板メニュー。チキンとビール一杯で登山の疲れをすっきり癒しましょう。",dcn:"金橄榄炸鸡原创BBQ水落山站直营店。香脆美味的金橄榄炸鸡是招牌菜。炸鸡配啤酒，轻松消除登山疲劳。",menus:[{ko:"황금올리브치킨",en:"Golden Olive Chicken",jp:"ゴールデンオリーブ",cn:"金橄榄炸鸡",p:"22,000원"},{ko:"양념치킨",en:"Seasoned Chicken",jp:"ヤンニョムチキン",cn:"调味炸鸡",p:"22,000원"},{ko:"반반치킨",en:"Half & Half",jp:"ハーフ&ハーフ",cn:"一半一半",p:"23,000원"},{ko:"순살치킨",en:"Boneless Chicken",jp:"骨なしチキン",cn:"无骨炸鸡",p:"23,000원"},{ko:"맥주",en:"Beer",jp:"ビール",cn:"啤酒",p:"4,500원"}]},
+  {id:21,ko:"한국통닭",en:"Korean Fried Chicken",jp:"韓国トンダク",cn:"韩国炸鸡",addr:"서울 노원구 동일로242길 31",cat:"food",dist:185,hours:"11:00~22:00",dko:"옛날 방식 그대로 바삭하게 튀겨내는 정통 한국 통닭 전문점입니다.\n추억의 한국 통닭을 현대적으로 재해석한 맛이 일품입니다.\n바삭한 튀김 옷과 촉촉한 속살의 조화가 환상적입니다.",den:"Classic Korean fried chicken made the old-fashioned way.\nA modern take on the nostalgic taste of traditional Korean chicken.\nThe perfect harmony of a crispy crust and juicy interior.",djp:"昔ながらの方法でカリカリに揚げた本格韓国チキン専門店。懐かしい韓国チキンを現代的に再解釈した味が絶品。サクサクの衣と中のジューシーさの調和が素晴らしい。",dcn:"按照老式方法香脆油炸的正宗韩国炸鸡专门店。是对怀旧韩国炸鸡的现代演绎，味道一绝。酥脆外皮与鲜嫩内里的完美融合令人陶醉。",menus:[{ko:"후라이드통닭",en:"Fried Chicken",jp:"フライドチキン",cn:"原味炸鸡",p:"16,000원"},{ko:"양념통닭",en:"Seasoned Chicken",jp:"ヤンニョムチキン",cn:"调味炸鸡",p:"17,000원"},{ko:"반반",en:"Half & Half",jp:"ハーフ&ハーフ",cn:"一半一半",p:"17,000원"},{ko:"닭다리튀김",en:"Fried Drumstick",jp:"揚げドラムスティック",cn:"炸鸡腿",p:"2,500원"},{ko:"맥주",en:"Beer",jp:"ビール",cn:"啤酒",p:"4,500원"}]},
+  {id:22,ko:"수락산풍천장어",en:"Suraksan Pungcheon Eel",jp:"水落山プンチョンウナギ",cn:"水落山丰川鳗鱼",addr:"서울 노원구 동일로242길 31",cat:"food",dist:180,hours:"12:00~22:00",dko:"풍천 장어를 전문으로 하는 수락산 대표 장어 전문점입니다.\n양념구이와 소금구이 모두 깊은 풍미를 자랑합니다.\n원기 회복에 좋은 장어로 수락산 등산의 여독을 풀어보세요.",den:"Suraksan's premier eel restaurant specializing in Pungcheon eel.\nBoth seasoned and salt-grilled versions boast deep, rich flavor.\nRestore your energy with eel — the perfect recovery dish after a hike.",djp:"水落山を代表するプンチョンウナギ専門店。タレ焼きも塩焼きも深みのある風味を誇ります。精力回復に良いウナギで水落山登山の疲れを癒してください。",dcn:"水落山首屈一指的丰川鳗鱼专门店。酱烤和盐烤均风味深厚，令人回味。鳗鱼有助恢复体力，是水落山登山后的绝佳补品。",menus:[{ko:"양념장어구이",en:"Seasoned Grilled Eel",jp:"タレウナギ焼き",cn:"酱烤鳗鱼",p:"35,000원"},{ko:"소금장어구이",en:"Salt Grilled Eel",jp:"塩ウナギ焼き",cn:"盐烤鳗鱼",p:"35,000원"},{ko:"장어탕",en:"Eel Soup",jp:"ウナギスープ",cn:"鳗鱼汤",p:"12,000원"},{ko:"장어덮밥",en:"Eel Rice Bowl",jp:"ウナギ丼",cn:"鳗鱼盖饭",p:"13,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}]},
+  {id:23,ko:"임금님보쌈",en:"King Bossam",jp:"王様ポッサム",cn:"国王包饭",addr:"서울 노원구 동일로242길 31",cat:"food",dist:175,hours:"11:00~22:00",dko:"임금님이 드셨을 법한 최상급 보쌈을 자랑하는 전문점입니다.\n부드럽고 촉촉한 보쌈과 신선한 새우젓의 조화가 절묘합니다.\n수락거리에서 손꼽히는 보쌈 맛집으로 단체 모임에 강력 추천합니다.",den:"Premium bossam fit for a king — the best in Surak Street.\nTender, moist pork paired perfectly with fresh salted shrimp.\nHighly recommended for group gatherings at this renowned Surak Street spot.",djp:"王様がお召し上がりになりそうな最高級ポッサム専門店。柔らかくしっとりのポッサムと新鮮な塩エビの絶妙な組み合わせ。スラク거리で指折りのポッサム名店、グループ宴会に強くおすすめ。",dcn:"堪称御用级别的顶级包饭专门店，是水落街的翘楚。嫩滑多汁的猪肉与新鲜咸虾搭配绝妙。水落街数一数二的包饭名店，强力推荐团体聚餐。",menus:[{ko:"보쌈(소)",en:"Bossam(S)",jp:"ポッサム(小)",cn:"包饭(小)",p:"28,000원"},{ko:"보쌈(중)",en:"Bossam(M)",jp:"ポッサム(中)",cn:"包饭(中)",p:"33,000원"},{ko:"보쌈(대)",en:"Bossam(L)",jp:"ポッサム(大)",cn:"包饭(大)",p:"38,000원"},{ko:"족보세트",en:"Jokbo Set",jp:"チョッポセット",cn:"猪蹄包饭套餐",p:"45,000원"},{ko:"김치찌개",en:"Kimchi Jjigae",jp:"キムチチゲ",cn:"泡菜锅",p:"3,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"}]},
+  {id:24,ko:"순대일번지 수락산점",en:"Sundae No.1 Suraksan",jp:"スンデ一番地水落山",cn:"血肠一番地水落山",addr:"서울 노원구 동일로242길 31",cat:"food",dist:170,hours:"10:00~22:00",dko:"신선한 순대와 순대국밥으로 유명한 수락거리 명물 맛집입니다.\n매일 아침 직접 만드는 순대로 맛과 신선도를 보장합니다.\n등산 후 든든하게 한 끼 해결하기 좋은 정통 순대 전문점입니다.",den:"Famous for fresh sundae and sundae soup on Surak Street.\nSundae made fresh every morning guarantees taste and freshness.\nA traditional sundae specialist — perfect for a hearty post-hike meal.",djp:"新鮮なスンデとスンデクッパで有名なスラク거리名物グルメ。毎朝自家製スンデで味と新鮮度を保証。登山後にしっかり一食楽しめる本格スンデ専門店。",dcn:"以新鲜血肠和血肠汤饭著称的水落街名物美食。每天早晨自制血肠，确保口味和新鲜度。登山后饱餐一顿的正宗血肠专门店。",menus:[{ko:"순대국밥",en:"Sundae Soup Rice",jp:"スンデクッパ",cn:"血肠汤饭",p:"9,000원"},{ko:"모듬순대",en:"Mixed Sundae",jp:"盛り合わせスンデ",cn:"混合血肠",p:"12,000원"},{ko:"순대볶음",en:"Stir-fried Sundae",jp:"スンデ炒め",cn:"炒血肠",p:"10,000원"},{ko:"오징어볶음",en:"Stir-fried Squid",jp:"イカ炒め",cn:"炒鱿鱼",p:"10,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}]},
+  {id:25,ko:"딥크루아상",en:"Deep Croissant",jp:"ディープクロワッサン",cn:"深层可颂",addr:"서울 노원구 동일로242길 32",cat:"cafe",dist:165,hours:"09:00~21:00",dko:"바삭하고 고소한 크루아상을 전문으로 하는 베이커리 카페입니다.\n직접 만든 다양한 크루아상과 정성껏 내린 커피가 자랑입니다.\n수락거리 산책 중 달콤한 휴식을 선물하는 작지만 알찬 카페입니다.",den:"A bakery café specializing in crispy, buttery croissants.\nVarieties of homemade croissants and carefully brewed coffee are the pride.\nA small but special café offering a sweet break during your Surak stroll.",djp:"サクサクで香ばしいクロワッサンを専門とするベーカリーカフェ。自家製の多彩なクロワッサンと丁寧に淹れたコーヒーが自慢。スラク거리散策中に甘い休憩をプレゼントしてくれる小さくても充実したカフェ。",dcn:"专门制作香脆美味可颂的烘焙咖啡厅。多种自制可颂和精心冲泡的咖啡是自豪所在。水落街散步途中带来甜蜜休憩的小而美的咖啡厅。",menus:[{ko:"버터크루아상",en:"Butter Croissant",jp:"バタークロワッサン",cn:"黄油可颂",p:"4,500원"},{ko:"햄치즈크루아상",en:"Ham&Cheese Croissant",jp:"ハムチーズクロワッサン",cn:"火腿芝士可颂",p:"5,500원"},{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,000원"},{ko:"카페라떼",en:"Café Latte",jp:"カフェラテ",cn:"拿铁",p:"5,000원"},{ko:"크루아상샌드위치",en:"Croissant Sandwich",jp:"クロワッサンサンド",cn:"可颂三明治",p:"7,500원"}]},
+  {id:26,ko:"자매반찬",en:"Sisters Banchan",jp:"姉妹おかず",cn:"姐妹小菜",addr:"서울 노원구 동일로242길 32",cat:"food",dist:160,hours:"09:00~20:00",dko:"정갈하고 맛있는 집반찬을 전문으로 하는 밑반찬 전문점입니다.\n어머니의 손맛을 담은 다양한 반찬으로 건강한 밥상을 완성하세요.\n등산 후 간편하게 집에서 즐기는 건강 반찬을 만날 수 있는 곳입니다.",den:"A specialty side dish store offering clean, delicious homestyle banchan.\nComplete a healthy meal table with a variety of mom-inspired dishes.\nFind healthy side dishes to enjoy at home after your hike.",djp:"丁寧で美味しい家庭的おかずを専門とするおかず専門店。お母さんの味を込めた多彩なおかずで健康的な食卓を完成させましょう。登山後、家で手軽に楽しめる健康おかずが揃うお店。",dcn:"专门提供精致美味家常小菜的配菜专门店。多种充满妈妈味道的小菜助您打造健康饭桌。登山后在家轻松享用的健康小菜就在这里。",menus:[{ko:"반찬 3찬",en:"3 Side Dishes",jp:"おかず3種",cn:"3种小菜",p:"5,000원"},{ko:"반찬 5찬",en:"5 Side Dishes",jp:"おかず5種",cn:"5种小菜",p:"8,000원"},{ko:"나물모듬",en:"Namul Mix",jp:"ナムル盛り合わせ",cn:"拌菜拼盘",p:"6,000원"},{ko:"김치",en:"Kimchi",jp:"キムチ",cn:"泡菜",p:"5,000원"},{ko:"장조림",en:"Soy Braised Meat",jp:"醤油煮",cn:"酱焖肉",p:"7,000원"}]},
+  {id:27,ko:"포아이니 수락산역점",en:"Poaini Suraksan",jp:"ポアイニ水落山",cn:"包爱尼水落山",addr:"서울 노원구 동일로242길 29",cat:"bar",dist:150,hours:"17:00~01:00",dko:"아시안 퓨전 스타일의 이국적인 포차입니다.\n독특한 안주와 감성적인 분위기가 젊은 층에게 인기입니다.\n수락거리의 밤을 더욱 특별하게 만들어주는 힙한 술집입니다.",den:"An exotic Asian fusion-style pojangmacha with a unique vibe.\nUnique dishes and a trendy atmosphere popular with younger visitors.\nThe hip bar that makes nights on Surak Street extra special.",djp:"アジアンフュージョンスタイルの異国情緒あふれるポチャ。独特のおつまみと感性的な雰囲気が若者に人気。スラク거리の夜をさらに特別にしてくれるおしゃれな酒場。",dcn:"亚洲融合风格的异域特色路边摊。独特小吃和时尚氛围深受年轻人喜爱。让水落街夜晚更加特别的潮流酒吧。",menus:[{ko:"팟타이",en:"Pad Thai",jp:"パッタイ",cn:"泰式炒面",p:"13,000원"},{ko:"스프링롤",en:"Spring Roll",jp:"春巻き",cn:"春卷",p:"10,000원"},{ko:"모듬안주",en:"Assorted Snacks",jp:"盛り合わせ",cn:"拼盘小吃",p:"15,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"},{ko:"맥주",en:"Beer",jp:"ビール",cn:"啤酒",p:"4,500원"},{ko:"칵테일",en:"Cocktail",jp:"カクテル",cn:"鸡尾酒",p:"9,000원"}]},
+  {id:28,ko:"백송춘천닭갈비",en:"Baeksong Chuncheon Dakgalbi",jp:"ペクソン春川タッカルビ",cn:"白松春川鸡排",addr:"서울 노원구 동일로242길 27",cat:"gogi",dist:130,hours:"11:00~22:00",dko:"춘천 정통 방식의 닭갈비 전문점입니다.\n매콤달콤한 양념이 잘 배인 닭갈비가 철판 위에서 지글거립니다.\n마지막에 볶음밥을 추가해 먹는 것이 이 집의 필수 코스입니다.",den:"Authentic Chuncheon-style spicy chicken in a hot skillet.\nSweet and spicy marinated chicken sizzling on a cast-iron plate.\nAdding fried rice at the end is the essential final course here.",djp:"春川伝統スタイルのタッカルビ専門店。甘辛いタレがよく染みたタッカルビが鉄板の上でジュージュー焼けます。最後に炒飯を追加して食べるのがこのお店の必須コース。",dcn:"春川正宗风格辣炒鸡排专门店。甜辣腌料充分入味的鸡排在铁板上嗞嗞作响。最后加炒饭是这家店的必选步骤。",menus:[{ko:"닭갈비(1인)",en:"Dakgalbi(1p)",jp:"タッカルビ(1人)",cn:"辣炒鸡排(1人)",p:"12,000원"},{ko:"치즈닭갈비",en:"Cheese Dakgalbi",jp:"チーズタッカルビ",cn:"芝士辣炒鸡排",p:"13,000원"},{ko:"막국수",en:"Buckwheat Noodles",jp:"マッククス",cn:"荞麦冷面",p:"8,000원"},{ko:"볶음밥",en:"Fried Rice",jp:"チャーハン",cn:"炒饭",p:"3,000원"},{ko:"음료",en:"Drink",jp:"ドリンク",cn:"饮料",p:"2,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}]},
+  {id:29,ko:"진1926 수락산역점",en:"Jin1926 Suraksan",jp:"ジン1926水落山",cn:"真1926水落山",addr:"서울 노원구 동일로242길 23",cat:"gogi",dist:110,hours:"17:00~23:00",dko:"1926년 전통 레시피를 현대적으로 재해석한 양고기 전문점입니다.\n로즈마리 향이 가득한 프렌치랙과 양갈비가 대표 메뉴입니다.\n수락거리에서 색다른 미식 경험을 원하는 분께 강력 추천합니다.",den:"A modern reinterpretation of a 1926 traditional lamb recipe.\nFrench rack and lamb ribs fragrant with rosemary are the signatures.\nStrongly recommended for those seeking a unique gourmet experience on Surak Street.",djp:"1926年の伝統レシピを現代的に再解釈したラム肉専門店。ローズマリーの香りあふれるフレンチラックとラムリブが代表メニュー。スラク거리で一味違うグルメ体験を求める方に強くおすすめ。",dcn:"将1926年传统配方现代演绎的羊肉专门店。满溢迷迭香香气的法式羊排和羊排是招牌菜。强力推荐给在水落街寻求独特美食体验的朋友。",menus:[{ko:"프렌치랙",en:"French Rack",jp:"フレンチラック",cn:"法式羊排",p:"36,000원"},{ko:"양갈비",en:"Lamb Ribs",jp:"ラムリブ",cn:"羊排",p:"30,000원"},{ko:"양고기스테이크",en:"Lamb Steak",jp:"ラムステーキ",cn:"羊排",p:"28,000원"},{ko:"양고기모듬",en:"Lamb Assorted",jp:"ラム盛り合わせ",cn:"羊肉拼盘",p:"45,000원"},{ko:"와인",en:"Wine",jp:"ワイン",cn:"红酒",p:"8,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}]},
+  {id:30,ko:"설빙 서울수락산점",en:"Sulbing Suraksan",jp:"ソルビン水落山",cn:"雪冰水落山",addr:"서울 노원구 동일로242길 22",cat:"cafe",dist:95,hours:"11:00~22:00",dko:"전국적으로 유명한 빙수 프랜차이즈의 수락산점입니다.\n등산 후 시원하게 즐기는 빙수 한 그릇이 피로를 싹 날려줍니다.\n인절미빙수, 딸기빙수 등 다양한 시즌 메뉴가 준비되어 있습니다.",den:"The Suraksan branch of the nationally famous shaved ice franchise.\nA refreshing bowl of bingsu after hiking blows away all fatigue.\nInjeolmi, strawberry and various seasonal menus are always ready.",djp:"全国的に有名なかき氷フランチャイズの水落山店。登山後に涼しく楽しむかき氷一杯が疲れをすっきり飛ばします。インジョルミ、イチゴ等多彩なシーズンメニューが揃っています。",dcn:"全国知名刨冰连锁的水落山店。登山后爽快享用一碗刨冰，疲劳一扫而光。糯米糕、草莓等各种季节菜单随时供应。",menus:[{ko:"인절미빙수",en:"Injeolmi Bingsu",jp:"インジョルミかき氷",cn:"糯米糕刨冰",p:"12,000원"},{ko:"딸기빙수",en:"Strawberry Bingsu",jp:"イチゴかき氷",cn:"草莓刨冰",p:"13,000원"},{ko:"망고빙수",en:"Mango Bingsu",jp:"マンゴーかき氷",cn:"芒果刨冰",p:"13,000원"},{ko:"팥빙수",en:"Red Bean Bingsu",jp:"小豆かき氷",cn:"红豆刨冰",p:"11,000원"},{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,000원"}]},
+  {id:31,ko:"달콤한커피방앗간",en:"Sweet Coffee Mill",jp:"甘いコーヒー工場",cn:"甜蜜咖啡磨坊",addr:"서울 노원구 동일로242길 22",cat:"cafe",dist:90,hours:"09:00~21:00",dko:"전통 방앗간 콘셉트를 담은 감성 카페입니다.\n달콤한 인절미 라떼와 수제 과자가 이 카페만의 자랑입니다.\n수락거리에서 가장 한국적인 감성의 카페로 외국인에게도 인기입니다.",den:"A charming café with a traditional Korean mill concept.\nSweet injeolmi latte and homemade sweets are unique to this café.\nThe most Korean-style café on Surak Street — popular with foreign visitors too.",djp:"伝統的な製粉所コンセプトの感性カフェ。甘いインジョルミラテと手作りお菓子がこのカフェだけの自慢。スラク거리で最も韓国的な感性のカフェとして外国人にも人気。",dcn:"融入传统磨坊概念的格调咖啡厅。香甜的糯米糕拿铁和手工点心是这家咖啡厅的独家招牌。水落街最具韩国风情的咖啡厅，外国游客也深受欢迎。",menus:[{ko:"달콤라떼",en:"Sweet Latte",jp:"甘いラテ",cn:"甜拿铁",p:"5,000원"},{ko:"인절미라떼",en:"Injeolmi Latte",jp:"インジョルミラテ",cn:"糯米糕拿铁",p:"5,500원"},{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,000원"},{ko:"수제과자세트",en:"Homemade Snack Set",jp:"手作りお菓子セット",cn:"手工点心套餐",p:"6,000원"},{ko:"식혜",en:"Sikhye",jp:"シッケ",cn:"甜米汁",p:"3,500원"}]},
+  {id:32,ko:"빛나는바다 수락산점",en:"Shining Sea Suraksan",jp:"輝く海水落山",cn:"闪耀的海水落山",addr:"서울 노원구 동일로242길 15",cat:"food",dist:75,hours:"11:00~22:00",dko:"신선한 해산물을 전문으로 하는 수산물 요리 전문점입니다.\n제철 해산물을 직접 손질해 내놓는 해물탕과 꽃게찜이 유명합니다.\n바다의 신선함을 수락산 기슭에서 그대로 느낄 수 있는 곳입니다.",den:"A seafood specialist serving only the freshest catches.\nFamous for seasonal seafood hot pot and steamed flower crab.\nExperience the freshness of the sea right at the foot of Suraksan.",djp:"新鮮な海産物専門の水産料理専門店。旬の海産物を自家仕込みで提供する海鮮鍋と花ガニ蒸しが有名。水落山のふもとで海の新鮮さをそのまま感じられる場所。",dcn:"专门供应新鲜海产的水产料理专门店。亲手处理当季海鲜制作的海鲜汤和花蟹蒸远近闻名。在水落山脚下原汁原味感受大海的新鲜。",menus:[{ko:"해물탕(소)",en:"Seafood Stew(S)",jp:"海鮮鍋(小)",cn:"海鲜汤(小)",p:"35,000원"},{ko:"해물탕(대)",en:"Seafood Stew(L)",jp:"海鮮鍋(大)",cn:"海鲜汤(大)",p:"55,000원"},{ko:"꽃게찜",en:"Steamed Flower Crab",jp:"花ガニ蒸し",cn:"花蟹蒸",p:"40,000원"},{ko:"새우구이",en:"Grilled Shrimp",jp:"海老焼き",cn:"烤虾",p:"25,000원"},{ko:"낙지볶음",en:"Stir-fried Octopus",jp:"タコ炒め",cn:"炒章鱼",p:"15,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"}]},
+  {id:33,ko:"쪽갈비대통령 수락산점",en:"Rib President Suraksan",jp:"チョクカルビ大統領",cn:"排骨总统水落山",addr:"서울 노원구 동일로242길 15",cat:"gogi",dist:70,hours:"17:00~23:00",dko:"쫄깃하고 맛있는 쪽갈비만을 전문으로 하는 고기 전문점입니다.\n직접 담근 양념으로 숙성시킨 갈비가 구이판 위에서 익어갑니다.\n수락거리 저녁 모임의 단골 코스로 사랑받는 갈비 맛집입니다.",den:"A specialist exclusively in the chewy and delicious short rib.\nHomemade marinade-aged ribs sizzling on the grill.\nA beloved evening dining staple on Surak Street.",djp:"モチモチで美味しいチョクカルビのみを専門とする焼き肉専門店。自家製タレで熟成させたカルビが焼き台の上で焼けていきます。スラク거리の夜の集まりの定番コースとして愛されるカルビ名店。",dcn:"专门以劲道美味短排骨为主打的烤肉专门店。自制腌料熟成的排骨在烤盘上慢慢烤制。是水落街晚间聚会必选路线，深受喜爱的排骨名店。",menus:[{ko:"쪽갈비",en:"Short Ribs",jp:"チョクカルビ",cn:"短排骨",p:"18,000원"},{ko:"쪽갈비+냉면세트",en:"Ribs+Cold Noodle Set",jp:"カルビ+冷麺セット",cn:"排骨+冷面套餐",p:"25,000원"},{ko:"항정살",en:"Cheek Meat",jp:"ハンジョン",cn:"颊肉",p:"17,000원"},{ko:"냉면",en:"Cold Noodles",jp:"冷麺",cn:"冷面",p:"7,000원"},{ko:"된장찌개",en:"Doenjang Jjigae",jp:"味噌チゲ",cn:"大酱汤",p:"3,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"}]},
+  {id:34,ko:"박가네부대찌개 수락산점",en:"Bakgane Budae Jjigae",jp:"パクガネ部隊チゲ",cn:"朴家部队锅",addr:"서울 노원구 동일로242길 13",cat:"food",dist:62,hours:"11:00~22:00",dko:"푸짐한 재료로 가득 찬 부대찌개 전문점입니다.\n햄, 소시지, 라면 등 다양한 재료가 들어간 얼큰한 맛이 일품입니다.\n라면사리 추가는 필수! 등산 후 속을 확 풀어주는 해장 메뉴로도 최고입니다.",den:"Army stew overflowing with generous toppings.\nA spicy and savory mix of ham, sausage, ramen and more.\nRamen add-on is a must! Also the best hangover cure after hiking.",djp:"具沢山の部隊チゲ専門店。ハム、ソーセージ、ラーメン等多彩な食材が入ったピリ辛の味が絶品。ラーメン追加は必須！登山後にすっきり楽しめる解酒メニューとしても最高。",dcn:"食材丰富的部队锅专门店。火腿、香肠、拉面等各种食材汇聚的麻辣美味令人称绝。加拉面是必选！登山后最佳解酒菜。",menus:[{ko:"부대찌개(1인)",en:"Budae Jjigae(1p)",jp:"部隊チゲ(1人)",cn:"部队锅(1人)",p:"9,000원"},{ko:"부대찌개(2인)",en:"Budae Jjigae(2p)",jp:"部隊チゲ(2人)",cn:"部队锅(2人)",p:"18,000원"},{ko:"라면사리",en:"Ramen Add-on",jp:"ラーメン追加",cn:"加拉面",p:"1,000원"},{ko:"치즈추가",en:"Cheese Add-on",jp:"チーズ追加",cn:"加芝士",p:"2,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}]},
+  {id:35,ko:"수락이오냉면",en:"Suraki Cold Noodle",jp:"スラキ冷麺",cn:"水落儿冷面",addr:"서울 노원구 동일로242길 13",cat:"food",dist:58,hours:"11:00~22:00",dko:"시원하고 깔끔한 평양냉면 스타일의 냉면 전문점입니다.\n직접 뽑은 면과 맑고 깊은 육수가 어우러진 깊은 맛이 특징입니다.\n등산 후 더위를 날리기에 딱 맞는 수락거리의 여름 명물 메뉴입니다.",den:"A cold noodle specialist in the clean, refreshing Pyongyang style.\nHand-pulled noodles in a clear, deep broth — the signature taste.\nThe perfect way to beat the heat after hiking — a Surak Street summer staple.",djp:"さっぱり清涼な平壌冷麺スタイルの冷麺専門店。自家製麺と澄んだ深みのあるスープが絡む深い味が特徴。登山後の暑さを吹き飛ばすのにぴったりなスラク거리の夏の名物メニュー。",dcn:"清爽干净的平壤风冷面专门店。手工拉面配上清澈深厚汤底，风味独特。是水落街夏季清凉消暑的名物，登山后再适合不过。",menus:[{ko:"물냉면",en:"Mul Naengmyeon",jp:"水冷麺",cn:"水冷面",p:"9,000원"},{ko:"비빔냉면",en:"Bibim Naengmyeon",jp:"ビビム冷麺",cn:"拌冷面",p:"9,000원"},{ko:"온면",en:"Hot Noodles",jp:"温麺",cn:"热面",p:"9,000원"},{ko:"만두",en:"Dumplings",jp:"餃子",cn:"饺子",p:"7,000원"},{ko:"수육",en:"Boiled Pork",jp:"スユク",cn:"白切肉",p:"15,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}]},
+  {id:36,ko:"최가네손두부",en:"Choi Handmade Tofu",jp:"チョイガネ手作り豆腐",cn:"崔家手工豆腐",addr:"서울 노원구 동일로242길 24",cat:"food",dist:105,hours:"10:00~21:00",dko:"100% 국산 콩으로 직접 만드는 손두부 전문점입니다.\n갓 만든 따뜻한 두부의 고소하고 담백한 맛이 일품입니다.\n건강을 생각하는 분들께 특히 사랑받는 수락거리의 건강 맛집입니다.",den:"Handmade tofu specialist using 100% domestic soybeans.\nThe nutty, clean taste of freshly made warm tofu is simply wonderful.\nA health-conscious favorite beloved by those who care about what they eat.",djp:"国産大豆100%で自家製造する手作り豆腐専門店。できたての温かい豆腐のコクとあっさりした味が絶品。健康を考える方に特に愛されるスラク거리のヘルシーグルメ店。",dcn:"使用100%国产大豆亲手制作的豆腐专门店。刚制作的温热豆腐香醇清淡，令人回味。特受注重健康人士喜爱的水落街健康美食店。",menus:[{ko:"순두부찌개",en:"Soft Tofu Stew",jp:"スンドゥブチゲ",cn:"嫩豆腐锅",p:"9,000원"},{ko:"두부전골",en:"Tofu Hot Pot",jp:"豆腐チゲ",cn:"豆腐火锅",p:"25,000원"},{ko:"모두부",en:"Block Tofu",jp:"木綿豆腐",cn:"老豆腐",p:"8,000원"},{ko:"두부구이",en:"Grilled Tofu",jp:"焼き豆腐",cn:"烤豆腐",p:"9,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"4,000원"}]},
+  {id:37,ko:"진미초밥",en:"Jinmi Sushi",jp:"珍味寿司",cn:"珍味寿司",addr:"서울 노원구 동일로242길 26",cat:"food",dist:118,hours:"11:00~22:00",dko:"신선한 재료만 고집하는 정통 일식 초밥 전문점입니다.\n매일 직접 들어오는 신선한 해산물로 만드는 초밥이 자랑입니다.\n오마카세 코스도 운영하여 특별한 날에 방문하기 좋은 곳입니다.",den:"Traditional Japanese sushi using only the freshest ingredients.\nSushi made from fresh seafood delivered daily is the pride of this restaurant.\nOmakase course is also available — perfect for a special occasion.",djp:"新鮮な食材のみを使った本格日式寿司専門店。毎日直送の新鮮な海産物で作る寿司が自慢。おまかせコースも運営しており、特別な日の訪問に最適。",dcn:"只用新鲜食材的正宗日式寿司专门店。每日直送新鲜海鲜制作的寿司是招牌。也提供主厨套餐，是特殊场合的绝佳选择。",menus:[{ko:"초밥세트(10p)",en:"Sushi Set(10p)",jp:"寿司セット(10貫)",cn:"寿司套餐(10个)",p:"15,000원"},{ko:"초밥세트(20p)",en:"Sushi Set(20p)",jp:"寿司セット(20貫)",cn:"寿司套餐(20个)",p:"28,000원"},{ko:"오마카세",en:"Omakase",jp:"おまかせ",cn:"主厨套餐",p:"35,000원"},{ko:"사시미",en:"Sashimi",jp:"刺身",cn:"刺身",p:"20,000원"},{ko:"김밥",en:"Gimbap",jp:"キムパプ",cn:"紫菜卷",p:"8,000원"},{ko:"우동",en:"Udon",jp:"うどん",cn:"乌冬面",p:"8,000원"}]},
+  {id:38,ko:"공감커피정원",en:"Sympathy Coffee Garden",jp:"共感コーヒー庭園",cn:"共鸣咖啡花园",addr:"서울 노원구 동일로242길 26",cat:"cafe",dist:115,hours:"10:00~22:00",dko:"정원을 연상케 하는 아늑한 분위기의 감성 카페입니다.\n직접 선별한 원두로 내린 드립커피와 직접 만든 케이크가 자랑입니다.\n수락산 등산 후 조용히 쉬어가기에 더할 나위 없는 힐링 공간입니다.",den:"A cozy, garden-inspired aesthetic café for the soul.\nDrip coffee from personally selected beans and homemade cakes are the pride.\nThe ideal healing space to rest quietly after a Suraksan hike.",djp:"庭園を彷彿とさせる落ち着いた雰囲気の感性カフェ。自家選別豆で淹れたドリップコーヒーと自家製ケーキが自慢。水落山登山後に静かに休憩するのに最適なヒーリング空間。",dcn:"令人联想到花园的温馨氛围格调咖啡厅。用亲自精选豆冲泡的手冲咖啡和自制蛋糕是招牌。水落山登山后静静休憩的绝佳疗愈空间。",menus:[{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,000원"},{ko:"드립커피",en:"Drip Coffee",jp:"ドリップコーヒー",cn:"手冲咖啡",p:"6,000원"},{ko:"정원라떼",en:"Garden Latte",jp:"ガーデンラテ",cn:"花园拿铁",p:"5,500원"},{ko:"케이크",en:"Cake",jp:"ケーキ",cn:"蛋糕",p:"6,500원"},{ko:"과일에이드",en:"Fruit Ade",jp:"フルーツエイド",cn:"水果气泡饮",p:"6,000원"}]},
+  {id:39,ko:"일주일",en:"Iljuil Cafe",jp:"一週間カフェ",cn:"一周咖啡",addr:"서울 노원구 동일로242길 28",cat:"cafe",dist:122,hours:"10:00~22:00",dko:"한 주의 쉼터 같은 감성 카페입니다.\n독특한 시그니처 음료와 감성적인 인테리어가 방문객을 사로잡습니다.\n수락거리에서 특별한 카페 경험을 원하는 분께 추천합니다.",den:"A café that feels like a weekly retreat for the soul.\nUnique signature drinks and a stylish interior captivate every visitor.\nRecommended for those seeking a special café experience on Surak Street.",djp:"一週間の憩いの場のような感性カフェ。独特のシグネチャードリンクと感性的なインテリアが訪問者を魅了します。スラク거리で特別なカフェ体験を求める方におすすめ。",dcn:"如每周休憩所般的格调咖啡厅。独特的招牌饮品和时尚装潢令每位访客着迷。推荐给在水落街寻求特别咖啡体验的朋友。",menus:[{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,500원"},{ko:"플랫화이트",en:"Flat White",jp:"フラットホワイト",cn:"馥芮白",p:"5,500원"},{ko:"시그니처라떼",en:"Signature Latte",jp:"シグネチャーラテ",cn:"招牌拿铁",p:"6,000원"},{ko:"티라떼",en:"Tea Latte",jp:"ティーラテ",cn:"茶拿铁",p:"5,500원"},{ko:"스콘",en:"Scone",jp:"スコーン",cn:"司康饼",p:"4,500원"}]},
+  {id:40,ko:"짜장과우동",en:"Jjajang and Udon",jp:"ジャジャンとうどん",cn:"炸酱与乌冬",addr:"서울 노원구 동일로242길 25",cat:"food",dist:112,hours:"10:00~21:00",dko:"짜장면과 우동을 전문으로 하는 가성비 좋은 중식 분식집입니다.\n직접 만든 면과 진한 소스가 어우러진 깊은 맛이 특징입니다.\n간단하게 한 끼 해결하기 좋은 수락거리의 가성비 맛집입니다.",den:"Great value Chinese-Korean noodle joint specializing in jjajang and udon.\nHomemade noodles paired with a rich, deep sauce are the signature.\nA go-to spot for a quick, satisfying meal on Surak Street.",djp:"ジャジャン麺とうどんを専門とするコスパの良い中華軽食店。自家製麺と濃厚ソースが絡む深い味が特徴。手軽に一食解決できるスラク거리のコスパグルメ店。",dcn:"专营炸酱面和乌冬的高性价比中式快餐店。手工面条配上浓郁酱汁，风味深厚。水落街快速解决一顿的高性价比美食店。",menus:[{ko:"짜장면",en:"Jjajangmyeon",jp:"ジャジャン麺",cn:"炸酱面",p:"7,000원"},{ko:"짬뽕",en:"Jjambbong",jp:"チャンポン",cn:"辣海鲜汤面",p:"8,000원"},{ko:"우동",en:"Udon",jp:"うどん",cn:"乌冬面",p:"7,000원"},{ko:"볶음밥",en:"Fried Rice",jp:"チャーハン",cn:"炒饭",p:"7,000원"},{ko:"탕수육",en:"Sweet & Sour Pork",jp:"タンスユク",cn:"糖醋肉",p:"18,000원"},{ko:"군만두",en:"Fried Dumplings",jp:"焼き餃子",cn:"煎饺",p:"6,000원"}]},
+  {id:41,ko:"우지커피 수락산점",en:"Uji Coffee Suraksan",jp:"ウジコーヒー水落山",cn:"宇治咖啡水落山",addr:"서울 노원구 동일로242길 7",cat:"cafe",dist:42,hours:"09:00~21:00",dko:"정통 드립커피와 말차를 전문으로 하는 일본식 감성의 카페입니다.\n엄선한 원두와 말차로 정성껏 만드는 음료가 자랑입니다.\n수락산 등산로 입구에 위치해 등산 전후 방문하기 좋은 카페입니다.",den:"A Japanese-inspired café specializing in authentic drip coffee and matcha.\nCarefully crafted drinks from selected beans and quality matcha.\nConveniently located at the Suraksan trailhead — great before or after a hike.",djp:"本格ドリップコーヒーと抹茶を専門とする日本式感性のカフェ。厳選した豆と抹茶で丁寧に作る飲み物が自慢。水落山登山道入口に位置し、登山前後の訪問に最適なカフェ。",dcn:"专营正宗手冲咖啡与抹茶的日式风格咖啡厅。用精选咖啡豆和优质抹茶精心制作的饮品是招牌。位于水落山登山道入口，登山前后都方便造访。",menus:[{ko:"드립커피",en:"Drip Coffee",jp:"ドリップコーヒー",cn:"手冲咖啡",p:"6,000원"},{ko:"말차라떼",en:"Matcha Latte",jp:"抹茶ラテ",cn:"抹茶拿铁",p:"6,500원"},{ko:"아메리카노",en:"Americano",jp:"アメリカーノ",cn:"美式咖啡",p:"4,500원"},{ko:"아이스말차",en:"Iced Matcha",jp:"アイス抹茶",cn:"冰抹茶",p:"6,000원"},{ko:"마카롱",en:"Macaron",jp:"マカロン",cn:"马卡龙",p:"2,500원"}]},
+  {id:42,ko:"응다방",en:"Retro Eungda Café",jp:"レトロウンダカフェ",cn:"复古应答茶馆",addr:"서울 노원구 동일로242길 37",cat:"cafe",dist:245,hours:"09:00~21:00",dko:"1970~80년대 옛날 다방 감성을 재현한 레트로 카페입니다.\n쌍화차, 수정과, 식혜 등 전통 음료가 이 카페의 자랑입니다.\n어른들의 추억과 젊은이들의 호기심이 만나는 특별한 공간입니다.",den:"A retro café recreating the nostalgic 1970s–80s Korean tea house vibe.\nTraditional drinks like ssanghwa tea, sikhye and sujeonggwa are the pride.\nA special place where the memories of elders meet the curiosity of the young.",djp:"1970〜80年代の古いダバンの感性を再現したレトロカフェ。サンファ茶、スジョングァ、シッケ等の伝統飲み物がこのカフェの自慢。大人たちの思い出と若者の好奇心が出会う特別な空間。",dcn:"再现1970-80年代老式茶馆情怀的复古咖啡厅。双花茶、柿子饮料、甜米汁等传统饮品是招牌。老人的回忆与年轻人的好奇心交汇的特别空间。",menus:[{ko:"쌍화차",en:"Ssanghwa Tea",jp:"サンファ茶",cn:"双花茶",p:"4,500원"},{ko:"커피",en:"Coffee",jp:"コーヒー",cn:"咖啡",p:"3,500원"},{ko:"식혜",en:"Sikhye",jp:"シッケ",cn:"甜米汁",p:"3,500원"},{ko:"수정과",en:"Sujeonggwa",jp:"スジョングァ",cn:"柿子饮料",p:"3,500원"},{ko:"유자차",en:"Yuzu Tea",jp:"ゆず茶",cn:"柚子茶",p:"4,000원"}]},
+  {id:43,ko:"신오반점 수락산본점",en:"Sino Chinese Suraksan",jp:"新五飯店水落山本店",cn:"新五饭店水落山本店",addr:"서울 노원구 동일로242길 16",cat:"food",dist:80,hours:"11:00~21:00",dko:"수락산 터줏대감으로 오랜 역사를 자랑하는 중화요리 전문점입니다.\n가성비 좋은 정통 중화요리를 합리적인 가격에 즐길 수 있습니다.\n수락거리를 찾는 등산객과 지역 주민 모두에게 사랑받는 곳입니다.",den:"A long-established Chinese restaurant that has stood the test of time on Surak Street.\nAuthentic Chinese cuisine at great value prices.\nLoved by both hikers visiting Surak Street and local residents alike.",djp:"水落山の老舗として長い歴史を誇る中華料理専門店。コスパの良い本格中華料理をリーズナブルな価格で楽しめます。スラク거리を訪れる登山客と地元住民双方に愛されるお店。",dcn:"水落山老字号，历史悠久的中华料理专门店。正宗中华料理价格实惠，超高性价比。深受水落街登山客和当地居民共同喜爱。",menus:[{ko:"짜장면",en:"Jjajangmyeon",jp:"ジャジャン麺",cn:"炸酱面",p:"7,000원"},{ko:"짬뽕",en:"Jjambbong",jp:"チャンポン",cn:"辣海鲜汤面",p:"8,000원"},{ko:"볶음밥",en:"Fried Rice",jp:"チャーハン",cn:"炒饭",p:"8,000원"},{ko:"탕수육",en:"Sweet&Sour Pork",jp:"タンスユク",cn:"糖醋肉",p:"18,000원"},{ko:"군만두",en:"Fried Dumplings",jp:"焼き餃子",cn:"煎饺",p:"6,000원"},{ko:"울면",en:"Thick Noodle Soup",jp:"ウルミョン",cn:"芡汤面",p:"9,000원"}]},
+  {id:44,ko:"산두막",en:"Sandumaak Bar",jp:"サンドゥマク",cn:"山棚酒馆",addr:"서울 노원구 동일로242길 15",cat:"bar",dist:68,hours:"14:00~23:00",dko:"등산객들의 성지로 불리는 수락거리 대표 포차입니다.\n두루치기와 모듬전이 유명하며 등산 후 막걸리 한 잔이 일품입니다.\n수락산을 사랑하는 모든 이들이 즐겨 찾는 소박하고 정겨운 술집입니다.",den:"The iconic bar of Surak Street — a sacred spot for hikers.\nFamous for durutchigi and assorted pancakes, perfect with makgeolli after a hike.\nA humble, warm-hearted bar where all Suraksan lovers gather.",djp:"登山客の聖地と呼ばれるスラク거리を代表するポチャ。豚炒めと盛り合わせチヂミが有名で、登山後のマッコリ一杯が最高。水落山を愛するすべての人が訪れる素朴で温かい酒場。",dcn:"被称为登山者圣地的水落街代表路边摊。炒肉和拼盘煎饼著名，登山后来一杯米酒最是享受。所有水落山爱好者都喜欢光顾的朴实温馨酒馆。",menus:[{ko:"두루치기",en:"Spicy Pork Stir-fry",jp:"豚炒め",cn:"辣炒猪肉",p:"13,000원"},{ko:"모듬전",en:"Assorted Pancakes",jp:"チヂミ盛り合わせ",cn:"拼盘煎饼",p:"12,000원"},{ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"3,000원"},{ko:"파전",en:"Green Onion Pancake",jp:"ネギチヂミ",cn:"葱饼",p:"10,000원"},{ko:"오징어볶음",en:"Stir-fried Squid",jp:"イカ炒め",cn:"炒鱿鱼",p:"10,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"}]},
+  {id:45,ko:"호남해물탕",en:"Honam Seafood Stew",jp:"ホナム海鮮鍋",cn:"湖南海鲜锅",addr:"서울 노원구 동일로242길 40",cat:"food",dist:278,hours:"11:00~22:00",dko:"전라도 정통 방식의 해물탕 전문점입니다.\n신선한 해산물이 가득한 얼큰한 해물탕이 이 집의 자랑입니다.\n남도의 맛을 서울에서 그대로 느낄 수 있는 수락거리 명소입니다.",den:"A specialist in authentic Jeolla-do style seafood hot pot.\nOverflowing fresh seafood in a spicy broth is the signature dish.\nExperience the true taste of Southern Korea right here on Surak Street.",djp:"全羅道伝統スタイルの海鮮鍋専門店。新鮮な海産物たっぷりのピリ辛海鮮鍋がこのお店の自慢。南道の味をソウルでそのまま感じられるスラク거리の名所。",dcn:"全罗道正宗风格的海鲜汤专门店。新鲜海鲜满满的麻辣海鲜汤是招牌。在首尔原汁原味品尝南道风味的水落街名所。",menus:[{ko:"해물탕(소)",en:"Seafood Stew(S)",jp:"海鮮鍋(小)",cn:"海鲜汤(小)",p:"35,000원"},{ko:"해물탕(대)",en:"Seafood Stew(L)",jp:"海鮮鍋(大)",cn:"海鲜汤(大)",p:"55,000원"},{ko:"조개구이",en:"Grilled Clams",jp:"ハマグリ焼き",cn:"烤蛤蜊",p:"20,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"},{ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"4,000원"}]},
+  {id:46,ko:"별이빛나는밤에",en:"Starry Night Bar",jp:"星が輝く夜に",cn:"繁星夜酒馆",addr:"서울 노원구 동일로 1689",cat:"bar",dist:35,hours:"18:00~02:00",dko:"별빛 아래 감성적인 분위기의 주점입니다.\n하이볼과 와인을 중심으로 다양한 안주를 즐길 수 있습니다.\n수락거리의 낭만적인 야경을 즐기며 특별한 저녁을 보내기에 최적입니다.",den:"A romantic bar under the stars with a dreamy atmosphere.\nHighball and wine with various snacks are the highlights.\nThe perfect spot for a special evening enjoying Surak Street's romantic night view.",djp:"星空の下、感性的な雰囲気の居酒屋。ハイボールとワインを中心に多彩なおつまみを楽しめます。スラク거리のロマンチックな夜景を楽しみながら特別な夜を過ごすのに最適。",dcn:"繁星之下充满感性氛围的酒馆。以高球酒和红酒为主，配有各种精致小吃。欣赏水落街浪漫夜景，度过特别夜晚的最佳去处。",menus:[{ko:"하이볼",en:"Highball",jp:"ハイボール",cn:"高球酒",p:"8,000원"},{ko:"와인(글라스)",en:"Wine(Glass)",jp:"ワイン(グラス)",cn:"红酒(杯)",p:"8,000원"},{ko:"안주플레이트",en:"Snack Plate",jp:"おつまみプレート",cn:"小吃拼盘",p:"15,000원"},{ko:"감자튀김",en:"French Fries",jp:"フライドポテト",cn:"薯条",p:"6,000원"},{ko:"치즈볼",en:"Cheese Ball",jp:"チーズボール",cn:"芝士球",p:"8,000원"},{ko:"소시지",en:"Sausage",jp:"ソーセージ",cn:"香肠",p:"9,000원"}]},
+  {id:47,ko:"이화수전통육개장",en:"Ihwasu Traditional Yukgaejang",jp:"梨花水伝統ユッケジャン",cn:"梨花水传统肉丝汤",addr:"서울 노원구 동일로 1689",cat:"food",dist:32,hours:"09:00~21:00",dko:"진하고 얼큰한 전통 육개장 전문점입니다.\n정성껏 끓인 깊은 육수와 부드러운 소고기가 어우러진 최고의 해장 메뉴입니다.\n등산 후 출출할 때, 혹은 아침 해장으로 수락거리에서 가장 사랑받는 식당입니다.",den:"A specialist in rich and spicy traditional yukgaejang beef soup.\nDeep broth lovingly simmered with tender beef — the ultimate hangover cure.\nThe most beloved restaurant on Surak Street, for post-hike hunger or morning recovery.",djp:"濃厚でピリ辛な伝統ユッケジャン専門店。丁寧に煮込んだ深みのあるスープと柔らかい牛肉が絡む最高の解酒メニュー。登山後の空腹時や朝の二日酔い解消にスラク거리で最も愛されるお店。",dcn:"浓郁辛辣的传统肉丝汤专门店。精心熬制的深厚汤底配嫩牛肉，是最佳解酒首选。登山后饥饿时或早晨解酒，是水落街最受喜爱的餐厅。",menus:[{ko:"육개장",en:"Yukgaejang",jp:"ユッケジャン",cn:"肉丝汤",p:"10,000원"},{ko:"육개장+공기밥",en:"Yukgaejang+Rice",jp:"ユッケジャン+ご飯",cn:"肉丝汤+米饭",p:"11,000원"},{ko:"수육",en:"Boiled Pork",jp:"スユク",cn:"白切肉",p:"15,000원"},{ko:"만두",en:"Dumplings",jp:"餃子",cn:"饺子",p:"7,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"},{ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"4,000원"}]},
+  {id:48,ko:"봉평산골메밀촌",en:"Bongpyeong Buckwheat Village",jp:"峰平山里そば村",cn:"峰平山村荞麦",addr:"서울 노원구 동일로 1689",cat:"food",dist:30,hours:"10:00~21:00",dko:"강원도 봉평 메밀을 직접 공수해 만드는 메밀 전문점입니다.\n건강하고 담백한 메밀 요리가 등산 후 몸을 가볍게 해줍니다.\n메밀의 고소한 향과 시원한 국물이 어우러진 건강 식단을 즐겨보세요.",den:"A buckwheat specialist using flour directly sourced from Bongpyeong, Gangwon.\nLight and healthy buckwheat dishes help your body recover after a hike.\nEnjoy the nutty aroma and refreshing broth of a truly healthy meal.",djp:"江原道峰平のそば粉を直接仕入れて作るそば専門店。ヘルシーであっさりしたそば料理が登山後に体を軽くしてくれます。そばの香ばしい香りとさっぱりしたスープが絶妙に合う健康食を楽しんでください。",dcn:"直接从江原道峰平采购荞麦粉制作的荞麦专门店。健康清淡的荞麦料理让登山后的身体轻盈恢复。品尝荞麦香与清爽汤底融合的健康餐。",menus:[{ko:"메밀국수",en:"Buckwheat Noodles",jp:"そば",cn:"荞麦面",p:"9,000원"},{ko:"메밀전병",en:"Buckwheat Crepe",jp:"そばクレープ",cn:"荞麦薄饼",p:"8,000원"},{ko:"메밀묵",en:"Buckwheat Jelly",jp:"そば餅",cn:"荞麦凉粉",p:"7,000원"},{ko:"메밀전",en:"Buckwheat Pancake",jp:"そばチヂミ",cn:"荞麦煎饼",p:"9,000원"},{ko:"막걸리",en:"Makgeolli",jp:"マッコリ",cn:"米酒",p:"4,000원"},{ko:"동동주",en:"Dongdongju",jp:"ドンドンジュ",cn:"米酒",p:"5,000원"}]},
+  {id:49,ko:"산과맥주",en:"Mountain and Beer",jp:"山とビール",cn:"山与啤酒",addr:"서울 노원구 동일로 1689",cat:"bar",dist:28,hours:"13:00~24:00",dko:"등산객 필수 코스! 수락산을 내려오면 바로 들르는 맥주 전문점입니다.\n시원한 생맥주 한 잔과 함께 등산의 성취감을 만끽하세요.\n다양한 수제 안주와 함께하는 맥주 한 잔이 최고의 마무리입니다.",den:"A hiker's must-stop! The first place to visit after descending Suraksan.\nSavor the satisfaction of your hike with a cold draft beer.\nA perfect ending — a glass of beer paired with delicious homemade snacks.",djp:"登山者必須コース！水落山を下りたらすぐに立ち寄るビール専門店。冷たい生ビール一杯と共に登山の達成感を満喫しましょう。多彩な手作りおつまみと共にするビール一杯が最高のフィナーレ。",dcn:"登山者必经之地！下水落山后第一个要去的啤酒专门店。配上冰爽生啤，尽享登山成就感。多种手工小吃配啤酒，是完美的收尾。",menus:[{ko:"생맥주",en:"Draft Beer",jp:"生ビール",cn:"生啤酒",p:"4,000원"},{ko:"수제맥주",en:"Craft Beer",jp:"クラフトビール",cn:"精酿啤酒",p:"6,000원"},{ko:"수제안주",en:"Homemade Snack",jp:"手作りおつまみ",cn:"手工小吃",p:"10,000원"},{ko:"소시지",en:"Sausage",jp:"ソーセージ",cn:"香肠",p:"8,000원"},{ko:"감자튀김",en:"French Fries",jp:"フライドポテト",cn:"薯条",p:"6,000원"},{ko:"치즈볼",en:"Cheese Ball",jp:"チーズボール",cn:"芝士球",p:"7,000원"}]},
+  {id:50,ko:"팔선당",en:"Palsundang Chinese",jp:"八仙堂中華",cn:"八仙堂中华",addr:"서울 노원구 동일로 1689",cat:"food",dist:25,hours:"11:00~21:00",dko:"8가지 신선한 재료를 엄선해 만드는 중화요리 전문점입니다.\n오랜 단골 손님이 많은 수락거리의 터줏대감 중식당입니다.\n합리적인 가격으로 정통 중화의 맛을 즐길 수 있는 곳입니다.",den:"Chinese cuisine crafted from 8 carefully selected fresh ingredients.\nA longtime local institution with many loyal regulars on Surak Street.\nAuthentic Chinese flavors at a price that makes everyone smile.",djp:"8つの新鮮な食材を厳選して作る中華料理専門店。常連客が多いスラク거리の老舗中華料理店。リーズナブルな価格で本格中華の味を楽しめる場所。",dcn:"精选8种新鲜食材烹制的中华料理专门店。水落街老字号中餐厅，常客众多。价格实惠，品味正宗中华美食的好去处。",menus:[{ko:"짜장면",en:"Jjajangmyeon",jp:"ジャジャン麺",cn:"炸酱面",p:"7,000원"},{ko:"짬뽕",en:"Jjambbong",jp:"チャンポン",cn:"辣海鲜汤面",p:"8,000원"},{ko:"팔선탕수육",en:"Palsun Sweet&Sour",jp:"八仙タンスユク",cn:"八仙糖醋肉",p:"20,000원"},{ko:"볶음밥",en:"Fried Rice",jp:"チャーハン",cn:"炒饭",p:"8,000원"},{ko:"만두",en:"Dumplings",jp:"餃子",cn:"饺子",p:"6,000원"},{ko:"울면",en:"Thick Noodle Soup",jp:"ウルミョン",cn:"芡汤面",p:"9,000원"}]},
+  {id:51,ko:"어부생선구이",en:"Fisher's Grilled Fish",jp:"漁夫の焼き魚",cn:"渔夫烤鱼",addr:"서울 노원구 동일로242길 40",cat:"food",dist:275,hours:"11:00~21:00",dko:"당일 수산시장에서 직송한 신선한 생선구이 전문점입니다.\n고등어, 삼치, 갈치 등 다양한 생선을 바삭하게 구워내는 것이 특기입니다.\n건강하고 담백한 생선구이 한 상으로 수락산 등산의 마무리를 완성하세요.",den:"Grilled fish specialist with fish delivered daily from the market.\nSpecializes in perfectly crisping mackerel, Spanish mackerel, hairtail and more.\nComplete your Suraksan hike with a healthy, clean-tasting grilled fish meal.",djp:"当日水産市場から直送した新鮮な焼き魚専門店。サバ、サワラ、タチウオ等多彩な魚をカリカリに焼き上げるのが得意。健康でさっぱりした焼き魚膳で水落山登山の締めを完成させましょう。",dcn:"当日水产市场直运新鲜烤鱼专门店。擅长将鲭鱼、马鲛鱼、带鱼等各种鱼烤制得酥脆可口。一桌健康清淡的烤鱼，为水落山登山画上完美句号。",menus:[{ko:"고등어구이",en:"Grilled Mackerel",jp:"サバ焼き",cn:"烤鲭鱼",p:"12,000원"},{ko:"삼치구이",en:"Grilled Spanish Mackerel",jp:"サワラ焼き",cn:"烤马鲛鱼",p:"13,000원"},{ko:"갈치구이",en:"Grilled Hairtail",jp:"タチウオ焼き",cn:"烤带鱼",p:"14,000원"},{ko:"생선구이 정식",en:"Grilled Fish Set",jp:"焼き魚定食",cn:"烤鱼套餐",p:"15,000원"},{ko:"공기밥",en:"Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"미역국",en:"Seaweed Soup",jp:"わかめスープ",cn:"海带汤",p:"2,000원"}]}
 ];
 var TRAILS=[
   {id:1,
@@ -1118,61 +794,82 @@ function openPopup(s){
   var cat=CATS[s.cat]||CATS.food;
   var nm=lang==='KO'?s.ko:lang==='EN'?(s.en||s.ko):lang==='JP'?(s.jp||s.ko):(s.cn||s.ko);
   var dc=lang==='KO'?s.dko:lang==='EN'?(s.den||s.dko):lang==='JP'?(s.djp||s.dko):(s.dcn||s.dko);
-  var bMap={nopo:'🏛 수락산 노포',rec:'⭐ 상인회 추천',hot:'🔥 인기',new:'✨ 신규'};
-  var bCol={nopo:'#8B5E3C',rec:'#2A6E4E',hot:'#E85030',new:'#5050C0'};
-  var badgeHtml=s.badge&&bMap[s.badge]?'<span style="display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;background:'+bCol[s.badge]+';color:#fff;margin-bottom:8px">'+bMap[s.badge]+'</span><br>':'';
-  var hdr=document.getElementById('pop-header');
-  if(hdr){hdr.innerHTML=
-    '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">'
-    +'<span style="font-size:48px;line-height:1">'+cat.icon+'</span>'
-    +'<div style="flex:1">'+badgeHtml
-    +'<div style="font-size:20px;font-weight:800;color:#222;line-height:1.3">'+nm+'</div>'
-    +'<div style="font-size:12px;color:#888;margin-top:4px">'+transAddr(s.addr)+'</div>'
-    +'<div style="margin-top:6px">'
-    +'<span style="font-size:12px;background:'+cat.color+'22;color:'+cat.color+';padding:3px 10px;border-radius:20px;font-weight:700">'+cat.icon+' '+cat.label+'</span>'
-    +' <span style="font-size:12px;color:#888">📍 역에서 '+(s.dist||0)+'m</span>'
-    +'</div></div></div>';}
-  var tabILbl=lang==='EN'?'📋 Info':lang==='JP'?'📋 情報':lang==='CN'?'📋 信息':'📋 정보';
-  var tabMLbl=lang==='EN'?'🍽 Menu':lang==='JP'?'🍽 メニュー':lang==='CN'?'🍽 菜单':'🍽 메뉴';
-  var tabGLbl=lang==='EN'?'🎒 Goods':lang==='JP'?'🎒 グッズ':lang==='CN'?'🎒 商品':'🎒 굿즈';
-  var infoHtml='<div>'
-    +'<div style="font-size:15px;color:#444;line-height:1.7;padding:14px;background:#f8f9f8;border-radius:10px;margin-bottom:14px">'+dc+'</div>'
-    +(s.hours?'<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #f0f0f0">'
-      +'<span style="font-size:24px">🕐</span>'
-      +'<div><div style="font-size:11px;color:#999;margin-bottom:2px">영업시간</div>'
-      +'<div style="font-size:16px;font-weight:700;color:#222">'+s.hours+'</div></div></div>':'')
-    +'</div>';
-  var menusHtml='<div>';
-  (s.menus||[]).forEach(function(m,i){
-    var mn=lang==='KO'?m.ko:lang==='EN'?(m.en||m.ko):lang==='JP'?(m.jp||m.ko):(m.cn||m.ko);
-    menusHtml+='<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f5f5f5">'
-      +'<span style="font-size:15px;color:#333">'+(i===0?'✨ ':'')+mn+'</span>'
-      +'<span style="font-size:16px;font-weight:800;color:#2A6E4E">'+m.p+'</span></div>';
-  });
-  menusHtml+='</div>';
   var gKey=CAT_GOODS[s.cat]||'keyring';
   var gIco={keyring:'🗝️',tumbler:'🥤',sock:'🧦',bandana:'🪢',cap:'🧢'};
-  var gNm={keyring:T('keyring'),tumbler:T('tumbler'),sock:T('sock'),bandana:T('bandana'),cap:T('cap')};
-  var goodsHtml='<div><div style="background:linear-gradient(135deg,#e8f5ee,#f0f9f4);border-radius:14px;padding:22px;text-align:center">'
-    +'<div style="font-size:52px;margin-bottom:12px">'+gIco[gKey]+'</div>'
-    +'<div style="font-size:18px;font-weight:800;color:#2A6E4E;margin-bottom:8px">'+gNm[gKey]+'</div>'
-    +'<div style="font-size:13px;color:#555;line-height:1.7">'+T('pcert')+'</div></div></div>';
-  var pb=document.getElementById('pop-body');
-  if(pb){
-    pb.innerHTML='<div class="pop-tabs" id="pop-tabs-row"></div>'
-      +'<div id="pop-tab-info" class="pop-tab-panel">'+infoHtml+'</div>'
-      +'<div id="pop-tab-menu" class="pop-tab-panel" style="display:none">'+menusHtml+'</div>'
-      +'<div id="pop-tab-goods" class="pop-tab-panel" style="display:none">'+goodsHtml+'</div>';
-    var tabsRow=document.getElementById('pop-tabs-row');
-    [{lbl:tabILbl,id:'info'},{lbl:tabMLbl,id:'menu'},{lbl:tabGLbl,id:'goods'}].forEach(function(t,i){
-      var b=document.createElement('button');
-      b.className='pop-tab'+(i===0?' on':'');
-      b.textContent=t.lbl;
-      b.setAttribute('data-tab',t.id);
-      b.addEventListener('click',function(){switchPopTab(this);});
-      tabsRow.appendChild(b);
-    });
+  var gNmMap={
+    KO:{keyring:T('keyring'),tumbler:T('tumbler'),sock:T('sock'),bandana:T('bandana'),cap:T('cap')},
+    EN:{keyring:'Keyring',tumbler:'Tumbler',sock:'Socks',bandana:'Bandana',cap:'Cap'},
+    JP:{keyring:'キーリング',tumbler:'タンブラー',sock:'ソックス',bandana:'バンダナ',cap:'キャップ'},
+    CN:{keyring:'钥匙扣',tumbler:'保温杯',sock:'登山袜',bandana:'头巾',cap:'帽子'}
+  };
+  var gNm=(gNmMap[lang]&&gNmMap[lang][gKey])||T(gKey);
+  var goodsBox='<span style="display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#e8f5ee,#d4ede0);border-radius:10px;padding:5px 10px;margin-left:6px;flex-shrink:0">'
+    +'<span style="font-size:18px">'+gIco[gKey]+'</span>'
+    +'<span style="font-size:12px;font-weight:800;color:#2A6E4E">'+gNm+'</span>'
+    +'</span>';
+  var L={
+    hours:{KO:'영업시간',EN:'Hours',JP:'営業時間',CN:'营业时间'},
+    intro:{KO:'🏠 소개',EN:'🏠 About',JP:'🏠 紹介',CN:'🏠 介绍'},
+    menu:{KO:'🍱 메뉴',EN:'🍱 Menu',JP:'🍱 メニュー',CN:'🍱 菜单'},
+    goods:{KO:'🎁 굿즈 혜택',EN:'🎁 Goods Reward',JP:'🎁 グッズ特典',CN:'🎁 商品奖励'},
+    cert:{
+      KO:'수락산 어디서든 SNS 인증 1회 후 이 매장에서 결제 시 증정!',
+      EN:'SNS Cert at Suraksan + payment here = get goods!',
+      JP:'水落山でSNS認証後、こちらでお支払いでグッズ贈呈！',
+      CN:'在水落山SNS认证后，在此消费即可获得商品！'
+    }
+  };
+  function lbl(k){return L[k][lang]||L[k].KO;}
+  var hdr=document.getElementById('pop-header');
+  if(hdr){
+    hdr.innerHTML=
+      '<div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:4px">'
+      +'<div style="width:64px;height:64px;border-radius:20px;background:'+cat.color
+        +'18;display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0">'+cat.icon+'</div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:4px">'
+      +'<span style="font-size:20px;font-weight:800;color:#1a1a1a;line-height:1.3">'+nm+'</span>'
+      +goodsBox+'</div>'
+      +'<div style="font-size:13px;color:#999;margin-bottom:6px">'+transAddr(s.addr)+'</div>'
+      +'<span style="font-size:13px;background:'+cat.color+'18;color:'+cat.color
+        +';padding:4px 12px;border-radius:20px;font-weight:700">'+cat.icon+' '+cat.label+'</span>'
+      +' <span style="font-size:13px;color:#aaa">📍 '+(s.dist||0)+'m</span>'
+      +'</div></div>';
   }
+  var pb=document.getElementById('pop-body');
+  if(!pb)return;
+  var html='';
+  // 소개
+  html+='<div style="margin-bottom:22px">'
+    +'<div style="font-size:16px;font-weight:800;color:#1a1a1a;margin-bottom:10px">'+lbl('intro')+'</div>'
+    +'<div style="font-size:15px;color:#3a3a3a;line-height:1.9;padding:16px;background:#f7f9f7;border-radius:14px;margin-bottom:12px">'
+    +dc.split('\n').join('<br>')+'</div>'
+    +(s.hours
+      ?'<div style="display:flex;align-items:center;gap:14px;padding:14px;background:#fff;border:1.5px solid #f0f0f0;border-radius:14px">'
+        +'<span style="font-size:30px">🕐</span>'
+        +'<div><div style="font-size:12px;color:#999;margin-bottom:3px">'+lbl('hours')+'</div>'
+        +'<div style="font-size:17px;font-weight:800;color:#1a1a1a">'+s.hours+'</div></div></div>':'')
+    +'</div>';
+  // 메뉴
+  html+='<div style="margin-bottom:22px">'
+    +'<div style="font-size:16px;font-weight:800;color:#1a1a1a;margin-bottom:10px">'+lbl('menu')+'</div>';
+  (s.menus||[]).forEach(function(m,i){
+    var mn=lang==='KO'?m.ko:lang==='EN'?(m.en||m.ko):lang==='JP'?(m.jp||m.ko):(m.cn||m.ko);
+    html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #f5f5f5">'
+      +'<span style="font-size:16px;color:#2a2a2a;font-weight:'+(i===0?'800':'500')+'">'+(i===0?'✨ ':'')+mn+'</span>'
+      +'<span style="font-size:17px;font-weight:800;color:#2A6E4E;white-space:nowrap;margin-left:12px">'+m.p+'</span>'
+      +'</div>';
+  });
+  html+='</div>';
+  // 굿즈
+  html+='<div style="margin-bottom:10px">'
+    +'<div style="font-size:16px;font-weight:800;color:#1a1a1a;margin-bottom:10px">'+lbl('goods')+'</div>'
+    +'<div style="background:linear-gradient(135deg,#e8f5ee,#d4ede0);border-radius:18px;padding:24px 20px;text-align:center">'
+    +'<div style="font-size:56px;margin-bottom:12px">'+gIco[gKey]+'</div>'
+    +'<div style="font-size:20px;font-weight:800;color:#1a6e3e;margin-bottom:8px">'+gNm+'</div>'
+    +'<div style="font-size:14px;color:#2A6E4E;line-height:1.8">'+lbl('cert')+'</div>'
+    +'</div></div>';
+  pb.innerHTML=html;
   ov.style.display='';
   ov.classList.add('on');
 }
@@ -1204,6 +901,10 @@ function applyT(){
   if(g('wd-lbl-wind'))g('wd-lbl-wind').textContent=T('wdWind');
   if(g('wd-lbl-sunset'))g('wd-lbl-sunset').textContent=T('wdSunset');
   if(g('wd-lbl-hiking'))g('wd-lbl-hiking').textContent=T('wdHiking');
+  // 언어 버튼 상태 동기화
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('on', b.dataset.lang===lang);
+  });
 }
 
 // ── 탭 전환 ──
@@ -1226,23 +927,25 @@ function sv(v){
 document.querySelectorAll('.vtab').forEach(function(b){
   b.addEventListener('click',function(){sv(this.dataset.v);});
 });
-document.getElementById('lang-btn').addEventListener('change',function(){
-  lang=this.value;
-  // dataset.done 초기화 - 언어 전환 시 재렌더
-  ['goods-inner','trail-inner','info-inner'].forEach(function(id){
-    var el=document.getElementById(id);
-    if(el) delete el.dataset.done;
+document.querySelectorAll('.lang-btn').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    lang=this.dataset.lang;
+    document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('on');});
+    this.classList.add('on');
+    ['goods-inner','trail-inner','info-inner'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el) delete el.dataset.done;
+    });
+    applyT();
+    if(_map) _buildMapFilter();
+    var cur=document.querySelector('.vtab.on');
+    if(!cur) return;
+    var v=cur.dataset.v;
+    if(v==='goods') renderGoods();
+    else if(v==='trail') renderTrail();
+    else if(v==='info') renderInfo();
+    else if(v==='list'){ buildListFilter(); renderList(); }
   });
-  applyT();
-  if(_map) _buildMapFilter();
-  // 현재 열린 탭 재렌더
-  var cur=document.querySelector('.vtab.on');
-  if(!cur) return;
-  var v=cur.dataset.v;
-  if(v==='goods') renderGoods();
-  else if(v==='trail') renderTrail();
-  else if(v==='info') renderInfo();
-  else if(v==='list'){ buildListFilter(); renderList(); }
 });
 document.getElementById('pop-x').onclick=closePopup;
 document.getElementById('pop-ov').onclick=function(e){if(e.target===this)closePopup();};

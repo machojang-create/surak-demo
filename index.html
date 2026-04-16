@@ -348,6 +348,12 @@ function weatherDesc(code){
   if(code<=82)return WD[80];return WD[95];
 }
 function hikingOk(code,temp){return code<=3&&temp>0&&temp<33;}
+
+var GOODS_KEYS=['keyring','tumbler','sock','bandana','cap'];
+function getGoodsState(){try{return JSON.parse(localStorage.getItem('surak_goods')||'{}');}catch(e){return {};}}
+function setGoodsState(s){try{localStorage.setItem('surak_goods',JSON.stringify(s));}catch(e){}}
+function toggleGoods(key){var s=getGoodsState();s[key]=!s[key];setGoodsState(s);return s[key];}
+function hasGoods(key){return !!getGoodsState()[key];}
 var STORES=[
   {id:1,ko:"오공김밥 수락산점",en:"Ogong Gimbap",jp:"オゴンキムパプ",cn:"五公紫菜卷",addr:"서울 노원구 동일로242길 55 1층",cat:"food",dist:30,hours:"07:00~21:00",dko:"1998년부터 이어온 손맛! 수락산 등산객들의 아침을 책임지는 김밥 전문점.\n50여 가지 다양한 김밥과 분식을 합리적인 가격에 즐길 수 있습니다.\n등산 전 든든하게, 등산 후 가볍게 — 어느 때나 딱 맞는 한 끼입니다.",den:"Gimbap specialist since 1998, beloved by Suraksan hikers.\nOver 50 varieties of gimbap and Korean snacks at great prices.\nPerfect for a hearty pre-hike meal or a light post-hike bite.",djp:"1998年から続く手作りキムパプ専門店。水落山登山者の朝食を支える名店。\n50種以上の多彩なキムパプと軽食をリーズナブルな価格で楽しめます。\n登山前のしっかり食事にも、登山後の軽食にも最適な一軒です。",dcn:"自1998年传承手工紫菜卷，是水落山登山者的早餐首选。\n50多种多样的紫菜卷和小吃，价格实惠。\n无论登山前饱餐一顿，还是登山后轻松小吃，都是绝佳选择。",menus:[{ko:"참치김밥",en:"Tuna Gimbap",jp:"ツナキムパプ",cn:"金枪鱼紫菜卷",p:"4,500원"},{ko:"소고기김밥",en:"Beef Gimbap",jp:"牛肉キムパプ",cn:"牛肉紫菜卷",p:"5,000원"},{ko:"치즈김밥",en:"Cheese Gimbap",jp:"チーズキムパプ",cn:"芝士紫菜卷",p:"4,000원"},{ko:"오공스페셜김밥",en:"Ogong Special",jp:"オゴンスペシャル",cn:"五公特色紫菜卷",p:"5,500원"},{ko:"야채김밥",en:"Veggie Gimbap",jp:"野菜キムパプ",cn:"蔬菜紫菜卷",p:"3,500원"},{ko:"순대국",en:"Sundae Soup",jp:"スンデクッ",cn:"血肠汤",p:"7,000원"}]},
   {id:2,ko:"화로화 수락본점",en:"Hwarohwa",jp:"ファロファ本店",cn:"火炉花本店",addr:"서울 노원구 동일로 1689",cat:"gogi",dist:40,hours:"11:00~23:00",dko:"참숯 직화로 구워내는 프리미엄 고기집. 국내산 신선육만 고집합니다.\n수락산 등산 후 시원한 한잔과 함께 즐기는 고기 한 점의 행복.\n두꺼운 고기가 연기 속에 익어가는 향기가 거리까지 퍼지는 맛집입니다.",den:"Premium charcoal BBQ using only fresh domestic meat.\nNothing beats a slice of grilled pork after conquering Suraksan.\nThe smoky aroma drifting down the street tells you exactly where to go.",djp:"国産新鮮肉のみを使ったプレミアム炭火焼き肉店。\n水落山登山後、冷たい一杯と一緒に楽しむ焼き肉の幸せ。\n炭の香りが거리まで漂う、本格派焼き肉の名店です。",dcn:"只用国产新鲜肉的高端炭火烤肉店。\n水落山登山后，配上一杯冰啤酒的烤肉享受。\n炭香弥漫整条街道，是正宗炭火烤肉的名店。",menus:[{ko:"삼겹살",en:"Pork Belly",jp:"サムギョプサル",cn:"五花肉",p:"16,000원"},{ko:"목살",en:"Pork Neck",jp:"モクサル",cn:"颈肉",p:"16,000원"},{ko:"항정살",en:"Cheek Meat",jp:"ハンジョンサル",cn:"猪颊肉",p:"18,000원"},{ko:"갈매기살",en:"Skirt Meat",jp:"ガルメギサル",cn:"横膈肌",p:"17,000원"},{ko:"된장찌개",en:"Doenjang Jjigae",jp:"味噌チゲ",cn:"大酱汤",p:"3,000원"},{ko:"공기밥",en:"Steamed Rice",jp:"ご飯",cn:"米饭",p:"1,000원"}]},
@@ -581,7 +587,11 @@ function _fitAll(){
 
 function _renderMarkers(){
   _markers.forEach(function(m){m.setMap(null);}); _markers=[];
-  gfStore().forEach(function(s){if(s.lat&&s.lng)_placeMarker(s);});
+  STORES.forEach(function(s){
+    if(!s.lat||!s.lng)return;
+    if(_curFilter!=='all'&&s.cat!==_curFilter)return;
+    _placeMarker(s);
+  });
 }
 
 function _buildMapFilter(){
@@ -667,39 +677,65 @@ function renderList(){
 // ── 굿즈 탭 ──
 function renderGoods(){
   var el=document.getElementById('goods-inner');
-  if(!el||el.dataset.done)return;
+  if(!el)return;
+  delete el.dataset.done;
   el.dataset.done='1';
+  var state=getGoodsState();
   var h='';
-  // 수령 방법
   h+='<div class="sec-tit">'+T('howTitle')+'</div>';
-  [{t:T('hw1t'),d:T('hw1d')},
-   {t:T('hw2t'),d:T('hw2d')},
-   {t:T('hw3t'),d:T('hw3d')},
-   {t:T('hw4t'),d:T('hw4d')}
+  [{t:T('hw1t'),d:T('hw1d')},{t:T('hw2t'),d:T('hw2d')},
+   {t:T('hw3t'),d:T('hw3d')},{t:T('hw4t'),d:T('hw4d')}
   ].forEach(function(s,i){
-    h+='<div class="hw-step"><div class="hw-num">'+(i+1)+'</div><div><div class="hw-t">'+s.t+'</div><div class="hw-d">'+s.d+'</div></div></div>';
+    h+='<div class="hw-step"><div class="hw-num">'+(i+1)+'</div>'
+      +'<div><div class="hw-t">'+s.t+'</div><div class="hw-d">'+s.d+'</div></div></div>';
   });
-  // 굿즈 종류
+  var collected=GOODS_KEYS.filter(function(k){return !!state[k];}).length;
+  var progressLbl={KO:'수집 현황',EN:'Collection Progress',JP:'収集進捗',CN:'收集进度'};
+  var allDoneLbl={KO:'🏆 모두 수집 완료!',EN:'🏆 All collected!',JP:'🏆 全部収集！',CN:'🏆 全部收集！'};
+  var keepLbl={KO:'계속 수집해보세요!',EN:'Keep collecting!',JP:'集め続けよう！',CN:'继续收集！'};
+  h+='<div style="background:linear-gradient(135deg,#2A6E4E,#1a4a30);border-radius:16px;padding:16px;margin:12px 0 16px;color:#fff">'
+    +'<div style="font-size:13px;opacity:.8;margin-bottom:8px">🎒 '+(progressLbl[lang]||progressLbl.KO)+'</div>'
+    +'<div style="display:flex;align-items:center;gap:12px">'
+    +'<div style="font-size:36px;font-weight:800">'+collected+'/5</div>'
+    +'<div style="flex:1"><div style="background:rgba(255,255,255,.3);border-radius:10px;height:10px">'
+    +'<div style="background:#fff;border-radius:10px;height:10px;width:'+(collected/5*100)+'%"></div>'
+    +'</div><div style="font-size:12px;opacity:.8;margin-top:6px">'
+    +(collected===5?(allDoneLbl[lang]||allDoneLbl.KO):(keepLbl[lang]||keepLbl.KO))
+    +'</div></div></div></div>';
   h+='<div class="sec-tit">'+T('goodsCatTit')+'</div>';
   h+='<div class="goods-grid">';
-  [{icon:'🗝️',name:T('keyring'), cat:'food',  col:'#E8A030', desc:T('food')},
-   {icon:'🥤',name:T('tumbler'), cat:'cafe',  col:'#20A070', desc:T('cafe')},
-   {icon:'🧦',name:T('sock'),    cat:'gogi',  col:'#D04030', desc:T('gogi')},
-   {icon:'🪢',name:T('bandana'), cat:'bar',   col:'#5050C0', desc:T('bar')},
-   {icon:'🧢',name:T('cap'),     cat:'outdoor',col:'#3D6B4F',desc:T('outdoor')}
+  [{key:'keyring',icon:'🗝️'},{key:'tumbler',icon:'🥤'},{key:'sock',icon:'🧦'},
+   {key:'bandana',icon:'🪢'},{key:'cap',icon:'🧢'}
   ].forEach(function(g){
-    h+='<div class="goods-item"><div class="goods-ic">'+g.icon+'</div><div class="goods-name">'+g.name+'</div><div class="goods-sub" style="color:'+g.col+'">'+g.desc+'</div></div>';
+    var isCol=!!state[g.key];
+    var nm={keyring:T('keyring'),tumbler:T('tumbler'),sock:T('sock'),bandana:T('bandana'),cap:T('cap')}[g.key];
+    h+='<div style="background:'+(isCol?'linear-gradient(135deg,#e8f5ee,#d4ede0)':'#f8f9f8')+';border-radius:14px;padding:16px;text-align:center;border:2px solid '+(isCol?'#2A6E4E':'#eee')+';position:relative;cursor:pointer" data-goods-key="'+g.key+'">'
+      +(isCol?'<div style="position:absolute;top:8px;right:8px;font-size:14px">✅</div>':'<div style="position:absolute;top:8px;right:8px;font-size:14px;opacity:.3">○</div>')
+      +'<div style="font-size:36px;margin-bottom:8px">'+g.icon+'</div>'
+      +'<div style="font-size:14px;font-weight:800;color:'+(isCol?'#2A6E4E':'#1a1a1a')+'">'+nm+'</div>'
+      +'<div style="font-size:11px;color:'+(isCol?'#2A6E4E':'#bbb')+';margin-top:4px">'
+      +(isCol?({KO:'수집 완료',EN:'Collected',JP:'収集済',CN:'已收集'}[lang]||'수집 완료'):({KO:'미수집',EN:'Not yet',JP:'未収集',CN:'未收集'}[lang]||'미수집'))
+      +'</div></div>';
   });
   h+='</div>';
-  // 인증 포인트
   h+='<div class="sec-tit">'+T('certPtsTit')+'</div>';
   CERT_POINTS.forEach(function(cp){
     var nm=lang==='KO'?cp.ko:lang==='EN'?cp.en:lang==='JP'?cp.jp:cp.cn;
     var dc=lang==='KO'?cp.dko:lang==='EN'?cp.den:lang==='JP'?cp.djp:cp.dcn;
-    var gico=cp.goods==='cap'?'🧢':cp.goods==='bandana'?'🪢':cp.goods==='sock'?'🧦':cp.goods==='tumbler'?'🥤':'🗝️';
-    h+='<div class="sp-card"><div class="sp-ic">'+cp.icon+'</div><div><div class="sp-name">'+nm+'</div><div class="sp-desc">'+dc+'</div><div class="sp-goods">'+gico+' '+T('certBtn')+'</div></div></div>';
+    var gico={cap:'🧢',bandana:'🪢',sock:'🧦',tumbler:'🥤',keyring:'🗝️'}[cp.goods]||'🗝️';
+    h+='<div class="sp-card"><div class="sp-ic">'+cp.icon+'</div>'
+      +'<div><div class="sp-name">'+nm+'</div><div class="sp-desc">'+dc+'</div>'
+      +'<div class="sp-goods">'+gico+' '+T('certBtn')+'</div></div></div>';
   });
   el.innerHTML=h;
+  // 굿즈 카드 클릭 토글
+  el.querySelectorAll('[data-goods-key]').forEach(function(card){
+    card.addEventListener('click',function(){
+      var key=this.getAttribute('data-goods-key');
+      toggleGoods(key);
+      renderGoods();
+    });
+  });
 }
 
 // ── 등산 탭 ──
@@ -939,7 +975,21 @@ function openPopup(s){
     +'<div style="font-size:20px;font-weight:800;color:#1a6e3e;margin-bottom:8px">'+gNm+'</div>'
     +'<div style="font-size:14px;color:#2A6E4E;line-height:1.8">'+lbl('cert')+'</div>'
     +'</div></div>';
+  // 굿즈 수집 버튼
+  var gCollected=hasGoods(gKey);
+  var cLbl={KO:gCollected?'✅ 수집 완료':'🎁 수집하기',EN:gCollected?'✅ Collected':'🎁 Collect',JP:gCollected?'✅ 収集済み':'🎁 収集する',CN:gCollected?'✅ 已收集':'🎁 收集'};
+  html+='<button id="goods-collect-btn" data-gkey="'+gKey+'" style="width:100%;padding:14px;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;margin-top:12px;border:2px solid #2A6E4E;background:'+(gCollected?'#e8f5ee':'linear-gradient(135deg,#2A6E4E,#1a4a30)')+';color:'+(gCollected?'#2A6E4E':'#fff')+';">'+(cLbl[lang]||cLbl.KO)+'</button>';
   pb.innerHTML=html;
+  var cbtn=document.getElementById('goods-collect-btn');
+  if(cbtn){cbtn.addEventListener('click',function(){
+    var k=this.getAttribute('data-gkey');
+    var now=toggleGoods(k);
+    var nl={KO:now?'✅ 수집 완료':'🎁 수집하기',EN:now?'✅ Collected':'🎁 Collect',JP:now?'✅ 収集済み':'🎁 収集する',CN:now?'✅ 已收집':'🎁 収集'};
+    this.textContent=nl[lang]||nl.KO;
+    this.style.background=now?'#e8f5ee':'linear-gradient(135deg,#2A6E4E,#1a4a30)';
+    this.style.color=now?'#2A6E4E':'#fff';
+    if(document.getElementById('goods-inner'))renderGoods();
+  });}
   ov.style.display='';
   ov.classList.add('on');
 }

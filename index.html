@@ -446,6 +446,7 @@ var SC_PLAYLISTS={
   }
 };
 var _currentMode='walk';
+var _currentPlayUrl=null;
 var _userOverride=false;
 var STORES=[
   {id:1,ko:"오공김밥 수락산점",en:"오공김밥 Suraksan",jp:"오공김밥 수락산점",cn:"오공김밥 수락산점",addr:"서울 노원구 동일로242길 55 1층",cat:"food",dist:30,hours:"11:00~22:00",dko:"1998년부터 이어온 손맛! 수락산 등산객들의 아침을 책임지는 김밥 전문점. 50여 가지 다양한 김밥과 분식을 합리적인 가격에 즐길 수 있습니다. 등산 전 든든하게, 등산 후 가볍게 어느 때나 딱 맞는 한 끼입니다.",den:"Gimbap specialist since 1998, beloved by Suraksan hikers. Over 50 varieties of gimbap and snacks at great prices. Perfect for a hearty pre-hike meal or a light post-hike bite.",djp:"1998年から続く手作りキムパプ専門店。50種以上の多彩なキムパプと軽食をリーズナブルな価格で楽しめます。登山前も登山後もぴったりの一食。",dcn:"自1998年传承手工紫菜卷。50多种紫菜卷和小吃，价格实惠。无论登山前饱餐还是登山后轻食，都是最佳选择。",menus:[{ko:"참치김밥",en:"Tuna Gimbap",jp:"ツナキムパプ",cn:"金枪鱼紫菜卷",p:"4,500원"},{ko:"소고기김밥",en:"Beef Gimbap",jp:"牛肉キムパプ",cn:"牛肉紫菜卷",p:"5,000원"},{ko:"치즈김밥",en:"Cheese Gimbap",jp:"チーズキムパプ",cn:"芝士紫菜卷",p:"4,000원"},{ko:"오공스페셜김밥",en:"Special Gimbap",jp:"スペシャルキムパプ",cn:"特色紫菜卷",p:"5,500원"},{ko:"야채김밥",en:"Veggie Gimbap",jp:"野菜キムパプ",cn:"蔬菜紫菜卷",p:"3,500원"},{ko:"계란김밥",en:"Egg Gimbap",jp:"卵キムパプ",cn:"鸡蛋紫菜卷",p:"3,500원"},{ko:"참치마요김밥",en:"Tuna Mayo Gimbap",jp:"ツナマヨキムパプ",cn:"金枪鱼蛋黄酱紫菜卷",p:"5,000원"},{ko:"떡볶이",en:"Tteokbokki",jp:"トッポッキ",cn:"炒年糕",p:"4,000원"},{ko:"라면",en:"Ramen",jp:"ラーメン",cn:"拉面",p:"3,500원"},{ko:"순대국",en:"Sundae Soup",jp:"スンデクッ",cn:"血肠汤",p:"7,000원"},{ko:"김치찌개",en:"Kimchi Jjigae",jp:"キムチチゲ",cn:"泡菜锅",p:"7,000원"}]},

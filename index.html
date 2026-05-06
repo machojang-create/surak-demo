@@ -199,6 +199,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
 /* 블루 포인트 조화 */
 .fcat.on{background:linear-gradient(135deg,#2A6E4E,#2A8AAA);color:#fff;border-color:#2A6E4E}
 #map-status{background:linear-gradient(135deg,rgba(26,74,138,.8),rgba(42,110,78,.8))}
+
+@keyframes surakDance{0%{transform:rotate(-8deg) scale(1.05);}100%{transform:rotate(8deg) scale(0.95);}}
 </style>
 </head>
 <body>
@@ -219,7 +221,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
     <button class="vtab on" data-v="map"><span class="vtab-ic">🗺️</span><span id="t-map">지도</span></button>
     <button class="vtab" data-v="list"><span class="vtab-ic">🏪</span><span id="t-list">매장</span></button>
     <button class="vtab" data-v="goods"><span class="vtab-ic">🎒</span><span id="t-goods">굿즈</span></button>
-    <button class="vtab" data-v="trail"><span class="vtab-ic">🥾</span><span id="t-trail">등산</span></button>
+    <button class="vtab" data-v="sound"><span class="vtab-ic">🎵</span><span id="t-sound">사운드</span></button>
     <button class="vtab" data-v="info"><span class="vtab-ic">ℹ️</span><span id="t-info">안내</span></button>
   </div>
   <div id="views">
@@ -237,8 +239,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Nanum Gothic',sans
     <div class="view" id="goods-view">
       <div class="view-scroll" id="goods-inner"></div>
     </div>
-    <div class="view" id="trail-view">
-      <div class="view-scroll" id="trail-inner"></div>
+    <div class="view" id="sound-view">
+      <div class="view-scroll" id="sound-inner"></div>
     </div>
     <div class="view" id="info-view">
       <div class="view-scroll" id="info-inner"></div>
@@ -410,6 +412,29 @@ var WATER_SPOTS=[
   {id:'ws2',icon:'🌊',color:'#1a6a8a',KO:{name:'처마바위 폭포',desc:'병풍바위 아래 숨겨진 소형 폭포. 등산 중 만나는 청량한 쉼터입니다.',route:'3번출구 → 도보 40분'},EN:{name:'Cheomabawi Falls',desc:'A hidden waterfall beneath Byeongpungbawi Rock. A refreshing rest spot mid-hike.',route:'Exit 3 → 40 min walk'},JP:{name:'軒岩滝',desc:'屏風岩の下に隠れた小さな滝。登山中に出会う清々しい休憩スポット。',route:'3番出口 → 徒歩40分'},CN:{name:'屋檐岩瀑布',desc:'屏风岩下隐藏的小瀑布。登山途中邂逅的清凉休憩处。',route:'3号出口 → 步行40分'}},
   {id:'ws3',icon:'🏊',color:'#1565a0',KO:{name:'은류폭포',desc:'수락산 최고의 폭포. 높이 15m의 웅장한 폭포로 사진 명소입니다.',route:'3번출구 → 도보 60분'},EN:{name:'Eunryu Falls',desc:'Suraksan finest waterfall. A majestic 15m cascade and top photo spot.',route:'Exit 3 → 60 min walk'},JP:{name:'銀流瀑布',desc:'水落山最高の滝。高さ15mの雄大な滝で写真スポット。',route:'3番出口 → 徒歩60분'},CN:{name:'银流瀑布',desc:'水落山最佳瀑布。高达15m的壮观瀑布。',route:'3号出口 → 步行60分'}}
 ];
+
+var SC_PLAYLISTS={
+  walk:{url:'https://soundcloud.com/djyinthehouse/sets/vibes-of-life',
+    titleKO:'VIBES OF LIFE',descKO:'Jackin House — 거리 산책에 어울리는 경쾌한 하우스',
+    titleEN:'VIBES OF LIFE',descEN:'Jackin House — Light grooves for street strolling',
+    titleJP:'VIBES OF LIFE',descJP:'Jackin House — 거리산책にぴったりのハウス',
+    titleCN:'VIBES OF LIFE',descCN:'Jackin House — 适合街头漫步的House',
+    mood:'🚶',color:'#3D6B2A'},
+  active:{url:'https://soundcloud.com/djyinthehouse/sets/concrete-grit',
+    titleKO:'CONCRETE GRIT',descKO:'Chicago House — 에너지를 끌어올리는 강렬한 비트',
+    titleEN:'CONCRETE GRIT',descEN:'Chicago House — Intense beats for energetic climbing',
+    titleJP:'CONCRETE GRIT',descJP:'Chicago House — エネルギーを高める力強いビート',
+    titleCN:'CONCRETE GRIT',descCN:'Chicago House — 激发能量的强劲节拍',
+    mood:'⚡',color:'#8B2A2A'},
+  relax:{url:'https://soundcloud.com/djyinthehouse/sets/tales-from-the-past',
+    titleKO:'TALES FROM THE PAST',descKO:'Afro Jungle House — 쉼터에서 즐기는 감성 하우스',
+    titleEN:'TALES FROM THE PAST',descEN:'Afro Jungle House — Soulful vibes for rest spots',
+    titleJP:'TALES FROM THE PAST',descJP:'Afro Jungle House — 休憩スポットの感性ハウス',
+    titleCN:'TALES FROM THE PAST',descCN:'Afro Jungle House — 休憩处的感性House',
+    mood:'☕',color:'#6B4A1E'}
+};
+var _currentMode='walk';
+var _userOverride=false;
 var STORES=[
   {id:1,ko:"오공김밥 수락산점",en:"오공김밥 Suraksan",jp:"오공김밥 수락산점",cn:"오공김밥 수락산점",addr:"서울 노원구 동일로242길 55 1층",cat:"food",dist:30,hours:"11:00~22:00",dko:"1998년부터 이어온 손맛! 수락산 등산객들의 아침을 책임지는 김밥 전문점. 50여 가지 다양한 김밥과 분식을 합리적인 가격에 즐길 수 있습니다. 등산 전 든든하게, 등산 후 가볍게 어느 때나 딱 맞는 한 끼입니다.",den:"Gimbap specialist since 1998, beloved by Suraksan hikers. Over 50 varieties of gimbap and snacks at great prices. Perfect for a hearty pre-hike meal or a light post-hike bite.",djp:"1998年から続く手作りキムパプ専門店。50種以上の多彩なキムパプと軽食をリーズナブルな価格で楽しめます。登山前も登山後もぴったりの一食。",dcn:"自1998年传承手工紫菜卷。50多种紫菜卷和小吃，价格实惠。无论登山前饱餐还是登山后轻食，都是最佳选择。",menus:[{ko:"참치김밥",en:"Tuna Gimbap",jp:"ツナキムパプ",cn:"金枪鱼紫菜卷",p:"4,500원"},{ko:"소고기김밥",en:"Beef Gimbap",jp:"牛肉キムパプ",cn:"牛肉紫菜卷",p:"5,000원"},{ko:"치즈김밥",en:"Cheese Gimbap",jp:"チーズキムパプ",cn:"芝士紫菜卷",p:"4,000원"},{ko:"오공스페셜김밥",en:"Special Gimbap",jp:"スペシャルキムパプ",cn:"特色紫菜卷",p:"5,500원"},{ko:"야채김밥",en:"Veggie Gimbap",jp:"野菜キムパプ",cn:"蔬菜紫菜卷",p:"3,500원"},{ko:"계란김밥",en:"Egg Gimbap",jp:"卵キムパプ",cn:"鸡蛋紫菜卷",p:"3,500원"},{ko:"참치마요김밥",en:"Tuna Mayo Gimbap",jp:"ツナマヨキムパプ",cn:"金枪鱼蛋黄酱紫菜卷",p:"5,000원"},{ko:"떡볶이",en:"Tteokbokki",jp:"トッポッキ",cn:"炒年糕",p:"4,000원"},{ko:"라면",en:"Ramen",jp:"ラーメン",cn:"拉面",p:"3,500원"},{ko:"순대국",en:"Sundae Soup",jp:"スンデクッ",cn:"血肠汤",p:"7,000원"},{ko:"김치찌개",en:"Kimchi Jjigae",jp:"キムチチゲ",cn:"泡菜锅",p:"7,000원"}]},
   {id:2,ko:"화로화 수락본점",en:"화로화 Surak본",jp:"화로화 수락본점",cn:"화로화 수락본점",addr:"서울 노원구 동일로 1689",cat:"gogi",dist:40,hours:"11:00~22:00",dko:"참숯 직화로 구워내는 프리미엄 고기집. 국내산 신선육만 고집합니다. 수락산 등산 후 시원한 한잔과 함께 즐기는 고기 한 점의 행복을 느껴보세요.",den:"Premium charcoal BBQ using only fresh domestic meat. Nothing beats grilled pork after conquering Suraksan.",djp:"国産新鮮肉のみを使ったプレミアム炭火焼き肉店。水落山登山後の焼き肉が最高。",dcn:"只用国产新鲜肉的高端炭火烤肉店。水落山登山后的烤肉享受。",menus:[{ko:"삼겹살",en:"Pork Belly",jp:"サムギョプサル",cn:"五花肉",p:"16,000원"},{ko:"목살",en:"Pork Neck",jp:"モクサル",cn:"颈肉",p:"16,000원"},{ko:"항정살",en:"Cheek Meat",jp:"ハンジョンサル",cn:"猪颊肉",p:"18,000원"},{ko:"갈매기살",en:"Skirt Meat",jp:"ガルメギサル",cn:"横膈肌",p:"17,000원"},{ko:"모듬구이",en:"Assorted BBQ",jp:"モドゥムグイ",cn:"拼盘烤肉",p:"19,000원"},{ko:"된장찌개",en:"Doenjang Jjigae",jp:"テンジャンチゲ",cn:"大酱汤",p:"3,000원"},{ko:"공기밥",en:"Steamed Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"냉면",en:"Cold Noodles",jp:"冷麺",cn:"冷面",p:"7,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"},{ko:"맥주",en:"Beer",jp:"ビール",cn:"啤酒",p:"4,500원"},{ko:"쌈채소",en:"Ssam Vegetables",jp:"サム野菜",cn:"包饭蔬菜",p:"2,000원"}]},
@@ -555,8 +580,14 @@ window.naverMapInit=function(){
 function _initMap(){
   if(!_mapReady||_map)return;
   _map=new naver.maps.Map('naver-map',{
-    center:new naver.maps.LatLng(37.6579,127.0601),
-    zoom:16,mapTypeId:naver.maps.MapTypeId.NORMAL
+    center:new naver.maps.LatLng(37.6590,127.0625),
+    zoom:17,
+    mapTypeId:naver.maps.MapTypeId.NORMAL,
+    zoomControl:true,
+    zoomControlOptions:{
+      style:naver.maps.ZoomControlStyle.SMALL,
+      position:naver.maps.Position.TOP_RIGHT
+    }
   });
   _iw=new naver.maps.InfoWindow({
     backgroundColor:'#fff',borderColor:'#2A6E4E',borderWidth:2,
@@ -1114,6 +1145,92 @@ function closePopup(){
 }
 
 // ── 번역 적용 ──
+function renderSound(){
+  var el=document.getElementById('sound-inner');
+  if(!el)return;
+  var pl=SC_PLAYLISTS[_currentMode]||SC_PLAYLISTS.walk;
+  var title=lang==='EN'?pl.titleEN:lang==='JP'?pl.titleJP:lang==='CN'?pl.titleCN:pl.titleKO;
+  var desc=lang==='EN'?pl.descEN:lang==='JP'?pl.descJP:lang==='CN'?pl.descCN:pl.descKO;
+  var mLabels={
+    walk:{KO:'🚶 Walk',EN:'🚶 Walk',JP:'🚶 Walk',CN:'🚶 Walk'},
+    active:{KO:'⚡ Active',EN:'⚡ Active',JP:'⚡ Active',CN:'⚡ Active'},
+    relax:{KO:'☕ Relax',EN:'☕ Relax',JP:'☕ Relax',CN:'☕ Relax'}
+  };
+  var gpsLbl={KO:'GPS 위치 감지 중...',EN:'Detecting GPS...',JP:'GPS検出中...',CN:'GPS检测中...'};
+  var nowLbl={KO:'NOW PLAYING',EN:'NOW PLAYING',JP:'NOW PLAYING',CN:'NOW PLAYING'};
+  var moreLbl={KO:'더 많은 플레이리스트',EN:'More Playlists',JP:'もっとプレイリスト',CN:'更多播放列表'};
+  var charLbl={KO:'수락이와 함께 듣는 하우스',EN:'House with Surak-i',JP:'スラキと聴くハウス',CN:'与水落一起听House'};
+  var h='';
+  h+='<div id="gps-status-bar" style="background:rgba(44,74,30,0.08);border-radius:10px;padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;">';
+  h+='<span id="gps-dot" style="width:8px;height:8px;border-radius:50%;background:#bbb;flex-shrink:0;display:inline-block;"></span>';
+  h+='<span id="gps-status-text" style="font-size:12px;color:#6B6454;">'+(gpsLbl[lang]||gpsLbl.KO)+'</span>';
+  h+='<span id="gps-mode-badge" style="margin-left:auto;font-size:10px;padding:2px 8px;border-radius:10px;background:#e8e0d0;color:#6B6454;display:none;"></span>';
+  h+='</div>';
+  h+='<div style="display:flex;gap:6px;margin-bottom:14px;">';
+  ['walk','active','relax'].forEach(function(m){
+    var ml=(mLabels[m]&&mLabels[m][lang])||m;
+    var isOn=m===_currentMode;
+    var col=SC_PLAYLISTS[m].color;
+    h+='<button data-mode="'+m+'" onclick="setSoundMode(this)" style="flex:1;padding:9px 4px;border-radius:10px;border:1.5px solid '+(isOn?col:'#D8D0BE')+';background:'+(isOn?col:'#fff')+';color:'+(isOn?'#fff':'#6B6454')+';font-size:11px;font-weight:700;cursor:pointer;">'+ml+'</button>';
+  });
+  h+='</div>';
+  h+='<div style="background:#fff;border:1px solid #D8D0BE;border-radius:14px;padding:14px;margin-bottom:12px;">';
+  h+='<div style="font-size:10px;color:#9E9484;letter-spacing:1px;margin-bottom:4px;">'+(nowLbl[lang]||'NOW PLAYING')+'</div>';
+  h+='<div style="font-size:15px;font-weight:800;color:#1A1A14;margin-bottom:5px;">'+title+'</div>';
+  h+='<div style="font-size:12px;color:#6B6454;line-height:1.6;">'+desc+'</div>';
+  h+='</div>';
+  h+='<div style="border-radius:12px;overflow:hidden;margin-bottom:14px;">';
+  h+='<iframe id="sc-widget" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url='+encodeURIComponent(pl.url)+'&color=%232C4A1E&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>';
+  h+='</div>';
+  h+='<div style="text-align:center;padding:8px 0 12px;">';
+  h+='<div id="surak-char-wrap" style="display:inline-block;">';
+  var surakSrc=document.querySelector && document.querySelector("img[alt='수락이']");
+  if(surakSrc){
+    h+="<img src="+JSON.stringify(surakSrc.src)+" style='width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #D8D0BE;' alt='수락이' id='surak-dance-img'/>";
+  }else{
+    h+="<div style='font-size:44px' id='surak-dance-img'>🐿️</div>";
+  }
+  h+='</div>';
+  h+='<div style="font-size:11px;color:#9E9484;margin-top:6px;">'+(charLbl[lang]||charLbl.KO)+'</div>';
+  h+='</div>';
+  h+='<div style="font-size:10px;color:#9E9484;letter-spacing:1px;margin-bottom:8px;">'+(moreLbl[lang]||moreLbl.KO)+'</div>';
+  var extras=[
+    {url:'https://soundcloud.com/djyinthehouse/sets/deal-of-destiny-jackin-house',title:'DEAL OF DESTINY',sub:'Jackin House'},
+    {url:'https://soundcloud.com/djyinthehouse/sets/jekyll-hyde-swing-house',title:'JEKYLL & HYDE',sub:'Swing House'},
+    {url:'https://soundcloud.com/djyinthehouse/sets/vibes-of-life',title:'VIBES OF LIFE',sub:'Jackin House'}
+  ];
+  extras.forEach(function(p){
+    h+='<div onclick="playCustomSC('+JSON.stringify(p.url)+')" style="background:#fff;border:1px solid #D8D0BE;border-radius:10px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;">';
+    h+='<div style="width:32px;height:32px;border-radius:6px;background:#2C4A1E;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0;">♪</div>';
+    h+='<div><div style="font-size:13px;font-weight:700;color:#1A1A14;">'+p.title+'</div><div style="font-size:11px;color:#9E9484;">'+p.sub+'</div></div>';
+    h+='<div style="margin-left:auto;font-size:13px;color:#2C4A1E;font-weight:700;">▶</div>';
+    h+='</div>';
+  });
+  el.innerHTML=h;
+}
+
+function setSoundMode(btnOrMode){
+  var mode=typeof btnOrMode==='string'?btnOrMode:btnOrMode.getAttribute('data-mode');
+  _currentMode=mode;
+  _userOverride=true;
+  renderSound();
+}
+
+function playCustomSC(url){
+  var iframe=document.getElementById('sc-widget');
+  if(!iframe)return;
+  iframe.src='https://w.soundcloud.com/player/?url='+encodeURIComponent(url)+'&color=%232C4A1E&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false';
+}
+
+function startDanceAnim(){
+  var el=document.getElementById('surak-char-wrap');
+  if(el)el.style.animation='surakDance 0.5s ease-in-out infinite alternate';
+}
+function stopDanceAnim(){
+  var el=document.getElementById('surak-char-wrap');
+  if(el)el.style.animation='none';
+}
+
 function applyT(){
   // HTML 하드코딩 요소 번역
   var _h = [
@@ -1201,16 +1318,18 @@ setTimeout(function(){showGuideTip();setInterval(showGuideTip,30000);},8000);
 function sv(v){
   document.querySelectorAll('.view').forEach(function(el){el.classList.remove('on');});
   document.querySelectorAll('.vtab').forEach(function(b){b.classList.remove('on');});
-  document.getElementById(v+'-view').classList.add('on');
-  document.querySelector('[data-v="'+v+'"]').classList.add('on');
+  var viewEl=document.getElementById(v+'-view');
+  if(viewEl)viewEl.classList.add('on');
+  var tabEl=document.querySelector('[data-v="'+v+'"]');
+  if(tabEl)tabEl.classList.add('on');
   if(v==='map'){
     if(_mapReady&&!_map) _initMap();
     else if(_map) setTimeout(function(){naver.maps.Event.trigger(_map,'resize');},150);
   }
-  if(v==='list'){ buildListFilter(); renderList(); }
+  if(v==='list'){buildListFilter();renderList();}
   if(v==='goods') renderGoods();
-  if(v==='trail') renderTrail();
-  if(v==='info')  renderInfo();
+  if(v==='sound') renderSound();
+  if(v==='info') renderInfo();
 }
 
 // ── 이벤트 ──

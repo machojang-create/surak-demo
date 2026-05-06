@@ -414,24 +414,36 @@ var WATER_SPOTS=[
 ];
 
 var SC_PLAYLISTS={
-  walk:{url:'https://soundcloud.com/djyinthehouse/sets/vibes-of-life',
-    titleKO:'VIBES OF LIFE',descKO:'Jackin House — 거리 산책에 어울리는 경쾌한 하우스',
-    titleEN:'VIBES OF LIFE',descEN:'Jackin House — Light grooves for street strolling',
-    titleJP:'VIBES OF LIFE',descJP:'Jackin House — 거리산책にぴったりのハウス',
-    titleCN:'VIBES OF LIFE',descCN:'Jackin House — 适合街头漫步的House',
-    mood:'🚶',color:'#3D6B2A'},
-  active:{url:'https://soundcloud.com/djyinthehouse/sets/concrete-grit',
-    titleKO:'CONCRETE GRIT',descKO:'Chicago House — 에너지를 끌어올리는 강렬한 비트',
-    titleEN:'CONCRETE GRIT',descEN:'Chicago House — Intense beats for energetic climbing',
-    titleJP:'CONCRETE GRIT',descJP:'Chicago House — エネルギーを高める力強いビート',
-    titleCN:'CONCRETE GRIT',descCN:'Chicago House — 激发能量的强劲节拍',
-    mood:'⚡',color:'#8B2A2A'},
-  relax:{url:'https://soundcloud.com/djyinthehouse/sets/tales-from-the-past',
-    titleKO:'TALES FROM THE PAST',descKO:'Afro Jungle House — 쉼터에서 즐기는 감성 하우스',
-    titleEN:'TALES FROM THE PAST',descEN:'Afro Jungle House — Soulful vibes for rest spots',
-    titleJP:'TALES FROM THE PAST',descJP:'Afro Jungle House — 休憩スポットの感性ハウス',
-    titleCN:'TALES FROM THE PAST',descCN:'Afro Jungle House — 休憩处的感性House',
-    mood:'☕',color:'#6B4A1E'}
+  walk:{
+    label:{KO:'🚶 Walk',EN:'🚶 Walk',JP:'🚶 Walk',CN:'🚶 Walk'},
+    desc:{KO:'Jackin House — 거리 산책의 경쾌한 리듬',EN:'Jackin House — Light grooves for street strolling',JP:'Jackin House — 街歩きの軽快なリズム',CN:'Jackin House — 街道漫步的轻快节奏'},
+    color:'#3D6B2A',
+    default:'https://soundcloud.com/djyinthehouse/sets/vibes-of-life',
+    lists:[
+      {url:'https://soundcloud.com/djyinthehouse/sets/vibes-of-life',title:'VIBES OF LIFE',sub:'Jackin House · 5 tracks',icon:'🎵'},
+      {url:'https://soundcloud.com/djyinthehouse/sets/deal-of-destiny-jackin-house',title:'DEAL OF DESTINY',sub:'Jackin House · 5 tracks',icon:'🎵'}
+    ]
+  },
+  active:{
+    label:{KO:'⚡ Active',EN:'⚡ Active',JP:'⚡ Active',CN:'⚡ Active'},
+    desc:{KO:'Chicago House — 에너지를 끌어올리는 강렬한 비트',EN:'Chicago House — Intense beats for energetic climbing',JP:'Chicago House — エネルギーを高める力強いビート',CN:'Chicago House — 激发能量的强劲节拍'},
+    color:'#8B2A2A',
+    default:'https://soundcloud.com/djyinthehouse/sets/concrete-grit',
+    lists:[
+      {url:'https://soundcloud.com/djyinthehouse/sets/concrete-grit',title:'CONCRETE GRIT',sub:'Chicago House · 5 tracks',icon:'⚡'},
+      {url:'https://soundcloud.com/djyinthehouse/sets/jekyll-hyde-swing-house',title:'JEKYLL & HYDE',sub:'Swing House · 5 tracks',icon:'🎸'}
+    ]
+  },
+  relax:{
+    label:{KO:'☕ Relax',EN:'☕ Relax',JP:'☕ Relax',CN:'☕ Relax'},
+    desc:{KO:'Afro & Swing House — 쉼터에서 즐기는 감성 하우스',EN:'Afro & Swing House — Soulful vibes for rest spots',JP:'Afro & Swing House — 休憩スポットの感性ハウス',CN:'Afro & Swing House — 休憩处的感性House'},
+    color:'#6B4A1E',
+    default:'https://soundcloud.com/djyinthehouse/sets/tales-from-the-past',
+    lists:[
+      {url:'https://soundcloud.com/djyinthehouse/sets/tales-from-the-past',title:'TALES FROM THE PAST',sub:'Afro Jungle House · 5 tracks',icon:'🌿'},
+      {url:'https://soundcloud.com/djyinthehouse/sets/deal-of-destiny-jackin-house',title:'DEAL OF DESTINY',sub:'Jackin House · 5 tracks',icon:'🎵'}
+    ]
+  }
 };
 var _currentMode='walk';
 var _userOverride=false;
@@ -1149,69 +1161,89 @@ function renderSound(){
   var el=document.getElementById('sound-inner');
   if(!el)return;
   var pl=SC_PLAYLISTS[_currentMode]||SC_PLAYLISTS.walk;
-  var title=lang==='EN'?pl.titleEN:lang==='JP'?pl.titleJP:lang==='CN'?pl.titleCN:pl.titleKO;
-  var desc=lang==='EN'?pl.descEN:lang==='JP'?pl.descJP:lang==='CN'?pl.descCN:pl.descKO;
-  var mLabels={
-    walk:{KO:'🚶 Walk',EN:'🚶 Walk',JP:'🚶 Walk',CN:'🚶 Walk'},
-    active:{KO:'⚡ Active',EN:'⚡ Active',JP:'⚡ Active',CN:'⚡ Active'},
-    relax:{KO:'☕ Relax',EN:'☕ Relax',JP:'☕ Relax',CN:'☕ Relax'}
-  };
+  var activeUrl=_currentPlayUrl||pl.default;
+  var label=pl.label[lang]||pl.label.KO;
+  var desc=pl.desc[lang]||pl.desc.KO;
   var gpsLbl={KO:'GPS 위치 감지 중...',EN:'Detecting GPS...',JP:'GPS検出中...',CN:'GPS检测中...'};
   var nowLbl={KO:'NOW PLAYING',EN:'NOW PLAYING',JP:'NOW PLAYING',CN:'NOW PLAYING'};
-  var moreLbl={KO:'더 많은 플레이리스트',EN:'More Playlists',JP:'もっとプレイリスト',CN:'更多播放列表'};
+  var plLbl={KO:'📋 플레이리스트',EN:'📋 Playlists',JP:'📋 プレイリスト',CN:'📋 播放列表'};
   var charLbl={KO:'수락이와 함께 듣는 하우스',EN:'House with Surak-i',JP:'スラキと聴くハウス',CN:'与水落一起听House'};
   var h='';
+  // GPS 상태바
   h+='<div id="gps-status-bar" style="background:rgba(44,74,30,0.08);border-radius:10px;padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:8px;">';
   h+='<span id="gps-dot" style="width:8px;height:8px;border-radius:50%;background:#bbb;flex-shrink:0;display:inline-block;"></span>';
   h+='<span id="gps-status-text" style="font-size:12px;color:#6B6454;">'+(gpsLbl[lang]||gpsLbl.KO)+'</span>';
   h+='<span id="gps-mode-badge" style="margin-left:auto;font-size:10px;padding:2px 8px;border-radius:10px;background:#e8e0d0;color:#6B6454;display:none;"></span>';
   h+='</div>';
+  // 모드 탭 3개
   h+='<div style="display:flex;gap:6px;margin-bottom:14px;">';
   ['walk','active','relax'].forEach(function(m){
-    var ml=(mLabels[m]&&mLabels[m][lang])||m;
+    var ml=(SC_PLAYLISTS[m].label[lang])||m;
     var isOn=m===_currentMode;
     var col=SC_PLAYLISTS[m].color;
-    h+='<button data-mode="'+m+'" onclick="setSoundMode(this)" style="flex:1;padding:9px 4px;border-radius:10px;border:1.5px solid '+(isOn?col:'#D8D0BE')+';background:'+(isOn?col:'#fff')+';color:'+(isOn?'#fff':'#6B6454')+';font-size:11px;font-weight:700;cursor:pointer;">'+ml+'</button>';
+    h+='<button data-mode="'+m+'" class="sound-mode-btn" style="flex:1;padding:9px 4px;border-radius:10px;border:1.5px solid '+(isOn?col:'#D8D0BE')+';background:'+(isOn?col:'#fff')+';color:'+(isOn?'#fff':'#6B6454')+';font-size:11px;font-weight:700;cursor:pointer;">'+ml+'</button>';
   });
   h+='</div>';
-  h+='<div style="background:#fff;border:1px solid #D8D0BE;border-radius:14px;padding:14px;margin-bottom:12px;">';
-  h+='<div style="font-size:10px;color:#9E9484;letter-spacing:1px;margin-bottom:4px;">'+(nowLbl[lang]||'NOW PLAYING')+'</div>';
-  h+='<div style="font-size:15px;font-weight:800;color:#1A1A14;margin-bottom:5px;">'+title+'</div>';
-  h+='<div style="font-size:12px;color:#6B6454;line-height:1.6;">'+desc+'</div>';
+  // 현재 모드 설명
+  h+='<div style="background:#fff;border:1px solid #D8D0BE;border-radius:14px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">';
+  h+='<div style="width:36px;height:36px;border-radius:8px;background:'+pl.color+';flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;">♪</div>';
+  h+='<div><div style="font-size:13px;font-weight:800;color:#1A1A14;">'+label+'</div><div style="font-size:11px;color:#6B6454;margin-top:2px;">'+desc+'</div></div>';
   h+='</div>';
-  h+='<div style="border-radius:12px;overflow:hidden;margin-bottom:14px;">';
-  h+='<iframe id="sc-widget" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url='+encodeURIComponent(pl.url)+'&color=%232C4A1E&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>';
+  // SoundCloud 위젯
+  h+='<div style="border-radius:12px;overflow:hidden;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">';
+  h+='<iframe id="sc-widget" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url='+encodeURIComponent(activeUrl)+'&color=%232C4A1E&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>';
   h+='</div>';
-  h+='<div style="text-align:center;padding:8px 0 12px;">';
+  // 수락이 캐릭터
+  h+='<div style="text-align:center;padding:6px 0 12px;">';
   h+='<div id="surak-char-wrap" style="display:inline-block;">';
-  var surakSrc=document.querySelector && document.querySelector("img[alt='수락이']");
-  if(surakSrc){
-    h+="<img src="+JSON.stringify(surakSrc.src)+" style='width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #D8D0BE;' alt='수락이' id='surak-dance-img'/>";
+  var surakImgEl=null;
+  try{surakImgEl=document.querySelector('img[alt="수락이"]');}catch(e){}
+  if(surakImgEl&&surakImgEl.src){
+    h+='<img src="'+surakImgEl.src+'" style="width:60px;height:60px;border-radius:50%;object-fit:cover;border:2px solid #D8D0BE;" alt="수락이" id="surak-dance-img"/>';
   }else{
-    h+="<div style='font-size:44px' id='surak-dance-img'>🐿️</div>";
+    h+='<div style="font-size:40px" id="surak-dance-img">🐿️</div>';
   }
   h+='</div>';
-  h+='<div style="font-size:11px;color:#9E9484;margin-top:6px;">'+(charLbl[lang]||charLbl.KO)+'</div>';
+  h+='<div style="font-size:11px;color:#9E9484;margin-top:4px;">'+(charLbl[lang]||charLbl.KO)+'</div>';
   h+='</div>';
-  h+='<div style="font-size:10px;color:#9E9484;letter-spacing:1px;margin-bottom:8px;">'+(moreLbl[lang]||moreLbl.KO)+'</div>';
-  var extras=[
-    {url:'https://soundcloud.com/djyinthehouse/sets/deal-of-destiny-jackin-house',title:'DEAL OF DESTINY',sub:'Jackin House'},
-    {url:'https://soundcloud.com/djyinthehouse/sets/jekyll-hyde-swing-house',title:'JEKYLL & HYDE',sub:'Swing House'},
-    {url:'https://soundcloud.com/djyinthehouse/sets/vibes-of-life',title:'VIBES OF LIFE',sub:'Jackin House'}
-  ];
-  extras.forEach(function(p){
-    h+='<div onclick="playCustomSC('+JSON.stringify(p.url)+')" style="background:#fff;border:1px solid #D8D0BE;border-radius:10px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px;cursor:pointer;">';
-    h+='<div style="width:32px;height:32px;border-radius:6px;background:#2C4A1E;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;flex-shrink:0;">♪</div>';
-    h+='<div><div style="font-size:13px;font-weight:700;color:#1A1A14;">'+p.title+'</div><div style="font-size:11px;color:#9E9484;">'+p.sub+'</div></div>';
-    h+='<div style="margin-left:auto;font-size:13px;color:#2C4A1E;font-weight:700;">▶</div>';
+  // 이 모드의 플레이리스트 목록
+  h+='<div style="font-size:11px;font-weight:700;color:#1A1A14;letter-spacing:0.5px;margin-bottom:8px;">'+(plLbl[lang]||plLbl.KO)+'</div>';
+  pl.lists.forEach(function(p){
+    var isActive=p.url===activeUrl;
+    h+='<div class="sc-pl-item" data-url="'+p.url+'" style="background:'+(isActive?'rgba(44,74,30,0.06)':'#fff')+';border:1.5px solid '+(isActive?pl.color:'#D8D0BE')+';border-radius:12px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:center;gap:10px;cursor:pointer;">';
+    h+='<div style="width:36px;height:36px;border-radius:8px;background:'+(isActive?pl.color:'#EDE8DC')+';flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;">'+p.icon+'</div>';
+    h+='<div style="flex:1;"><div style="font-size:13px;font-weight:700;color:'+(isActive?pl.color:'#1A1A14')+';">'+p.title+'</div>';
+    h+='<div style="font-size:11px;color:#9E9484;margin-top:2px;">'+p.sub+'</div></div>';
+    h+=(isActive?'<div style="font-size:11px;color:'+pl.color+';font-weight:700;">▶ 재생중</div>':'<div style="font-size:18px;color:#D8D0BE;">▶</div>');
     h+='</div>';
   });
   el.innerHTML=h;
+  // 이벤트 바인딩
+  el.querySelectorAll('.sound-mode-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){setSoundMode(this.getAttribute('data-mode'));});
+  });
+  el.querySelectorAll('.sc-pl-item').forEach(function(item){
+    item.addEventListener('click',function(){
+      var url=this.getAttribute('data-url');
+      _currentPlayUrl=url;
+      var iframe=document.getElementById('sc-widget');
+      if(iframe)iframe.src='https://w.soundcloud.com/player/?url='+encodeURIComponent(url)+'&color=%232C4A1E&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false';
+      el.querySelectorAll('.sc-pl-item').forEach(function(i){
+        var iurl=i.getAttribute('data-url');
+        var isNow=iurl===url;
+        var col=SC_PLAYLISTS[_currentMode].color;
+        i.style.background=isNow?'rgba(44,74,30,0.06)':'#fff';
+        i.style.border='1.5px solid '+(isNow?col:'#D8D0BE');
+      });
+    });
+  });
 }
 
-function setSoundMode(btnOrMode){
-  var mode=typeof btnOrMode==='string'?btnOrMode:btnOrMode.getAttribute('data-mode');
+function setSoundMode(modeOrEl){
+  var mode=typeof modeOrEl==='string'?modeOrEl:(modeOrEl&&modeOrEl.getAttribute?modeOrEl.getAttribute('data-mode'):modeOrEl);
+  if(!mode)return;
   _currentMode=mode;
+  _currentPlayUrl=SC_PLAYLISTS[mode]?SC_PLAYLISTS[mode].default:null;
   _userOverride=true;
   renderSound();
 }

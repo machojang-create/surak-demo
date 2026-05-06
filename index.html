@@ -593,7 +593,7 @@ window.naverMapInit=function(){
 function _initMap(){
   if(!_mapReady||_map)return;
   _map=new naver.maps.Map('naver-map',{
-    center:new naver.maps.LatLng(37.6590,127.0625),
+    center:new naver.maps.LatLng(37.674746,127.058228),
     zoom:17,
     mapTypeId:naver.maps.MapTypeId.NORMAL,
     zoomControl:true,
@@ -1377,7 +1377,7 @@ document.querySelectorAll('.lang-btn').forEach(function(btn){
     lang=this.dataset.lang;
     document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('on');});
     this.classList.add('on');
-    ['goods-inner','trail-inner','info-inner'].forEach(function(id){
+    ['goods-inner','sound-inner','info-inner'].forEach(function(id){
       var el=document.getElementById(id);
       if(el) delete el.dataset.done;
     });
@@ -1387,7 +1387,7 @@ document.querySelectorAll('.lang-btn').forEach(function(btn){
     if(!cur) return;
     var v=cur.dataset.v;
     if(v==='goods') renderGoods();
-    else if(v==='trail') renderTrail();
+    else if(v==='sound') renderSound();
     else if(v==='info') renderInfo();
     else if(v==='list'){ buildListFilter(); renderList(); }
   });

@@ -334,6 +334,112 @@ body{
 .map-sc-nm{font-size:13px;font-weight:700;color:var(--t1);}
 .map-sc-meta{font-size:11px;color:var(--t3);margin-top:1px;}
 .map-sc-dist{font-size:11px;font-weight:700;color:var(--ac2);margin-left:auto;flex-shrink:0;}
+
+/* ── 팝업 이미지 슬라이더 ── */
+.pop-img-slider{
+  display:flex;gap:6px;overflow-x:auto;
+  padding:12px 16px;background:var(--bg2);
+  -webkit-overflow-scrolling:touch;
+  scroll-snap-type:x mandatory;
+}
+.pop-img-slider::-webkit-scrollbar{display:none;}
+.pop-img-item{flex-shrink:0;width:200px;height:140px;border-radius:var(--r3);overflow:hidden;scroll-snap-align:start;box-shadow:var(--s2);}
+.pop-img-item img{width:100%;height:100%;object-fit:cover;display:block;}
+/* 이미지 카운터 도트 */
+.pop-img-dots{display:flex;justify-content:center;gap:5px;padding:6px 0 2px;background:var(--bg2);}
+.pop-img-dot{width:6px;height:6px;border-radius:50%;background:var(--bd);transition:background .2s;}
+.pop-img-dot.on{background:var(--ac);}
+
+/* ── 내 위치 버튼 ── */
+#my-loc-btn{
+  position:absolute;bottom:16px;right:10px;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--sf);border:1.5px solid var(--bd);
+  box-shadow:var(--s2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--ac);z-index:50;transition:all .2s;
+}
+#my-loc-btn:active{transform:scale(.92);}
+#my-loc-btn.locating{animation:locPulse 1s ease-in-out infinite;}
+@keyframes locPulse{0%,100%{box-shadow:var(--s2);}50%{box-shadow:0 0 0 6px rgba(44,74,30,.2);}}
+
+/* ── 포인트 시스템 ── */
+.point-hero{
+  background:linear-gradient(135deg,#8B6B2A,#C49A3C);
+  border-radius:var(--r3);padding:16px;margin-bottom:12px;
+  color:#fff;box-shadow:var(--s2);
+}
+.point-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.2);border-radius:20px;
+  padding:4px 12px;font-size:12px;font-weight:700;margin-bottom:10px;
+}
+.point-num{font-size:36px;font-weight:800;line-height:1;}
+.point-unit{font-size:14px;opacity:.8;margin-left:3px;}
+.point-hist{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r3);overflow:hidden;box-shadow:var(--s1);}
+.point-hist-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--bd2);}
+.point-hist-row:last-child{border-bottom:none;}
+.point-hist-ic{width:32px;height:32px;border-radius:var(--r2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.point-hist-t{font-size:13px;font-weight:600;color:var(--t1);}
+.point-hist-d{font-size:11px;color:var(--t3);margin-top:1px;}
+.point-plus{font-size:14px;font-weight:800;color:var(--am);margin-left:auto;}
+.point-minus{font-size:14px;font-weight:800;color:var(--re);margin-left:auto;}
+
+@keyframes myLocPulse{0%{transform:scale(1);opacity:.6;}100%{transform:scale(2.5);opacity:0;}}
+
+/* ── 코스 가이드 ── */
+.course-hero{
+  background:linear-gradient(160deg,#1a3a12,#2C4A1E);
+  border-radius:var(--r4);padding:20px;color:#fff;
+  position:relative;overflow:hidden;margin-bottom:12px;
+}
+.course-hero::after{content:'⛰️';position:absolute;right:10px;bottom:-10px;font-size:72px;opacity:.12;}
+.course-stat-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+.course-stat{background:rgba(255,255,255,.15);border-radius:var(--r2);padding:6px 12px;font-size:11px;font-weight:700;}
+
+/* 고도 그래프 */
+.elev-wrap{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r3);padding:14px;margin-bottom:10px;box-shadow:var(--s1);}
+.elev-title{font-size:11px;font-weight:700;color:var(--t3);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;font-family:monospace;}
+.elev-svg{width:100%;height:80px;}
+
+/* 진행률 */
+.progress-track-wrap{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r3);padding:14px;margin-bottom:10px;box-shadow:var(--s1);}
+.progress-bar-outer{height:8px;background:var(--bd);border-radius:4px;position:relative;margin:10px 0 6px;}
+.progress-bar-inner{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--ac),var(--ac3));transition:width .8s ease;}
+.progress-dot{position:absolute;top:-4px;width:16px;height:16px;border-radius:50%;background:var(--ac);border:3px solid #fff;box-shadow:var(--s2);transform:translateX(-50%);transition:left .8s ease;}
+.landmark-labels{display:flex;justify-content:space-between;margin-top:2px;}
+.landmark-label{font-size:9px;color:var(--t3);text-align:center;width:14%;}
+
+/* 랜드마크 스텝 */
+.landmark-list{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r3);overflow:hidden;box-shadow:var(--s1);}
+.landmark-row{display:flex;align-items:stretch;gap:0;border-bottom:1px solid var(--bd2);}
+.landmark-row:last-child{border-bottom:none;}
+.landmark-row.reached{background:var(--acbg);}
+.landmark-line{width:3px;background:var(--bd);flex-shrink:0;}
+.landmark-row.reached .landmark-line{background:var(--ac);}
+.landmark-dot-col{width:36px;display:flex;flex-direction:column;align-items:center;padding:14px 0;flex-shrink:0;}
+.landmark-dot{width:12px;height:12px;border-radius:50%;background:var(--bd);border:2px solid var(--sf);}
+.landmark-row.reached .landmark-dot{background:var(--ac);}
+.landmark-body{flex:1;padding:12px 12px 12px 0;}
+.landmark-name{font-size:13px;font-weight:800;color:var(--t1);}
+.landmark-row.reached .landmark-name{color:var(--ac);}
+.landmark-time{font-size:11px;color:var(--t3);margin-top:1px;}
+.landmark-desc{font-size:12px;color:var(--t2);margin-top:4px;line-height:1.5;}
+.landmark-warn{font-size:11px;color:var(--re);font-weight:700;margin-top:4px;}
+.landmark-dist{font-size:10px;font-weight:700;color:var(--ac2);margin-left:auto;flex-shrink:0;padding:12px 10px 0 0;}
+
+/* 안전 위젯 */
+.safety-widget{background:linear-gradient(135deg,#1a2a4a,#0f1e3a);border-radius:var(--r3);padding:14px;color:#fff;margin-bottom:10px;}
+.safety-row{display:flex;gap:8px;margin-top:10px;}
+.safety-item{flex:1;background:rgba(255,255,255,.1);border-radius:var(--r2);padding:8px 10px;text-align:center;}
+.safety-ic{font-size:20px;margin-bottom:3px;}
+.safety-lbl{font-size:9px;opacity:.65;margin-bottom:2px;}
+.safety-val{font-size:13px;font-weight:800;}
+
+/* 하산 권장 */
+.descend-alert{border-radius:var(--r2);padding:10px 12px;display:flex;align-items:center;gap:10px;margin-top:10px;}
+.descend-alert.safe{background:rgba(74,122,53,.15);border:1px solid rgba(74,122,53,.3);}
+.descend-alert.warn{background:rgba(139,42,42,.12);border:1px solid rgba(139,42,42,.3);}
 </style>
 </head>
 <body>
@@ -436,6 +542,13 @@ body{
     <div id="map-wrap">
       <div id="naver-map"></div>
       <div id="map-status"></div>
+      <!-- 내 위치 버튼 -->
+      <button id="my-loc-btn" onclick="moveToMyLocation()" title="내 위치">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+          <circle cx="12" cy="12" r="8" stroke-opacity=".3"/>
+        </svg>
+      </button>
     </div>
     <!-- 하단 매장 패널 -->
     <div id="map-list-panel">
@@ -634,50 +747,73 @@ var SC_PLAYLISTS={
   }
 };
 var TRAILS=[
-  {id:1,
-   ko:"1코스 — 주등산로",  en:"Course 1: Main Trail",  jp:"1コース — 主登山道",    cn:"1路线 — 主登山道",
-   lk:"중급",              le:"Intermediate",           lj:"中級",                  lc:"中级",
-   distko:"약 3.2km",     disten:"~3.2km",             distjp:"約3.2km",           distcn:"约3.2公里",
-   timeko:"약 1시간 30분", timeen:"~1.5 hours",         timejp:"約1時間30分",        timecn:"约1.5小时",
-   ptko:"3번출구 → 수락산 입구 → 기차바위 → 정상(638m)",
-   pten:"Exit 3 → Trail Entrance → Gichabawi Rock → Summit (638m)",
-   ptjp:"3番出口 → 登山口 → キチャバウィ岩 → 山頂(638m)",
-   ptcn:"3号出口 → 登山口 → 火车岩 → 山顶(638m)",
-   certko:"SNS 인증 후 캠프캡 🧢 수령 가능",
-   certen:"Camp Cap 🧢 available with SNS cert",
-   certjp:"SNS認証後キャンプキャップ🧢受取可",
-   certcn:"SNS认证后可领取露营帽🧢",
-   color:"#E85030"},
-  {id:2,
-   ko:"2코스 — 둘레길 (은류폭포)",  en:"Course 2: Dulle-gil Trail",  jp:"2コース — ドゥレギル（銀流滝）",  cn:"2路线 — 绕山步道（银流瀑布）",
-   lk:"초급",                       le:"Beginner",                   lj:"初級",                           lc:"初级",
-   distko:"약 8km",                 disten:"~8km",                   distjp:"約8km",                      distcn:"约8公里",
-   timeko:"약 3시간",               timeen:"~3 hours",               timejp:"約3時間",                    timecn:"约3小时",
-   ptko:"3번출구 등산로 옆 → 둘레길 입구 → 은류폭포 → 내원암 → 순환",
-   pten:"Trail side at Exit 3 → Dulle-gil entrance → Eunryu Falls → Naewon Temple → Loop",
-   ptjp:"3番出口登山道の横 → ドゥレギル入口 → 銀流滝 → 内院庵 → 周回",
-   ptcn:"3号出口登山道旁 → 绕山步道入口 → 银流瀑布 → 内院庵 → 环绕",
-   certko:"SNS 인증 후 반다나 🪢 수령 가능",
-   certen:"Bandana 🪢 available with SNS cert",
-   certjp:"SNS認証後バンダナ🪢受取可",
-   certcn:"SNS认证后可领取头巾🪢",
-   color:"#2A8AAA"},
-  {id:3,
-   ko:"3코스 — 능선 (향로봉)",  en:"Course 3: Ridge Trail",  jp:"3コース — 稜線（香炉峰）",  cn:"3路线 — 山脊（香炉峰）",
-   lk:"중급",                   le:"Intermediate",           lj:"中級",                      lc:"中级",
-   distko:"약 5km",             disten:"~5km",               distjp:"約5km",                 distcn:"约5公里",
-   timeko:"약 2시간",           timeen:"~2 hours",           timejp:"約2時間",               timecn:"约2小时",
-   ptko:"수락산 입구 → 향로봉 → 능선 조망 → 하산",
-   pten:"Trail Entrance → Hyangnobong Peak → Ridge View → Descent",
-   ptjp:"登山口 → 香炉峰 → 稜線展望 → 下山",
-   ptcn:"登山口 → 香炉峰 → 山脊景观 → 下山",
-   certko:"SNS 인증 후 등산양말 🧦 수령 가능",
-   certen:"Hiking Socks 🧦 available with SNS cert",
-   certjp:"SNS認証後ハイキングソックス🧦受取可",
-   certcn:"SNS认证后可领取登山袜🧦",
-   color:"#5A7A3A"}
+  {id:'jubong',
+   ko:'수락산 주봉 코스',en:'Suraksan Summit Course',jp:'水落山主峰コース',cn:'水落山主峰路线',
+   lk:'중급',le:'Intermediate',lj:'中級',lc:'中级',
+   dist:'8.2km',
+   timeko:'약 4시간 (등산 2h+하산 2h)',timeen:'~4hrs (up 2h+down 2h)',timejp:'約4時間（登り2h+下り2h）',timecn:'约4小时（上山2h+下山2h）',
+   color:'#2C4A1E',
+   ptko:'수락산역 → 벽운지맥 → 물개바위 → 깔딱고개 → 독수리바위 → 철모바위 → 주봉(637m)',
+   pten:'Suraksan Stn → Byeokun Ridge → Mulgae Rock → Steep Pass → Eagle Rock → Helmet Rock → Summit(637m)',
+   ptjp:'スラクサン駅 → 碧雲지맥 → 물개岩 → 깔딱고개 → 독수리岩 → 철모岩 → 頂上(637m)',
+   ptcn:'水落山站 → 碧云山脊 → 海狗岩 → 陡峭坡 → 鹰岩 → 头盔岩 → 主峰(637m)',
+   certko:'주봉 정상석 인증샷 → 캡 🧢',certen:'Summit stone photo → Cap 🧢',certjp:'頂上石認証 → キャップ🧢',certcn:'顶峰石认证 → 帽子🧢',
+   descend:'하산 후 수락 스트릿 포차거리 추천!',
+   landmarks:[
+     {name:{KO:'수락산역 3번 출구',EN:'Station Exit 3',JP:'駅3番出口',CN:'车站3号出口'},time:0,elev:50,
+      desc:{KO:'등산 시작점. 인근 편의점·김밥 가게에서 식수·도시락 준비',EN:'Start point. Grab water and food at nearby stores.',JP:'登山開始点。近くのコンビニで水・食料を準備。',CN:'登山起点，附近便利店补充饮水和食物。'},
+      icon:'🚉',warn:null},
+     {name:{KO:'벽운지맥 입구',EN:'Byeokun Ridge Entry',JP:'碧雲지맥入口',CN:'碧云山脊入口'},time:15,elev:120,
+      desc:{KO:'산책로 끝, 본격 산길 시작. 마지막 화장실 위치',EN:'End of walking path, mountain trail begins. Last restroom here.',JP:'遊歩道の終わり、本格的な山道の始まり。最後のトイレ。',CN:'步道结束，正式山路开始。最后一处厕所。'},
+      icon:'🌲',warn:null},
+     {name:{KO:'물개바위',EN:'Mulgae Rock',JP:'물개岩',CN:'海狗岩'},time:40,elev:280,
+      desc:{KO:'1차 휴식 스팟. 물개 형상의 바위. 완만한 경사 구간 마지막',EN:'First rest spot. Seal-shaped rock. Last gentle slope section.',JP:'最初の休憩スポット。アザラシ形の岩。緩やかな傾斜の最後。',CN:'第一休息点，海狗形状岩石，平缓坡道最后段。'},
+      icon:'🪨',warn:null},
+     {name:{KO:'깔딱고개',EN:'Steep Pass',JP:'急坂峠',CN:'陡峭坡口'},time:70,elev:450,
+      desc:{KO:'코스 최난구간. 급경사 돌계단과 로프 구간. 충분한 휴식 후 진행',EN:'Hardest section. Steep stone steps and rope sections. Rest well before.',JP:'コース最難関。急な石段とロープ区間。十分な休息後に進む。',CN:'全程最难段，陡峭石阶和绳索路段，充分休息后继续。'},
+      icon:'⚠️',warn:{KO:'⚠️ 낙석 주의! 앞사람과 간격 유지',EN:'⚠️ Watch for falling rocks! Keep distance.',JP:'⚠️ 落石注意！前の人との間隔を保つ。',CN:'⚠️ 注意落石！保持与前方人员的距离。'}},
+     {name:{KO:'독수리바위',EN:'Eagle Rock',JP:'독수리岩',CN:'鹰岩'},time:90,elev:540,
+      desc:{KO:'조망 명소. 서울·의정부 시내 전경 확인 가능. 사진 스팟',EN:'Scenic viewpoint. Seoul and Uijeongbu panorama. Great photo spot.',JP:'眺望名所。ソウル・議政府市内の全景が見える。写真スポット。',CN:'观景名所，可俯瞰首尔和议政府市区全景，绝佳拍照地。'},
+      icon:'🦅',warn:null},
+     {name:{KO:'철모바위',EN:'Helmet Rock',JP:'鉄帽岩',CN:'头盔岩'},time:100,elev:600,
+      desc:{KO:'정상 직전 갈림길. 군용 철모를 닮은 바위. 정상까지 10분',EN:'Junction just before summit. Helmet-shaped rock. 10min to summit.',JP:'頂上直前の分岐点。軍用ヘルメットに似た岩。頂上まで10分。',CN:'顶峰前的岔路口，形似军用头盔的岩石，距顶峰10分钟。'},
+      icon:'⛑️',warn:null},
+     {name:{KO:'수락산 주봉 (637m)',EN:'Summit (637m)',JP:'水落山主峰 (637m)',CN:'主峰 (637m)'},time:110,elev:637,
+      desc:{KO:'정상석 및 태극기. 360도 파노라마 전망. 인증샷 필수!',EN:'Summit stone and Korean flag. 360° panoramic view. Get your photo!',JP:'頂上石と太極旗。360度パノラマ。認証写真を忘れずに！',CN:'顶峰石和太极旗，360度全景视野，必须拍认证照！'},
+      icon:'🏔️',warn:null}
+   ]
+  },
+  {id:'valley',
+   ko:'벽운계곡 코스',en:'Byeokun Valley Route',jp:'碧雲渓谷コース',cn:'碧云溪谷路线',
+   lk:'초중급',le:'Beginner+',lj:'初中級',lc:'初中级',
+   dist:'3.5km',timeko:'2시간',timeen:'2hrs',timejp:'2時間',timecn:'2小时',
+   color:'#2A558B',
+   ptko:'수락산역 → 벽운계곡 → 은류폭포 → 주봉',
+   pten:'Suraksan Stn → Byeokun Valley → Eunryu Falls → Summit',
+   ptjp:'스라쿠산역 → 碧雲渓谷 → 銀流瀑布 → 頂上',ptcn:'水落山站 → 碧云溪谷 → 银流瀑布 → 顶峰',
+   certko:'은류폭포 인증샷 → 텀블러 🥤',certen:'Falls photo → Tumbler 🥤',certjp:'瀑布認証 → タンブラー🥤',certcn:'瀑布认证 → 杯子🥤',
+   descend:'하산 후 계곡 근처 카페 추천!'
+  },
+  {id:'dulle',
+   ko:'둘레길 코스',en:'Dulle Trail',jp:'둘레길コース',cn:'环山路线',
+   lk:'초급',le:'Easy',lj:'初級',lc:'初级',
+   dist:'6.1km',timeko:'2시간',timeen:'2hrs',timejp:'2時間',timecn:'2小时',
+   color:'#8B6B2A',
+   ptko:'수락산역 → 수락산 둘레길 → 순환',
+   pten:'Suraksan Stn → Dulle Trail → Loop',
+   ptjp:'スラクサン駅 → 둘레길 → 周回',ptcn:'水落山站 → 环山路 → 循环',
+   certko:'둘레길 완주 인증 → 양말 🧦',certen:'Trail completion → Socks 🧦',certjp:'完走認証 → ソックス🧦',certcn:'完成认证 → 袜子🧦',
+   descend:'완주 후 수락 스트릿 맛집 투어 추천!'
+  }
 ];
 var CAT_GOODS={food:'keyring',cafe:'tumbler',gogi:'sock',bar:'bandana',outdoor:'cap'};
+var STORE_IMGS={
+  food:["https://images.unsplash.com/photo-1590301157890-4810ed352733?w=300&h=200&fit=crop","https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=300&h=200&fit=crop","https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=300&h=200&fit=crop"],
+  gogi:["https://images.unsplash.com/photo-1534482421-64566f976cfa?w=300&h=200&fit=crop","https://images.unsplash.com/photo-1544025162-d76694265947?w=300&h=200&fit=crop","https://images.unsplash.com/photo-1558030006-450675393462?w=300&h=200&fit=crop"],
+  cafe:["https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=300&h=200&fit=crop","https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=300&h=200&fit=crop","https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=300&h=200&fit=crop"],
+  bar:["https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=300&h=200&fit=crop","https://images.unsplash.com/photo-1570598912132-0ba1dc952b7d?w=300&h=200&fit=crop","https://images.unsplash.com/photo-1516997121675-4c2d1684aa3e?w=300&h=200&fit=crop"],
+  outdoor:["https://images.unsplash.com/photo-1551632811-561732d1e306?w=300&h=200&fit=crop","https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=300&h=200&fit=crop","https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=300&h=200&fit=crop"],
+};
 var STORES=[
   {id:1,ko:"오공김밥 수락산점",en:"오공김밥 Suraksan",jp:"오공김밥 수락산점",cn:"오공김밥 수락산점",addr:"서울 노원구 동일로242길 55 1층",cat:"food",dist:30,hours:"11:00~22:00",dko:"1998년부터 이어온 손맛! 수락산 등산객들의 아침을 책임지는 김밥 전문점. 50여 가지 다양한 김밥과 분식을 합리적인 가격에 즐길 수 있습니다. 등산 전 든든하게, 등산 후 가볍게 어느 때나 딱 맞는 한 끼입니다.",den:"Gimbap specialist since 1998, beloved by Suraksan hikers. Over 50 varieties of gimbap and snacks at great prices. Perfect for a hearty pre-hike meal or a light post-hike bite.",djp:"1998年から続く手作りキムパプ専門店。50種以上の多彩なキムパプと軽食をリーズナブルな価格で楽しめます。登山前も登山後もぴったりの一食。",dcn:"自1998年传承手工紫菜卷。50多种紫菜卷和小吃，价格实惠。无论登山前饱餐还是登山后轻食，都是最佳选择。",menus:[{ko:"참치김밥",en:"Tuna Gimbap",jp:"ツナキムパプ",cn:"金枪鱼紫菜卷",p:"4,500원"},{ko:"소고기김밥",en:"Beef Gimbap",jp:"牛肉キムパプ",cn:"牛肉紫菜卷",p:"5,000원"},{ko:"치즈김밥",en:"Cheese Gimbap",jp:"チーズキムパプ",cn:"芝士紫菜卷",p:"4,000원"},{ko:"오공스페셜김밥",en:"Special Gimbap",jp:"スペシャルキムパプ",cn:"特色紫菜卷",p:"5,500원"},{ko:"야채김밥",en:"Veggie Gimbap",jp:"野菜キムパプ",cn:"蔬菜紫菜卷",p:"3,500원"},{ko:"계란김밥",en:"Egg Gimbap",jp:"卵キムパプ",cn:"鸡蛋紫菜卷",p:"3,500원"},{ko:"참치마요김밥",en:"Tuna Mayo Gimbap",jp:"ツナマヨキムパプ",cn:"金枪鱼蛋黄酱紫菜卷",p:"5,000원"},{ko:"떡볶이",en:"Tteokbokki",jp:"トッポッキ",cn:"炒年糕",p:"4,000원"},{ko:"라면",en:"Ramen",jp:"ラーメン",cn:"拉面",p:"3,500원"},{ko:"순대국",en:"Sundae Soup",jp:"スンデクッ",cn:"血肠汤",p:"7,000원"},{ko:"김치찌개",en:"Kimchi Jjigae",jp:"キムチチゲ",cn:"泡菜锅",p:"7,000원"}]},
   {id:2,ko:"화로화 수락본점",en:"화로화 Surak본",jp:"화로화 수락본점",cn:"화로화 수락본점",addr:"서울 노원구 동일로 1689",cat:"gogi",dist:40,hours:"11:00~22:00",dko:"참숯 직화로 구워내는 프리미엄 고기집. 국내산 신선육만 고집합니다. 수락산 등산 후 시원한 한잔과 함께 즐기는 고기 한 점의 행복을 느껴보세요.",den:"Premium charcoal BBQ using only fresh domestic meat. Nothing beats grilled pork after conquering Suraksan.",djp:"国産新鮮肉のみを使ったプレミアム炭火焼き肉店。水落山登山後の焼き肉が最高。",dcn:"只用国产新鲜肉的高端炭火烤肉店。水落山登山后的烤肉享受。",menus:[{ko:"삼겹살",en:"Pork Belly",jp:"サムギョプサル",cn:"五花肉",p:"16,000원"},{ko:"목살",en:"Pork Neck",jp:"モクサル",cn:"颈肉",p:"16,000원"},{ko:"항정살",en:"Cheek Meat",jp:"ハンジョンサル",cn:"猪颊肉",p:"18,000원"},{ko:"갈매기살",en:"Skirt Meat",jp:"ガルメギサル",cn:"横膈肌",p:"17,000원"},{ko:"모듬구이",en:"Assorted BBQ",jp:"モドゥムグイ",cn:"拼盘烤肉",p:"19,000원"},{ko:"된장찌개",en:"Doenjang Jjigae",jp:"テンジャンチゲ",cn:"大酱汤",p:"3,000원"},{ko:"공기밥",en:"Steamed Rice",jp:"ご飯",cn:"米饭",p:"1,000원"},{ko:"냉면",en:"Cold Noodles",jp:"冷麺",cn:"冷面",p:"7,000원"},{ko:"소주",en:"Soju",jp:"焼酎",cn:"烧酒",p:"4,000원"},{ko:"맥주",en:"Beer",jp:"ビール",cn:"啤酒",p:"4,500원"},{ko:"쌈채소",en:"Ssam Vegetables",jp:"サム野菜",cn:"包饭蔬菜",p:"2,000원"}]},
@@ -875,65 +1011,48 @@ function openPopup(s){
   var pop=g('pop');if(!pop)return;
   var nm=lang==='EN'?s.en:lang==='JP'?s.jp:lang==='CN'?s.cn:s.ko;
   se('pop-nm',nm);se('pop-addr',s.addr);
-  var catColors={food:'#4A7A35',gogi:'#8B3A2A',cafe:'#2A558B',bar:'#6B3A8B'};
-  var catNames={
-    food:{KO:'식사',EN:'Food',JP:'食事',CN:'餐饮'},
-    gogi:{KO:'고기',EN:'BBQ',JP:'焼肉',CN:'烤肉'},
-    cafe:{KO:'카페',EN:'Café',JP:'カフェ',CN:'咖啡'},
-    bar:{KO:'바/야간',EN:'Bar',JP:'バー',CN:'酒吧'}
-  };
+  var catColors={food:'#4A7A35',gogi:'#8B3A2A',cafe:'#2A558B',bar:'#6B3A8B',outdoor:'#6B6B2A'};
+  var catNames={food:{KO:'식사',EN:'Food',JP:'食事',CN:'餐饮'},gogi:{KO:'고기',EN:'BBQ',JP:'焼肉',CN:'烤肉'},cafe:{KO:'카페',EN:'Café',JP:'カフェ',CN:'咖啡'},bar:{KO:'바/야간',EN:'Bar',JP:'バー',CN:'酒吧'},outdoor:{KO:'아웃도어',EN:'Outdoor',JP:'アウトドア',CN:'户外'}};
   var cb=g('pop-cat-badge');
-  if(cb){
-    cb.textContent=(catNames[s.cat]&&catNames[s.cat][lang])||s.cat;
-    cb.style.cssText='display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-top:4px;background:'+(catColors[s.cat]||'var(--ac)')+'22;color:'+(catColors[s.cat]||'var(--ac)')+';border:1px solid '+(catColors[s.cat]||'var(--ac)')+'44;';
-  }
+  if(cb){cb.textContent=(catNames[s.cat]&&catNames[s.cat][lang])||s.cat;cb.style.cssText='display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-top:4px;background:'+(catColors[s.cat]||'var(--ac)')+'22;color:'+(catColors[s.cat]||'var(--ac)')+';border:1px solid '+(catColors[s.cat]||'var(--ac)')+'44;';}
   var gKey=CAT_GOODS[s.cat]||'keyring';
-  var gInfo={
-    keyring:{icon:'🗝️',nm:{KO:'식당 키링',EN:'Restaurant Keyring',JP:'食堂キーリング',CN:'餐厅钥匙扣'}},
-    tumbler:{icon:'🥤',nm:{KO:'카페 텀블러',EN:'Café Tumbler',JP:'カフェタンブラー',CN:'咖啡杯'}},
-    sock:   {icon:'🧦',nm:{KO:'고기 양말',EN:'BBQ Socks',JP:'焼肉ソックス',CN:'烤肉袜'}},
-    bandana:{icon:'🪢',nm:{KO:'바 반다나',EN:'Bar Bandana',JP:'バーバンダナ',CN:'酒吧头巾'}},
-    cap:    {icon:'🧢',nm:{KO:'수락 캡',EN:'Surak Cap',JP:'スラクキャップ',CN:'水落帽'}}
-  };
+  var gInfo={keyring:{icon:'🗝️',nm:{KO:'식당 키링',EN:'Restaurant Keyring',JP:'食堂キーリング',CN:'餐厅钥匙扣'}},tumbler:{icon:'🥤',nm:{KO:'카페 텀블러',EN:'Café Tumbler',JP:'カフェタンブラー',CN:'咖啡杯'}},sock:{icon:'🧦',nm:{KO:'고기 양말',EN:'BBQ Socks',JP:'焼肉ソックス',CN:'烤肉袜'}},bandana:{icon:'🪢',nm:{KO:'바 반다나',EN:'Bar Bandana',JP:'バーバンダナ',CN:'酒吧头巾'}},cap:{icon:'🧢',nm:{KO:'수락 캡',EN:'Surak Cap',JP:'スラクキャップ',CN:'水落帽'}}};
   var desc=lang==='EN'?s.den:lang==='JP'?s.djp:lang==='CN'?s.dcn:s.dko;
   var gi=gInfo[gKey]||gInfo.keyring;
   var gnm=gi.nm[lang]||gi.nm.KO;
   var gCollected=hasGoods(gKey);
+  var imgs=STORE_IMGS[s.cat]||STORE_IMGS.food;
   var h='';
 
-  /* ① 매장 정보 (맨 위) */
-  h+='<div class="pop-sec">';
-  h+='<div class="pop-sec-title">'+T('popInfo')+'</div>';
-  if(desc){
-    h+='<div style="font-size:13px;color:var(--t2);line-height:1.75;margin-bottom:10px;padding:12px;background:var(--sf2);border-radius:var(--r2);">'+desc+'</div>';
-  }
+  /* 이미지 슬라이더 */
+  h+='<div class="pop-img-slider">';
+  imgs.forEach(function(src,i){
+    h+='<div class="pop-img-item"><img src="'+src+'" alt="'+nm+' '+(i+1)+'"/></div>';
+  });
+  h+='</div>';
+
+  /* ① 매장 정보 */
+  h+='<div class="pop-sec"><div class="pop-sec-title">'+T('popInfo')+'</div>';
+  if(desc)h+='<div style="font-size:13px;color:var(--t2);line-height:1.75;margin-bottom:10px;padding:12px;background:var(--sf2);border-radius:var(--r2);">'+desc+'</div>';
   h+='<div class="info-row"><span class="info-label">⏰</span><span class="info-val">'+s.hours+'</span></div>';
   h+='<div class="info-row"><span class="info-label">📍</span><span class="info-val" style="font-size:11px;">'+s.addr+'</span></div>';
   h+='</div>';
 
-  /* ② 시그니처 메뉴 */
+  /* ② 메뉴 */
   if(s.menus&&s.menus.length){
-    h+='<div class="pop-sec">';
-    h+='<div class="pop-sec-title">'+T('popMenu')+'</div>';
+    h+='<div class="pop-sec"><div class="pop-sec-title">'+T('popMenu')+'</div>';
     s.menus.forEach(function(m,i){
       var mnm=lang==='EN'?m.en:lang==='JP'?m.jp:lang==='CN'?m.cn:m.ko;
-      var isSig=i<3; // 첫 3개는 시그니처
+      var isSig=i<3;
       h+='<div class="menu-row" style="'+(isSig?'background:var(--acbg);border:1px solid rgba(44,74,30,.12);':'')+'">';
-      h+='<span class="menu-nm">'+(isSig?'⭐ ':'')+mnm+'</span>';
-      h+='<span class="menu-pr">'+m.p+'</span>';
-      h+='</div>';
+      h+='<span class="menu-nm">'+(isSig?'⭐ ':'')+mnm+'</span><span class="menu-pr">'+m.p+'</span></div>';
     });
     h+='</div>';
   }
 
   /* ③ 굿즈 */
-  h+='<div class="pop-sec">';
-  h+='<div class="pop-sec-title">'+T('popGoods')+'</div>';
-  h+='<div class="pop-goods-card">';
-  h+='<div class="pop-goods-ic">'+gi.icon+'</div>';
-  h+='<div class="pop-goods-nm">'+gnm+'</div>';
-  h+='<div class="pop-goods-desc">'+T('popVisit')+' → SNS → '+T('popCollect')+'</div>';
-  h+='</div>';
+  h+='<div class="pop-sec"><div class="pop-sec-title">'+T('popGoods')+'</div>';
+  h+='<div class="pop-goods-card"><div class="pop-goods-ic">'+gi.icon+'</div><div class="pop-goods-nm">'+gnm+'</div><div class="pop-goods-desc">'+T('popVisit')+' → SNS → '+T('popCollect')+'</div></div>';
   h+='<button id="goods-collect-btn" data-gkey="'+gKey+'" style="width:100%;padding:14px;border-radius:var(--r3);font-size:15px;font-weight:800;cursor:pointer;border:2px solid var(--ac);background:'+(gCollected?'var(--acbg)':'var(--ac)')+';color:'+(gCollected?'var(--ac)':'#fff')+';">'+(gCollected?T('popCollected'):T('popCollect'))+'</button>';
   h+='</div>';
 
@@ -942,13 +1061,10 @@ function openPopup(s){
   if(cbtn)cbtn.addEventListener('click',function(){
     var k=this.getAttribute('data-gkey'),now=toggleGoods(k);
     this.textContent=now?T('popCollected'):T('popCollect');
-    this.style.background=now?'var(--acbg)':'var(--ac)';
-    this.style.color=now?'var(--ac)':'#fff';
+    this.style.background=now?'var(--acbg)':'var(--ac)';this.style.color=now?'var(--ac)':'#fff';
     var gi2=g('goods-inner');if(gi2)renderGoods();
   });
-  pop.style.display='flex';
-  pop.style.alignItems='flex-end';
-  pop.style.justifyContent='center';
+  pop.style.display='flex';pop.style.alignItems='flex-end';pop.style.justifyContent='center';
   setTimeout(function(){pop.classList.add('on');},10);
 }
 function closePopup(){var pop=g('pop');if(!pop)return;pop.classList.remove('on');setTimeout(function(){pop.style.display='none';},320);}
@@ -1146,7 +1262,35 @@ function renderMy(){
   h+='<div class="my-name">'+T('appName')+'</div>';
   h+='<div class="my-badge">'+(collected===5?'🏆 '+T('ambTitle'):'🎒 '+T('tgoods')+' '+collected+'/5')+'</div>';
   h+='</div>';
+  // 포인트 섹션
+  var pdata=getPoints();
+  var ptTotal=pdata.total||0;
+  var ptLbls={KO:'보유 포인트',EN:'My Points',JP:'保有ポイント',CN:'我的积分'};
+  var ptHistLbls={KO:'포인트 내역',EN:'Point History',JP:'ポイント履歴',CN:'积分记录'};
+  var ptEmptyLbls={KO:'아직 포인트 내역이 없어요.',EN:'No point history yet.',JP:'まだポイント履歴がありません。',CN:'还没有积分记录。'};
+  var ptHowLbls={KO:'적립 방법',EN:'How to earn',JP:'積立方法',CN:'如何获得'};
   h+='<div style="margin:14px 14px 8px;">';
+  h+='<div class="point-hero">';
+  h+='<div class="point-badge">🪙 '+( ptLbls[lang]||ptLbls.KO)+'</div>';
+  h+='<div><span class="point-num">'+ptTotal.toLocaleString()+'</span><span class="point-unit">P</span></div>';
+  h+='<div style="font-size:11px;opacity:.7;margin-top:6px;">'+( ptHowLbls[lang]||ptHowLbls.KO)+': '+{KO:'굿즈수집 +100P · 방문인증 +50P · SNS공유 +30P',EN:'Goods +100P · Visit +50P · SNS share +30P',JP:'グッズ収集 +100P · 訪問認証 +50P · SNS共有 +30P',CN:'收集周边 +100P · 到店认证 +50P · SNS分享 +30P'}[lang]+'</div>';
+  h+='</div>';
+  h+='<div style="font-size:11px;font-weight:700;color:var(--t1);margin:12px 0 6px;">'+( ptHistLbls[lang]||ptHistLbls.KO)+'</div>';
+  if(pdata.history&&pdata.history.length){
+    h+='<div class="point-hist">';
+    pdata.history.slice(0,5).forEach(function(row){
+      h+='<div class="point-hist-row">';
+      h+='<div class="point-hist-ic" style="background:var(--ambg);">'+row.icon+'</div>';
+      h+='<div><div class="point-hist-t">'+row.reason+'</div><div class="point-hist-d">'+row.date+'</div></div>';
+      h+=(row.amount>0?'<div class="point-plus">+'+row.amount+'P</div>':'<div class="point-minus">'+row.amount+'P</div>');
+      h+='</div>';
+    });
+    h+='</div>';
+  }else{
+    h+='<div style="font-size:12px;color:var(--t3);padding:12px;text-align:center;background:var(--sf);border-radius:var(--r2);">'+( ptEmptyLbls[lang]||ptEmptyLbls.KO)+'</div>';
+  }
+  h+='</div>';
+  h+='<div style="margin:0 14px 8px;">';
   h+='<div style="background:var(--sf);border:1px solid var(--bd);border-radius:var(--r3);overflow:hidden;box-shadow:var(--s1);">';
   menus.forEach(function(m){
     h+='<div class="my-menu-row" onclick="'+m.fn+'"><div class="my-menu-ic">'+m.ic+'</div><div class="my-menu-t">'+m.t+'</div><div class="my-menu-ar">›</div></div>';
@@ -1198,10 +1342,64 @@ var GUIDE_TIPS=[
 ];
 var _guideIdx=0;
 function showGuideTip(){
+  var TIPS={
+    KO:[
+      '⛰️ 수락산은 해발 638m! 기차바위에서 서울 전경이 한눈에 보여요.',
+      '💧 은류폭포는 벽운계곡 코스 중간에 있어요. 여름엔 꼭 들러보세요!',
+      '🖊️ 천상병 시인은 수락산 인근에 살며 "귀천"을 썼어요. 오늘도 소풍 온 것처럼 즐겨요!',
+      '🎒 식사·카페·고기·포차 4가지 카테고리 방문하면 굿즈 4종 수령!',
+      '✨ 매일 저녁 8시부터 8시 30분, 빛의 런웨이가 펼쳐져요!',
+      '🥾 등산 전 오공김밥에서 든든하게 드시고 출발하세요!',
+      '🌸 봄엔 벚꽃, 여름엔 계곡, 가을엔 단풍, 겨울엔 설경! 사계절 모두 예뻐요.',
+      '🍺 등산 후 수락산 막걸리 한 잔은 필수코스! 포차거리로 오세요.',
+      '📸 #수락디자인거리 해시태그로 SNS 인증하면 굿즈 받을 수 있어요!',
+      '🚇 4호선 수락산역 3번출구로 나오면 바로 수락 스트릿이에요!',
+      '⚠️ 산불 예방을 위해 화기 사용은 절대 금지예요!',
+      '🌊 벽운계곡 코스는 3.5km, 2시간이면 충분해요. 초보자도 도전 가능!',
+      '🏆 5개 카테고리 모두 방문하면 수락스트릿 앰버서더가 돼요!',
+      '☕ 수락 스트릿에는 개성 넘치는 카페가 7곳이나 있어요. 다 가봐요!',
+      '🎵 오늘 기분에 맞는 사운드 탭 음악과 함께 산책해보세요!'
+    ],
+    EN:[
+      '⛰️ Suraksan is 638m high! See all of Seoul from Gichabawi Rock.',
+      '💧 Eunryu Falls is mid-way on the Byeokun Valley route. A must-visit in summer!',
+      '🖊️ Poet Cheon Sang-byeong wrote "Returning to Heaven" near Suraksan.',
+      '🎒 Visit all 4 categories to collect 4 types of goods!',
+      '✨ Light Runway show every evening 8:00~8:30PM!',
+      '🥾 Fuel up at a gimbap shop before your hike!',
+      '🌸 Cherry blossoms, cool valleys, autumn leaves, snow - beautiful all year!',
+      '🍺 Post-hike makgeolli at the pojangmacha street is a must!',
+      '📸 Tag #surakdesignstreet on SNS to claim your goods!',
+      '🚇 Exit 3 of Suraksan Station leads directly to Surak Street!'
+    ],
+    JP:[
+      '⛰️ 水落山は638m！汽車岩からソウル全景が一望できます。',
+      '💧 銀流瀑布は碧雲渓谷コースの途中にあります。夏は必見！',
+      '🖊️ 詩人千尚炳は水落山近くに住み「帰天」を書きました。',
+      '🎒 4つのカテゴリを訪問すればグッズ4種ゲット！',
+      '✨ 毎晩20:00~20:30、光のランウェイが開催されます！',
+      '🥾 登山前にキムパプ店で腹ごしらえ！',
+      '🌸 春の桜、夏の渓谷、秋の紅葉、冬の雪景色、四季どれも美しい！',
+      '📸 #スラクデザイン通りでSNS認証すればグッズがもらえます！',
+      '🚇 4号線スラクサン駅3番出口からスラクストリートへすぐ！'
+    ],
+    CN:[
+      '⛰️ 水落山海拔638m！从火车岩可以俯瞰首尔全景。',
+      '💧 银流瀑布在碧云溪谷路线中段，夏天必去！',
+      '🖊️ 诗人千尚炳在水落山附近生活，写下了《归天》。',
+      '🎒 访问4个类别即可领取4种周边！',
+      '✨ 每晚20:00~20:30举办光之跑道活动！',
+      '🥾 登山前在紫菜包饭店吃饱再出发！',
+      '🌸 春樱、夏溪、秋叶、冬雪，四季皆美！',
+      '📸 在SNS上标记#水落设计街即可领取周边！',
+      '🚇 4号线水落山站3号出口直通水落街！'
+    ]
+  };
   var bubble=g('guide-bubble'),text=g('guide-text');if(!bubble||!text)return;
-  text.textContent=GUIDE_TIPS[_guideIdx%GUIDE_TIPS.length];_guideIdx++;
+  var tips=TIPS[lang]||TIPS.KO;
+  text.textContent=tips[_guideIdx%tips.length];_guideIdx++;
   bubble.style.display='block';
-  setTimeout(function(){if(bubble)bubble.style.display='none';},5000);
+  setTimeout(function(){if(bubble)bubble.style.display='none';},6000);
 }
 
 /* ═══ 번역 ═══ */
@@ -1240,6 +1438,67 @@ function renderMapList(){
   // 라벨 업데이트
   var lbl = g('map-list-label');
   if(lbl) lbl.textContent = '📋 매장 목록 ('+filtered.length+'개)';
+}
+
+/* ═══ 포인트 시스템 ═══ */
+function getPoints(){
+  try{return JSON.parse(localStorage.getItem('surak_points')||'{"total":0,"history":[]}');}
+  catch(e){return {total:0,history:[]};}
+}
+function addPoint(amount,reason,icon){
+  var data=getPoints();
+  data.total=Math.max(0,(data.total||0)+amount);
+  data.history=data.history||[];
+  data.history.unshift({amount:amount,reason:reason,icon:icon||'🎯',date:new Date().toLocaleDateString('ko-KR')});
+  if(data.history.length>20)data.history=data.history.slice(0,20);
+  try{localStorage.setItem('surak_points',JSON.stringify(data));}catch(e){}
+  return data.total;
+}
+function usePoint(amount,reason){
+  var data=getPoints();
+  if(data.total<amount)return false;
+  addPoint(-amount,reason,'💸');
+  return true;
+}
+
+/* ═══ 내 위치 ═══ */
+var _myMarker=null;
+function moveToMyLocation(){
+  if(!navigator.geolocation){alert('GPS를 지원하지 않는 브라우저입니다.');return;}
+  var btn=g('my-loc-btn');
+  if(btn)btn.classList.add('locating');
+  navigator.geolocation.getCurrentPosition(
+    function(pos){
+      var lat=pos.coords.latitude,lng=pos.coords.longitude;
+      if(btn)btn.classList.remove('locating');
+      if(!_map)return;
+      // 기존 내 위치 마커 제거
+      if(_myMarker)_myMarker.setMap(null);
+      // 파란 점 마커
+      var markerHtml='<div style="position:relative;width:20px;height:20px;">'
+        +'<div style="position:absolute;inset:0;border-radius:50%;background:#4A90E2;border:3px solid #fff;box-shadow:0 2px 8px rgba(74,144,226,.6);z-index:2;"></div>'
+        +'<div style="position:absolute;top:-6px;left:-6px;width:32px;height:32px;border-radius:50%;background:rgba(74,144,226,.2);animation:myLocPulse 1.5s ease-out infinite;"></div>'
+        +'</div>';
+      _myMarker=new naver.maps.Marker({
+        position:new naver.maps.LatLng(lat,lng),
+        map:_map,
+        icon:{content:markerHtml,anchor:new naver.maps.Point(10,10)},
+        zIndex:200
+      });
+      _map.panTo(new naver.maps.LatLng(lat,lng));
+      _map.setZoom(17);
+      showGpsToast({KO:'내 위치로 이동했습니다 📍',EN:'Moved to your location 📍',JP:'現在地に移動しました 📍',CN:'已移动到您的位置 📍'}[lang]||'내 위치로 이동했습니다 📍');
+    },
+    function(err){
+      if(btn)btn.classList.remove('locating');
+      var msgs={1:{KO:'위치 권한을 허용해주세요.',EN:'Please allow location access.',JP:'位置情報を許可してください。',CN:'请允许位置访问。'},
+                2:{KO:'위치를 찾을 수 없습니다.',EN:'Location unavailable.',JP:'位置を取得できません。',CN:'无法获取位置。'},
+                3:{KO:'위치 요청 시간이 초과됐습니다.',EN:'Location request timed out.',JP:'位置リクエストがタイムアウトしました。',CN:'位置请求超时。'}};
+      var msg=(msgs[err.code]&&msgs[err.code][lang])||'위치를 가져올 수 없습니다.';
+      showGpsToast(msg);
+    },
+    {enableHighAccuracy:true,timeout:10000,maximumAge:0}
+  );
 }
 function applyT(){
   var tMap=[

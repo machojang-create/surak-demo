@@ -1761,26 +1761,14 @@ function renderHome(){
   html+='<div class="stit">'+L({KO:'빠른 메뉴',EN:'QUICK MENU',JP:'クイックメニュー',CN:'快捷菜单'})+'</div>';
   html+='<div class="quick-btns">';
   [{type:'course',ic:'🗺️',t:{KO:'코스 트래킹',EN:'Route',JP:'コース',CN:'路线'}},
-   {type:'safety',ic:'⛑️',t:{KO:'안전 정보',EN:'Safety',JP:'安全',CN:'安全'}},
-   {type:'weather',ic:'🌡️',t:{KO:'실시간 날씨',EN:'Weather',JP:'天気',CN:'天气'}},
+   {type:'safety',ic:'⛑️',t:{KO:'안전 정보',EN:'Safety',JP:'安全',CN:'안전'}},
+   {type:'goods',ic:'🎒',t:{KO:'굿즈 받기',EN:'Get Goods',JP:'グッズ受取',CN:'领取周边'}},
    ].forEach(function(b){
     html+='<div class="qb'+(b.accent?' accent':'')+'" data-popup-type="'+b.type+'">';
     html+='<div class="qb-ic">'+b.ic+'</div><div class="qb-t">'+L(b.t)+'</div></div>';
   });
   html+='</div>';
-  html+='<div class="stit">'+L({KO:'오늘의 하이라이트',EN:'HIGHLIGHTS',JP:'ハイライト',CN:'今日亮点'})+'</div>';
-  html+='<div class="highlight-row">';
-  var expData=getExpData();var lvInfo=getLevelInfo(expData.exp||0);
-  var medalSrc=makeMedalSVG(lvInfo.lv,32);
-  html+='<div class="hl-card" data-sv="goods"><img src="'+medalSrc+'" width="28" height="28" style="margin-bottom:5px;display:block;"/>';
-  html+='<div class="hl-t">LV.'+lvInfo.lv+' '+L(lvInfo.name)+'</div><div class="hl-d">'+(expData.exp||0)+' EXP</div></div>';
-  html+='<div class="hl-card" id="hl-runway-btn"><div class="hl-ic">✨</div>';
-  html+='<div class="hl-t">'+L({KO:'빛의 런웨이',EN:'Light Runway',JP:'光のランウェイ',CN:'光之跑道'})+'</div><div class="hl-d">20:00~20:30</div></div>';
-  html+='<div class="hl-card" id="hl-onuri-btn"><div class="hl-ic">🏷️</div>';
-  html+='<div class="hl-t">'+L({KO:'온누리상품권',EN:'Onuri Voucher',JP:'オヌリ商品券',CN:'温누리券'})+'</div><div class="hl-d">'+L({KO:'20개 매장',EN:'20 stores',JP:'20店舗',CN:'20家店'})+'</div></div>';
-  html+='<div class="hl-card" id="hl-chat-btn"><div class="hl-ic">🐿️</div>';
-  html+='<div class="hl-t">'+L({KO:'수락이',EN:'Surak-i',JP:'スラキ',CN:'水落'})+'</div><div class="hl-d">'+L({KO:'무엇이든!',EN:'Ask me!',JP:'何でも！',CN:'问我！'})+'</div></div>';
-  html+='</div>';
+  /* 하이라이트 섹션 제거됨 */
   html+='<div class="stit">'+T('homeHotTitle')+'</div>';
   html+='<div class="hot-row" id="hot-list2"></div>';
 
@@ -1788,13 +1776,11 @@ function renderHome(){
   wrap.innerHTML=html;
   var ccBtn=document.getElementById('course-card-btn');
   if(ccBtn)ccBtn.addEventListener('click',function(){openHomePopup('course');});
-  var chatBtn=document.getElementById('hl-chat-btn');
-  if(chatBtn)chatBtn.addEventListener('click',toggleChat);
+  /* hl-chat-btn 제거됨 */
   /* story cards rendered inline */
   /* surak-chat-banner 제거됨 */
-  var runwayBtn=document.getElementById('hl-runway-btn');
-  if(runwayBtn)runwayBtn.addEventListener('click',function(){openHomePopup('runway');});
-  var onuriBtn=document.getElementById('hl-onuri-btn');
+  /* hl-runway-btn 제거됨 */
+  /* onuriBtn 제거됨 */
   if(onuriBtn)onuriBtn.addEventListener('click',function(){openHomePopup('onuri');});
   wrap.querySelectorAll('.qb[data-popup-type]').forEach(function(btn){
     btn.addEventListener('click',function(){openHomePopup(this.dataset.popupType);});
@@ -3279,10 +3265,20 @@ function handleLoginSuccess(user){
 
 /* ═══ 배지 16종 ═══ */
 var BADGE_DEFS=[
-  {id:'hist_cheon',grade:'C',cat:'history',icon:'🖊️',nm:{KO:'소풍의 시작',EN:'Beginning of a Picnic',JP:'소풍の始まり',CN:'郊游的开始'},desc:{KO:'천상병 시인 스토리를 정독한 유저',EN:'Read the story of poet Cheon',JP:'千尚炳詩人のストーリーを精読',CN:'精读了天祥炳诗人故事'}},
-  {id:'hist_kim',grade:'R',cat:'history',icon:'📚',nm:{KO:'매월당의 붓',EN:'Brush of Maewoldang',JP:'梅月堂の筆',CN:'梅月堂的笔'},desc:{KO:'김시습의 금오신화를 탐구한 유저',EN:'Explored Kim Si-seup Geumo Sinhwa',JP:'金時習の金鰲新話を探求',CN:'探索了金时习金鳌新话'}},
-  {id:'hist_queen',grade:'R',cat:'history',icon:'🌙',nm:{KO:'인현왕후의 달빛',EN:'Queen Inhyeon Moonlight',JP:'仁顕王后の月明かり',CN:'仁显王后的月光'},desc:{KO:'인현왕후 서사를 확인한 감성 유저',EN:'Discovered the story of Queen Inhyeon',JP:'仁顕王后の物語を確認',CN:'了解仁显王后故事'}},
-  {id:'hist_master',grade:'E',cat:'history',icon:'🏛️',nm:{KO:'수락산 마스터',EN:'Suraksan Master',JP:'スラクサンマスター',CN:'水落山大师'},desc:{KO:'세 인물의 역사적 서사를 모두 마스터',EN:'Mastered all three historical figures',JP:'三人の歴史的物語をすべてマスター',CN:'掌握了三位历史人物的故事'}},
+  /* ── 역사 인물 배지 (SD 12개 대응) ── */
+  {id:'hist_cheon',grade:'C',cat:'history',icon:'🖊️',nm:{KO:'소풍의 시작',EN:'Picnic Poet',JP:'소풍の詩人',CN:'郊游诗人'},desc:{KO:'천상병 시인 이야기를 읽은 유저',EN:'Read poet Cheon Sang-byeong story',JP:'千尚炳詩人の物語を読んだ',CN:'读完了天尚炳诗人的故事'}},
+  {id:'hist_kim',grade:'C',cat:'history',icon:'📚',nm:{KO:'매월당의 붓',EN:'Maewoldang Brush',JP:'梅月堂の筆',CN:'梅月堂之笔'},desc:{KO:'김시습의 금오신화 이야기를 읽은 유저',EN:'Read Kim Si-seup story',JP:'金時習の物語を読んだ',CN:'读完了金时习的故事'}},
+  {id:'hist_queen',grade:'C',cat:'history',icon:'🌙',nm:{KO:'인현왕후의 달빛',EN:'Queen\'s Moonlight',JP:'王后の月明かり',CN:'王后月光'},desc:{KO:'인현왕후와 장희빈 이야기를 읽은 유저',EN:'Read Queen Inhyeon story',JP:'仁顕王后の物語を読んだ',CN:'读完了仁显王后的故事'}},
+  {id:'hist_park',grade:'C',cat:'history',icon:'📖',nm:{KO:'수락산 예찬론자',EN:'Suraksan Devotee',JP:'スラクサン礼賛者',CN:'水落山礼赞者'},desc:{KO:'박세당의 수락산 예찬 이야기를 읽은 유저',EN:'Read Park Se-dang story',JP:'朴世堂の物語を読んだ',CN:'读完了朴世堂的故事'}},
+  {id:'hist_hwang',grade:'C',cat:'history',icon:'🏛️',nm:{KO:'물소리의 재상',EN:'Minister of Waters',JP:'水音の宰相',CN:'水声宰相'},desc:{KO:'황희 정승의 수락산 이야기를 읽은 유저',EN:'Read Minister Hwang Hee story',JP:'黄喜政丞の物語を読んだ',CN:'读完了黄喜政丞的故事'}},
+  {id:'hist_lee',grade:'C',cat:'history',icon:'⚔️',nm:{KO:'반역산의 건국자',EN:'Founder of Rebel Mt.',JP:'逆賊山の建国者',CN:'逆贼山建国者'},desc:{KO:'이성계와 반역산 이야기를 읽은 유저',EN:'Read Yi Seonggye story',JP:'李成桂の物語を読んだ',CN:'读完了李成桂的故事'}},
+  {id:'hist_jeongjo',grade:'R',cat:'history',icon:'🏯',nm:{KO:'백일기도의 기적',EN:'Miracle of 100 Days',JP:'百日祈祷の奇跡',CN:'百日祈祷奇迹'},desc:{KO:'정조 대왕의 내원암 기도 이야기를 읽은 유저',EN:'Read King Jeongjo prayer story',JP:'正祖の祈祷物語を読んだ',CN:'读完了正祖祈祷的故事'}},
+  {id:'hist_yeonsan',grade:'R',cat:'history',icon:'🔥',nm:{KO:'폭군의 사냥터',EN:'Tyrant\'s Hunting Ground',JP:'暴君の狩猟場',CN:'暴君猎场'},desc:{KO:'연산군과 수락산 민초 이야기를 읽은 유저',EN:'Read Yeonsangun story',JP:'燕山君の物語を読んだ',CN:'读完了燕山君的故事'}},
+  {id:'hist_heungseon',grade:'R',cat:'history',icon:'🖌️',nm:{KO:'야망의 베이스캠프',EN:'Ambition Base Camp',JP:'野望のベースキャンプ',CN:'野心大本营'},desc:{KO:'흥선대원군의 수락산 이야기를 읽은 유저',EN:'Read Heungseon Daewongun story',JP:'興宣大院君の物語を読んだ',CN:'读完了兴宣大院君的故事'}},
+  {id:'hist_jeong',grade:'R',cat:'history',icon:'🎨',nm:{KO:'진경의 붓질',EN:'Jingyeong Brushstroke',JP:'真景の筆遣い',CN:'真景笔触'},desc:{KO:'겸재 정선의 수락산 그림 이야기를 읽은 유저',EN:'Read Jeong Seon story',JP:'謙斎鄭敾の物語を読んだ',CN:'读完了谦斋郑敾的故事'}},
+  {id:'hist_eom',grade:'R',cat:'history',icon:'🕯️',nm:{KO:'충의의 밤',EN:'Night of Loyalty',JP:'忠義の夜',CN:'忠义之夜'},desc:{KO:'엄흥도와 김시습의 비밀 야화를 읽은 유저',EN:'Read the secret tale of Eom & Kim',JP:'厳興道と金時習の夜話を読んだ',CN:'读完了严兴道与金时习的夜话'}},
+  {id:'hist_misc',grade:'R',cat:'history',icon:'🐯',nm:{KO:'수락산의 전설들',EN:'Legends of Suraksan',JP:'スラクサンの伝説',CN:'水落山的传说'},desc:{KO:'호랑이·김삿갓·한석봉 야화를 읽은 유저',EN:'Read the tales of tiger, Kim Satgat & Han',JP:'虎・金笠・韓石峯の夜話を読んだ',CN:'读完了老虎·金笠·韩石峯的夜话'}},
+  {id:'hist_master',grade:'E',cat:'history',icon:'👑',nm:{KO:'수락산 역사가',EN:'Suraksan Historian',JP:'スラクサン歴史家',CN:'水落山历史学家'},desc:{KO:'수락산 12인의 이야기를 모두 마스터한 탐험가',EN:'Mastered all 12 Suraksan legends',JP:'12人の物語をすべてマスター',CN:'掌握了全部12位历史人物故事'}},
   {id:'hike_first',grade:'C',cat:'hiking',icon:'🚶',nm:{KO:'첫걸음마',EN:'First Steps',JP:'初めの一歩',CN:'第一步'},desc:{KO:'수락 스트릿 탐험을 시작한 유저',EN:'Started exploring Surak Street',JP:'スラクストリートの探険を開始',CN:'开始探索水落街'}},
   {id:'hike_morning',grade:'C',cat:'hiking',icon:'🌅',nm:{KO:'아침의 싱그러움',EN:'Morning Freshness',JP:'朝の清々しさ',CN:'清晨的清新'},desc:{KO:'이른 아침 거리를 활기차게 만든 유저',EN:'Energized the street in early morning',JP:'早朝に通りを活気づかせた',CN:'在清晨为街道注入活力'}},
   {id:'hike_weekend',grade:'R',cat:'hiking',icon:'⛰️',nm:{KO:'주말의 정복자',EN:'Weekend Conqueror',JP:'週末の征服者',CN:'周末征服者'},desc:{KO:'주말 풀코스를 주파한 프로 등산러',EN:'Completed the full weekend course',JP:'週末フルコースを走破',CN:'完成周末全程的登山者'}},
@@ -3318,7 +3314,12 @@ function checkTimeBadges(){var hr=new Date().getHours(),isWE=new Date().getDay()
 function checkGourmetBadges(){var visits=getStoreVisits();var ids=Object.keys(visits).map(Number);var visited=STORES.filter(function(s){return ids.indexOf(s.id)>=0;});if(visited.length>=3)unlockBadge('food_explorer');if(visited.filter(function(s){return s.cat==='cafe';}).length>=3)unlockBadge('food_cafe');if(['food','cafe','gogi','bar'].every(function(c){return visited.some(function(s){return s.cat===c;});}))unlockBadge('food_vip');if(Object.values(visits).some(function(v){return v>=3;}))unlockBadge('food_regular');}
 function checkHikingBadges(){var data=getExpData();var cnt=(data.history||[]).filter(function(r){return r.reason&&r.reason.indexOf('등산')>=0;}).length;if(cnt>=5)unlockBadge('hike_iron');if(new Date().getDay()===0||new Date().getDay()===6)unlockBadge('hike_weekend');}
 function checkNightBadges(){var bs=getBadgeState();if(['night_stroll','night_music','night_owl'].every(function(id){return bs[id];}))unlockBadge('night_legend');}
-function checkHistoryBadges(){if(localStorage.getItem('surak_hist_cheon'))unlockBadge('hist_cheon');if(localStorage.getItem('surak_hist_kim'))unlockBadge('hist_kim');if(localStorage.getItem('surak_hist_queen'))unlockBadge('hist_queen');var bs=getBadgeState();if(bs['hist_cheon']&&bs['hist_kim']&&bs['hist_queen'])unlockBadge('hist_master');}
+function checkHistoryBadges(){
+  var ids=['cheon','kim','queen','park','hwang','lee','jeongjo','yeonsan','heungseon','jeong','eom','misc'];
+  ids.forEach(function(k){if(localStorage.getItem('surak_hist_'+k))unlockBadge('hist_'+k);});
+  var bs=getBadgeState();
+  if(ids.every(function(k){return bs['hist_'+k];}))unlockBadge('hist_master');
+}
 function checkMusicBadge(){if(parseInt(localStorage.getItem('surak_play_time')||'0')>=600)unlockBadge('night_music');}
 function renderDokkam(el){
   if(!el)return;

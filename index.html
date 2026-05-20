@@ -1107,7 +1107,7 @@ body{
 .sm-pw{display:flex;height:100%;transition:transform .3s ease;}
 .sm-page{min-width:100%;height:100%;padding:16px 20px;overflow-y:auto;display:flex;flex-direction:column;}
 .sm-page::-webkit-scrollbar{display:none;}
-.sm-illust{height:100px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;flex-shrink:0;font-size:48px;}
+.sm-illust{height:180px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;flex-shrink:0;font-size:48px;}
 .sm-pg-num{font-size:10px;color:rgba(255,255,255,.3);letter-spacing:2px;margin-bottom:5px;}
 .sm-pg-title{font-size:16px;font-weight:800;color:#fff;line-height:1.4;margin-bottom:10px;}
 .sm-pg-body{font-size:13px;color:rgba(255,255,255,.72);line-height:1.85;word-break:keep-all;flex:1;}
@@ -2032,11 +2032,16 @@ function renderHome(){
      t:{KO:'야화 ② 호랑이·김삿갓·한석봉',EN:'Tale② Tiger·Satgat·Seokbong',JP:'夜話②虎·金笠·韓石峯',CN:'夜话②老虎·金笠·韩石峯'},
      s:{KO:'수락산을 사랑한 천재들의 야사',EN:'Secret tales of Suraksan\'s geniuses',JP:'スラクサンを愛した天才たちの野史',CN:'热爱水落山的天才们的野史'}}
   ];
+  var _ILL=['https://machojang-create.github.io/surak-demo/illust_cheon.png','https://machojang-create.github.io/surak-demo/illust_kim.png','https://machojang-create.github.io/surak-demo/illust_queen.png'];
   STORY_CARDS.forEach(function(c){
-    html+='<div onclick="openStoryModal('+c.idx+')" style="flex-shrink:0;width:156px;background:'+c.bg+';border-radius:14px;padding:16px 14px 14px;cursor:pointer;border:1px solid rgba(255,255,255,.1);position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.3);">';
-    html+='<div style="font-size:26px;margin-bottom:10px;">'+c.ic+'</div>';
-    html+='<div style="font-size:13px;font-weight:800;color:'+c.color+';margin-bottom:6px;line-height:1.3;letter-spacing:-.2px;">'+L(c.t)+'</div>';
+    var ill=_ILL[c.idx]||'';
+    html+='<div onclick="openStoryModal('+c.idx+')" style="flex-shrink:0;width:156px;background:'+c.bg+';border-radius:14px;padding:0;cursor:pointer;border:1px solid rgba(255,255,255,.1);position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.3);">';
+    if(ill)html+='<div style="width:100%;height:88px;background-image:url('+ill+');background-size:cover;background-position:center top;"></div>';
+    html+='<div style="padding:8px 12px 14px;position:relative;">';
+    html+='<div style="font-size:22px;margin-bottom:6px;">'+c.ic+'</div>';
+    html+='<div style="font-size:13px;font-weight:800;color:'+c.color+';margin-bottom:4px;line-height:1.3;">'+L(c.t)+'</div>';
     html+='<div style="font-size:11px;color:rgba(255,255,255,.6);line-height:1.5;">'+L(c.s)+'</div>';
+    html+='</div>';
     html+='<div style="position:absolute;right:10px;bottom:10px;font-size:16px;color:rgba(255,255,255,.25);">›</div>';
     html+='</div>';
   });
@@ -3989,12 +3994,28 @@ function _buildStory(){
     var story=document.createElement('div');story.className='sm-story';story.style.background=s.bg;
     var pages=document.createElement('div');pages.className='sm-pages';
     var pw=document.createElement('div');pw.className='sm-pw';pw.id='sm-pw-'+si;
+    var _ill2=['https://machojang-create.github.io/surak-demo/illust_cheon.png','https://machojang-create.github.io/surak-demo/illust_kim.png','https://machojang-create.github.io/surak-demo/illust_queen.png'];
+    var illSrc=_ill2[si]||'';
     s.pages.forEach(function(pg){
       var page=document.createElement('div');page.className='sm-page';
-      page.innerHTML='<div class="sm-illust" style="background:rgba(255,255,255,.05);">'+s.ic+'</div>'
-        +'<div class="sm-pg-num">'+pg.n+'</div>'
-        +'<div class="sm-pg-title">'+L(pg.t)+'</div>'
-        +'<div class="sm-pg-body">'+(L(pg.b)).replace(/\n/g,'<br>')+'</div>';
+      var illDiv=document.createElement('div');
+      illDiv.className='sm-illust';
+      if(illSrc){
+        illDiv.style.backgroundImage='url('+illSrc+')';
+        illDiv.style.backgroundSize='cover';
+        illDiv.style.backgroundPosition='center top';
+        illDiv.style.position='relative';
+        var grad=document.createElement('div');
+        grad.style.cssText='position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,'+s.bg+' 100%);border-radius:14px;';
+        illDiv.appendChild(grad);
+      } else {
+        illDiv.style.background='rgba(255,255,255,.05)';
+        illDiv.textContent=s.ic;
+      }
+      page.appendChild(illDiv);
+      var numEl=document.createElement('div');numEl.className='sm-pg-num';numEl.textContent=pg.n;page.appendChild(numEl);
+      var titEl=document.createElement('div');titEl.className='sm-pg-title';titEl.textContent=L(pg.t);page.appendChild(titEl);
+      var bodEl=document.createElement('div');bodEl.className='sm-pg-body';bodEl.innerHTML=(L(pg.b)).replace(/\n/g,'<br>');page.appendChild(bodEl);
       pw.appendChild(page);
     });
     pages.appendChild(pw);story.appendChild(pages);

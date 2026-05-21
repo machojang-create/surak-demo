@@ -5,281 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <meta name="theme-color" content="#F5F0E8"/>
 <title>수락 스트릿</title>
-<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=d7ufdpoww3&submodules=geocoder&callback=naverMapInit">
-/* ═══════════════════════════════════════════════
-   수락스트릿 미니게임 & 쿠폰 시스템
-═══════════════════════════════════════════════ */
-
-/* ── 게임 포인트 (기존 getPoints/addPoint 활용) ── */
-var GAME_KEY_POINTS = 'surak_points'; /* 기존과 동일 */
-
-/* ── 쿠폰 데이터 ── */
-var GAME_COUPONS = [
-  {id:'drink', ic:'🥤', nm:{KO:'음료 1캔 교환권',EN:'1 Drink',JP:'ドリンク1本',CN:'饮料1罐'}, pt:2000,
-   stores:[
-     {id:'s1',nm:'오공김밥 수락산점',addr:'동일로242길 55',pin:'1234',color:'#2C4A1E'},
-     {id:'s2',nm:'잇츠굿토스트',addr:'동일로242길',pin:'2345',color:'#7B4F2E'},
-     {id:'s3',nm:'메가MGC커피',addr:'동일로242길 55',pin:'3456',color:'#1A4A6B'},
-   ]},
-  {id:'soju', ic:'🥂', nm:{KO:'소주 1병 교환권',EN:'1 Soju',JP:'焼酎1本',CN:'烧酒1瓶'}, pt:5000,
-   stores:[
-     {id:'s4',nm:'화로화 수락본점',addr:'동일로242길 66',pin:'4567',color:'#8B2A2A'},
-     {id:'s5',nm:'오공김밥 수락산점',addr:'동일로242길 55',pin:'1234',color:'#2C4A1E'},
-     {id:'s6',nm:'꾸이92포차',addr:'동일로242길 27',pin:'5678',color:'#4A2C6B'},
-   ]},
-  {id:'beer', ic:'🍺', nm:{KO:'맥주 1캔 교환권',EN:'1 Beer',JP:'ビール1本',CN:'啤酒1罐'}, pt:3000,
-   stores:[
-     {id:'s7',nm:'화로화 수락본점',addr:'동일로242길 66',pin:'4567',color:'#8B2A2A'},
-     {id:'s8',nm:'맥주조아',addr:'동일로242나길 7',pin:'6789',color:'#2A4A8B'},
-     {id:'s9',nm:'디오스호프',addr:'동일로242길 30',pin:'7890',color:'#3A5A2A'},
-   ]},
-];
-var GAME_USED_KEY = 'surak_used_cp';
-var GAME_EX_KEY   = 'surak_ex_date';
-
-function gameIsUsed(id){
-  try{var u=JSON.parse(localStorage.getItem(GAME_USED_KEY)||'[]');return u.indexOf(id)>=0;}catch(e){return false;}
-}
-function gameMarkUsed(id){
-  try{var u=JSON.parse(localStorage.getItem(GAME_USED_KEY)||'[]');if(u.indexOf(id)<0){u.push(id);localStorage.setItem(GAME_USED_KEY,JSON.stringify(u));}}catch(e){}
-}
-function gameCanEx(){return localStorage.getItem(GAME_EX_KEY)!==new Date().toISOString().slice(0,10);}
-function gameMarkEx(){localStorage.setItem(GAME_EX_KEY,new Date().toISOString().slice(0,10));}
-
-/* ── 마이탭 쿠폰 렌더 ── */
-function renderMyCoupons(wrap){
-  if(!wrap)return;
-  var L=function(o){return o[lang]||o.KO;};
-  var html='';
-  GAME_COUPONS.forEach(function(cp){
-    var used=gameIsUsed(cp.id);
-    var canBuy=gameCanEx()&&!used&&(getPoints().total||0)>=cp.pt;
-    html+='<div style="background:var(--sf);border:1px solid var(--bd);border-radius:var(--r3);margin-bottom:8px;overflow:hidden;box-shadow:var(--s1);'+(used?'filter:grayscale(.8);opacity:.6;':'')+'">';
-    html+='<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;">';
-    html+='<div style="font-size:32px;">'+cp.ic+'</div>';
-    html+='<div style="flex:1;"><div style="font-size:14px;font-weight:800;color:var(--t1);margin-bottom:2px;">'+L(cp.nm)+'</div>';
-    html+='<div style="font-size:12px;color:var(--t3);">'+cp.pt.toLocaleString()+' P · '+cp.stores.length+'개 매장</div></div>';
-    if(used){
-      html+='<div style="font-size:11px;font-weight:700;color:var(--t3);">✅ 사용완료</div>';
-    } else {
-      html+='<button data-cpid="'+cp.id+'" style="background:'+(canBuy?'var(--ac)':'var(--t3)')+';color:#fff;border:none;border-radius:var(--r2);padding:7px 12px;font-size:12px;font-weight:700;cursor:'+(canBuy?'pointer':'not-allowed')+';white-space:nowrap;">'+(canBuy?'교환':(getPoints().total<cp.pt?'P부족':'오늘완료'))+'</button>';
-    }
-    html+='</div></div>';
-  });
-  if(!html) html='<div style="padding:16px;text-align:center;font-size:12px;color:var(--t3);">포인트를 모아 쿠폰을 교환하세요!</div>';
-  wrap.innerHTML = html;
-  /* 쿠폰 교환 클릭 */
-  wrap.querySelectorAll('button[data-cpid]').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var cpid=this.getAttribute('data-cpid');
-      openCouponModal(cpid);
-    });
-  });
-}
-
-/* ── 쿠폰 모달 ── */
-var _activeCp=null, _selStore=null, _pinVal='', _pinTry=0, _tsInt=null;
-
-function openCouponPage(){
-  /* 마이탭 쿠폰 섹션으로 스크롤 */
-  var el=document.getElementById('my-coupon-wrap');
-  if(el) el.scrollIntoView({behavior:'smooth'});
-}
-
-function openCouponModal(cpid){
-  var cp=null;
-  for(var i=0;i<GAME_COUPONS.length;i++){if(GAME_COUPONS[i].id===cpid){cp=GAME_COUPONS[i];break;}}
-  if(!cp)return;
-  var L=function(o){return o[lang]||o.KO;};
-  if(!gameIsUsed(cp.id)&&(!gameCanEx()||(getPoints().total||0)<cp.pt)) return;
-  _activeCp=cp; _selStore=null;
-
-  /* 모달 생성 */
-  var existing=document.getElementById('_gameCpModal');
-  if(existing) existing.parentNode.removeChild(existing);
-
-  var modal=document.createElement('div');
-  modal.id='_gameCpModal';
-  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9000;display:flex;align-items:flex-end;justify-content:center;';
-
-  var storeHtml='';
-  cp.stores.forEach(function(s){
-    storeHtml+='<div data-sid="'+s.id+'" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r2);margin-bottom:6px;cursor:pointer;">'
-      +'<div style="width:8px;height:8px;border-radius:50%;background:'+s.color+';flex-shrink:0;"></div>'
-      +'<div style="flex:1;"><div style="font-size:13px;font-weight:600;">'+s.nm+'</div>'
-      +'<div style="font-size:10px;color:var(--t3);">'+s.addr+'</div></div>'
-      +'<div style="font-size:12px;color:var(--t3);">›</div></div>';
-  });
-
-  modal.innerHTML='<div style="background:var(--sf);border-radius:24px 24px 0 0;width:100%;max-width:430px;padding:20px 20px 40px;max-height:88vh;overflow-y:auto;">'
-    +'<div style="width:40px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto 16px;"></div>'
-    +'<div style="background:linear-gradient(135deg,#1a3a5c,#0d1f3c);border-radius:12px;padding:16px;color:#fff;margin-bottom:16px;position:relative;overflow:hidden;">'
-    +'<div id="_cpWm" style="position:absolute;inset:0;opacity:.06;font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;animation:wmMove 4s linear infinite;">수락스트릿 · SURAK STREET · '.repeat(20)+'</div>'
-    +'<div style="position:absolute;bottom:8px;right:10px;font-size:11px;font-weight:800;opacity:.6;" id="_cpTs">--:--:--</div>'
-    +'<div style="font-size:18px;font-weight:800;position:relative;margin-bottom:4px;">'+cp.ic+' '+L(cp.nm)+'</div>'
-    +'<div style="font-size:22px;font-weight:800;position:relative;color:#FFD700;">'+cp.pt.toLocaleString()+' P</div>'
-    +'</div>'
-    +'<div style="font-size:12px;font-weight:700;color:var(--t2);margin-bottom:8px;">📍 '+L({KO:'교환 가능 매장 (탭하여 선택)',EN:'Select a store',JP:'店舗を選択',CN:'选择门店'})+'</div>'
-    +'<div id="_cpStores">'+storeHtml+'</div>'
-    +'<button id="_cpStaffBtn" style="width:100%;padding:14px;border-radius:var(--r3);background:var(--t3);border:none;color:#fff;font-size:15px;font-weight:800;cursor:not-allowed;margin-bottom:8px;margin-top:4px;">📍 '+L({KO:'매장을 먼저 선택해주세요',EN:'Select a store first',JP:'店舗を選択してください',CN:'请先选择门店'})+'</button>'
-    +'<button id="_cpCancelBtn" style="width:100%;padding:12px;border-radius:var(--r3);background:transparent;border:1px solid var(--bd);font-size:14px;color:var(--t2);cursor:pointer;">'+L({KO:'닫기',EN:'Close',JP:'閉じる',CN:'关闭'})+'</button>'
-    +'</div>';
-
-  document.body.appendChild(modal);
-
-  /* 타임스탬프 */
-  function uTs(){var n=new Date(),el=document.getElementById('_cpTs');if(!el)return;var h=n.getHours(),m=n.getMinutes(),s=n.getSeconds();el.textContent=(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;}
-  uTs(); _tsInt=setInterval(uTs,1000);
-
-  /* 배경 클릭 닫기 */
-  modal.addEventListener('click',function(e){if(e.target===modal)closeCouponModal();});
-  document.getElementById('_cpCancelBtn').addEventListener('click',closeCouponModal);
-
-  /* 매장 선택 */
-  document.getElementById('_cpStores').querySelectorAll('[data-sid]').forEach(function(item){
-    item.addEventListener('click',function(){
-      document.getElementById('_cpStores').querySelectorAll('[data-sid]').forEach(function(x){
-        x.style.borderColor='var(--bd)'; x.style.background='var(--sf2)';
-      });
-      this.style.borderColor='var(--ac)'; this.style.background='rgba(44,74,30,.06)';
-      var sid=this.getAttribute('data-sid');
-      _activeCp.stores.forEach(function(s){if(s.id===sid)_selStore=s;});
-      var sb=document.getElementById('_cpStaffBtn');
-      sb.style.background='var(--ac)'; sb.style.cursor='pointer';
-      sb.textContent='👨‍💼 '+_selStore.nm+' '+{KO:'직원 확인',EN:'Staff Verify',JP:'スタッフ確認',CN:'员工确认'}[lang];
-    });
-  });
-
-  /* 직원확인 버튼 */
-  document.getElementById('_cpStaffBtn').addEventListener('click',function(){
-    if(!_selStore)return;
-    if(!gameIsUsed(_activeCp.id)){
-      if(!gameCanEx()){showGameAlert('오늘은 이미 쿠폰을 교환했어요!');return;}
-      if((getPoints().total||0)<_activeCp.pt){showGameAlert('포인트가 부족해요.
-현재: '+(getPoints().total||0)+' P / 필요: '+_activeCp.pt+' P');return;}
-      showGameConfirm(_activeCp.ic+' '+L(_activeCp.nm), _activeCp.pt.toLocaleString()+' P를 사용할까요?', function(){
-        addPoint(-_activeCp.pt,L(_activeCp.nm)+' 쿠폰 교환','🎟️');
-        gameMarkEx();
-        openPinModal();
-      });
-      return;
-    }
-    openPinModal();
-  });
-}
-
-function closeCouponModal(){
-  if(_tsInt){clearInterval(_tsInt);_tsInt=null;}
-  var m=document.getElementById('_gameCpModal');
-  if(m)m.parentNode.removeChild(m);
-  _activeCp=null;_selStore=null;
-}
-
-/* ── PIN 모달 ── */
-function openPinModal(){
-  var L=function(o){return o[lang]||o.KO;};
-  var existing=document.getElementById('_pinModal');
-  if(existing)existing.parentNode.removeChild(existing);
-  _pinVal='';_pinTry=0;
-
-  var pm=document.createElement('div');
-  pm.id='_pinModal';
-  pm.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9100;display:flex;align-items:center;justify-content:center;';
-  pm.innerHTML='<div style="background:var(--sf);border-radius:20px;width:290px;padding:24px 20px;text-align:center;">'
-    +'<div style="font-size:16px;font-weight:800;margin-bottom:4px;">🔒 매장 PIN 확인</div>'
-    +'<div style="font-size:11px;color:var(--t3);margin-bottom:16px;line-height:1.5;white-space:pre-line;">'+_selStore.nm+'
-직원이 PIN 4자리를 입력해주세요</div>'
-    +'<div style="display:flex;justify-content:center;gap:10px;margin-bottom:12px;" id="_pinDots">'
-    +'<div id="_pd0" style="'+_pdStyle()+'"></div><div id="_pd1" style="'+_pdStyle()+'"></div>'
-    +'<div id="_pd2" style="'+_pdStyle()+'"></div><div id="_pd3" style="'+_pdStyle()+'"></div>'
-    +'</div>'
-    +'<div style="font-size:11px;color:#c00;font-weight:700;min-height:16px;margin-bottom:10px;" id="_pinMsg"></div>'
-    +'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;">'
-    +[1,2,3,4,5,6,7,8,9,'del',0,'x'].map(function(k){
-      return '<button data-pk="'+k+'" style="height:50px;border-radius:8px;background:var(--sf2);border:1px solid var(--bd);font-size:18px;font-weight:700;cursor:pointer;">'+(k==='del'?'⌫':k==='x'?'✕':k)+'</button>';
-    }).join('')
-    +'</div>'
-    +'<button id="_pinCloseBtn" style="width:100%;padding:11px;border-radius:8px;background:transparent;border:1px solid var(--bd);font-size:13px;color:var(--t2);cursor:pointer;">취소</button>'
-    +'</div>';
-  document.body.appendChild(pm);
-  pm.querySelectorAll('[data-pk]').forEach(function(btn){
-    btn.addEventListener('click',function(){_doPIN(this.getAttribute('data-pk'));});
-  });
-  document.getElementById('_pinCloseBtn').addEventListener('click',closePinModal);
-}
-function _pdStyle(filled,err){
-  return 'width:42px;height:42px;border-radius:8px;background:'+(err?'rgba(139,42,42,.1)':(filled?'var(--ac)':'var(--sf2)'))+';border:2px solid '+(err?'#c00':(filled?'var(--ac)':'var(--bd)'))+';display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;';
-}
-function _renderPIN(err){
-  for(var i=0;i<4;i++){
-    var d=document.getElementById('_pd'+i);
-    if(!d)return;
-    var filled=_pinVal.length>i;
-    d.style.cssText=_pdStyle(filled,err);
-    d.textContent=filled?'●':'';
-  }
-}
-function _doPIN(k){
-  if(k==='x'||k==='del'){_pinVal=_pinVal.slice(0,-1);document.getElementById('_pinMsg').textContent='';}
-  else if(/[0-9]/.test(k)&&_pinVal.length<4){
-    _pinVal+=k;
-    if(_pinVal.length===4)setTimeout(_verifyPIN,150);
-  }
-  _renderPIN();
-}
-function _verifyPIN(){
-  if(!_selStore)return;
-  if(_pinVal===_selStore.pin){
-    closePinModal();
-    gameMarkUsed(_activeCp.id);
-    /* 사용완료 UI 업데이트 */
-    var bg=document.querySelector('#_gameCpModal .use-bg');
-    if(bg)bg.style.filter='grayscale(1)';
-    var sb=document.getElementById('_cpStaffBtn');
-    if(sb){sb.textContent='✅ 사용 완료';sb.disabled=true;sb.style.background='var(--t3)';}
-    /* 마이탭 쿠폰 다시 렌더 */
-    var mw=document.getElementById('my-coupon-wrap');
-    if(mw)renderMyCoupons(mw);
-    closeCouponModal();
-    showGameAlert('✅ 쿠폰 사용 완료!\n즐거운 식사 되세요 🍽️');
-  } else {
-    _pinTry++;_pinVal='';_renderPIN(true);
-    document.getElementById('_pinMsg').textContent=_pinTry>=3?'❌ 3회 오류. 잠시 후 시도하세요.':'❌ PIN 불일치 ('+(3-_pinTry)+'회 남음)';
-    if(_pinTry>=3)setTimeout(closePinModal,2000);
-  }
-}
-function closePinModal(){var m=document.getElementById('_pinModal');if(m)m.parentNode.removeChild(m);_pinVal='';}
-
-/* ── 커스텀 Alert/Confirm ── */
-function showGameAlert(msg,onOk){
-  var d=document.createElement('div');
-  d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9200;display:flex;align-items:center;justify-content:center;';
-  d.innerHTML='<div style="background:var(--sf);border-radius:16px;width:280px;padding:24px 20px;text-align:center;">'
-    +'<div style="font-size:14px;color:var(--t1);line-height:1.7;white-space:pre-line;margin-bottom:20px;">'+msg+'</div>'
-    +'<button style="width:100%;padding:12px;border-radius:8px;background:var(--ac);border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;">확인</button>'
-    +'</div>';
-  document.body.appendChild(d);
-  d.querySelector('button').addEventListener('click',function(){d.parentNode.removeChild(d);if(onOk)onOk();});
-}
-function showGameConfirm(title,msg,onOk){
-  var d=document.createElement('div');
-  d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9200;display:flex;align-items:center;justify-content:center;';
-  d.innerHTML='<div style="background:var(--sf);border-radius:16px;width:280px;padding:24px 20px;text-align:center;">'
-    +'<div style="font-size:15px;font-weight:800;margin-bottom:8px;">'+title+'</div>'
-    +'<div style="font-size:13px;color:var(--t2);line-height:1.7;white-space:pre-line;margin-bottom:20px;">'+msg+'</div>'
-    +'<div style="display:flex;gap:8px;">'
-    +'<button id="_cfCancelBtn" style="flex:1;padding:12px;border-radius:8px;background:transparent;border:1px solid var(--bd);font-size:14px;color:var(--t2);cursor:pointer;">취소</button>'
-    +'<button id="_cfOkBtn" style="flex:1;padding:12px;border-radius:8px;background:var(--ac);border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;">확인</button>'
-    +'</div></div>';
-  document.body.appendChild(d);
-  d.querySelector('#_cfOkBtn').addEventListener('click',function(){d.parentNode.removeChild(d);if(onOk)onOk();});
-  d.querySelector('#_cfCancelBtn').addEventListener('click',function(){d.parentNode.removeChild(d);});
-}
-
-/* ── 게임 모달 열기 ── */
-/* ═══ 게임 시스템 끝 ═══ */
-
-</script>
+<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=d7ufdpoww3&submodules=geocoder&callback=naverMapInit"></script>
 <script src="https://w.soundcloud.com/player/api.js"></script>
 <style>
 :root{
@@ -2095,7 +1821,12 @@ function renderHome(){
   wrap.innerHTML=html;
   var ccBtn=document.getElementById('course-card-btn');
   if(ccBtn)ccBtn.addEventListener('click',function(){openHomePopup('course');});
-  /* 게임 배너 이벤트 - document 위임으로 처리 (별도 등록) */
+  document.querySelectorAll('[data-gameid]').forEach(function(el){
+    el.addEventListener('click',function(e){
+      e.stopPropagation();
+      openGameModal(this.getAttribute('data-gameid'));
+    });
+  });
   /* hl-chat-btn 제거됨 */
   /* story cards rendered inline */
   /* surak-chat-banner 제거됨 */
@@ -4076,6 +3807,12 @@ function _onCTA(si){
   var cta=document.getElementById('sm-cta-'+si);
   if(cta){cta.className='sm-cta-btn done';cta.textContent='&#x2705; '+L({KO:'획득 완료!',EN:'Claimed!',JP:'獲得完了！',CN:'已获取！'});}
   if(typeof checkHistoryBadges==='function')checkHistoryBadges();
+  if(!window._cpEvt){window._cpEvt=true;
+    document.addEventListener('click',function(e){
+      var card=e.target.closest('[data-cpid]');
+      if(card){e.stopPropagation();openCouponModal(card.getAttribute('data-cpid'));}
+    });
+  }
   /* 게임 배너 전역 이벤트 위임 - 한 번만 등록 */
   if(!window._gameEvtRegistered){
     window._gameEvtRegistered=true;
@@ -4409,6 +4146,282 @@ function openGameModal(gameId){
   });
 }
 /* ═══ 게임 시스템 끝 ═══ */
+
+
+/* ═══════════════════════════════════════════════
+   수락스트릿 미니게임 & 쿠폰 시스템
+═══════════════════════════════════════════════ */
+
+/* ── 게임 포인트 (기존 getPoints/addPoint 활용) ── */
+var GAME_KEY_POINTS = 'surak_points'; /* 기존과 동일 */
+
+/* ── 쿠폰 데이터 ── */
+var GAME_COUPONS = [
+  {id:'drink', ic:'🥤', nm:{KO:'음료 1캔 교환권',EN:'1 Drink',JP:'ドリンク1本',CN:'饮料1罐'}, pt:2000,
+   stores:[
+     {id:'s1',nm:'오공김밥 수락산점',addr:'동일로242길 55',pin:'1234',color:'#2C4A1E'},
+     {id:'s2',nm:'잇츠굿토스트',addr:'동일로242길',pin:'2345',color:'#7B4F2E'},
+     {id:'s3',nm:'메가MGC커피',addr:'동일로242길 55',pin:'3456',color:'#1A4A6B'},
+   ]},
+  {id:'soju', ic:'🥂', nm:{KO:'소주 1병 교환권',EN:'1 Soju',JP:'焼酎1本',CN:'烧酒1瓶'}, pt:5000,
+   stores:[
+     {id:'s4',nm:'화로화 수락본점',addr:'동일로242길 66',pin:'4567',color:'#8B2A2A'},
+     {id:'s5',nm:'오공김밥 수락산점',addr:'동일로242길 55',pin:'1234',color:'#2C4A1E'},
+     {id:'s6',nm:'꾸이92포차',addr:'동일로242길 27',pin:'5678',color:'#4A2C6B'},
+   ]},
+  {id:'beer', ic:'🍺', nm:{KO:'맥주 1캔 교환권',EN:'1 Beer',JP:'ビール1本',CN:'啤酒1罐'}, pt:3000,
+   stores:[
+     {id:'s7',nm:'화로화 수락본점',addr:'동일로242길 66',pin:'4567',color:'#8B2A2A'},
+     {id:'s8',nm:'맥주조아',addr:'동일로242나길 7',pin:'6789',color:'#2A4A8B'},
+     {id:'s9',nm:'디오스호프',addr:'동일로242길 30',pin:'7890',color:'#3A5A2A'},
+   ]},
+];
+var GAME_USED_KEY = 'surak_used_cp';
+var GAME_EX_KEY   = 'surak_ex_date';
+
+function gameIsUsed(id){
+  try{var u=JSON.parse(localStorage.getItem(GAME_USED_KEY)||'[]');return u.indexOf(id)>=0;}catch(e){return false;}
+}
+function gameMarkUsed(id){
+  try{var u=JSON.parse(localStorage.getItem(GAME_USED_KEY)||'[]');if(u.indexOf(id)<0){u.push(id);localStorage.setItem(GAME_USED_KEY,JSON.stringify(u));}}catch(e){}
+}
+function gameCanEx(){return localStorage.getItem(GAME_EX_KEY)!==new Date().toISOString().slice(0,10);}
+function gameMarkEx(){localStorage.setItem(GAME_EX_KEY,new Date().toISOString().slice(0,10));}
+
+/* ── 마이탭 쿠폰 렌더 ── */
+function renderMyCoupons(wrap){
+  if(!wrap)return;
+  var L=function(o){return o[lang]||o.KO;};
+  var html='';
+  GAME_COUPONS.forEach(function(cp){
+    var used=gameIsUsed(cp.id);
+    var canBuy=gameCanEx()&&!used&&(getPoints().total||0)>=cp.pt;
+    html+='<div style="background:var(--sf);border:1px solid var(--bd);border-radius:var(--r3);margin-bottom:8px;overflow:hidden;box-shadow:var(--s1);'+(used?'filter:grayscale(.8);opacity:.6;':'')+'">';
+    html+='<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;">';
+    html+='<div style="font-size:32px;">'+cp.ic+'</div>';
+    html+='<div style="flex:1;"><div style="font-size:14px;font-weight:800;color:var(--t1);margin-bottom:2px;">'+L(cp.nm)+'</div>';
+    html+='<div style="font-size:12px;color:var(--t3);">'+cp.pt.toLocaleString()+' P · '+cp.stores.length+'개 매장</div></div>';
+    if(used){
+      html+='<div style="font-size:11px;font-weight:700;color:var(--t3);">✅ 사용완료</div>';
+    } else {
+      html+='<button data-cpid="'+cp.id+'" style="background:'+(canBuy?'var(--ac)':'var(--t3)')+';color:#fff;border:none;border-radius:var(--r2);padding:7px 12px;font-size:12px;font-weight:700;cursor:'+(canBuy?'pointer':'not-allowed')+';white-space:nowrap;">'+(canBuy?'교환':(getPoints().total<cp.pt?'P부족':'오늘완료'))+'</button>';
+    }
+    html+='</div></div>';
+  });
+  if(!html) html='<div style="padding:16px;text-align:center;font-size:12px;color:var(--t3);">포인트를 모아 쿠폰을 교환하세요!</div>';
+  wrap.innerHTML = html;
+  /* 쿠폰 교환 클릭 */
+  wrap.querySelectorAll('button[data-cpid]').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var cpid=this.getAttribute('data-cpid');
+      openCouponModal(cpid);
+    });
+  });
+}
+
+/* ── 쿠폰 모달 ── */
+var _activeCp=null, _selStore=null, _pinVal='', _pinTry=0, _tsInt=null;
+
+function openCouponPage(){
+  /* 마이탭 쿠폰 섹션으로 스크롤 */
+  var el=document.getElementById('my-coupon-wrap');
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+function openCouponModal(cpid){
+  var cp=null;
+  for(var i=0;i<GAME_COUPONS.length;i++){if(GAME_COUPONS[i].id===cpid){cp=GAME_COUPONS[i];break;}}
+  if(!cp)return;
+  var L=function(o){return o[lang]||o.KO;};
+  /* 포인트/일일 체크는 직원확인 단계에서 처리 */
+  _activeCp=cp; _selStore=null;
+
+  /* 모달 생성 */
+  var existing=document.getElementById('_gameCpModal');
+  if(existing) existing.parentNode.removeChild(existing);
+
+  var modal=document.createElement('div');
+  modal.id='_gameCpModal';
+  modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9000;display:flex;align-items:flex-end;justify-content:center;';
+
+  var storeHtml='';
+  cp.stores.forEach(function(s){
+    storeHtml+='<div data-sid="'+s.id+'" style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r2);margin-bottom:6px;cursor:pointer;">'
+      +'<div style="width:8px;height:8px;border-radius:50%;background:'+s.color+';flex-shrink:0;"></div>'
+      +'<div style="flex:1;"><div style="font-size:13px;font-weight:600;">'+s.nm+'</div>'
+      +'<div style="font-size:10px;color:var(--t3);">'+s.addr+'</div></div>'
+      +'<div style="font-size:12px;color:var(--t3);">›</div></div>';
+  });
+
+  modal.innerHTML='<div style="background:var(--sf);border-radius:24px 24px 0 0;width:100%;max-width:430px;padding:20px 20px 40px;max-height:88vh;overflow-y:auto;">'
+    +'<div style="width:40px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto 16px;"></div>'
+    +'<div style="background:linear-gradient(135deg,#1a3a5c,#0d1f3c);border-radius:12px;padding:16px;color:#fff;margin-bottom:16px;position:relative;overflow:hidden;">'
+    +'<div id="_cpWm" style="position:absolute;inset:0;opacity:.06;font-size:10px;font-weight:700;white-space:nowrap;overflow:hidden;animation:wmMove 4s linear infinite;">수락스트릿 · SURAK STREET · '.repeat(20)+'</div>'
+    +'<div style="position:absolute;bottom:8px;right:10px;font-size:11px;font-weight:800;opacity:.6;" id="_cpTs">--:--:--</div>'
+    +'<div style="font-size:18px;font-weight:800;position:relative;margin-bottom:4px;">'+cp.ic+' '+L(cp.nm)+'</div>'
+    +'<div style="font-size:22px;font-weight:800;position:relative;color:#FFD700;">'+cp.pt.toLocaleString()+' P</div>'
+    +'</div>'
+    +'<div style="font-size:12px;font-weight:700;color:var(--t2);margin-bottom:8px;">📍 '+L({KO:'교환 가능 매장 (탭하여 선택)',EN:'Select a store',JP:'店舗を選択',CN:'选择门店'})+'</div>'
+    +'<div id="_cpStores">'+storeHtml+'</div>'
+    +'<button id="_cpStaffBtn" style="width:100%;padding:14px;border-radius:var(--r3);background:var(--t3);border:none;color:#fff;font-size:15px;font-weight:800;cursor:not-allowed;margin-bottom:8px;margin-top:4px;">📍 '+L({KO:'매장을 먼저 선택해주세요',EN:'Select a store first',JP:'店舗を選択してください',CN:'请先选择门店'})+'</button>'
+    +'<button id="_cpCancelBtn" style="width:100%;padding:12px;border-radius:var(--r3);background:transparent;border:1px solid var(--bd);font-size:14px;color:var(--t2);cursor:pointer;">'+L({KO:'닫기',EN:'Close',JP:'閉じる',CN:'关闭'})+'</button>'
+    +'</div>';
+
+  document.body.appendChild(modal);
+
+  /* 타임스탬프 */
+  function uTs(){var n=new Date(),el=document.getElementById('_cpTs');if(!el)return;var h=n.getHours(),m=n.getMinutes(),s=n.getSeconds();el.textContent=(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;}
+  uTs(); _tsInt=setInterval(uTs,1000);
+
+  /* 배경 클릭 닫기 */
+  modal.addEventListener('click',function(e){if(e.target===modal)closeCouponModal();});
+  document.getElementById('_cpCancelBtn').addEventListener('click',closeCouponModal);
+
+  /* 매장 선택 */
+  document.getElementById('_cpStores').querySelectorAll('[data-sid]').forEach(function(item){
+    item.addEventListener('click',function(){
+      document.getElementById('_cpStores').querySelectorAll('[data-sid]').forEach(function(x){
+        x.style.borderColor='var(--bd)'; x.style.background='var(--sf2)';
+      });
+      this.style.borderColor='var(--ac)'; this.style.background='rgba(44,74,30,.06)';
+      var sid=this.getAttribute('data-sid');
+      _activeCp.stores.forEach(function(s){if(s.id===sid)_selStore=s;});
+      var sb=document.getElementById('_cpStaffBtn');
+      sb.style.background='var(--ac)'; sb.style.cursor='pointer';
+      sb.textContent='👨‍💼 '+_selStore.nm+' '+{KO:'직원 확인',EN:'Staff Verify',JP:'スタッフ確認',CN:'员工确认'}[lang];
+    });
+  });
+
+  /* 직원확인 버튼 */
+  document.getElementById('_cpStaffBtn').addEventListener('click',function(){
+    if(!_selStore)return;
+    if(!gameIsUsed(_activeCp.id)){
+      if(!gameCanEx()){showGameAlert('오늘은 이미 쿠폰을 교환했어요!');return;}
+      if((getPoints().total||0)<_activeCp.pt){showGameAlert('포인트가 부족해요.
+현재: '+(getPoints().total||0)+' P / 필요: '+_activeCp.pt+' P');return;}
+      showGameConfirm(_activeCp.ic+' '+L(_activeCp.nm), _activeCp.pt.toLocaleString()+' P를 사용할까요?', function(){
+        addPoint(-_activeCp.pt,L(_activeCp.nm)+' 쿠폰 교환','🎟️');
+        gameMarkEx();
+        openPinModal();
+      });
+      return;
+    }
+    openPinModal();
+  });
+}
+
+function closeCouponModal(){
+  if(_tsInt){clearInterval(_tsInt);_tsInt=null;}
+  var m=document.getElementById('_gameCpModal');
+  if(m)m.parentNode.removeChild(m);
+  _activeCp=null;_selStore=null;
+}
+
+/* ── PIN 모달 ── */
+function openPinModal(){
+  var L=function(o){return o[lang]||o.KO;};
+  var existing=document.getElementById('_pinModal');
+  if(existing)existing.parentNode.removeChild(existing);
+  _pinVal='';_pinTry=0;
+
+  var pm=document.createElement('div');
+  pm.id='_pinModal';
+  pm.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9100;display:flex;align-items:center;justify-content:center;';
+  pm.innerHTML='<div style="background:var(--sf);border-radius:20px;width:290px;padding:24px 20px;text-align:center;">'
+    +'<div style="font-size:16px;font-weight:800;margin-bottom:4px;">🔒 매장 PIN 확인</div>'
+    +'<div style="font-size:11px;color:var(--t3);margin-bottom:16px;line-height:1.5;white-space:pre-line;">'+_selStore.nm+'
+직원이 PIN 4자리를 입력해주세요</div>'
+    +'<div style="display:flex;justify-content:center;gap:10px;margin-bottom:12px;" id="_pinDots">'
+    +'<div id="_pd0" style="'+_pdStyle()+'"></div><div id="_pd1" style="'+_pdStyle()+'"></div>'
+    +'<div id="_pd2" style="'+_pdStyle()+'"></div><div id="_pd3" style="'+_pdStyle()+'"></div>'
+    +'</div>'
+    +'<div style="font-size:11px;color:#c00;font-weight:700;min-height:16px;margin-bottom:10px;" id="_pinMsg"></div>'
+    +'<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;">'
+    +[1,2,3,4,5,6,7,8,9,'del',0,'x'].map(function(k){
+      return '<button data-pk="'+k+'" style="height:50px;border-radius:8px;background:var(--sf2);border:1px solid var(--bd);font-size:18px;font-weight:700;cursor:pointer;">'+(k==='del'?'⌫':k==='x'?'✕':k)+'</button>';
+    }).join('')
+    +'</div>'
+    +'<button id="_pinCloseBtn" style="width:100%;padding:11px;border-radius:8px;background:transparent;border:1px solid var(--bd);font-size:13px;color:var(--t2);cursor:pointer;">취소</button>'
+    +'</div>';
+  document.body.appendChild(pm);
+  pm.querySelectorAll('[data-pk]').forEach(function(btn){
+    btn.addEventListener('click',function(){_doPIN(this.getAttribute('data-pk'));});
+  });
+  document.getElementById('_pinCloseBtn').addEventListener('click',closePinModal);
+}
+function _pdStyle(filled,err){
+  return 'width:42px;height:42px;border-radius:8px;background:'+(err?'rgba(139,42,42,.1)':(filled?'var(--ac)':'var(--sf2)'))+';border:2px solid '+(err?'#c00':(filled?'var(--ac)':'var(--bd)'))+';display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#fff;';
+}
+function _renderPIN(err){
+  for(var i=0;i<4;i++){
+    var d=document.getElementById('_pd'+i);
+    if(!d)return;
+    var filled=_pinVal.length>i;
+    d.style.cssText=_pdStyle(filled,err);
+    d.textContent=filled?'●':'';
+  }
+}
+function _doPIN(k){
+  if(k==='x'||k==='del'){_pinVal=_pinVal.slice(0,-1);document.getElementById('_pinMsg').textContent='';}
+  else if(/[0-9]/.test(k)&&_pinVal.length<4){
+    _pinVal+=k;
+    if(_pinVal.length===4)setTimeout(_verifyPIN,150);
+  }
+  _renderPIN();
+}
+function _verifyPIN(){
+  if(!_selStore)return;
+  if(_pinVal===_selStore.pin){
+    closePinModal();
+    gameMarkUsed(_activeCp.id);
+    /* 사용완료 UI 업데이트 */
+    var bg=document.querySelector('#_gameCpModal .use-bg');
+    if(bg)bg.style.filter='grayscale(1)';
+    var sb=document.getElementById('_cpStaffBtn');
+    if(sb){sb.textContent='✅ 사용 완료';sb.disabled=true;sb.style.background='var(--t3)';}
+    /* 마이탭 쿠폰 다시 렌더 */
+    var mw=document.getElementById('my-coupon-wrap');
+    if(mw)renderMyCoupons(mw);
+    closeCouponModal();
+    showGameAlert('✅ 쿠폰 사용 완료!\n즐거운 식사 되세요 🍽️');
+  } else {
+    _pinTry++;_pinVal='';_renderPIN(true);
+    document.getElementById('_pinMsg').textContent=_pinTry>=3?'❌ 3회 오류. 잠시 후 시도하세요.':'❌ PIN 불일치 ('+(3-_pinTry)+'회 남음)';
+    if(_pinTry>=3)setTimeout(closePinModal,2000);
+  }
+}
+function closePinModal(){var m=document.getElementById('_pinModal');if(m)m.parentNode.removeChild(m);_pinVal='';}
+
+/* ── 커스텀 Alert/Confirm ── */
+function showGameAlert(msg,onOk){
+  var d=document.createElement('div');
+  d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9200;display:flex;align-items:center;justify-content:center;';
+  d.innerHTML='<div style="background:var(--sf);border-radius:16px;width:280px;padding:24px 20px;text-align:center;">'
+    +'<div style="font-size:14px;color:var(--t1);line-height:1.7;white-space:pre-line;margin-bottom:20px;">'+msg+'</div>'
+    +'<button style="width:100%;padding:12px;border-radius:8px;background:var(--ac);border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;">확인</button>'
+    +'</div>';
+  document.body.appendChild(d);
+  d.querySelector('button').addEventListener('click',function(){d.parentNode.removeChild(d);if(onOk)onOk();});
+}
+function showGameConfirm(title,msg,onOk){
+  var d=document.createElement('div');
+  d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9200;display:flex;align-items:center;justify-content:center;';
+  d.innerHTML='<div style="background:var(--sf);border-radius:16px;width:280px;padding:24px 20px;text-align:center;">'
+    +'<div style="font-size:15px;font-weight:800;margin-bottom:8px;">'+title+'</div>'
+    +'<div style="font-size:13px;color:var(--t2);line-height:1.7;white-space:pre-line;margin-bottom:20px;">'+msg+'</div>'
+    +'<div style="display:flex;gap:8px;">'
+    +'<button id="_cfCancelBtn" style="flex:1;padding:12px;border-radius:8px;background:transparent;border:1px solid var(--bd);font-size:14px;color:var(--t2);cursor:pointer;">취소</button>'
+    +'<button id="_cfOkBtn" style="flex:1;padding:12px;border-radius:8px;background:var(--ac);border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;">확인</button>'
+    +'</div></div>';
+  document.body.appendChild(d);
+  d.querySelector('#_cfOkBtn').addEventListener('click',function(){d.parentNode.removeChild(d);if(onOk)onOk();});
+  d.querySelector('#_cfCancelBtn').addEventListener('click',function(){d.parentNode.removeChild(d);});
+}
+
+/* ── 게임 모달 열기 ── */
+/* ═══ 게임 시스템 끝 ═══ */
+
+
 </script>
 </body>
 </html

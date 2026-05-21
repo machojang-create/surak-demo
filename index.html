@@ -831,9 +831,9 @@ body{
 .sm-story{min-width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden;}
 .sm-pages{flex:1;overflow:hidden;}
 .sm-pw{display:flex;height:100%;transition:transform .3s ease;}
-.sm-page{min-width:100%;height:100%;padding:16px 20px;overflow-y:auto;display:flex;flex-direction:column;}
+.sm-page{min-width:100%;height:100%;padding:0;overflow:hidden;display:flex;flex-direction:column;}
 .sm-page::-webkit-scrollbar{display:none;}
-.sm-illust{height:160px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;flex-shrink:0;font-size:48px;}
+.sm-illust{width:100%;height:240px;flex-shrink:0;font-size:48px;display:flex;align-items:center;justify-content:center;}
 .sm-pg-num{font-size:10px;color:rgba(255,255,255,.3);letter-spacing:2px;margin-bottom:5px;}
 .sm-pg-title{font-size:16px;font-weight:800;color:#fff;line-height:1.4;margin-bottom:10px;padding-top:14px;}
 .sm-pg-body{font-size:13px;color:rgba(255,255,255,.72);line-height:1.85;word-break:keep-all;flex:1;}
@@ -3741,24 +3741,25 @@ function _buildStory(){
       illDiv.className='sm-illust';
       if(illSrc){
         illDiv.style.backgroundImage='url('+illSrc+')';
-        illDiv.style.backgroundSize='cover';
-        illDiv.style.backgroundPosition='center top';
+        illDiv.style.backgroundSize='contain';
+        illDiv.style.backgroundPosition='center center';
+        illDiv.style.backgroundRepeat='no-repeat';
         illDiv.style.position='relative';
-        /* 반투명 오버레이: 이미지 흐리게 + 하단 페이드 */
-        var ov=document.createElement('div');
-        ov.style.cssText='position:absolute;inset:0;background:'+s.bg+';opacity:.55;border-radius:14px;';
-        illDiv.appendChild(ov);
+        /* 하단 페이드만 */
         var grad=document.createElement('div');
-        grad.style.cssText='position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,'+s.bg+' 100%);border-radius:14px;';
+        grad.style.cssText='position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to bottom,transparent,'+s.bg+');';
         illDiv.appendChild(grad);
       } else {
         illDiv.style.background='rgba(255,255,255,.05)';
         illDiv.textContent=s.ic;
       }
       page.appendChild(illDiv);
-      var numEl=document.createElement('div');numEl.className='sm-pg-num';numEl.textContent=pg.n;page.appendChild(numEl);
-      var titEl=document.createElement('div');titEl.className='sm-pg-title';titEl.textContent=L(pg.t);page.appendChild(titEl);
-      var bodEl=document.createElement('div');bodEl.className='sm-pg-body';bodEl.innerHTML=(L(pg.b)).replace(/\n/g,'<br>');page.appendChild(bodEl);
+      var textWrap=document.createElement('div');
+      textWrap.style.cssText='flex:1;overflow-y:auto;padding:16px 20px 20px;-webkit-overflow-scrolling:touch;';
+      var numEl=document.createElement('div');numEl.className='sm-pg-num';numEl.textContent=pg.n;textWrap.appendChild(numEl);
+      var titEl=document.createElement('div');titEl.className='sm-pg-title';titEl.textContent=L(pg.t);textWrap.appendChild(titEl);
+      var bodEl=document.createElement('div');bodEl.className='sm-pg-body';bodEl.innerHTML=(L(pg.b)).replace(/\n/g,'<br>');textWrap.appendChild(bodEl);
+      page.appendChild(textWrap);
       pw.appendChild(page);
     });
     pages.appendChild(pw);story.appendChild(pages);

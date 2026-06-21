@@ -1,0 +1,11 @@
+{
+  "//": "수락스트릿 — 프론트엔드는 GitHub Pages(surakstreet.com)로 배포, 백엔드(함수·DB규칙)만 Firebase로 배포.",
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20"
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}

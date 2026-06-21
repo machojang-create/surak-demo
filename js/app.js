@@ -2010,6 +2010,7 @@ function saveUser(user){
   _user=user;
 }
 function logout(){
+  if(typeof fbLogout==='function') fbLogout();
   localStorage.removeItem('surak_user');
   _user=null;
   var mi=g('my-inner');if(mi)delete mi.dataset.done;
@@ -2073,6 +2074,11 @@ function loginNaver(){
 
 // 구글 로그인
 function loginGoogle(){
+  // 리뉴얼: Firebase 설정 시 실제 구글 로그인 (성공→onAuth 브리지가 handleLoginSuccess 호출)
+  if(typeof fbLoginGoogle==='function' && typeof fbConfigured==='function' && fbConfigured()){
+    fbLoginGoogle().catch(function(){ showGpsToast('로그인에 실패했어요.'); });
+    return;
+  }
   if(typeof google==='undefined'||!google.accounts){
     handleLoginSuccess({id:'google_'+Date.now(),name:'수락이',email:'surak@gmail.com',provider:'google',avatar:null});
     return;
@@ -2103,6 +2109,17 @@ function handleLoginSuccess(user){
   showGpsToast({KO:user.name+'님 환영합니다! 🎉',EN:'Welcome '+user.name+'! 🎉',JP:user.name+'さんようこそ！🎉',CN:'欢迎'+user.name+'！🎉'}[lang]);
   var mi=g('my-inner');if(mi)delete mi.dataset.done;
   renderMy();
+}
+
+// 리뉴얼: Firebase 인증 ↔ 앱 사용자 브리지 (Firebase 로그인 시 앱 _user 동기화)
+if(typeof fbOnAuth==='function'){
+  fbOnAuth(function(u){
+    if(!u) return;
+    var existing=getUserData(), fid='google_'+u.uid;
+    if(!existing || existing.id!==fid){
+      handleLoginSuccess({id:fid,name:u.displayName||'수락이',email:u.email||'',provider:'google',avatar:u.photoURL||null});
+    } else { _user=existing; }
+  });
 }
 
 /* ═══ 배지 16종 ═══ */

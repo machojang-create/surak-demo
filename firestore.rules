@@ -1,0 +1,100 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── 공통 판별 함수 ──
+    // 운영자(마스터): Firebase 토큰 이메일로 판별. 매장·쿠폰·공지·정책 관리 권한.
+    //   (기존 다시봄라이프 admin_roles 패턴과 동일. 추후 매장주 org_admin 역할로 확장)
+    function isMaster() {
+      return request.auth != null
+        && request.auth.token.email in ['machojang@gmail.com', 'machojang@naver.com'];
+    }
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(uid) { return request.auth != null && request.auth.uid == uid; }
+
+    // ── User (§7.1) : 회원 프로필 ──
+    //   본인만 읽기. 생성 시 보상필드는 초기값으로만.
+    //   ⚠️ points/xp/level 은 클라이언트가 못 바꿈 → QR검증 Cloud Function(Admin SDK)만 기록.
+    //      (포인트 조작 방지의 핵심)
+    match /users/{uid} {
+      allow read:   if isOwner(uid) || isMaster();
+      allow create: if isOwner(uid)
+                    && request.resource.data.points == 0
+                    && request.resource.data.xp == 0
+                    && request.resource.data.level == 1;
+      allow update: if isOwner(uid)
+                    && request.resource.data.points == resource.data.points
+                    && request.resource.data.xp == resource.data.xp
+                    && request.resource.data.level == resource.data.level;
+      allow delete: if isMaster();
+    }
+
+    // ── Store (§7.2) : 매장 ──
+    //   노출(visible)된 매장은 비로그인 포함 누구나 읽기. 등록·수정·삭제는 운영자만.
+    match /stores/{storeId} {
+      allow read:  if resource.data.visible == true || isMaster();
+      allow write: if isMaster();
+    }
+
+    // ── Coupon (§7.4) : 쿠폰 정의 ──
+    //   누구나 읽기(앱에 노출). 생성·수정은 운영자.
+    match /coupons/{couponId} {
+      allow read:  if true;
+      allow write: if isMaster();
+    }
+
+    // ── 발급된 사용자 쿠폰(사용여부) ──
+    //   본인만 읽기. 발급·사용처리는 서버(Function)만 → 클라이언트 쓰기 전면 금지.
+    match /userCoupons/{id} {
+      allow read:  if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow write: if false;
+    }
+
+    // ── QR_Log (§7.3) : QR 스캔 로그 ──
+    //   본인·운영자 읽기. 기록은 GPS 검증 Function만.
+    match /qrLogs/{id} {
+      allow read:  if isMaster() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow write: if false;
+    }
+
+    // ── XP_Log (§7.6) : XP 적립 로그 ──
+    match /xpLogs/{id} {
+      allow read:  if isMaster() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow write: if false;
+    }
+
+    // ── Stamp (§7.5) : 매장별 스탬프 누적 ──
+    //   본인 읽기. 적립은 QR검증 Function만.
+    match /stamps/{id} {
+      allow read:  if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow write: if false;
+    }
+
+    // ── Badge (§7.7) : 디지털 배지 ──
+    //   본인 읽기. 지급은 서버(Function)만.
+    match /badges/{id} {
+      allow read:  if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow write: if false;
+    }
+
+    // ── 공지 (§4.8) ──
+    //   노출분은 누구나 읽기. 작성·수정·삭제는 운영자.
+    match /notices/{id} {
+      allow read:  if resource.data.visible == true || isMaster();
+      allow write: if isMaster();
+    }
+
+    // ── 추천 콘텐츠 (§4.7) : 메인 노출 매장/코스 ──
+    match /recommend/{id} {
+      allow read:  if true;
+      allow write: if isMaster();
+    }
+
+    // ── 설정 (§4.6) : XP/레벨 정책, 레벨표 등 ──
+    //   누구나 읽기(레벨표 표시). 운영자만 수정.
+    match /config/{docId} {
+      allow read:  if true;
+      allow write: if isMaster();
+    }
+  }
+}

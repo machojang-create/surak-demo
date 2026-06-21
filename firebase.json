@@ -1,5 +1,13 @@
 {
-  "//": "수락스트릿 — 프론트엔드는 GitHub Pages(surakstreet.com)로 배포, 백엔드(함수·DB규칙)만 Firebase로 배포.",
+  "//": "수락스트릿 — 프론트는 GitHub Pages(surakstreet.com), 백엔드+스테이징은 Firebase.",
+  "hosting": {
+    "public": ".",
+    "ignore": ["firebase.json", "**/.*", "functions/**", "**/node_modules/**", "firestore.rules", "firestore.indexes.json", "*.md", "CNAME"],
+    "rewrites": [
+      { "source": "/admin", "destination": "/admin.html" },
+      { "source": "**", "destination": "/index.html" }
+    ]
+  },
   "functions": {
     "source": "functions",
     "runtime": "nodejs20"

@@ -100,12 +100,15 @@
     <div class="scroll"><div class="pad" id="info-inner"></div></div>
   </div>
 
-<!-- 하단 탭바 -->
+<!-- 수락이(검색) 뷰 -->
+<div class="view" id="search-view"><div class="scroll"><div class="pad" id="search-inner"></div></div></div>
+
+<!-- 하단 탭바 (4탭 + QR) -->
 <div id="tabs">
   <button class="tab on" data-v="home"><span class="tab-ic">🏠</span><span id="t-tab-home"></span></button>
+  <button class="tab" data-v="search"><span class="tab-ic">🔍</span><span>수락이</span></button>
+  <button class="tab tab-qr" onclick="openQrScan()" style="color:var(--ac);font-weight:800;"><span class="tab-ic">📷</span><span>QR</span></button>
   <button class="tab" data-v="map"><span class="tab-ic">🗺️</span><span id="t-tab-map"></span></button>
-  <button class="tab" data-v="goods"><span class="tab-ic">🎁</span><span id="t-tab-goods"></span></button>
-  <button class="tab" data-v="sound"><span class="tab-ic">🎵</span><span id="t-tab-sound"></span></button>
   <button class="tab" data-v="my"><span class="tab-ic">👤</span><span id="t-tab-my"></span></button>
 </div>
 

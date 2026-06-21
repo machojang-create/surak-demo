@@ -560,29 +560,7 @@ function renderHome(){
   html+='</div>';
 
 
-  /* 🎮 미니게임 배너 */
-  html+='<div class="stit">🎮 '+L({KO:'오늘의 미니게임',EN:'DAILY MINI GAMES',JP:'デイリーミニゲーム',CN:'每日小游戏'})+'</div>';
-  html+='<div id="game-banner" style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:14px;padding:14px;border:1px solid rgba(255,255,255,.08);box-shadow:0 4px 16px rgba(0,0,0,.3);">';
-  html+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">';
-  html+='<div style="font-size:13px;font-weight:700;color:#fff;">'+L({KO:'게임하고 포인트 모아 쿠폰으로!',EN:'Play & earn points for coupons!',JP:'ゲームでポイントを集めよう！',CN:'玩游戏积分换优惠券！'})+'</div>';
-  html+='<div style="font-size:11px;color:#f5a623;font-weight:700;" id="game-banner-pt">'+(parseInt((getPoints()||{}).total)||0).toLocaleString()+' P</div>';
-  html+='</div>';
-  html+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">';
-  var gDefs=[
-    {id:'slot', ic:'🎲', nm:{KO:'행운 뽑기',EN:'Lucky Draw',JP:'幸運くじ',CN:'幸运抽奖'}, key:'surak_slot_done'},
-    {id:'roulette', ic:'🌀', nm:{KO:'수락 돌림판',EN:'Spin Wheel',JP:'スピンホイール',CN:'转盘'}, key:'surak_roul_done'},
-    {id:'mahjong', ic:'🧩', nm:{KO:'블록 맞추기',EN:'Block Match',JP:'ブロックマッチ',CN:'方块配对'}, key:'surak_mah_done'},
-  ];
-  var todayStr=new Date().toISOString().slice(0,10);
-  gDefs.forEach(function(gd){
-    var done=localStorage.getItem(gd.key)===todayStr;
-    html+='<div data-gameid="'+gd.id+'" style="background:rgba(255,255,255,'+(done?'.04':'.08')+');border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,'+(done?'.04':'.12')+');opacity:'+(done?'.5':'1')+';transition:all .15s;">';
-    html+='<div style="font-size:28px;margin-bottom:6px;">'+gd.ic+'</div>';
-    html+='<div style="font-size:11px;font-weight:700;color:'+(done?'#888':'#fff')+';margin-bottom:4px;">'+L(gd.nm)+'</div>';
-    html+='<div style="font-size:10px;color:'+(done?'#4CAF50':'#f5a623')+';font-weight:600;">'+(done?'✅ '+L({KO:'완료',EN:'Done',JP:'完了',CN:'完成'}):L({KO:'▶ 시작',EN:'▶ Play',JP:'▶ 開始',CN:'▶ 开始'}))+'</div>';
-    html+='</div>';
-  });
-  html+='</div></div>';
+  /* 🎮 미니게임 배너 제거됨 (명세 §1.3 — MVP 미니게임 제외) */
 
   /* 빠른메뉴 제거됨 */
   html+='<div class="stit">'+T('homeHotTitle')+'</div>';
@@ -2550,9 +2528,49 @@ function sv(v){
     }
   }
   if(v==='home')renderHome();
-  if(v==='goods')renderGoods();
-  if(v==='sound')renderSound();
+  if(v==='search')renderSearch();
   if(v==='my'){var mi=g('my-inner');if(mi)delete mi.dataset.done;renderMy();}
+}
+
+/* ── 수락이(검색) + QR 스캔 — Phase B ── */
+function renderSearch(){
+  var el=g('search-inner'); if(!el) return;
+  if(el.dataset.done) return; el.dataset.done='1';
+  var cats=[
+    {ic:'☕',label:'근처 카페',q:'cafe'},{ic:'🍚',label:'근처 식당',q:'food'},
+    {ic:'🍖',label:'고기집',q:'gogi'},{ic:'🍺',label:'주점',q:'bar'},
+    {ic:'🚻',label:'화장실',q:'toilet'},{ic:'🅿️',label:'주차장',q:'parking'},
+    {ic:'⛰️',label:'등산 코스',q:'course'},{ic:'📍',label:'정상까지 거리',q:'summit'}
+  ];
+  var h='<div style="padding:18px 16px;">'
+    +'<div style="font-size:18px;font-weight:800;margin-bottom:2px;">🔍 수락이</div>'
+    +'<div style="font-size:13px;color:var(--t2);margin-bottom:16px;">무엇을 찾으세요? 눌러보세요.</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+  cats.forEach(function(c){
+    h+='<button onclick="searchQuery(\''+c.q+'\')" style="display:flex;align-items:center;gap:8px;padding:14px;border:1px solid var(--bd);border-radius:var(--r2);background:var(--sf);font-size:14px;font-weight:600;cursor:pointer;text-align:left;"><span style="font-size:20px;">'+c.ic+'</span>'+c.label+'</button>';
+  });
+  h+='</div><div id="search-result" style="margin-top:18px;"></div></div>';
+  el.innerHTML=h;
+}
+function searchQuery(q){
+  var res=g('search-result'); if(!res) return;
+  var cat={cafe:'cafe',food:'food',gogi:'gogi',bar:'bar'}[q];
+  if(cat){
+    var list=(typeof STORES!=='undefined'?STORES:[]).filter(function(s){return s.cat===cat;});
+    res.innerHTML='<div style="font-size:13px;color:var(--t3);margin-bottom:8px;">'+list.length+'곳</div>'
+      +list.slice(0,20).map(function(s){return '<div onclick="openPopup(STORES.find(function(x){return x.id==='+s.id+';}))" style="padding:12px;border:1px solid var(--bd);border-radius:var(--r2);margin-bottom:8px;cursor:pointer;"><div style="font-weight:700;">'+(s.ko||'')+'</div><div style="font-size:12px;color:var(--t3);">'+(s.addr||'')+'</div></div>';}).join('');
+  } else if(q==='course'||q==='summit'){
+    res.innerHTML='<div style="padding:14px;background:var(--acbg);border-radius:var(--r2);font-size:14px;">⛰️ 수락산 주봉 코스 8.2km · 약 4시간 (중급)<br/><span style="font-size:12px;color:var(--t2);">지도 탭에서 코스를 확인하세요.</span></div>';
+  } else {
+    res.innerHTML='<div style="padding:14px;background:var(--bg2);border-radius:var(--r2);font-size:13px;color:var(--t2);">곧 추가될 검색이에요.</div>';
+  }
+}
+function openQrScan(){
+  if(typeof showGameConfirm==='function'){
+    showGameConfirm('📷 QR 스캔','매장에 부착된 QR 코드를\n폰 카메라로 찍으면 방문 적립됩니다.\n\n(테스트: 1번 매장 적립 시뮬레이션)',function(){
+      if(typeof startQrScan==='function') startQrScan(1);
+    });
+  }
 }
 
 /* ═══ 네이버 지도 콜백 ═══ */
@@ -2564,22 +2582,21 @@ window.naverMapInit=function(){
 /* ═══ 초기화 ═══ */
 document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.tab').forEach(function(btn){
-    btn.addEventListener('click',function(){sv(this.dataset.v);});
+    btn.addEventListener('click',function(){if(this.dataset.v)sv(this.dataset.v);});
   });
   document.querySelectorAll('.lang-btn').forEach(function(btn){
     btn.addEventListener('click',function(){
       lang=this.dataset.lang;
       document.querySelectorAll('.lang-btn').forEach(function(b){b.classList.remove('on');});
       this.classList.add('on');
-      ['goods-inner','sound-inner'].forEach(function(id){var el=g(id);if(el)delete el.dataset.done;});
+      var si=g('search-inner');if(si)delete si.dataset.done;
       var mi=g('my-inner');if(mi)delete mi.dataset.done;
       applyT();
       if(_map)_buildMapFilter();
       var cur=document.querySelector('.tab.on');if(!cur)return;
       var v=cur.dataset.v;
       if(v==='home')renderHome();
-      else if(v==='goods')renderGoods();
-      else if(v==='sound')renderSound();
+      else if(v==='search')renderSearch();
       else if(v==='my'){var mi2=g('my-inner');if(mi2)delete mi2.dataset.done;renderMy();}
       else if(v==='info'){var ii2=g('info-inner');if(ii2)delete ii2.dataset.done;renderInfo();}
     });

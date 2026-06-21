@@ -6,12 +6,12 @@
 
 /* ⬇️⬇️ Macho: surakstreet Firebase 프로젝트 생성 후, 콘솔 > 프로젝트설정 > 웹앱의 config를 여기에 붙여넣기 ⬇️⬇️ */
 var SURAK_FIREBASE_CONFIG = {
-  apiKey:            "PASTE_HERE",
-  authDomain:        "PASTE_HERE.firebaseapp.com",
-  projectId:         "PASTE_HERE",
-  storageBucket:     "PASTE_HERE.appspot.com",
-  messagingSenderId: "PASTE_HERE",
-  appId:             "PASTE_HERE"
+  apiKey:            "AIzaSyCwOcR1RJ2OcuNx3aMqbjCpXDrTiadlndI",
+  authDomain:        "gen-lang-client-0824359288.firebaseapp.com",
+  projectId:         "gen-lang-client-0824359288",
+  storageBucket:     "gen-lang-client-0824359288.firebasestorage.app",
+  messagingSenderId: "1019245247046",
+  appId:             "1:1019245247046:web:cd497b97c3ee3b56952847"
 };
 /* ⬆️⬆️ 여기 6줄만 교체하면 연결됩니다 ⬆️⬆️ */
 

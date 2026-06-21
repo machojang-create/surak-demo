@@ -1102,6 +1102,7 @@ function toggleMapPanel(){
 }
 
 function renderMapList(){
+  var L=function(o){return o[lang]||o.KO;};
   var el = g('map-list-inner');
   if(!el) return;
   var catColors={food:'#4A7A35',gogi:'#8B3A2A',cafe:'#2A558B',bar:'#6B3A8B',outdoor:'#6B6B2A'};
@@ -2511,18 +2512,19 @@ function sv(v){
   var ve=g(v+'-view');if(ve)ve.classList.add('on');
   var te=document.querySelector('[data-v="'+v+'"]');if(te)te.classList.add('on');
   if(v==='map'){
+    renderMapList(); // 매장 리스트는 지도와 무관하게 항상 표시
+    var _resize=function(){if(window.naver&&naver.maps&&naver.maps.Event&&_map){try{naver.maps.Event.trigger(_map,'resize');}catch(e){}}};
     if(_mapReady&&!_map){
       _initMap();
     } else if(_map){
-      setTimeout(function(){naver.maps.Event.trigger(_map,'resize');},150);
-      renderMapList();
+      setTimeout(_resize,150);
     } else {
-      // 네이버 지도 아직 로딩 중 - 대기 후 재시도
+      // 네이버 지도 로딩 대기 (실패 시 리스트만 표시)
       var _mapWait=0;
       var _mapTimer=setInterval(function(){
         _mapWait++;
         if(_mapReady&&!_map){clearInterval(_mapTimer);_initMap();}
-        else if(_map){clearInterval(_mapTimer);setTimeout(function(){naver.maps.Event.trigger(_map,'resize');},150);renderMapList();}
+        else if(_map){clearInterval(_mapTimer);setTimeout(_resize,150);}
         else if(_mapWait>20)clearInterval(_mapTimer);
       },200);
     }

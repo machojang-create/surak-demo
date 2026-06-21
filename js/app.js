@@ -922,7 +922,7 @@ function renderMy(){
 
   // 통계 그리드
   var stats=[
-    {ic:'⛰️',num:expData.history?expData.history.filter(function(r){return r.reason&&r.reason.indexOf('등산')>=0;}).length:0,
+    {ic:'⛰️',num:expData.history?expData.history.filter(function(r){return typeof r.reason==='string'&&r.reason.indexOf('등산')>=0;}).length:0,
      lbl:{KO:'등산 횟수',EN:'Hikes',JP:'登山回数',CN:'登山次数'}},
     {ic:'🏪',num:GOODS_KEYS.filter(function(k){return !!gsData[k];}).length,
      lbl:{KO:'수집 굿즈',EN:'Goods',JP:'収集グッズ',CN:'收集周边'}},
@@ -1363,6 +1363,7 @@ function getLevelInfo(exp){
 }
 
 function addExp(amount,reason){
+  if(reason&&typeof reason==='object')reason=reason[lang]||reason.KO||'';
   var d=getExpData();
   var oldLv=getLevelInfo(d.exp);
   d.exp=(d.exp||0)+amount;
@@ -2150,7 +2151,7 @@ function unlockBadge(id){
 }
 function checkTimeBadges(){var hr=new Date().getHours(),isWE=new Date().getDay()===0||new Date().getDay()===6;if(hr<7)unlockBadge('hike_morning');if(hr>=21)unlockBadge('night_stroll');if(isWE&&hr>=22)unlockBadge('night_owl');if(!localStorage.getItem('surak_first_run')){localStorage.setItem('surak_first_run','1');unlockBadge('hike_first');}}
 function checkGourmetBadges(){var visits=getStoreVisits();var ids=Object.keys(visits).map(Number);var visited=STORES.filter(function(s){return ids.indexOf(s.id)>=0;});if(visited.length>=3)unlockBadge('food_explorer');if(visited.filter(function(s){return s.cat==='cafe';}).length>=3)unlockBadge('food_cafe');if(['food','cafe','gogi','bar'].every(function(c){return visited.some(function(s){return s.cat===c;});}))unlockBadge('food_vip');if(Object.values(visits).some(function(v){return v>=3;}))unlockBadge('food_regular');}
-function checkHikingBadges(){var data=getExpData();var cnt=(data.history||[]).filter(function(r){return r.reason&&r.reason.indexOf('등산')>=0;}).length;if(cnt>=5)unlockBadge('hike_iron');if(new Date().getDay()===0||new Date().getDay()===6)unlockBadge('hike_weekend');}
+function checkHikingBadges(){var data=getExpData();var cnt=(data.history||[]).filter(function(r){return typeof r.reason==='string'&&r.reason.indexOf('등산')>=0;}).length;if(cnt>=5)unlockBadge('hike_iron');if(new Date().getDay()===0||new Date().getDay()===6)unlockBadge('hike_weekend');}
 function checkNightBadges(){var bs=getBadgeState();if(['night_stroll','night_music','night_owl'].every(function(id){return bs[id];}))unlockBadge('night_legend');}
 function checkHistoryBadges(){
   var ids=['cheon','kim','queen','park','hwang','lee','jeongjo','yeonsan','heungseon','jeong','eom','misc'];

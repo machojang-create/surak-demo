@@ -100,6 +100,26 @@ header.adm .who{font-size:12px;color:var(--t3);}
       </div>
       <div id="coupon-list"><div class="hint">불러오는 중...</div></div>
     </div>
+
+    <!-- XP/레벨 정책 (§4.6) -->
+    <div class="sec">
+      <h2>⚙️ XP / 레벨 정책 <span class="cnt">🔥 운영 핵심</span></h2>
+      <div class="grid2">
+        <div><label>QR 스캔 XP (메인)</label><input id="pol-scanXp" type="number"/></div>
+        <div><label>매장 방문 XP</label><input id="pol-visitXp" type="number"/></div>
+        <div><label>쿠폰 사용 XP</label><input id="pol-couponXp" type="number"/></div>
+        <div><label>코스 완료 XP</label><input id="pol-courseXp" type="number"/></div>
+        <div><label>GPS 반경 (m)</label><input id="pol-gpsRadiusM" type="number"/></div>
+        <div><label>재스캔 제한 (분)</label><input id="pol-rescanMinutes" type="number"/></div>
+      </div>
+      <label>전체 레벨 테이블 (쉼표 구분, 예: 0,50,150,350,700,1200,2000)</label><input id="pol-levelTable"/>
+      <label>매장 레벨 테이블 (쉼표 구분, 예: 0,100,300,700)</label><input id="pol-storeLevelTable"/>
+      <div class="bar" style="margin-top:12px;">
+        <button class="btn" id="pol-save" onclick="savePolicy()">정책 저장</button>
+        <button class="btn ghost" onclick="loadPolicy()">새로고침</button>
+      </div>
+      <div class="hint" id="pol-msg"></div>
+    </div>
   </div>
 </div>
 

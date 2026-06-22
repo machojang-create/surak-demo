@@ -24,6 +24,7 @@ function onAdmAuth(u){
     gel('adm-who').textContent = u.email;
     loadStores();
     loadCoupons();
+    loadPolicy();
   } else {
     gel('admin-panel').style.display = 'none';
     gel('login-gate').style.display = 'block';
@@ -207,4 +208,27 @@ function saveCoupon(){
 function delCoupon(id){
   if(!confirm('이 쿠폰을 삭제할까요?')) return;
   FB.db.collection('coupons').doc(id).delete().then(loadCoupons).catch(function(e){ alert('삭제 실패: '+e.message); });
+}
+
+// ── XP/레벨 정책 (§4.6) ──
+function loadPolicy(){
+  if(!FB.ready) return;
+  FB.db.collection('config').doc('xpPolicy').get().then(function(s){
+    var d=s.exists?s.data():{};
+    var setv=function(id,v){ var e=gel(id); if(e) e.value=(v==null?'':v); };
+    setv('pol-scanXp',d.scanXp); setv('pol-visitXp',d.visitXp); setv('pol-couponXp',d.couponXp); setv('pol-courseXp',d.courseXp);
+    setv('pol-gpsRadiusM',d.gpsRadiusM); setv('pol-rescanMinutes',d.rescanMinutes);
+    setv('pol-levelTable',(d.levelTable||[]).join(',')); setv('pol-storeLevelTable',(d.storeLevelTable||[]).join(','));
+  }).catch(function(){});
+}
+function savePolicy(){
+  if(!FB.ready){ alert('Firebase 미연결'); return; }
+  var num=function(id){ return parseInt(gel(id).value,10)||0; };
+  var arr=function(id){ return gel(id).value.split(',').map(function(x){ return parseInt(x.trim(),10)||0; }); };
+  var data={ scanXp:num('pol-scanXp'), visitXp:num('pol-visitXp'), couponXp:num('pol-couponXp'), courseXp:num('pol-courseXp'),
+    gpsRadiusM:num('pol-gpsRadiusM'), rescanMinutes:num('pol-rescanMinutes'),
+    levelTable:arr('pol-levelTable'), storeLevelTable:arr('pol-storeLevelTable') };
+  var btn=gel('pol-save'); btn.disabled=true; btn.textContent='저장 중...';
+  FB.db.collection('config').doc('xpPolicy').set(data,{merge:true}).then(function(){ gel('pol-msg').textContent='✅ 저장됨 — qrScan이 즉시 반영합니다.'; })
+    .catch(function(e){ gel('pol-msg').textContent='실패: '+e.message; }).then(function(){ btn.disabled=false; btn.textContent='정책 저장'; });
 }

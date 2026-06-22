@@ -71,7 +71,7 @@ function showScanReward(res, store){
          + '<div style="font-size:11px;color:var(--t3);">' + label + '</div></div>';
   }
   d.innerHTML = '<div style="background:var(--sf);border-radius:20px;width:300px;padding:28px 22px;text-align:center;box-shadow:var(--s3);">'
-    + '<div style="font-size:44px;margin-bottom:6px;">🎉</div>'
+    + '<img src="surak/excited.png" style="width:88px;height:88px;border-radius:50%;margin-bottom:2px;" alt="수락이"/>'
     + '<div style="font-size:17px;font-weight:800;color:var(--t1);margin-bottom:4px;">방문 적립 완료!</div>'
     + '<div style="font-size:13px;color:var(--t2);margin-bottom:18px;">' + _storeName(store) + '</div>'
     + '<div style="display:flex;gap:8px;margin-bottom:' + (r.levelUp ? '14px' : '18px') + ';">'

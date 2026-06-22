@@ -120,6 +120,23 @@ header.adm .who{font-size:12px;color:var(--t3);}
       </div>
       <div class="hint" id="pol-msg"></div>
     </div>
+
+    <!-- 공지 관리 (§4.8) -->
+    <div class="sec">
+      <h2>📢 공지 관리 <span class="cnt" id="notice-count"></span></h2>
+      <input id="nt-title" placeholder="공지 제목"/>
+      <textarea id="nt-body" rows="2" placeholder="공지 내용" style="margin-top:8px;"></textarea>
+      <div class="bar" style="margin-top:8px;"><button class="btn" onclick="addNotice()">공지 추가</button></div>
+      <div id="notice-list" style="margin-top:8px;"></div>
+    </div>
+
+    <!-- 추천 콘텐츠 (§4.7) -->
+    <div class="sec">
+      <h2>⭐ 추천 콘텐츠</h2>
+      <label>메인 추천 매장 ID (쉼표, 예: 1,5,12)</label><input id="rec-stores"/>
+      <div class="bar" style="margin-top:8px;"><button class="btn" onclick="saveFeatured()">저장</button></div>
+      <div class="hint" id="rec-msg"></div>
+    </div>
   </div>
 </div>
 

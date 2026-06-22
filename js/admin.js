@@ -25,6 +25,8 @@ function onAdmAuth(u){
     loadStores();
     loadCoupons();
     loadPolicy();
+    loadNotices();
+    loadFeatured();
   } else {
     gel('admin-panel').style.display = 'none';
     gel('login-gate').style.display = 'block';
@@ -231,4 +233,37 @@ function savePolicy(){
   var btn=gel('pol-save'); btn.disabled=true; btn.textContent='저장 중...';
   FB.db.collection('config').doc('xpPolicy').set(data,{merge:true}).then(function(){ gel('pol-msg').textContent='✅ 저장됨 — qrScan이 즉시 반영합니다.'; })
     .catch(function(e){ gel('pol-msg').textContent='실패: '+e.message; }).then(function(){ btn.disabled=false; btn.textContent='정책 저장'; });
+}
+
+// ── 공지 관리 (§4.8) ──
+function loadNotices(){
+  if(!FB.ready) return;
+  FB.db.collection('notices').get().then(function(snap){
+    var arr=snap.docs.map(function(d){ var x=d.data(); x._id=d.id; return x; });
+    arr.sort(function(a,b){ return ((b.ts&&b.ts.seconds)||0)-((a.ts&&a.ts.seconds)||0); });
+    gel('notice-count').textContent='('+arr.length+')';
+    gel('notice-list').innerHTML=arr.length?arr.map(function(n){
+      return '<div class="st-row"><div class="nm">'+esc(n.title||'')+'<small>'+esc(n.body||'')+'</small></div>'
+        +'<div class="tag'+(n.visible===false?' off':'')+'">'+(n.visible===false?'비공개':'공개')+'</div>'
+        +'<div class="acts"><button onclick="toggleNotice(\''+n._id+'\','+(n.visible===false)+')">'+(n.visible===false?'공개':'숨김')+'</button><button onclick="delNotice(\''+n._id+'\')">삭제</button></div></div>';
+    }).join(''):'<div class="hint">공지가 없습니다.</div>';
+  }).catch(function(){});
+}
+function addNotice(){
+  var t=gel('nt-title').value.trim(); if(!t){ alert('제목을 입력하세요.'); return; }
+  FB.db.collection('notices').add({ title:t, body:gel('nt-body').value.trim(), visible:true, ts:firebase.firestore.FieldValue.serverTimestamp() })
+    .then(function(){ gel('nt-title').value=''; gel('nt-body').value=''; loadNotices(); }).catch(function(e){ alert('실패: '+e.message); });
+}
+function toggleNotice(id,makeVisible){ FB.db.collection('notices').doc(id).set({ visible:makeVisible },{merge:true}).then(loadNotices).catch(function(e){ alert(e.message); }); }
+function delNotice(id){ if(!confirm('공지를 삭제할까요?')) return; FB.db.collection('notices').doc(id).delete().then(loadNotices).catch(function(e){ alert(e.message); }); }
+
+// ── 추천 콘텐츠 (§4.7) ──
+function loadFeatured(){
+  if(!FB.ready) return;
+  FB.db.collection('config').doc('home').get().then(function(s){ if(s.exists&&gel('rec-stores')) gel('rec-stores').value=(s.data().featuredStoreIds||[]).join(','); }).catch(function(){});
+}
+function saveFeatured(){
+  if(!FB.ready){ alert('Firebase 미연결'); return; }
+  var ids=gel('rec-stores').value.split(',').map(function(x){ return parseInt(x.trim(),10); }).filter(function(x){ return !isNaN(x); });
+  FB.db.collection('config').doc('home').set({ featuredStoreIds:ids },{merge:true}).then(function(){ gel('rec-msg').textContent='✅ 저장됨'; }).catch(function(e){ gel('rec-msg').textContent='실패: '+e.message; });
 }

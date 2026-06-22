@@ -2598,11 +2598,30 @@ function renderSearch(){
 }
 function searchQuery(q){
   var res=g('search-result'); if(!res) return;
-  var cat={cafe:'cafe',food:'food',gogi:'gogi',bar:'bar'}[q];
-  if(cat){
-    var list=(typeof STORES!=='undefined'?STORES:[]).filter(function(s){return s.cat===cat;});
-    res.innerHTML='<div style="font-size:13px;color:var(--t3);margin-bottom:8px;">'+list.length+'곳</div>'
-      +list.slice(0,20).map(function(s){return '<div onclick="openPopup(STORES.find(function(x){return x.id==='+s.id+';}))" style="padding:12px;border:1px solid var(--bd);border-radius:var(--r2);margin-bottom:8px;cursor:pointer;"><div style="font-weight:700;">'+(s.ko||'')+'</div><div style="font-size:12px;color:var(--t3);">'+(s.addr||'')+'</div></div>';}).join('');
+  var catMap={cafe:'cafe',food:'food',gogi:'gogi',bar:'bar'};
+  if(catMap[q]){
+    var cat=catMap[q];
+    res.innerHTML='<div style="font-size:12px;color:var(--t3);padding:6px;">검색 중...</div>';
+    var fallback=(typeof STORES!=='undefined'?STORES:[]).filter(function(s){return s.cat===cat;}).map(function(s){return {id:s.id,nm:s.ko,addr:s.addr,lat:s.lat,lng:s.lng};});
+    var render=function(arr,withDist){
+      res.innerHTML='<div style="font-size:13px;color:var(--t3);margin-bottom:8px;">'+arr.length+'곳'+(withDist?' · 가까운 순':'')+'</div>'
+        +arr.slice(0,25).map(function(s){return '<div onclick="openPopup(STORES.find(function(x){return x.id==='+s.id+';}))" style="padding:12px;border:1px solid var(--bd);border-radius:var(--r2);margin-bottom:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;"><div style="min-width:0;"><div style="font-weight:700;">'+(s.nm||'')+'</div><div style="font-size:12px;color:var(--t3);">'+(s.addr||'')+'</div></div>'+(s._d!=null?'<div style="font-size:12px;color:var(--ac);font-weight:700;white-space:nowrap;">'+(s._d<1000?(s._d+'m'):((s._d/1000).toFixed(1)+'km'))+'</div>':'')+'</div>';}).join('');
+    };
+    var withGps=function(arr){
+      if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(pos){
+          arr.forEach(function(s){s._d=(typeof s.lat==='number')?Math.round(calcDist(pos.coords.latitude,pos.coords.longitude,s.lat,s.lng)):null;});
+          arr.sort(function(a,b){return (a._d==null?9e9:a._d)-(b._d==null?9e9:b._d);});
+          render(arr,true);
+        },function(){render(arr,false);},{timeout:6000,maximumAge:60000});
+      } else render(arr,false);
+    };
+    if(typeof FB!=='undefined'&&FB.ready){
+      FB.db.collection('stores').where('cat','==',cat).get().then(function(snap){
+        var arr=[];snap.forEach(function(d){var x=d.data();if(x.visible!==false)arr.push({id:x.id,nm:x.name||(x.nameI18n&&x.nameI18n.ko)||'',addr:x.addr||'',lat:x.lat,lng:x.lng});});
+        withGps(arr.length?arr:fallback);
+      }).catch(function(){withGps(fallback);});
+    } else withGps(fallback);
   } else if(q==='course'||q==='summit'){
     res.innerHTML='<div style="padding:14px;background:var(--acbg);border-radius:var(--r2);font-size:14px;">⛰️ 수락산 주봉 코스 8.2km · 약 4시간 (중급)<br/><span style="font-size:12px;color:var(--t2);">지도 탭에서 코스를 확인하세요.</span></div>';
   } else {

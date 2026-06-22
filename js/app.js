@@ -2643,12 +2643,51 @@ function searchQuery(q){
     res.innerHTML='<div style="padding:14px;background:var(--bg2);border-radius:var(--r2);font-size:13px;color:var(--t2);">곧 추가될 검색이에요.</div>';
   }
 }
+var _qrStream=null, _qrRAF=null;
 function openQrScan(){
-  if(typeof showGameConfirm==='function'){
-    showGameConfirm('📷 QR 스캔','매장에 부착된 QR 코드를\n폰 카메라로 찍으면 방문 적립됩니다.\n\n(테스트: 1번 매장 적립 시뮬레이션)',function(){
-      if(typeof startQrScan==='function') startQrScan(1);
-    });
+  // jsQR 미로드 또는 카메라 미지원 → 폴백
+  if(typeof jsQR==='undefined'||!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    if(typeof showGameConfirm==='function') showGameConfirm('📷 QR 스캔','이 기기/브라우저는 인앱 카메라 스캔을 지원하지 않아요.\n매장 QR을 휴대폰 카메라로 찍으면 링크로 적립됩니다.\n\n테스트로 1번 매장 적립을 시도할까요?',function(){ if(typeof startQrScan==='function') startQrScan(1); });
+    return;
   }
+  var ov=document.createElement('div'); ov.id='qr-cam-ov';
+  ov.style.cssText='position:fixed;inset:0;z-index:9400;background:#000;';
+  ov.innerHTML='<video id="qr-cam-vid" autoplay playsinline muted style="width:100%;height:100%;object-fit:cover;"></video>'
+    +'<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:230px;height:230px;border:3px solid #fff;border-radius:20px;box-shadow:0 0 0 9999px rgba(0,0,0,.45);"></div>'
+    +'<div style="position:absolute;top:calc(50% + 140px);left:0;right:0;text-align:center;color:#fff;font-size:14px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.6);">매장 QR을 사각형 안에 맞춰주세요</div>'
+    +'<button id="qr-cam-x" style="position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,.5);border:none;color:#fff;font-size:20px;cursor:pointer;">✕</button>';
+  document.body.appendChild(ov);
+  var vid=ov.querySelector('#qr-cam-vid');
+  var cvs=document.createElement('canvas'), ctx=cvs.getContext('2d');
+  ov.querySelector('#qr-cam-x').addEventListener('click',closeQrScan);
+  navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}}).then(function(stream){
+    _qrStream=stream; vid.srcObject=stream;
+    var tick=function(){
+      if(vid.readyState===vid.HAVE_ENOUGH_DATA&&vid.videoWidth){
+        cvs.width=vid.videoWidth; cvs.height=vid.videoHeight;
+        ctx.drawImage(vid,0,0,cvs.width,cvs.height);
+        var img=ctx.getImageData(0,0,cvs.width,cvs.height);
+        var code=jsQR(img.data,img.width,img.height,{inversionAttempts:'dontInvert'});
+        if(code&&code.data){ var id=_parseQrStoreId(code.data); if(id!=null){ closeQrScan(); if(typeof startQrScan==='function') startQrScan(id); return; } }
+      }
+      _qrRAF=requestAnimationFrame(tick);
+    };
+    _qrRAF=requestAnimationFrame(tick);
+  }).catch(function(){
+    closeQrScan();
+    if(typeof showGameAlert==='function') showGameAlert('카메라 권한이 필요해요.\n브라우저 설정에서 카메라를 허용한 뒤 다시 시도해주세요.');
+  });
+}
+function _parseQrStoreId(data){
+  // 인쇄 QR 형식: https://surakstreet.com/?s=1  /  ?s=1  /  숫자
+  try{ var m=String(data).match(/[?&]s=(\d+)/); if(m) return parseInt(m[1],10); }catch(e){}
+  if(/^\d+$/.test(String(data).trim())) return parseInt(String(data).trim(),10);
+  return null;
+}
+function closeQrScan(){
+  if(_qrRAF){ cancelAnimationFrame(_qrRAF); _qrRAF=null; }
+  if(_qrStream){ _qrStream.getTracks().forEach(function(t){ t.stop(); }); _qrStream=null; }
+  var ov=document.getElementById('qr-cam-ov'); if(ov&&ov.parentNode) ov.parentNode.removeChild(ov);
 }
 
 /* ═══ 네이버 지도 콜백 ═══ */

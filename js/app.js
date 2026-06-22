@@ -1355,6 +1355,18 @@ function getExpData(){
 function saveExpData(d){
   try{localStorage.setItem('surak_exp',JSON.stringify(d));}catch(e){}
 }
+// 서버(Firestore users) → 로컬 캐시 동기화: 마이탭이 서버 포인트/XP/레벨을 반영
+function fbSyncUser(cb){
+  if(typeof FB==='undefined'||!FB.ready||!FB.user){if(cb)cb();return;}
+  FB.db.collection('users').doc(FB.user.uid).get().then(function(s){
+    if(s.exists){var d=s.data();
+      try{var p=getPoints();p.total=d.points||0;localStorage.setItem('surak_points',JSON.stringify(p));}catch(e){}
+      try{var ex=getExpData();ex.exp=d.xp||0;ex.lv=d.level||1;localStorage.setItem('surak_exp',JSON.stringify(ex));}catch(e){}
+    }
+    var mv=g('my-view');if(mv&&mv.classList.contains('on')){var mi=g('my-inner');if(mi)delete mi.dataset.done;renderMy();}
+    if(cb)cb();
+  }).catch(function(e){console.warn('[FB] user sync 실패',e);if(cb)cb();});
+}
 
 function getLevelInfo(exp){
   for(var i=LEVELS.length-1;i>=0;i--){
@@ -2100,6 +2112,7 @@ if(typeof fbOnAuth==='function'){
     if(!existing || existing.id!==fid){
       handleLoginSuccess({id:fid,name:u.displayName||'수락이',email:u.email||'',provider:'google',avatar:u.photoURL||null});
     } else { _user=existing; }
+    fbSyncUser();
   });
 }
 

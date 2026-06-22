@@ -57,6 +57,7 @@ function doQrScan(storeId, store){
 
 // 보상 축하 팝업 (앱 모달 스타일·CSS변수 재사용)
 function showScanReward(res, store){
+  if (typeof fbSyncUser === 'function') fbSyncUser();
   if (res && res.alreadyToday) {
     showGameAlert(res.message || '오늘은 이미 이 매장 방문 적립을 받았어요.');
     if (typeof openPopup === 'function') openPopup(store);

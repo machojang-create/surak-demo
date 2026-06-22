@@ -293,6 +293,7 @@ function _buildMapFilter(){
     {k:'bar',    ic:'🍺',l:{KO:'바/야간',EN:'Bar',JP:'バー',CN:'酒吧'}},
     {k:'onuri',  ic:'🏷️',l:{KO:'온누리',EN:'Onuri',JP:'オヌリ',CN:'温누리'}},
     {k:'toilet', ic:'🚻',l:{KO:'화장실',EN:'Restroom',JP:'トイレ',CN:'厕所'}},
+    {k:'parking',ic:'🅿️',l:{KO:'주차장',EN:'Parking',JP:'駐車場',CN:'停车场'}},
   ];
   cats.forEach(function(c){
     if(c.k!=='all'&&c.k!=='onuri'&&c.k!=='toilet')
@@ -301,6 +302,8 @@ function _buildMapFilter(){
       c.n=STORES.filter(function(s){return s.onuri;}).length;
     else if(c.k==='toilet')
       c.n=3;
+    else if(c.k==='parking')
+      c.n=2;
   });
   el.innerHTML='';
   cats.forEach(function(c){
@@ -331,6 +334,21 @@ function _renderMarkers(){
         icon:{content:'<div style="background:#2A558B;color:#fff;font-size:12px;padding:4px 8px;border-radius:10px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.3);">🚻</div>',anchor:new naver.maps.Point(20,15)}
       });
       naver.maps.Event.addListener(m,'click',function(){showGpsToast((t.nm[lang]||t.nm.KO));});
+      _markers.push(m);
+    });
+    return;
+  }
+  if(_curFilter==='parking'){
+    var PARKING_LOCS=[
+      {lat:37.6749,lng:127.0578,nm:{KO:'수락산역 공영주차장',EN:'Suraksan Stn Parking',JP:'水落山駅駐車場',CN:'水落山站停车场'}},
+      {lat:37.6736,lng:127.0559,nm:{KO:'디자인거리 공영주차장',EN:'Design St Parking',JP:'デザイン通り駐車場',CN:'设计街停车场'}}
+    ];
+    PARKING_LOCS.forEach(function(p){
+      var m=new naver.maps.Marker({
+        position:new naver.maps.LatLng(p.lat,p.lng),map:_map,
+        icon:{content:'<div style="background:#1F6B3A;color:#fff;font-size:12px;padding:4px 8px;border-radius:10px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.3);">🅿️</div>',anchor:new naver.maps.Point(20,15)}
+      });
+      naver.maps.Event.addListener(m,'click',function(){showGpsToast((p.nm[lang]||p.nm.KO));});
       _markers.push(m);
     });
     return;

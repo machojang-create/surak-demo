@@ -27,6 +27,7 @@ function onAdmAuth(u){
     loadPolicy();
     loadNotices();
     loadFeatured();
+    loadStats();
   } else {
     gel('admin-panel').style.display = 'none';
     gel('login-gate').style.display = 'block';
@@ -266,4 +267,22 @@ function saveFeatured(){
   if(!FB.ready){ alert('Firebase 미연결'); return; }
   var ids=gel('rec-stores').value.split(',').map(function(x){ return parseInt(x.trim(),10); }).filter(function(x){ return !isNaN(x); });
   FB.db.collection('config').doc('home').set({ featuredStoreIds:ids },{merge:true}).then(function(){ gel('rec-msg').textContent='✅ 저장됨'; }).catch(function(e){ gel('rec-msg').textContent='실패: '+e.message; });
+}
+
+// ── 통계 · 사용자 (§4.10) ──
+function statCard(label,val){
+  return '<div style="flex:1;min-width:88px;background:rgba(0,0,0,.03);border:1px solid var(--bd);border-radius:10px;padding:12px 8px;text-align:center;"><div style="font-size:21px;font-weight:800;color:var(--ac);">'+val+'</div><div style="font-size:11px;color:var(--t3);margin-top:2px;">'+label+'</div></div>';
+}
+function loadStats(){
+  if(!FB.ready) return;
+  FB.db.collection('users').get().then(function(snap){
+    var users=snap.docs.map(function(d){ var x=d.data(); x._id=d.id; return x; });
+    var totalXp=0,totalPts=0; users.forEach(function(u){ totalXp+=(u.xp||0); totalPts+=(u.points||0); });
+    gel('stat-summary').innerHTML=statCard('👥 사용자',users.length)+statCard('📷 QR스캔','<span id="stat-scans">…</span>')+statCard('⭐ 누적 XP',totalXp)+statCard('🏆 누적 P',totalPts);
+    users.sort(function(a,b){ return (b.xp||0)-(a.xp||0); });
+    gel('user-list').innerHTML=users.length?users.slice(0,50).map(function(u){
+      return '<div class="st-row"><div class="nm">'+esc(u.displayName||u.email||u._id)+'<small>'+esc(u.email||'')+'</small></div><div class="tag">Lv.'+(u.level||1)+'</div><div style="font-size:12px;color:var(--t3);white-space:nowrap;margin-left:8px;">'+(u.xp||0)+'XP · '+(u.points||0)+'P</div></div>';
+    }).join(''):'<div class="hint">가입한 사용자가 없습니다.</div>';
+  }).catch(function(e){ gel('user-list').innerHTML='<div class="hint">사용자 불러오기 실패: '+esc(e.message)+'</div>'; });
+  FB.db.collection('qrLogs').get().then(function(snap){ var el=gel('stat-scans'); if(el) el.textContent=snap.size; }).catch(function(){ var el=gel('stat-scans'); if(el) el.textContent='-'; });
 }

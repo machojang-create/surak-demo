@@ -472,6 +472,20 @@ function fillStoreLevel(storeId){
     else sec.innerHTML=html;
   }).catch(function(){sec.innerHTML='<div style="font-size:12px;color:var(--t3);">레벨 정보를 불러올 수 없어요.</div>';});
 }
+// 홈 상단 공지 (Firestore notices, 관리자 작성분)
+function fillHomeNotice(){
+  var wrap=g('home-scroll-inner'); if(!wrap||typeof FB==='undefined'||!FB.ready) return;
+  FB.db.collection('notices').where('visible','==',true).get().then(function(snap){
+    if(snap.empty) return;
+    var arr=snap.docs.map(function(d){return d.data();});
+    arr.sort(function(a,b){return ((b.ts&&b.ts.seconds)||0)-((a.ts&&a.ts.seconds)||0);});
+    var n=arr[0];
+    var bar=document.createElement('div');
+    bar.style.cssText='background:var(--ambg);border:1px solid var(--am);border-radius:var(--r2);padding:10px 12px;margin-bottom:10px;display:flex;gap:8px;align-items:center;';
+    bar.innerHTML='<span style="font-size:16px;">📢</span><div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:700;color:var(--am);">'+((n.title)||'공지')+'</div><div style="font-size:12px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+((n.body)||'')+'</div></div>';
+    if(wrap.firstChild) wrap.insertBefore(bar, wrap.firstChild); else wrap.appendChild(bar);
+  }).catch(function(){});
+}
 
 /* ═══ 홈 탭 ═══ */
 function renderHome(){
@@ -590,6 +604,7 @@ function renderHome(){
 
 
   wrap.innerHTML=html;
+  fillHomeNotice();
   var ccBtn=document.getElementById('course-card-btn');
   if(ccBtn)ccBtn.addEventListener('click',function(){openHomePopup('course');});
   document.querySelectorAll('[data-gameid]').forEach(function(el){

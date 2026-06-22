@@ -421,6 +421,9 @@ function openPopup(s){
   h+='<div class="info-row"><span class="info-label">📍</span><span class="info-val" style="font-size:11px;">'+s.addr+'</span></div>';
   h+='</div>';
 
+  /* 매장 레벨 + 내 스탬프/방문 (서버에서 채움) */
+  h+='<div class="pop-sec"><div class="pop-sec-title">🏅 '+({KO:'매장 레벨',EN:'Store Level',JP:'店舗レベル',CN:'店铺等级'}[lang]||'매장 레벨')+'</div><div id="pop-storelv"><div style="font-size:12px;color:var(--t3);">불러오는 중...</div></div></div>';
+
   /* ② 메뉴 */
   if(s.menus&&s.menus.length){
     h+='<div class="pop-sec"><div class="pop-sec-title">'+T('popMenu')+'</div>';
@@ -440,6 +443,7 @@ function openPopup(s){
   h+='</div>';
 
   var pb=g('pop-body');if(pb)pb.innerHTML=h;
+  fillStoreLevel(s.id);
   var cbtn=g('goods-collect-btn');
   if(cbtn)cbtn.addEventListener('click',function(){
     var k=this.getAttribute('data-gkey'),now=toggleGoods(k);
@@ -451,6 +455,23 @@ function openPopup(s){
   setTimeout(function(){pop.classList.add('on');},10);
 }
 function closePopup(){var pop=g('pop');if(!pop)return;pop.classList.remove('on');setTimeout(function(){pop.style.display='none';},320);}
+// 매장 레벨(A안: visitXp 100/300/700) + 내 스탬프/방문 — 서버에서 채움
+var STORE_LV_TBL=[0,100,300,700];
+function storeLevelOf(vx){var lv=1;for(var i=0;i<STORE_LV_TBL.length;i++){if((vx||0)>=STORE_LV_TBL[i])lv=i+1;}return{lv:lv,next:STORE_LV_TBL[lv],base:STORE_LV_TBL[lv-1],xp:vx||0};}
+function fillStoreLevel(storeId){
+  var sec=g('pop-storelv');if(!sec)return;
+  if(typeof FB==='undefined'||!FB.ready){var v=(typeof getStoreVisits==='function')?(getStoreVisits()[storeId]||0):0;sec.innerHTML='<div style="font-size:13px;color:var(--t2);">내 방문 '+v+'회 (서버 연결 시 매장 레벨 표시)</div>';return;}
+  FB.db.collection('stores').doc(String(storeId)).get().then(function(ss){
+    var vx=(ss.exists&&ss.data().visitXp)||0,vc=(ss.exists&&ss.data().visitCount)||0,sl=storeLevelOf(vx);
+    var pct=sl.next?Math.min(100,Math.round((sl.xp-sl.base)/((sl.next-sl.base)||1)*100)):100;
+    var html='<div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;"><div style="font-size:24px;font-weight:800;color:var(--ac);">Lv.'+sl.lv+'</div>'
+      +'<div style="flex:1;"><div style="font-size:11px;color:var(--t3);margin-bottom:3px;">매장 경험치 '+sl.xp+'XP'+(sl.next?(' · 다음 '+sl.next+'XP'):' · MAX')+'</div>'
+      +'<div style="height:6px;background:var(--bd);border-radius:3px;overflow:hidden;"><div style="height:100%;width:'+pct+'%;background:var(--ac);transition:width .5s;"></div></div></div></div>'
+      +'<div style="font-size:12px;color:var(--t2);">누적 방문 '+vc+'회</div>';
+    if(FB.user){FB.db.collection('stamps').doc(FB.user.uid+'_'+storeId).get().then(function(st){var c=(st.exists&&st.data().count)||0;sec.innerHTML=html+'<div style="font-size:13px;color:var(--ac);font-weight:700;margin-top:6px;">🎟️ 내 스탬프 '+c+'개</div>';}).catch(function(){sec.innerHTML=html;});}
+    else sec.innerHTML=html;
+  }).catch(function(){sec.innerHTML='<div style="font-size:12px;color:var(--t3);">레벨 정보를 불러올 수 없어요.</div>';});
+}
 
 /* ═══ 홈 탭 ═══ */
 function renderHome(){

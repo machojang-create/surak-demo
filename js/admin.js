@@ -23,6 +23,7 @@ function onAdmAuth(u){
     gel('admin-panel').style.display = 'block';
     gel('adm-who').textContent = u.email;
     loadStores();
+    loadCoupons();
   } else {
     gel('admin-panel').style.display = 'none';
     gel('login-gate').style.display = 'block';
@@ -149,4 +150,61 @@ function downloadQR(){
   var dataUrl = img ? img.src : (canvas ? canvas.toDataURL('image/png') : null);
   if (!dataUrl){ alert('QR 생성 중입니다. 잠시 후 다시 시도해주세요.'); return; }
   var a = document.createElement('a'); a.href = dataUrl; a.download = 'surak-qr-' + _qrCurrent + '.png'; a.click();
+}
+
+// ── 쿠폰 관리 (§4.4) ──
+var _coupons = [];
+function loadCoupons(){
+  if(!FB.ready){ gel('coupon-list').innerHTML='<div class="hint">Firebase 미연결</div>'; return; }
+  gel('coupon-list').innerHTML='<div class="hint">불러오는 중...</div>';
+  FB.db.collection('coupons').get().then(function(snap){
+    _coupons=snap.docs.map(function(d){ var x=d.data(); x._id=d.id; return x; });
+    renderCoupons();
+  }).catch(function(e){ gel('coupon-list').innerHTML='<div class="hint">불러오기 실패: '+esc(e.message)+'</div>'; });
+}
+function renderCoupons(){
+  gel('coupon-count').textContent='('+_coupons.length+'개)';
+  if(!_coupons.length){ gel('coupon-list').innerHTML='<div class="hint">등록된 쿠폰이 없습니다. "쿠폰 추가"를 눌러주세요.</div>'; return; }
+  gel('coupon-list').innerHTML=_coupons.map(function(c){
+    return '<div class="st-row"><div style="font-size:22px;width:34px;text-align:center;flex-shrink:0;">'+esc(c.icon||'🎟️')+'</div>'
+      +'<div class="nm">'+esc(c.title||'(제목없음)')+'<small>'+esc(c.storeName||'전체매장')+(c.desc?(' · '+esc(c.desc)):'')+(c.until?(' · ~'+esc(c.until)):'')+'</small></div>'
+      +'<div class="tag'+(c.visible===false?' off':'')+'">'+(c.visible===false?'비공개':'공개')+'</div>'
+      +'<div class="acts"><button onclick="editCoupon(\''+c._id+'\')">수정</button><button onclick="delCoupon(\''+c._id+'\')">삭제</button></div></div>';
+  }).join('');
+}
+function fillCouponStores(){
+  var sel=gel('cf-store'); if(!sel) return;
+  sel.innerHTML='<option value="">전체 매장</option>'+(_stores||[]).map(function(s){ return '<option value="'+s.id+'">'+esc(s.name||('#'+s.id))+'</option>'; }).join('');
+}
+function openCouponForm(){
+  gel('cf-title').textContent='쿠폰 추가'; gel('cf-id').value='';
+  ['cf-title-in','cf-icon','cf-desc','cf-until','cf-pin'].forEach(function(id){ gel(id).value=''; });
+  gel('cf-limit').value='0'; gel('cf-visible').checked=true;
+  fillCouponStores(); gel('coupon-modal').classList.add('on');
+}
+function editCoupon(id){
+  var c=_coupons.find(function(x){ return x._id===id; }); if(!c) return;
+  gel('cf-title').textContent='쿠폰 수정'; gel('cf-id').value=id;
+  gel('cf-title-in').value=c.title||''; gel('cf-icon').value=c.icon||''; gel('cf-desc').value=c.desc||'';
+  gel('cf-until').value=c.until||''; gel('cf-pin').value=c.pin||''; gel('cf-limit').value=c.useLimit||0; gel('cf-visible').checked=c.visible!==false;
+  fillCouponStores(); gel('cf-store').value=c.storeId!=null?String(c.storeId):'';
+  gel('coupon-modal').classList.add('on');
+}
+function closeCouponForm(){ gel('coupon-modal').classList.remove('on'); }
+function saveCoupon(){
+  var title=gel('cf-title-in').value.trim();
+  if(!title){ alert('제목을 입력해주세요.'); return; }
+  var sid=gel('cf-store').value;
+  var store=sid?(_stores||[]).find(function(s){ return String(s.id)===sid; }):null;
+  var data={ title:title, icon:gel('cf-icon').value.trim()||'🎟️',
+    storeId:sid?parseInt(sid,10):null, storeName:store?(store.name||''):'',
+    desc:gel('cf-desc').value.trim(), until:gel('cf-until').value, pin:gel('cf-pin').value.trim(),
+    useLimit:parseInt(gel('cf-limit').value,10)||0, visible:gel('cf-visible').checked };
+  var btn=gel('cf-save'); btn.disabled=true; btn.textContent='저장 중...';
+  var ref=gel('cf-id').value?FB.db.collection('coupons').doc(gel('cf-id').value):FB.db.collection('coupons').doc();
+  ref.set(data,{merge:true}).then(function(){ closeCouponForm(); loadCoupons(); }).catch(function(e){ alert('저장 실패: '+e.message); }).then(function(){ btn.disabled=false; btn.textContent='저장'; });
+}
+function delCoupon(id){
+  if(!confirm('이 쿠폰을 삭제할까요?')) return;
+  FB.db.collection('coupons').doc(id).delete().then(loadCoupons).catch(function(e){ alert('삭제 실패: '+e.message); });
 }

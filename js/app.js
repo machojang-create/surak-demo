@@ -2766,6 +2766,17 @@ function renderMyCoupons(wrap){
   });
   if(!html) html='<div style="padding:16px;text-align:center;font-size:12px;color:var(--t3);">포인트를 모아 쿠폰을 교환하세요!</div>';
   wrap.innerHTML = html;
+  /* 관리자 발급 쿠폰(Firestore) 상단 표시 */
+  if(typeof FB!=='undefined'&&FB.ready){
+    FB.db.collection('coupons').where('visible','==',true).get().then(function(snap){
+      if(snap.empty)return;
+      var ch='<div style="font-size:12px;font-weight:700;color:var(--t2);margin:4px 0 8px;">🎟️ 매장 쿠폰</div>';
+      snap.forEach(function(d){var c=d.data();
+        ch+='<div style="background:var(--sf);border:1px dashed var(--ac);border-radius:var(--r3);margin-bottom:8px;padding:12px 14px;display:flex;align-items:center;gap:12px;"><div style="font-size:28px;">'+(c.icon||'🎟️')+'</div><div style="flex:1;"><div style="font-size:14px;font-weight:800;">'+(c.title||'')+'</div><div style="font-size:11px;color:var(--t3);">'+(c.storeName||'전체매장')+(c.desc?(' · '+c.desc):'')+(c.until?(' · ~'+c.until):'')+'</div></div></div>';
+      });
+      wrap.innerHTML=ch+wrap.innerHTML;
+    }).catch(function(){});
+  }
   /* 쿠폰 교환 클릭 */
   wrap.querySelectorAll('button[data-cpid]').forEach(function(btn){
     btn.addEventListener('click',function(){

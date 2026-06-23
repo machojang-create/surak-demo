@@ -93,6 +93,14 @@ body{
 .home-hero-title{font-size:23px;font-weight:800;letter-spacing:-.5px;text-shadow:0 1px 8px rgba(0,0,0,.25);}
 .home-hero-sub{font-size:12px;opacity:.7;margin-top:2px;letter-spacing:.5px;}
 .home-surak{width:52px;height:52px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;flex-shrink:0;}
+
+/* ── 수락이 카테고리 카드 ── */
+.cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.cat-card{position:relative;overflow:hidden;height:106px;border:none;border-radius:var(--r3);cursor:pointer;text-align:left;display:flex;flex-direction:column;justify-content:flex-end;padding:13px;box-shadow:var(--s2);transition:transform .14s,box-shadow .14s;background-size:cover;background-position:center;}
+.cat-card:active{transform:scale(.97);}
+.cat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 38%,rgba(0,0,0,.36) 100%);}
+.cat-ic{position:absolute;top:11px;right:13px;font-size:34px;line-height:1;filter:drop-shadow(0 2px 5px rgba(0,0,0,.22));z-index:1;}
+.cat-label{position:relative;z-index:1;color:#fff;font-size:15px;font-weight:800;text-shadow:0 1px 5px rgba(0,0,0,.35);letter-spacing:-.3px;}
 .home-weather{
   background:rgba(255,255,255,.12);border-radius:var(--r3);
   padding:8px 12px;display:flex;align-items:center;gap:10px;

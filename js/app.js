@@ -2615,16 +2615,20 @@ function renderSearch(){
   var el=g('search-inner'); if(!el) return;
   if(el.dataset.done) return; el.dataset.done='1';
   var cats=[
-    {ic:'☕',label:'근처 카페',q:'cafe'},{ic:'🍚',label:'근처 식당',q:'food'},
-    {ic:'🍖',label:'고기집',q:'gogi'},{ic:'🍺',label:'주점',q:'bar'},
-    {ic:'🚻',label:'화장실',q:'toilet'},{ic:'🅿️',label:'주차장',q:'parking'},
-    {ic:'⛰️',label:'등산 코스',q:'course'},{ic:'📍',label:'정상까지 거리',q:'summit'}
+    {ic:'☕',label:'근처 카페',q:'cafe',g:'linear-gradient(135deg,#C9A57E,#8B6F52)'},
+    {ic:'🍚',label:'근처 식당',q:'food',g:'linear-gradient(135deg,#F2856B,#D85C4A)'},
+    {ic:'🍖',label:'고기집',q:'gogi',g:'linear-gradient(135deg,#E0697A,#A23545)'},
+    {ic:'🍺',label:'주점',q:'bar',g:'linear-gradient(135deg,#F0B65C,#D88E3A)'},
+    {ic:'🚻',label:'화장실',q:'toilet',g:'linear-gradient(135deg,#6FA8E8,#4A7FD0)'},
+    {ic:'🅿️',label:'주차장',q:'parking',g:'linear-gradient(135deg,#5BBF8A,#3A9468)'},
+    {ic:'⛰️',label:'등산 코스',q:'course',g:'linear-gradient(135deg,#6DB36B,#3F8C4E)'},
+    {ic:'📍',label:'정상까지 거리',q:'summit',g:'linear-gradient(135deg,#9183F4,#6C5CE7)'}
   ];
   var h='<div style="padding:18px 16px;">'
     +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;"><img src="surak/curious.png" style="width:52px;height:52px;border-radius:50%;flex-shrink:0;" alt="수락이"/><div><div style="font-size:18px;font-weight:800;">🔍 수락이</div><div style="font-size:13px;color:var(--t2);">무엇을 찾으세요? 눌러보세요.</div></div></div>'
-    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+    +'<div class="cat-grid">';
   cats.forEach(function(c){
-    h+='<button onclick="searchQuery(\''+c.q+'\')" style="display:flex;align-items:center;gap:8px;padding:14px;border:1px solid var(--bd);border-radius:var(--r2);background:var(--sf);font-size:14px;font-weight:600;cursor:pointer;text-align:left;"><span style="font-size:20px;">'+c.ic+'</span>'+c.label+'</button>';
+    h+='<button onclick="searchQuery(\''+c.q+'\')" class="cat-card" style="background:'+c.g+';"><span class="cat-ic">'+c.ic+'</span><span class="cat-label">'+c.label+'</span></button>';
   });
   h+='</div><div id="search-result" style="margin-top:18px;"></div></div>';
   el.innerHTML=h;

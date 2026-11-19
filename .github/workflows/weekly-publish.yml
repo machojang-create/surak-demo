@@ -1,0 +1,32 @@
+# 인물 연재 「수락산 사람들」 매주 월요일 자동 공개
+# 매주 월요일 09:00(한국 시각)에 tools/build.mjs 를 돌려 공개일이 된 화를 사이트에 올린다.
+# 원고(content/people/NN-슬러그.md)는 미리 써서 넣어 두고, 공개일은 생성기 일정표가 정한다.
+# 수동 실행: GitHub 저장소 → Actions → 「주간 연재 공개」 → Run workflow
+name: 주간 연재 공개
+on:
+  schedule:
+    - cron: '5 0 * * 1'   # 월요일 00:05 UTC = 09:05 KST
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: weekly-publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: 페이지 생성
+        run: node tools/build.mjs
+      - name: 바뀐 것이 있으면 올리기
+        run: |
+          git config user.name "surakstreet-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "변경 없음"; exit 0; fi
+          git commit -m "주간 연재 공개 $(TZ=Asia/Seoul date +%F)"
+          git push

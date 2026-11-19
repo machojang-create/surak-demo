@@ -7,7 +7,7 @@
     var to='/'+(p?p+'/':'');
     if((m=p.match(/^people\/(\d+)$/)))to='/people/';
     if((m=p.match(/^trail\/(\d+)$/)))to='/trail/'+(['jubong','byeokun-valley','dulle'][+m[1]-1]||'')+'/';
-    if(p==='game/play')to='/game/';
+    if(p==='game'||p==='game/play')to='/play/';
     location.replace(to.replace(/\/\/$/,'/'));return;
   }
   var v=document.querySelector('.hero-v');

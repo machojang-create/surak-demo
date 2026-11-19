@@ -69,14 +69,15 @@ function mdToHtml(post) {
     para.push(t);
   }
   flush();
-  const text = post.body.replace(/\[\[IMG:[^\]]*\]\]/g, '').replace(/^## .*$/gm, '');
-  return { html: out.join('\n'), toc, chars: text.replace(/\s/g, '').length };
+  /* 분량 = 본문(공백 포함). 그림 자리·섹션 제목·「참고한 자료」는 뺀다 */
+  const text = post.body.split(/^## .*참고.*$/m)[0].replace(/\[\[IMG:[^\]]*\]\]/g, '').replace(/^## .*$/gm, '');
+  return { html: out.join('\n'), toc, chars: text.replace(/\s*\n\s*/g, ' ').trim().length };
 }
 
 /* ── 메뉴 ── */
 const MENU = [
   { id: 'shops', label: '매장', href: '/', ic: '<path d="M4 10h16v10H4z"/><path d="M3 10l2-6h14l2 6"/><path d="M10 20v-5h4v5"/>' },
-  { id: 'game', label: '게임', href: '/game/', ic: '<rect x="2.5" y="7" width="19" height="11" rx="5.5"/><path d="M7.5 10.5v4M5.5 12.5h4"/><circle cx="16" cy="11.5" r=".9"/><circle cx="18" cy="13.5" r=".9"/>' },
+  { id: 'game', label: '게임', href: '/play/', ic: '<rect x="2.5" y="7" width="19" height="11" rx="5.5"/><path d="M7.5 10.5v4M5.5 12.5h4"/><circle cx="16" cy="11.5" r=".9"/><circle cx="18" cy="13.5" r=".9"/>' },
   { id: 'people', label: '인물 연재', href: '/people/', ic: '<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>' },
   { id: 'column', label: '칼럼', href: '/column/', ic: '<path d="M14.5 4.5l5 5L9 20H4v-5z"/><path d="M12.5 6.5l5 5"/>' },
   { id: 'trail', label: '등산로', href: '/trail/', ic: '<path d="M2 20l7-12 4 6 3-4 6 10z"/><path d="M9 8l1.6 2.6"/>' }];
@@ -174,7 +175,7 @@ ${latest ? `<a class="tz" href="${latest.url}"><div class="tz-img ill" style="ba
 <a class="tz" href="/column/${col.id}/"><div class="tz-img" style="background-image:url(${img(col.img)})"></div><div class="tz-b"><div class="tz-k">칼럼</div><h3>${esc(col.title)}</h3><p>${esc(col.summary)}</p></div></a>
 <a class="tz" href="/trail/${tr.slug}/"><div class="tz-img tz-mtn"><span>637m</span></div><div class="tz-b"><div class="tz-k">등산로</div><h3>${esc(tr.name)}</h3><p>${esc(tr.lead)}</p></div></a>
 </div></section>
-<a class="gband" href="/game/"${D.GAME.banner ? ` style="background-image:linear-gradient(90deg,rgba(20,16,12,.85),rgba(20,16,12,.2)),url(${img(D.GAME.banner)})"` : ''}><div><div class="kicker light">GAME</div><h3>${esc(D.GAME.title)}</h3><p>${esc(D.GAME.sub)}</p></div><span class="more light">${D.GAME.url ? '플레이하기' : '곧 공개'} <i>→</i></span></a></div>`;
+<a class="gband" href="/play/"${D.GAME.banner ? ` style="background-image:linear-gradient(90deg,rgba(20,16,12,.85),rgba(20,16,12,.2)),url(${img(D.GAME.banner)})"` : ''}><div><div class="kicker light">GAME</div><h3>${esc(D.GAME.title)}</h3><p>${esc(D.GAME.sub)}</p></div><span class="more light">${D.GAME.url ? '플레이하기' : '곧 공개'} <i>→</i></span></a></div>`;
   write('/', layout({ p: '/', title: `${S.name} — 수락산 디자인거리의 가게와 이야기`, desc: S.desc, sec: 'shops', body,
     ld: [{ '@context': 'https://schema.org', '@type': 'WebSite', name: S.name, alternateName: S.nameEn, url: BASE + '/', inLanguage: 'ko-KR', description: S.desc }] }));
 }
@@ -205,10 +206,10 @@ function pageGame() {
   const body = `<div class="wrap"><section class="sec">${head('GAME', '게임', '수락산 골목을 무대로 한 게임.')}
 <div class="game${G.banner ? ' has-banner' : ''}"${G.banner ? ` style="background-image:url(${img(G.banner)})"` : ''}><div class="game-in"><div class="kicker light">${ready ? 'PLAY NOW' : 'COMING SOON'}</div>
 <h2>${esc(G.title)}</h2><div class="game-sub">${esc(G.sub)}</div><p>${esc(G.desc)}</p>
-${ready ? `<a class="btn light" href="${esc(G.url)}" target="_blank" rel="noopener">게임 시작하기 →</a>` : '<span class="btn light ghost">곧 공개됩니다</span>'}</div>
+${ready ? `<a class="btn light" href="${esc(G.url)}" >게임 시작하기 →</a>` : '<span class="btn light ghost">곧 공개됩니다</span>'}</div>
 ${G.banner ? '' : '<div class="game-art"><span class="g-sun"></span><span class="g-moon"></span><span class="g-mtn"></span></div>'}</div></section></div>`;
-  write('/game/', layout({ p: '/game/', title: `${G.title} — ${G.sub} | ${S.name}`, desc: cut(G.desc, 150), image: G.banner || undefined, sec: 'game', body,
-    crumbs: [['수락스트릿', '/'], ['게임', '/game/']] }));
+  write('/play/', layout({ p: '/play/', title: `${G.title} — ${G.sub} | ${S.name}`, desc: cut(G.desc, 150), image: G.banner || undefined, sec: 'game', body,
+    crumbs: [['수락스트릿', '/'], ['게임', '/play/']] }));
 }
 function pagePeople() {
   const next = D.LINEUP.find(l => l.no === (POSTS.length ? POSTS[POSTS.length - 1].no + 1 : 1));
@@ -228,7 +229,7 @@ ${next ? `<div class="bd-next"><div class="kicker">NEXT</div><div class="bd-next
 function pagePost(p, i) {
   const r = mdToHtml(p); const prev = POSTS[i - 1], next = POSTS[i + 1];
   const upcoming = !next ? D.LINEUP.find(l => l.no === p.no + 1) : null;
-  if (r.chars < 8000) warn.push(`제${p.no}화 본문 ${r.chars}자(공백 제외) — 1만 자 목표에 못 미침`);
+  if (r.chars < 9000) warn.push(`제${p.no}화 본문 ${r.chars}자(공백 포함) — 1만 자 목표에 못 미침`);
   const mins = Math.max(1, Math.round(r.chars / 500));
   const body = `<div class="wrap narrow"><article class="art post">
 <nav class="crumb"><a href="/people/">인물 연재</a> <i>›</i> 제${p.no}화</nav>
@@ -301,13 +302,15 @@ function page404() {
 }
 
 /* ── 실행: 생성 폴더 비우고 다시 만든다 ── */
-for (const d of ['shop', 'game', 'people', 'column', 'trail']) fs.rmSync(path.join(ROOT, d), { recursive: true, force: true });
+for (const d of ['shop', 'play', 'people', 'column', 'trail'])   /* ★ /game/ 은 다른 창이 올린 실제 게임 — 절대 지우지 않는다 */
+ fs.rmSync(path.join(ROOT, d), { recursive: true, force: true });
 pageHome(); SHOPS.forEach(pageShop); pageGame(); pagePeople(); POSTS.forEach(pagePost);
 pageColumns(); D.COLUMNS.forEach(pageColumn); pageTrails(); D.TRAILS.forEach(pageTrail); page404();
 
 /* 사이트맵 · robots · RSS */
 const lastmod = p => { const m = p.match(/^\/people\/(\d+)-/); if (m) { const x = POSTS.find(q => q.no === +m[1]); return x ? x.date : TODAY; } return TODAY; };
 const urls = written.filter(p => p !== '/404.html');
+if (fs.existsSync(path.join(ROOT, 'game/index.html'))) urls.push('/game/');   // 다른 창이 올린 실제 게임
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(p => `  <url><loc>${abs(p)}</loc><lastmod>${lastmod(p)}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 fs.writeFileSync(path.join(ROOT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /admin.html\nDisallow: /app-legacy.html\nDisallow: /functions/\nDisallow: /content/\nDisallow: /tools/\n\nSitemap: ${BASE}/sitemap.xml\n`);
 const items = [...POSTS.map(p => ({ t: `[수락산 사람들 제${p.no}화] ${p.title}`, u: abs(p.url), d: p.summary, date: p.date })),

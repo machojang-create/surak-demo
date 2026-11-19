@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="robots" content="noindex,nofollow"/><!-- 2026-11-19 개편: 옛 앱 보관본 (메뉴에서 연결 안 함) -->
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="theme-color" content="#F5F0E8"/>
+<title>수락 스트릿</title>
+<link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" href="css/street.css"/>
+<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=d7ufdpoww3&submodules=geocoder&callback=naverMapInit" defer></script>
+<script src="https://w.soundcloud.com/player/api.js" defer></script>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div id="hdr">
+  <div class="hlo">
+    <div class="hlo-ic"><img src="surak/default.png" alt="수락이"/></div>
+    <div><div class="hlo-t" id="t-app-title"></div><div class="hlo-s" id="t-app-sub">SURAK STREET</div></div>
+  </div>
+  <div class="lang-row">
+    <button class="lang-btn on" data-lang="KO">한국어</button>
+    <button class="lang-btn" data-lang="EN">EN</button>
+    <button class="lang-btn" data-lang="JP">日本語</button>
+    <button class="lang-btn" data-lang="CN">中文</button>
+  </div>
+</div>
+
+
+<!-- 뷰 -->
+<div id="views">
+
+  <!-- 홈 -->
+  <div class="view on" id="home-view">
+    <div class="scroll">
+      <div class="home-hero">
+        <video class="hero-video" autoplay loop muted playsinline>
+          <source src="media/surak-home.mp4" type="video/mp4"/>
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="home-hero-top">
+          <div>
+            <div class="home-hero-title" id="t-hero-title"></div>
+            <div class="home-hero-sub">SURAK STREET · NOWON-GU</div>
+          </div>
+          <div id="hero-surak-wrap" onclick="toggleChat()" style="cursor:pointer;position:relative;flex-shrink:0;"><div class="home-surak" style="background:url('surak/default.png') no-repeat center/cover;"></div><div style="position:absolute;bottom:-2px;right:-2px;background:var(--ac);color:#fff;font-size:8px;font-weight:700;border-radius:8px;padding:2px 5px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.3);">물어봐! 💬</div></div>
+        </div>
+      </div>
+      <div class="pad" id="home-scroll-inner"></div>
+    </div>
+  </div>
+
+    <!-- 지도 -->
+  <div class="view" id="map-view">
+    <button class="sub-back" onclick="sv('shop')">‹ 매장으로</button>
+    <div id="map-flt" class="map-flt-row"></div>
+    <div id="map-wrap">
+      <div id="naver-map"></div>
+      <div id="map-status"></div>
+      <button id="gps-track-btn" onclick="toggleMapGPS()" style="position:absolute;bottom:16px;left:10px;width:40px;height:40px;border-radius:50%;background:var(--sf);border:1.5px solid var(--bd);box-shadow:var(--s2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;z-index:50;">📍</button>
+      <!-- 내 위치 버튼 -->
+      <button id="my-loc-btn" onclick="moveToMyLocation()" title="내 위치">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
+          <circle cx="12" cy="12" r="8" stroke-opacity=".3"/>
+        </svg>
+      </button>
+    </div>
+    <!-- 하단 매장 패널 -->
+    <div id="map-list-panel" class="collapsed">
+      <div id="map-list-handle" onclick="toggleMapPanel()">
+        <div style="width:36px;height:4px;background:var(--bd);border-radius:2px;margin:0 auto;"></div>
+        <div id="map-list-label" style="font-size:11px;font-weight:700;color:var(--t2);margin-top:6px;text-align:center;"></div>
+      </div>
+      <div id="map-list-inner" style="overflow-y:auto;max-height:280px;padding:0 12px 12px;"></div>
+    </div>
+  </div>
+
+  <!-- 컬렉션 -->
+  <div class="view" id="goods-view">
+    <div class="scroll"><div class="pad" id="goods-inner"></div></div>
+  </div>
+
+  <!-- 사운드 -->
+  <div class="view" id="sound-view">
+    <div class="scroll"><div class="pad" id="sound-inner"></div></div>
+  </div>
+
+  <!-- 마이 -->
+  <div class="view" id="my-view">
+    <div class="scroll" id="my-inner"></div>
+  </div>
+  <!-- 수락이(검색) 뷰 — 매장 탭에서 진입 -->
+  <div class="view" id="search-view"><button class="sub-back" onclick="sv('shop')">‹ 매장으로</button><div class="scroll"><div class="pad" id="search-inner"></div></div></div>
+
+  <!-- 매장 · 놀이 · 이야기 (2026-11-19 개편, js/street.js) -->
+  <div class="view" id="shop-view"><div class="scroll"><div id="shop-inner"></div></div></div>
+  <div class="view" id="play-view"><div class="scroll"><div id="play-inner"></div></div></div>
+  <div class="view" id="story-view"><div class="scroll"><div id="story-inner"></div></div></div>
+
+</div>
+
+  <!-- 안내 -->
+  <div class="view" id="info-view">
+    <div class="scroll"><div class="pad" id="info-inner"></div></div>
+  </div>
+
+<!-- 하단 탭바: 홈 · 매장 · QR · 놀이 · 이야기 · 마이 (2026-11-19 개편) -->
+<div id="tabs">
+  <button class="tab on" data-v="home"><span class="tab-ic">🏠</span><span id="t-tab-home"></span></button>
+  <button class="tab" data-v="shop"><span class="tab-ic">🏪</span><span>매장</span></button>
+  <button class="tab tab-qr" onclick="openQrScan()" aria-label="QR 스캔"><span class="tab-qr-btn">📷</span><span>QR</span></button>
+  <button class="tab" data-v="play"><span class="tab-ic">🎮</span><span>놀이</span></button>
+  <button class="tab" data-v="story"><span class="tab-ic">📖</span><span>이야기</span></button>
+  <button class="tab" data-v="my"><span class="tab-ic">👤</span><span id="t-tab-my"></span></button>
+</div>
+
+<!-- 팝업 (스크롤형) -->
+<div id="pop">
+  <div id="pop-box">
+    <div class="pop-handle"></div>
+    <div id="pop-hd">
+      <div>
+        <div id="pop-nm"></div>
+        <div id="pop-cat-badge"></div>
+        <div id="pop-addr"></div>
+      </div>
+      <button id="pop-x">✕</button>
+    </div>
+    <div id="pop-body"></div>
+  </div>
+</div>
+
+<!-- 가이드 -->
+<div id="guide-bubble">
+  <div class="guide-msg">
+    <button id="guide-close" onclick="document.getElementById('guide-bubble').style.display='none'">✕</button>
+    <div id="guide-text"></div>
+  </div>
+  <div class="guide-av"><img src="surak/cheer.png" alt="수락이"/></div>
+</div>
+<div id="story-modal"><div class="sm-header"><div class="sm-logo">SURAK STORY</div><button class="sm-close" onclick="closeStoryModal()">&#x2715;</button></div><div class="sm-tabs" id="sm-tabs"></div><div class="sm-body"><div class="sm-story-wrap" id="sm-sw"></div></div></div>
+<div id="badge-detail-pop" onclick="if(event.target===this)closeBadgeDetail()">
+  <div class="bdp-box">
+    <div class="bdp-ic" id="bdp-ic"></div>
+    <div class="bdp-grade" id="bdp-grade"></div>
+    <div class="bdp-nm" id="bdp-nm"></div>
+    <div class="bdp-desc" id="bdp-desc"></div>
+    <div class="bdp-cond" id="bdp-cond"></div>
+    <div class="bdp-date" id="bdp-date"></div>
+  </div>
+</div>
+<div id="gps-toast"></div>
+
+<!-- 수락이 챗봇 FAB -->
+<button id="chat-fab" onclick="toggleChat()">
+  <img src="surak/hi.png" style="width:52px;height:52px;object-fit:cover;border-radius:50%;" alt="수락이"/>
+</button>
+
+<!-- 수락이 챗봇 창 -->
+<div id="chat-window">
+  <div class="chat-hdr">
+    <img src="surak/default.png" class="chat-hdr-av" alt="수락이"/>
+    <div>
+      <div id="t-chat-name" class="chat-hdr-name"></div>
+      <div id="t-chat-sub" class="chat-hdr-sub"></div>
+    </div>
+    <button class="chat-hdr-x" onclick="toggleChat()">✕</button>
+  </div>
+  <div id="chat-msgs"></div>
+  <div id="chat-quick"></div>
+  <div class="chat-input-row">
+    <input id="chat-input" type="text" placeholder="질문하세요..."/>
+    <button id="chat-send" onclick="sendChat()">▶</button>
+  </div>
+</div>
+
+<!-- 로그인 팝업 -->
+<div id="login-popup">
+  <div class="login-card">
+    <img src="surak/hi.png" class="login-avatar" alt="수락이"/>
+    <div class="login-title" id="t-login-title"></div>
+    <div class="login-sub" id="t-login-sub"></div>
+    <button class="login-btn login-kakao" id="btn-kakao-popup" onclick="loginKakao()"></button>
+    <button class="login-btn login-naver" id="btn-naver-popup" onclick="loginNaver()"></button>
+    <button class="login-btn login-google" id="btn-google-popup" onclick="loginGoogle()"></button>
+    <div class="login-skip" onclick="closeLoginPopup()" id="t-login-skip"></div>
+  </div>
+</div>
+
+<!-- 홈 팝업 -->
+<div id="home-popup">
+  <div id="home-popup-box">
+    <div class="hp-handle"></div>
+    <div class="hp-header">
+      <div class="hp-title" id="hp-title-text"></div>
+      <button class="hp-x" onclick="closeHomePopup()">✕</button>
+    </div>
+    <div class="hp-body" id="hp-body"></div>
+  </div>
+</div>
+
+<!-- 레벨업 팝업 -->
+<div id="levelup-popup">
+  <div class="levelup-card">
+    <div style="font-size:11px;opacity:.5;letter-spacing:2px;margin-bottom:4px;">LEVEL UP!</div>
+    <div class="levelup-badge-wrap" id="lu-badge">🥈</div>
+    <div class="levelup-title" id="lu-medal"></div>
+    <div class="levelup-name" id="lu-name"></div>
+    <div class="levelup-desc" id="lu-desc"></div>
+    <button class="levelup-btn" id="lu-confirm-btn" onclick="document.getElementById('levelup-popup').classList.remove('on')"></button>
+  </div>
+</div>
+
+<!-- Firebase (compat SDK) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-functions-compat.js"></script>
+<script src="js/firebase-init.js"></script>
+<script src="js/data.js"></script>
+<script src="js/games.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="js/app.js"></script>
+<script src="js/street.js"></script>
+<script src="js/qr.js"></script>
+</body>
+</html>

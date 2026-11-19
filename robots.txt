@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /app-legacy.html
+Disallow: /functions/
+Disallow: /content/
+Disallow: /tools/
+
+Sitemap: https://surakstreet.com/sitemap.xml

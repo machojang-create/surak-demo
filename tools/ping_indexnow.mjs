@@ -6,6 +6,8 @@ import fs from 'node:fs'; import path from 'node:path'; import { fileURLToPath }
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const S = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/site-data.json'), 'utf8')).SITE;
 const host = new URL(S.url).host, key = S.indexnowKey;
+const bad = process.argv.slice(2).filter(p => !p.startsWith('/'));
+if (bad.length) { console.log('✗ 주소는 /로 시작해야 함:', bad.join(' '), '— 깃배시라면 MSYS_NO_PATHCONV=1 을 앞에 붙일 것'); process.exit(1); }
 let urls = process.argv.slice(2).map(p => S.url.replace(/\/$/, '') + p);
 if (!urls.length) urls = [...fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8').matchAll(/<loc>([^<]+)<\/loc>/g)].map(m => m[1]);
 const body = JSON.stringify({ host, key, keyLocation: `${S.url.replace(/\/$/, '')}/${key}.txt`, urlList: urls });

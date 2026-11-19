@@ -163,6 +163,16 @@ function shopLd(s) {
 }
 
 /* ── 페이지들 ── */
+const FAQ = [
+  ['수락산 등산코스는 어떤 것들이 있나요?', '수락산역 3번 출구에서 출발하는 대표 코스는 세 가지예요. 정상 주봉(637m)에 오르는 주봉 코스(8.2km, 약 4시간, 중급), 물소리 따라 걷는 벽운계곡 코스(약 2시간, 초중급), 가볍게 걷는 둘레길 코스(약 2시간, 초급). 바위 능선을 즐기고 싶다면 7호선 장암역에서 석림사를 지나 기차바위로 오르는 코스도 많이 찾습니다.'],
+  ['수락산 석림사·기차바위 코스는 어떤가요?', '석림사는 의정부 장암동, 7호선 장암역에서 석림사 방향으로 20분쯤 걸으면 나오는 절이에요. 여기서 기차바위를 지나 정상으로 오르는데, 다녀온 분들 기준으로 오르는 데 2시간 안팎이 걸립니다. 기차바위는 밧줄을 잡고 오르내리는 긴 바위 구간이라 장갑을 챙기고, 비 온 뒤에는 피하세요. 장암역은 공사로 임시 승강장을 운영 중이니 출발 전에 운행 상황을 확인하세요.'],
+  ['수락산과 불암산은 어떻게 다른가요?', '두 산은 덕릉고개를 사이에 두고 이어져 있어요. 북쪽이 수락산(정상 주봉 637m), 남쪽이 불암산(약 508m)입니다. 수락산은 서울 노원구와 경기 의정부시·남양주시 별내에 걸쳐 있고, 더 높고 바위 능선이 길어 산행 시간도 긴 편이에요. 둘 다 노원구에서 지하철로 바로 닿습니다.'],
+  ['수락산 자연휴양림 「수락휴」는 어디에 있나요?', '서울 노원구 덕릉로145길 108, 수락산 자락에 있는 서울의 첫 자연휴양림이에요. 2025년 7월 17일 정식 개장했고, 가장 가까운 역은 4호선 불암산역입니다(걸어서 25분 안팎). 숙박은 숲나들e에서 예약합니다.'],
+  ['수락산역 먹자골목에는 어떤 식당이 모여 있나요?', '7호선 수락산역 3번 출구 앞 수락산 디자인서울거리 일대를 흔히 「수락산역 먹자골목」이라고 불러요. 고깃집·횟집·순댓국집 같은 하산 식당부터 김밥, 일식 카츠, 중식까지 걸어서 5~7분 안에 모여 있습니다. 수락스트릿에서는 오공김밥(김밥 전문), 쿠마키친(일식 카츠·나베), 팔선당(중식)을 소개합니다.'],
+  ['수락산 주변에 가볼 만한 곳이 있을까요?', '수락산역 쪽으로는 물소리 시원한 벽운계곡과 천상병 시인을 기리는 천상병공원이, 장암역 쪽으로는 석림사와 노강서원이 있어요. 자연휴양림 수락휴도 수락산 자락에 있습니다. 이 산 아래 살다 간 사람들의 이야기는 매주 월요일 연재 「수락산 사람들」에서 만나 보세요.'],
+  ['하산하고 밥은 어디서 먹나요?', '주봉·벽운계곡·둘레길 코스 모두 수락산역 3번 출구 쪽으로 내려오면 디자인거리(먹자골목)로 바로 이어집니다. 하산 시간대별 추천은 칼럼 「등산 후 한 끼」에 정리해 두었어요.'],
+  ['차를 가져가도 되나요?', '수락산 디자인서울거리 근처에 주차장이 있지만 주말 등산 시간대에는 금방 찹니다. 지하철 7호선 수락산역으로 오시는 게 가장 편해요.'],
+];
 function pageHome() {
   const latest = POSTS[POSTS.length - 1]; const col = D.COLUMNS[0]; const tr = D.TRAILS[0];
   const body = `<section class="hero"><video class="hero-v" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="/media/surak-home.mp4" type="video/mp4"/></video>
@@ -174,22 +184,25 @@ function pageHome() {
 <div class="sc-grid">${SHOPS.map((s, i) => shopCard(s, i)).join('')}</div></section>
 <section class="sec about">${head('ABOUT', '산이 먼저냐, 밥이 먼저냐', '', 'h2')}
 <div class="about-b">
-<p>수락산역 3번 출구를 나오면 두 가지 유혹이 동시에 손짓합니다. 한쪽은 해발 637m 수락산 주봉, 다른 한쪽은 걸어서 5분 거리 <strong>수락산 디자인거리</strong>의 맛집 골목. 수락스트릿은 그 갈림길에서 「오늘은 무엇부터」를 함께 고민해 주는 동네 안내서입니다.</p>
+<p>수락산역 3번 출구를 나오면 두 가지 유혹이 동시에 손짓합니다. 한쪽은 해발 637m 수락산 주봉, 다른 한쪽은 걸어서 5분 거리 <strong>수락산 디자인거리</strong>, 흔히 <strong>수락산역 먹자골목</strong>이라 부르는 맛집 골목. 수락스트릿은 그 갈림길에서 「오늘은 무엇부터」를 함께 고민해 주는 동네 안내서입니다.</p>
 <p>등산 전엔 <a href="/shop/ogonggimbap/">오공김밥</a>에서 든든한 한 줄을 챙기고, 하산 후엔 <a href="/shop/kumakitchen/">쿠마키친</a>의 바삭한 카츠나 <a href="/shop/palseondang/">팔선당</a>의 불향 가득한 짜장으로 수고한 무릎을 달래 보세요. 가게 정보는 각 매장의 네이버 플레이스를 바탕으로 정리하고, 바뀌면 바로 고칩니다. (사장님보다 조금 늦게 알 수는 있습니다.)</p>
 <p>매주 월요일에는 인물 연재 <a href="/people/">「수락산 사람들」</a>이 올라옵니다. 천상병 시인, 매월당 김시습처럼 이 산 아래 머물다 간 사람들의 이야기를 그림과 함께 천천히 풀어 놓습니다. 산은 늘 그 자리인데, 이야기는 매주 한 편씩 자랍니다.</p>
 <p><a href="/trail/">수락산 등산 코스</a>도 체력별로 챙겨 두었습니다. 정상을 노리는 주봉 코스부터 물소리 따라 걷는 벽운계곡, 가볍게 한 바퀴 도는 둘레길까지. 내려오는 길이 오르는 길보다 즐거운 동네, 수락산 디자인거리에 오신 걸 환영합니다.</p>
 </div>
-<nav class="tags" aria-label="주제 태그">${[['#수락산맛집', '/#shops'], ['#수락산역맛집', '/#shops'], ['#수락산디자인거리', '/column/halfday/'], ['#노원맛집', '/#shops'], ['#상계동맛집', '/#shops'], ['#수락산등산코스', '/trail/'], ['#등산후맛집', '/column/mealtime/'], ['#수락산둘레길', '/trail/dulle/'], ['#천상병공원', POSTS[0] ? POSTS[0].url : '/people/'], ['#수락산사람들', '/people/']].map(t => `<a href="${t[1]}">${t[0]}</a>`).join('')}</nav>
+<nav class="tags" aria-label="주제 태그">${[['#수락산', '/#faq'], ['#수락산등산코스', '/trail/'], ['#수락산맛집', '/#shops'], ['#수락산역맛집', '/#shops'], ['#수락산먹자골목', '/#faq'], ['#수락산기차바위', '/#faq'], ['#수락휴', '/#faq'], ['#수락산디자인거리', '/column/halfday/'], ['#벽운계곡', '/trail/byeokun-valley/'], ['#수락산둘레길', '/trail/dulle/'], ['#등산후맛집', '/column/mealtime/'], ['#노원맛집', '/#shops'], ['#천상병공원', POSTS[0] ? POSTS[0].url : '/people/'], ['#수락산사람들', '/people/']].map(t => `<a href="${t[1]}">${t[0]}</a>`).join('')}</nav>
+</section>
+<section class="sec faq" id="faq">${head('FAQ', '수락산, 이것부터 물어보세요', '수락산 등산코스, 기차바위, 수락휴, 수락산역 먹자골목까지 — 가장 많이 찾는 질문.', 'h2')}
+<div class="faq-l">${FAQ.map(([q, a], k) => `<details class="faq-i"${k === 0 ? ' open' : ''}><summary>${esc(q)}</summary><p>${esc(a).replace('「등산 후 한 끼」', '<a href="/column/mealtime/">「등산 후 한 끼」</a>').replace('「수락산 사람들」', '<a href="/people/">「수락산 사람들」</a>')}</p></details>`).join('')}</div>
 </section>
 <section class="sec">${head('STORIES', '수락산의 이야기', '사람의 이야기, 골목의 이야기, 산의 이야기.', 'h2')}<div class="teasers">
 ${latest ? `<a class="tz" href="${latest.url}"><div class="tz-img ill" style="background-image:url(/${latest.hero})"></div><div class="tz-b"><div class="tz-k">인물 연재 · 제${latest.no}화</div><h3>${esc(latest.title)}</h3><p>${esc(latest.summary)}</p></div></a>` : ''}
 <a class="tz" href="/column/${col.id}/"><div class="tz-img" style="background-image:url(${img(col.img)})"></div><div class="tz-b"><div class="tz-k">칼럼</div><h3>${esc(col.title)}</h3><p>${esc(col.summary)}</p></div></a>
 <a class="tz" href="/trail/${tr.slug}/"><div class="tz-img tz-mtn"><span>637m</span></div><div class="tz-b"><div class="tz-k">등산로</div><h3>${esc(tr.name)}</h3><p>${esc(tr.lead)}</p></div></a>
 </div></section>
-<a class="gband" href="/play/"${D.GAME.banner ? ` style="background-image:linear-gradient(90deg,rgba(20,16,12,.85),rgba(20,16,12,.2)),url(${img(D.GAME.banner)})"` : ''}><div><div class="kicker light">GAME</div><h3>${esc(D.GAME.title)}</h3><p>${esc(D.GAME.sub)}</p></div><span class="more light">${D.GAME.url ? '플레이하기' : '곧 공개'} <i>→</i></span></a></div>`;
-  write('/', layout({ p: '/', title: `${S.name} | 수락산역 맛집 · 디자인거리 · 등산 코스 안내`, desc: S.desc, sec: 'shops', body,
-    keywords: '수락스트릿, 수락산, 수락산역, 수락산 맛집, 수락산역 맛집, 수락산 디자인거리, 노원 맛집, 상계동 맛집, 수락산 등산 코스, 등산 후 맛집, 수락산 둘레길, 천상병공원, 팔선당, 쿠마키친, 오공김밥',
-    ld: [{ '@context': 'https://schema.org', '@type': 'WebSite', name: S.name, alternateName: S.nameEn, url: BASE + '/', inLanguage: 'ko-KR', description: S.desc },
+${gameCard()}</div>`;
+  write('/', layout({ p: '/', title: `${S.name} — 수락산 등산코스 · 수락산역 맛집 · 먹자골목 안내`, desc: S.desc, sec: 'shops', body,
+    keywords: '수락산, 수락산 등산코스, 수락산역, 수락산 맛집, 수락산역 맛집, 수락산 먹자골목, 수락산역 먹자골목, 수락산 기차바위, 수락산 석림사, 수락산 자연휴양림, 수락휴, 수락산 디자인서울거리, 수락산 디자인거리, 수락산역 3번출구, 수락산 계곡, 벽운계곡, 수락산 둘레길, 불암산, 장암역 등산, 노원 맛집, 상계동 맛집, 등산 후 맛집, 천상병공원, 수락스트릿, 팔선당, 쿠마키친, 오공김밥',
+    ld: [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }, { '@context': 'https://schema.org', '@type': 'WebSite', name: S.name, alternateName: S.nameEn, url: BASE + '/', inLanguage: 'ko-KR', description: S.desc },
       { '@context': 'https://schema.org', '@type': 'Organization', name: S.name, alternateName: S.nameEn, url: BASE + '/', logo: abs('img/brand/icon-512.png') }] }));
 }
 function pageShop(s, i) {
@@ -211,17 +224,35 @@ ${s.parking ? `<dt>주차</dt><dd>${esc(s.parking)}</dd>` : ''}<dt>전화</dt><d
 <section class="sec"><div class="kicker">OTHER SHOPS</div><div class="sc-grid two">${SHOPS.filter(x => x.key !== s.key).map(x => shopCard(x, SHOPS.indexOf(x))).join('')}</div></section></div>`;
   write(`/shop/${s.key}/`, layout({ p: `/shop/${s.key}/`, title: `${t} — ${s.cat} · 수락산 디자인거리 | ${S.name}`,
     desc: cut(`${t}(${s.cat}). ${s.tagline} ${s.lead} ${s.addr}, ${s.way}.`, 155), image: s.hero, sec: 'shops', body,
-    keywords: `${s.name}, ${t}, 수락산 맛집, 수락산역 ${s.cat}, 수락산 디자인거리, 노원 ${s.cat}`,
+    keywords: `${s.name}, ${t}, 수락산 맛집, 수락산역 맛집, 수락산 먹자골목, 수락산역 ${s.cat}, 수락산 디자인거리, 노원 ${s.cat}`,
     ld: [shopLd(s)], crumbs: [['수락스트릿', '/'], ['매장', '/'], [t, `/shop/${s.key}/`]] }));
+}
+/* 게임 카드(홈) — 대표 그림 + 세 사장님 + 바로 플레이 (2026-11-19 「배너와 카드가 재미없다」 개편) */
+function gameCard() {
+  const G = D.GAME; const ready = !!G.url;
+  return `<section class="sec gsec" aria-label="게임"><a class="gcard" href="/play/">
+<div class="gc-art"><img src="${img(G.banner)}" alt="${esc(G.title)} 대표 그림 — 낮에는 장사, 밤에는 좀비와 싸우는 수락산역 골목의 세 사장님" loading="lazy" width="1600" height="894"/>
+<span class="gc-tag day">☀ 낮 · 장사</span><span class="gc-tag night">☾ 밤 8시 · 좀비</span></div>
+<div class="gc-b"><div class="kicker light">GAME · 무료 웹게임</div><h2 class="gc-t">${esc(G.title)}</h2><p class="gc-sub">${esc(G.sub)}</p>
+<div class="gc-cast">${(G.cast || []).map(c => `<img src="${img(c.face)}" alt="${esc(c.shop)} 사장님" width="48" height="48" loading="lazy"/>`).join('')}<span>세 사장님이 골목을 지킨다</span></div>
+<span class="gc-go">${ready ? '지금 플레이' : '곧 공개'} <i>→</i></span></div></a></section>`;
 }
 function pageGame() {
   const G = D.GAME; const ready = !!G.url;
-  const body = `<div class="wrap"><section class="sec">${head('GAME', '게임', '수락산 골목을 무대로 한 게임.')}
-<div class="game${G.banner ? ' has-banner' : ''}"${G.banner ? ` style="background-image:url(${img(G.banner)})"` : ''}><div class="game-in"><div class="kicker light">${ready ? 'PLAY NOW' : 'COMING SOON'}</div>
-<h2>${esc(G.title)}</h2><div class="game-sub">${esc(G.sub)}</div><p>${esc(G.desc)}</p>
-${ready ? `<a class="btn light" href="${esc(G.url)}" >게임 시작하기 →</a>` : '<span class="btn light ghost">곧 공개됩니다</span>'}</div>
-${G.banner ? '' : '<div class="game-art"><span class="g-sun"></span><span class="g-moon"></span><span class="g-mtn"></span></div>'}</div></section></div>`;
-  write('/play/', layout({ p: '/play/', title: `${G.title} — ${G.sub} | ${S.name}`, desc: cut(G.desc, 150), image: G.banner || undefined, sec: 'game', body,
+  const play = ready ? `<a class="gm-play" href="${esc(G.url)}"><span class="gm-play-ic" aria-hidden="true">▶</span>지금 바로 플레이</a>` : '<span class="gm-play off">곧 공개됩니다</span>';
+  const body = `<div class="wrap"><section class="sec gm">
+<div class="gm-hero"><div class="gm-art"><img src="${img(G.banner)}" alt="${esc(G.title)} 대표 그림 — 낮에는 세 가게에 손님이 줄을 서고, 밤에는 좀비 떼가 몰려오는 수락산역 골목" width="1600" height="894" fetchpriority="high"/>
+<span class="gc-tag day">☀ 낮 · 장사</span><span class="gc-tag night">☾ 밤 8시 · 좀비</span></div>
+<div class="gm-b"><div class="kicker light">${ready ? 'PLAY NOW · 무료 · 설치 없음' : 'COMING SOON'}</div><h1 class="gm-t">${esc(G.title)}</h1><p class="gm-sub">${esc(G.sub)}</p><p class="gm-desc">${esc(G.desc)}</p>
+${play}<p class="gm-note">폰·PC 브라우저에서 바로 열립니다. 소리를 켜면 더 재밌어요.</p></div></div>
+<div class="gm-steps">${(G.steps || []).map((x, i) => `<div class="gm-step s${i + 1}"><div class="gm-step-t">${esc(x.t)}</div><div class="gm-step-h">${esc(x.h)}</div><p>${esc(x.p)}</p></div>`).join('<span class="gm-arrow" aria-hidden="true">→</span>')}</div>
+<div class="gm-cast-h"><div class="kicker">THE CAST</div><h2>골목을 지키는 세 사장님</h2><p>낮에는 손님을 받고, 밤에는 가게 앞을 막아섭니다. 선글라스는 셋 다 안 벗습니다.</p></div>
+<div class="gm-cast">${(G.cast || []).map(c => `<div class="gm-who"><img src="${img(c.face)}" alt="${esc(c.shop)} 사장님" width="96" height="96" loading="lazy"/><div class="gm-who-b"><div class="gm-shop">${esc(c.shop)}</div><div class="gm-role">${esc(c.role)}</div><p class="gm-line">“${esc(c.line)}”</p></div></div>`).join('')}</div>
+${ready ? `<div class="gm-end">${play}</div>` : ''}
+</section></div>`;
+  write('/play/', layout({ p: '/play/', title: `${G.title} — ${G.sub} | 수락산역 골목 좀비 디펜스 웹게임 | ${S.name}`, desc: cut(`${G.desc} 설치 없이 폰·PC 브라우저에서 무료로.`, 155), image: G.banner || undefined, sec: 'game', body,
+    keywords: '수락산 스트릿, 수락스트릿 게임, 무료 웹게임, 좀비 디펜스, 가게 운영 게임, 수락산역, 오공김밥, 쿠마키친, 팔선당',
+    ld: [{ '@context': 'https://schema.org', '@type': 'VideoGame', name: G.title, description: G.desc, url: BASE + '/play/', image: BASE + img(G.banner).replace(/\.webp$/, '.jpg'), genre: ['로그라이크', '디펜스', '경영'], gamePlatform: ['웹 브라우저', '모바일 브라우저'], applicationCategory: 'Game', operatingSystem: 'Web', inLanguage: 'ko-KR', offers: { '@type': 'Offer', price: 0, priceCurrency: 'KRW' } }],
     crumbs: [['수락스트릿', '/'], ['게임', '/play/']] }));
 }
 function pagePeople() {
@@ -289,10 +320,10 @@ ${c.shops ? `<div class="kicker mt">글에 나온 가게</div><div class="sc-gri
       author: { '@type': 'Organization', name: '수락스트릿 편집부' }, mainEntityOfPage: abs(`/column/${c.id}/`) }] }));
 }
 function pageTrails() {
-  const body = `<div class="wrap"><section class="sec">${head('TRAILS', '등산로', '수락산역에서 시작하는 세 갈래 길.')}<div class="trs">
+  const body = `<div class="wrap"><section class="sec">${head('TRAILS', '수락산 등산코스', '수락산역 3번 출구에서 시작하는 세 갈래 길 — 소요시간·난이도·구간 안내.')}<div class="trs">
 ${D.TRAILS.map((t, i) => `<a class="trc" href="/trail/${t.slug}/"><div class="trc-n">${num2(i + 1)}</div><div class="trc-b"><div class="trc-lv">${esc(t.level)} · ${esc(t.dist)} · ${esc(t.time)}</div><h2>${esc(t.name)}</h2><p>${esc(t.lead)}</p><div class="route">${t.route.map(esc).join('<i>›</i>')}</div></div></a>`).join('')}
 </div><div class="safety"><div class="kicker">SAFETY</div><ul>${D.SAFETY.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div></section></div>`;
-  write('/trail/', layout({ p: '/trail/', title: `수락산 등산로 — 주봉 · 벽운계곡 · 둘레길 | ${S.name}`, desc: '수락산역 3번 출구에서 시작하는 수락산 주봉 코스(8.2km), 벽운계곡 코스, 둘레길 코스 안내와 안전 수칙.', sec: 'trail', body,
+  write('/trail/', layout({ p: '/trail/', title: `수락산 등산코스 — 주봉 · 벽운계곡 · 둘레길 소요시간·난이도 | ${S.name}`, desc: '수락산역 3번 출구에서 시작하는 수락산 등산코스 세 가지 — 정상 주봉 코스(8.2km·약 4시간), 벽운계곡 코스, 둘레길 코스의 소요시간·난이도·구간 안내와 안전 수칙. 하산 후엔 수락산역 먹자골목으로.', sec: 'trail', body,
     crumbs: [['수락스트릿', '/'], ['등산로', '/trail/']] }));
 }
 function pageTrail(t, i) {

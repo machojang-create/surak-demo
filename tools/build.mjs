@@ -229,7 +229,8 @@ ${next ? `<div class="bd-next"><div class="kicker">NEXT</div><div class="bd-next
 function pagePost(p, i) {
   const r = mdToHtml(p); const prev = POSTS[i - 1], next = POSTS[i + 1];
   const upcoming = !next ? D.LINEUP.find(l => l.no === p.no + 1) : null;
-  if (r.chars < 9000) warn.push(`제${p.no}화 본문 ${r.chars}자(공백 포함) — 1만 자 목표에 못 미침`);
+  const nImg = (r.html.match(/<figure>/g) || []).length;
+  if (nImg < 5) warn.push(`제${p.no}화 사진 ${nImg}장 — 최소 5장 필요 (분량은 1만 자 미만도 괜찮음)`);
   const mins = Math.max(1, Math.round(r.chars / 500));
   const body = `<div class="wrap narrow"><article class="art post">
 <nav class="crumb"><a href="/people/">인물 연재</a> <i>›</i> 제${p.no}화</nav>

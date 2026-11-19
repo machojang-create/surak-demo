@@ -30,3 +30,7 @@ jobs:
           if git diff --cached --quiet; then echo "변경 없음"; exit 0; fi
           git commit -m "주간 연재 공개 $(TZ=Asia/Seoul date +%F)"
           git push
+      - name: 네이버·Bing 에 새 페이지 알리기 (IndexNow)
+        run: |
+          sleep 120   # GitHub Pages 가 새 페이지를 올릴 시간
+          node tools/ping_indexnow.mjs || true

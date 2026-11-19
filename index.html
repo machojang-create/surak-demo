@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#F5F0E8"/>
 <title>수락 스트릿</title>
 <link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" href="css/street.css"/>
 <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=d7ufdpoww3&submodules=geocoder&callback=naverMapInit" defer></script>
 <script src="https://w.soundcloud.com/player/api.js" defer></script>
 </head>
@@ -51,6 +52,7 @@
 
     <!-- 지도 -->
   <div class="view" id="map-view">
+    <button class="sub-back" onclick="sv('shop')">‹ 매장으로</button>
     <div id="map-flt" class="map-flt-row"></div>
     <div id="map-wrap">
       <div id="naver-map"></div>
@@ -88,8 +90,13 @@
   <div class="view" id="my-view">
     <div class="scroll" id="my-inner"></div>
   </div>
-  <!-- 수락이(검색) 뷰 -->
-  <div class="view" id="search-view"><div class="scroll"><div class="pad" id="search-inner"></div></div></div>
+  <!-- 수락이(검색) 뷰 — 매장 탭에서 진입 -->
+  <div class="view" id="search-view"><button class="sub-back" onclick="sv('shop')">‹ 매장으로</button><div class="scroll"><div class="pad" id="search-inner"></div></div></div>
+
+  <!-- 매장 · 놀이 · 이야기 (2026-11-19 개편, js/street.js) -->
+  <div class="view" id="shop-view"><div class="scroll"><div id="shop-inner"></div></div></div>
+  <div class="view" id="play-view"><div class="scroll"><div id="play-inner"></div></div></div>
+  <div class="view" id="story-view"><div class="scroll"><div id="story-inner"></div></div></div>
 
 </div>
 
@@ -98,12 +105,13 @@
     <div class="scroll"><div class="pad" id="info-inner"></div></div>
   </div>
 
-<!-- 하단 탭바 (4탭 + QR) -->
+<!-- 하단 탭바: 홈 · 매장 · QR · 놀이 · 이야기 · 마이 (2026-11-19 개편) -->
 <div id="tabs">
   <button class="tab on" data-v="home"><span class="tab-ic">🏠</span><span id="t-tab-home"></span></button>
-  <button class="tab" data-v="search"><span class="tab-ic">🔍</span><span>수락이</span></button>
-  <button class="tab tab-qr" onclick="openQrScan()" style="color:var(--ac);font-weight:800;"><span class="tab-ic">📷</span><span>QR</span></button>
-  <button class="tab" data-v="map"><span class="tab-ic">🗺️</span><span id="t-tab-map"></span></button>
+  <button class="tab" data-v="shop"><span class="tab-ic">🏪</span><span>매장</span></button>
+  <button class="tab tab-qr" onclick="openQrScan()" aria-label="QR 스캔"><span class="tab-qr-btn">📷</span><span>QR</span></button>
+  <button class="tab" data-v="play"><span class="tab-ic">🎮</span><span>놀이</span></button>
+  <button class="tab" data-v="story"><span class="tab-ic">📖</span><span>이야기</span></button>
   <button class="tab" data-v="my"><span class="tab-ic">👤</span><span id="t-tab-my"></span></button>
 </div>
 
@@ -214,6 +222,7 @@
 <script src="js/games.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 <script src="js/app.js"></script>
+<script src="js/street.js"></script>
 <script src="js/qr.js"></script>
 </body>
 </html>

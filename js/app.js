@@ -552,66 +552,8 @@ function renderHome(){
   html+='</div>';
   html+='<div style="font-size:11px;color:var(--t3);margin-top:8px;text-align:right;">'+L({KO:'탭하여 자세히 보기 →',EN:'Tap for details →',JP:'タップで詳細 →',CN:'点击查看详情 →'})+'</div>';
   html+='</div></div>';
-  /* 수락 이야기 카드 슬라이더 */
-  html+='<div class="stit">📜 '+L({KO:'수락산 인물 이야기',EN:'SURAKSAN LEGENDS',JP:'スラクサン人物語',CN:'水落山人物故事'})+'</div>';
-  html+='<div id="story-cards" style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;">';
-  var STORY_CARDS=[
-    {idx:0,ic:'🖊️',bg:'linear-gradient(135deg,#0d2b1a,#1a4a2e)',color:'#FFFFFF',
-     t:{KO:'천상병 시인',EN:'Poet Cheon',JP:'千尚炳詩人',CN:'诗人千尚炳'},
-     s:{KO:'이 세상 소풍 끝내는 날…',EN:'When this picnic ends…',JP:'この世の遠足が終わる日…',CN:'当郊游结束那天…'}},
-    {idx:1,ic:'📚',bg:'linear-gradient(135deg,#0d1b30,#1a2a4a)',color:'#FFFFFF',
-     t:{KO:'김시습',EN:'Kim Si-seup',JP:'金時習',CN:'金时习'},
-     s:{KO:'5살에 세종대왕을 감탄시킨 천재',EN:'The prodigy who stunned Sejong',JP:'5歳で世宗を感嘆させた天才',CN:'5岁让世宗惊叹的天才'}},
-    {idx:2,ic:'🌙',bg:'linear-gradient(135deg,#1a0d30,#2a1a4a)',color:'#FFFFFF',
-     t:{KO:'인현왕후',EN:'Queen Inhyeon',JP:'仁顕王后',CN:'仁显王后'},
-     s:{KO:'장희빈에 맞선 수락산의 기적',EN:'Suraksan miracle vs. Jang Hee-bin',JP:'張禧嬪に立ち向かった奇跡',CN:'对抗张禧嫔的水落山奇迹'}},
-    {idx:3,ic:'📖',bg:'linear-gradient(135deg,#0a2a1a,#0f3a25)',color:'#FFFFFF',
-     t:{KO:'박세당',EN:'Park Se-dang',JP:'朴世堂',CN:'朴世堂'},
-     s:{KO:'삼각산보다 수락산이 으뜸!',EN:'Suraksan beats Bukhansan!',JP:'三角山より水落山が上！',CN:'水落山胜过三角山！'}},
-    {idx:4,ic:'🏛️',bg:'linear-gradient(135deg,#2a200a,#3a2f0f)',color:'#FFFFFF',
-     t:{KO:'황희 정승',EN:'Minister Hwang Hee',JP:'黄喜政丞',CN:'黄喜政丞'},
-     s:{KO:'수락(水落)의 이름을 탄생시킨 한 마디',EN:'The words that named Suraksan',JP:'スラクサンの名を生んだ言葉',CN:'诞生水落山之名的那句话'}},
-    {idx:5,ic:'⚔️',bg:'linear-gradient(135deg,#2a0a0a,#3a1010)',color:'#FFFFFF',
-     t:{KO:'이성계',EN:'Yi Seonggye',JP:'李成桂',CN:'李成桂'},
-     s:{KO:'삐쳐서 서울에 등 돌린 반역산',EN:'The mountain that turned its back',JP:'背を向けた逆賊山',CN:'背对首尔的逆贼山'}},
-    {idx:6,ic:'🏯',bg:'linear-gradient(135deg,#0d0d2b,#1a1a4a)',color:'#FFFFFF',
-     t:{KO:'정조 대왕',EN:'King Jeongjo',JP:'正祖大王',CN:'正祖大王'},
-     s:{KO:'백일기도 끝에 탄생한 순조',EN:'Sunjo born after 100-day prayer',JP:'百日祈祷の末の純祖誕生',CN:'百日祈祷后诞生的纯祖'}},
-    {idx:7,ic:'🔥',bg:'linear-gradient(135deg,#2a0505,#400a0a)',color:'#FFFFFF',
-     t:{KO:'연산군',EN:'Yeonsangun',JP:'燕山君',CN:'燕山君'},
-     s:{KO:'민초들의 저주가 서린 수락산',EN:'Suraksan cursed by the people',JP:'民衆の呪いが宿るスラクサン',CN:'民众诅咒萦绕的水落山'}},
-    {idx:8,ic:'🖌️',bg:'linear-gradient(135deg,#150d2a,#22134a)',color:'#FFFFFF',
-     t:{KO:'흥선대원군',EN:'Heungseon Daewongun',JP:'興宣大院君',CN:'兴宣大院君'},
-     s:{KO:'수락산을 글씨로 도배한 야망',EN:'Ambition written across the mountain',JP:'書で山を埋めた野望',CN:'用书法占领山头的野心'}},
-    {idx:9,ic:'🎨',bg:'linear-gradient(135deg,#050f1a,#0a1e2e)',color:'#FFFFFF',
-     t:{KO:'겸재 정선',EN:'Jeong Seon',JP:'謙斎鄭敾',CN:'谦斋郑敾'},
-     s:{KO:'300년 전 그 각도 그대로',EN:'The same angle, 300 years later',JP:'300年前と同じ角度',CN:'300年后相同的角度'}},
-    {idx:10,ic:'🕯️',bg:'linear-gradient(135deg,#0a0a0a,#1a1a1a)',color:'#FFFFFF',
-     t:{KO:'야화 ① 엄흥도×김시습',EN:'Tale① Eom & Kim',JP:'夜話①厳興道×金時習',CN:'夜话①严兴道×金时习'},
-     s:{KO:'영화 속 그 장면이 수락산에서…',EN:'That movie scene happened here…',JP:'映画のあのシーンがスラクサンで…',CN:'电影中那一幕就发生在水落山…'}},
-    {idx:11,ic:'🐯',bg:'linear-gradient(135deg,#041a10,#082a18)',color:'#FFFFFF',
-     t:{KO:'야화 ② 호랑이·김삿갓·한석봉',EN:'Tale② Tiger·Satgat·Seokbong',JP:'夜話②虎·金笠·韓石峯',CN:'夜话②老虎·金笠·韩石峯'},
-     s:{KO:'수락산을 사랑한 천재들의 야사',EN:'Secret tales of Suraksan\'s geniuses',JP:'スラクサンを愛した天才たちの野史',CN:'热爱水落山的天才们的野史'}}
-  ];
-  var _ILL=['https://machojang-create.github.io/surak-demo/cheon.png','https://machojang-create.github.io/surak-demo/kimsiseup.png','https://machojang-create.github.io/surak-demo/inhyeon.png','https://machojang-create.github.io/surak-demo/parksedang.png','https://machojang-create.github.io/surak-demo/hwanghui.png','https://machojang-create.github.io/surak-demo/leeseonggye.png','https://machojang-create.github.io/surak-demo/leehwang.png','https://machojang-create.github.io/surak-demo/yeonsangun.png','https://machojang-create.github.io/surak-demo/heungseon.png','https://machojang-create.github.io/surak-demo/jeongseon.png','https://machojang-create.github.io/surak-demo/eomheungdo.png','https://machojang-create.github.io/surak-demo/kimsatgat.png','https://machojang-create.github.io/surak-demo/jeongjo.png','https://machojang-create.github.io/surak-demo/deokhye.png','https://machojang-create.github.io/surak-demo/hanseokbong.png','https://machojang-create.github.io/surak-demo/seonjo.png'];
-  STORY_CARDS.forEach(function(c){
-    var ill=_ILL[c.idx]||'';
-    /* 반투명 배경: 이미지+색상 레이어 */
-    var bgStyle=ill
-      ? 'background-image:url('+ill+');background-size:contain;background-position:center bottom;background-repeat:no-repeat;'
-      : '';
-    html+='<div onclick="openStoryModal('+c.idx+')" style="flex-shrink:0;width:156px;'+bgStyle+'background-color:'+c.bg+';border-radius:14px;padding:16px 14px 14px;cursor:pointer;border:1px solid rgba(255,255,255,.1);position:relative;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.3);">';
-    /* 반투명 오버레이 - 배경 이미지 위에 색상 씌워 가독성 확보 */
-    if(ill)html+='<div style="position:absolute;inset:0;background:'+c.bg+';opacity:.65;"></div>';
-    html+='<div style="position:relative;z-index:1;">';
-    html+='<div style="font-size:26px;margin-bottom:10px;">'+c.ic+'</div>';
-    html+='<div style="font-size:13px;font-weight:800;color:'+c.color+';margin-bottom:6px;line-height:1.3;letter-spacing:-.2px;">'+L(c.t)+'</div>';
-    html+='<div style="font-size:11px;color:rgba(255,255,255,.75);line-height:1.5;">'+L(c.s)+'</div>';
-    html+='</div>';
-    html+='<div style="position:absolute;right:10px;bottom:10px;font-size:16px;color:rgba(255,255,255,.3);z-index:1;">›</div>';
-    html+='</div>';
-  });
-  html+='</div>';
+  /* 추천 매장 · 놀이 · 인물 연재 블록 (js/street.js streetHomeExtras) — 옛 STORY_CARDS 슬라이더 대체 */
+  html+='<div id="home-street"></div>';
 
 
   /* 🎮 미니게임 배너 제거됨 (명세 §1.3 — MVP 미니게임 제외) */
@@ -623,6 +565,7 @@ function renderHome(){
 
   wrap.innerHTML=html;
   fillHomeNotice();
+  if(typeof streetHomeExtras==='function')streetHomeExtras();
   var ccBtn=document.getElementById('course-card-btn');
   if(ccBtn)ccBtn.addEventListener('click',function(){openHomePopup('course');});
   document.querySelectorAll('[data-gameid]').forEach(function(el){
@@ -2608,6 +2551,11 @@ function sv(v){
   if(v==='home')renderHome();
   if(v==='search')renderSearch();
   if(v==='my'){var mi=g('my-inner');if(mi)delete mi.dataset.done;renderMy();}
+  /* 2026-11-19 개편 탭 (js/street.js) — 지도·수락이는 매장 탭 안에서 연다 */
+  if(v==='shop'&&typeof renderShopTab==='function')renderShopTab();
+  if(v==='play'&&typeof renderPlayTab==='function')renderPlayTab();
+  if(v==='story'&&typeof renderStoryTab==='function')renderStoryTab();
+  if(v==='map'||v==='search'){var st=document.querySelector('.tab[data-v="shop"]');if(st)st.classList.add('on');}
 }
 
 /* ── 수락이(검색) + QR 스캔 — Phase B ── */

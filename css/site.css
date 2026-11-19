@@ -354,3 +354,15 @@ blockquote{margin:26px 0;padding:4px 0 4px 20px;border-left:2px solid var(--gold
   .bd-row:hover .bd-t{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px;}
   .post .art-t{font-size:40px;}
 }
+
+/* ── 소개(ABOUT) · 주제 태그 ── */
+.about .ph{margin-bottom:18px;}
+.about-b{max-width:760px;}
+.about-b p{font-size:16px;line-height:1.95;color:var(--ink2);margin-bottom:16px;}
+.about-b strong{color:var(--ink);font-weight:700;}
+.about-b a{color:var(--ink);border-bottom:1px solid var(--gold2);}
+.about-b a:hover{border-color:var(--ink);}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;}
+.tags a{font-size:13px;font-weight:600;color:var(--ink2);padding:7px 13px;border:1px solid var(--line);background:var(--card);border-radius:20px;transition:border-color .2s,color .2s;}
+.tags a:hover{border-color:var(--gold);color:var(--ink);}
+@media (min-width:1000px){.about-b p{font-size:17px;}}

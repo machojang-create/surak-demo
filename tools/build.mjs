@@ -167,17 +167,27 @@ function pageHome() {
   const body = `<section class="hero"><video class="hero-v" autoplay muted loop playsinline preload="metadata" aria-hidden="true"><source src="/media/surak-home.mp4" type="video/mp4"/></video>
 <div class="hero-sh"></div><div class="hero-in"><div class="kicker light">SURAK DESIGN STREET · NOWON, SEOUL</div>
 <h1 class="hero-t">수락산 아래,<br/>골목의 맛과 이야기</h1>
-<p class="hero-s">수락산역 3번 출구에서 걸어서 5분. 산을 오르기 전 한 줄, 내려와서 한 그릇.</p>
+<p class="hero-s">정상까지 637m, 김밥까지 407m. 오늘은 어느 쪽부터 가실래요?</p>
 <a class="hero-cta" href="#shops">가게 둘러보기 <i>↓</i></a></div></section>
 <div class="wrap"><section class="sec" id="shops">${head('THE SHOPS', '디자인거리의 가게들', '수락스트릿이 소개하는 세 곳의 이야기.', 'h2')}
 <div class="sc-grid">${SHOPS.map((s, i) => shopCard(s, i)).join('')}</div></section>
+<section class="sec about">${head('ABOUT', '산이 먼저냐, 밥이 먼저냐', '', 'h2')}
+<div class="about-b">
+<p>수락산역 3번 출구를 나오면 두 가지 유혹이 동시에 손짓합니다. 한쪽은 해발 637m 수락산 주봉, 다른 한쪽은 걸어서 5분 거리 <strong>수락산 디자인거리</strong>의 맛집 골목. 수락스트릿은 그 갈림길에서 「오늘은 무엇부터」를 함께 고민해 주는 동네 안내서입니다.</p>
+<p>등산 전엔 <a href="/shop/ogonggimbap/">오공김밥</a>에서 든든한 한 줄을 챙기고, 하산 후엔 <a href="/shop/kumakitchen/">쿠마키친</a>의 바삭한 카츠나 <a href="/shop/palseondang/">팔선당</a>의 불향 가득한 짜장으로 수고한 무릎을 달래 보세요. 가게 정보는 각 매장의 네이버 플레이스를 바탕으로 정리하고, 바뀌면 바로 고칩니다. (사장님보다 조금 늦게 알 수는 있습니다.)</p>
+<p>매주 월요일에는 인물 연재 <a href="/people/">「수락산 사람들」</a>이 올라옵니다. 천상병 시인, 매월당 김시습처럼 이 산 아래 머물다 간 사람들의 이야기를 그림과 함께 천천히 풀어 놓습니다. 산은 늘 그 자리인데, 이야기는 매주 한 편씩 자랍니다.</p>
+<p><a href="/trail/">수락산 등산 코스</a>도 체력별로 챙겨 두었습니다. 정상을 노리는 주봉 코스부터 물소리 따라 걷는 벽운계곡, 가볍게 한 바퀴 도는 둘레길까지. 내려오는 길이 오르는 길보다 즐거운 동네, 수락산 디자인거리에 오신 걸 환영합니다.</p>
+</div>
+<nav class="tags" aria-label="주제 태그">${[['#수락산맛집', '/#shops'], ['#수락산역맛집', '/#shops'], ['#수락산디자인거리', '/column/halfday/'], ['#노원맛집', '/#shops'], ['#상계동맛집', '/#shops'], ['#수락산등산코스', '/trail/'], ['#등산후맛집', '/column/mealtime/'], ['#수락산둘레길', '/trail/dulle/'], ['#천상병공원', POSTS[0] ? POSTS[0].url : '/people/'], ['#수락산사람들', '/people/']].map(t => `<a href="${t[1]}">${t[0]}</a>`).join('')}</nav>
+</section>
 <section class="sec">${head('STORIES', '수락산의 이야기', '사람의 이야기, 골목의 이야기, 산의 이야기.', 'h2')}<div class="teasers">
 ${latest ? `<a class="tz" href="${latest.url}"><div class="tz-img ill" style="background-image:url(/${latest.hero})"></div><div class="tz-b"><div class="tz-k">인물 연재 · 제${latest.no}화</div><h3>${esc(latest.title)}</h3><p>${esc(latest.summary)}</p></div></a>` : ''}
 <a class="tz" href="/column/${col.id}/"><div class="tz-img" style="background-image:url(${img(col.img)})"></div><div class="tz-b"><div class="tz-k">칼럼</div><h3>${esc(col.title)}</h3><p>${esc(col.summary)}</p></div></a>
 <a class="tz" href="/trail/${tr.slug}/"><div class="tz-img tz-mtn"><span>637m</span></div><div class="tz-b"><div class="tz-k">등산로</div><h3>${esc(tr.name)}</h3><p>${esc(tr.lead)}</p></div></a>
 </div></section>
 <a class="gband" href="/play/"${D.GAME.banner ? ` style="background-image:linear-gradient(90deg,rgba(20,16,12,.85),rgba(20,16,12,.2)),url(${img(D.GAME.banner)})"` : ''}><div><div class="kicker light">GAME</div><h3>${esc(D.GAME.title)}</h3><p>${esc(D.GAME.sub)}</p></div><span class="more light">${D.GAME.url ? '플레이하기' : '곧 공개'} <i>→</i></span></a></div>`;
-  write('/', layout({ p: '/', title: `${S.name} — 수락산 디자인거리의 가게와 이야기`, desc: S.desc, sec: 'shops', body,
+  write('/', layout({ p: '/', title: `${S.name} | 수락산역 맛집 · 디자인거리 · 등산 코스 안내`, desc: S.desc, sec: 'shops', body,
+    keywords: '수락스트릿, 수락산, 수락산역, 수락산 맛집, 수락산역 맛집, 수락산 디자인거리, 노원 맛집, 상계동 맛집, 수락산 등산 코스, 등산 후 맛집, 수락산 둘레길, 천상병공원, 팔선당, 쿠마키친, 오공김밥',
     ld: [{ '@context': 'https://schema.org', '@type': 'WebSite', name: S.name, alternateName: S.nameEn, url: BASE + '/', inLanguage: 'ko-KR', description: S.desc }] }));
 }
 function pageShop(s, i) {

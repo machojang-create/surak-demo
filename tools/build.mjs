@@ -87,7 +87,8 @@ const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' vi
 /* ── 레이아웃 (SEO 머리 포함) ── */
 function layout({ p, title, desc, image, type = 'website', sec, body, ld = [], crumbs, published, keywords }) {
   const url = abs(p);
-  const ogImg = abs(image || 'img/shops/ogong-hero.webp');
+  const _og = image || 'img/shops/ogong-hero.webp'; const _ogJpg = _og.replace(/.webp$/, '.jpg');
+  const ogImg = abs(fs.existsSync(path.join(ROOT, _ogJpg)) ? _ogJpg : _og);
   const jsonld = [...ld];
   if (crumbs) jsonld.push({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c[0], item: abs(c[1]) })) });
   return `<!DOCTYPE html>
@@ -311,7 +312,7 @@ pageColumns(); D.COLUMNS.forEach(pageColumn); pageTrails(); D.TRAILS.forEach(pag
 /* 사이트맵 · robots · RSS */
 const lastmod = p => { const m = p.match(/^\/people\/(\d+)-/); if (m) { const x = POSTS.find(q => q.no === +m[1]); return x ? x.date : TODAY; } return TODAY; };
 const urls = written.filter(p => p !== '/404.html');
-if (fs.existsSync(path.join(ROOT, 'game/index.html'))) urls.push('/game/');   // 다른 창이 올린 실제 게임
+// /game/(게임 앱 화면)은 사이트맵에 넣지 않는다 — 제목·본문·대표주소가 없어 「크롤링됨-색인 안 됨」으로 쌓인다(2026-11-19 실측). 소개는 /play/
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(p => `  <url><loc>${abs(p)}</loc><lastmod>${lastmod(p)}</lastmod></url>`).join('\n')}\n</urlset>\n`);
 fs.writeFileSync(path.join(ROOT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /admin.html\nDisallow: /app-legacy.html\nDisallow: /functions/\nDisallow: /content/\nDisallow: /tools/\n\nSitemap: ${BASE}/sitemap.xml\n`);
 const items = [...POSTS.map(p => ({ t: `[수락산 사람들 제${p.no}화] ${p.title}`, u: abs(p.url), d: p.summary, date: p.date })),

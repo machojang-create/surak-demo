@@ -366,3 +366,11 @@ blockquote{margin:26px 0;padding:4px 0 4px 20px;border-left:2px solid var(--gold
 .tags a{font-size:13px;font-weight:600;color:var(--ink2);padding:7px 13px;border:1px solid var(--line);background:var(--card);border-radius:20px;transition:border-color .2s,color .2s;}
 .tags a:hover{border-color:var(--gold);color:var(--ink);}
 @media (min-width:1000px){.about-b p{font-size:17px;}}
+
+/* ── 로고(G2 먹선: 두 봉우리 + 펼쳐진 길) ── */
+.logo{flex-direction:row;align-items:center;gap:10px;}
+.logo-mark{height:36px;width:auto;flex-shrink:0;}
+.logo-txt{display:flex;flex-direction:column;line-height:1.15;}
+.ft-logo{display:flex;align-items:center;gap:12px;}
+.ft-mark{height:38px;width:auto;}
+@media (min-width:1000px){.logo-mark{height:44px;}.logo{gap:12px;}}

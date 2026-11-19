@@ -109,7 +109,8 @@ ${keywords ? `<meta name="keywords" content="${esc(keywords)}"/>\n` : ''}<link r
 <meta property="og:image" content="${ogImg}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 ${published ? `<meta property="article:published_time" content="${published}T09:00:00+09:00"/>\n` : ''}${S.googleVerify ? `<meta name="google-site-verification" content="${esc(S.googleVerify)}"/>\n` : ''}${S.naverVerify ? `<meta name="naver-site-verification" content="${esc(S.naverVerify)}"/>\n` : ''}<meta name="theme-color" content="#F5F1EA"/>
-<link rel="icon" href="${FAVICON}"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/img/brand/favicon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/img/brand/apple-touch-icon.png"/>
 <link rel="alternate" type="application/rss+xml" title="${esc(S.name)}" href="/rss.xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -120,14 +121,14 @@ ${jsonld.map(j => `<script type="application/ld+json">${JSON.stringify(j)}</scri
 </head>
 <body>
 <header class="hd"><div class="hd-in">
-  <a class="logo" href="/" aria-label="${esc(S.name)} 처음으로"><span class="logo-en">${esc(S.nameEn)}</span><span class="logo-ko">수락스트릿 · 수락산 디자인거리</span></a>
+  <a class="logo" href="/" aria-label="${esc(S.name)} 처음으로"><img class="logo-mark" src="/img/brand/logo.png" alt="" width="50" height="40"/><span class="logo-txt"><span class="logo-en">${esc(S.nameEn)}</span><span class="logo-ko">수락스트릿 · 수락산 디자인거리</span></span></a>
   <nav class="nav" aria-label="주 메뉴">${MENU.map(m => `<a href="${m.href}"${m.id === sec ? ' class="on" aria-current="page"' : ''}>${m.label}</a>`).join('')}</nav>
 </div></header>
 <main id="page">
 ${body}
 </main>
 <footer class="ft"><div class="ft-in">
-  <div class="ft-logo">${esc(S.nameEn)}</div>
+  <div class="ft-logo"><img class="ft-mark" src="/img/brand/logo-light.png" alt="" width="50" height="40"/>${esc(S.nameEn)}</div>
   <div class="ft-sub">서울 노원구 수락산 디자인거리 · 수락산역 3번 출구</div>
   <nav class="ft-nav">${MENU.map(m => `<a href="${m.href}">${m.label}</a>`).join('')}</nav>
   <div class="ft-note">매장 정보는 각 매장의 네이버 플레이스 등록 정보를 바탕으로 정리했으며, 바뀔 수 있습니다.</div>
@@ -188,7 +189,8 @@ ${latest ? `<a class="tz" href="${latest.url}"><div class="tz-img ill" style="ba
 <a class="gband" href="/play/"${D.GAME.banner ? ` style="background-image:linear-gradient(90deg,rgba(20,16,12,.85),rgba(20,16,12,.2)),url(${img(D.GAME.banner)})"` : ''}><div><div class="kicker light">GAME</div><h3>${esc(D.GAME.title)}</h3><p>${esc(D.GAME.sub)}</p></div><span class="more light">${D.GAME.url ? '플레이하기' : '곧 공개'} <i>→</i></span></a></div>`;
   write('/', layout({ p: '/', title: `${S.name} | 수락산역 맛집 · 디자인거리 · 등산 코스 안내`, desc: S.desc, sec: 'shops', body,
     keywords: '수락스트릿, 수락산, 수락산역, 수락산 맛집, 수락산역 맛집, 수락산 디자인거리, 노원 맛집, 상계동 맛집, 수락산 등산 코스, 등산 후 맛집, 수락산 둘레길, 천상병공원, 팔선당, 쿠마키친, 오공김밥',
-    ld: [{ '@context': 'https://schema.org', '@type': 'WebSite', name: S.name, alternateName: S.nameEn, url: BASE + '/', inLanguage: 'ko-KR', description: S.desc }] }));
+    ld: [{ '@context': 'https://schema.org', '@type': 'WebSite', name: S.name, alternateName: S.nameEn, url: BASE + '/', inLanguage: 'ko-KR', description: S.desc },
+      { '@context': 'https://schema.org', '@type': 'Organization', name: S.name, alternateName: S.nameEn, url: BASE + '/', logo: abs('img/brand/icon-512.png') }] }));
 }
 function pageShop(s, i) {
   const t = s.full || s.name;
@@ -262,7 +264,7 @@ ${next ? `<a class="next" href="${next.url}"><small>다음 화</small>제${next.
     crumbs: [['수락스트릿', '/'], ['인물 연재', '/people/'], [`제${p.no}화 ${p.name}`, p.url]],
     ld: [{ '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.title, description: p.summary, image: [abs(p.hero)], inLanguage: 'ko-KR',
       datePublished: p.date + 'T09:00:00+09:00', dateModified: p.date + 'T09:00:00+09:00', keywords: p.keywords, wordCount: r.chars,
-      author: { '@type': 'Organization', name: '수락스트릿 편집부', url: BASE + '/' }, publisher: { '@type': 'Organization', name: S.name, url: BASE + '/' },
+      author: { '@type': 'Organization', name: '수락스트릿 편집부', url: BASE + '/' }, publisher: { '@type': 'Organization', name: S.name, url: BASE + '/', logo: { '@type': 'ImageObject', url: abs('img/brand/icon-512.png') } },
       mainEntityOfPage: abs(p.url), about: { '@type': 'Person', name: p.name } }] }));
 }
 function pageColumns() {

@@ -226,7 +226,21 @@
         "ogonggimbap",
         "kumakitchen",
         "palseondang"
-      ]
+      ],
+      "pics": {
+        "오전 — 산에 들고 갈 한 줄": {
+          "img": "img/column/halfday_1.webp",
+          "cap": "등산 전, 배낭에 넣는 김밥 한 줄"
+        },
+        "산 — 내 체력에 맞는 코스 고르기": {
+          "img": "img/column/halfday_2.webp",
+          "cap": "갈림길에서 오늘의 코스 고르기"
+        },
+        "하산 후 — 따뜻한 한 그릇": {
+          "img": "img/column/halfday_3.webp",
+          "cap": "하산 후 창가에서 받는 따뜻한 한 그릇"
+        }
+      }
     },
     {
       "id": "mealtime",
@@ -240,7 +254,21 @@
         "ogonggimbap",
         "kumakitchen",
         "palseondang"
-      ]
+      ],
+      "pics": {
+        "아침 9시부터 — 오공김밥": {
+          "img": "img/column/meal_1.webp",
+          "cap": "아침, 김밥을 마는 시간"
+        },
+        "점심 11시부터 — 쿠마키친 · 팔선당": {
+          "img": "img/column/meal_2.webp",
+          "cap": "점심 식탁 — 짬뽕·짜장·탕수육·카츠"
+        },
+        "저녁 — 마감 시간 확인": {
+          "img": "img/column/meal_3.webp",
+          "cap": "불이 켜지는 저녁 골목"
+        }
+      }
     }
   ],
   "TRAILS": [
@@ -304,7 +332,23 @@
           "d": "정상석과 태극기. 360도로 펼쳐지는 전망을 즐기세요."
         }
       ],
-      "slug": "jubong"
+      "slug": "jubong",
+      "hero": {
+        "img": "img/trail/jubong_hero.webp",
+        "cap": "산 아래 골목 끝에서 올려다본 수락산 주봉 능선"
+      },
+      "pics": [
+        {
+          "img": "img/trail/jubong_kkaldak.webp",
+          "cap": "깔딱고개 — 밧줄을 잡고 한 칸씩",
+          "at": 3
+        },
+        {
+          "img": "img/trail/jubong_summit.webp",
+          "cap": "정상 주봉 바위에서 내려다본 능선과 도시",
+          "at": 6
+        }
+      ]
     },
     {
       "name": "벽운계곡 코스",
@@ -319,7 +363,17 @@
       ],
       "lead": "계곡 물소리를 따라 오르는 길. 은류폭포를 지나 주봉으로 이어집니다.",
       "marks": [],
-      "slug": "byeokun-valley"
+      "slug": "byeokun-valley",
+      "hero": {
+        "img": "img/trail/byeokun_hero.webp",
+        "cap": "바위 사이로 물이 고여 쉬어 가는 벽운계곡"
+      },
+      "pics": [
+        {
+          "img": "img/trail/byeokun_2.webp",
+          "cap": "물가를 따라 걷는 계곡길"
+        }
+      ]
     },
     {
       "name": "둘레길 코스",
@@ -333,7 +387,17 @@
       ],
       "lead": "정상까지 오르지 않고 산자락을 한 바퀴 도는 완만한 길. 처음 오는 분께 권합니다.",
       "marks": [],
-      "slug": "dulle"
+      "slug": "dulle",
+      "hero": {
+        "img": "img/trail/dulle_hero.webp",
+        "cap": "낙엽 깔린 완만한 둘레길"
+      },
+      "pics": [
+        {
+          "img": "img/trail/dulle_2.webp",
+          "cap": "산허리 쉼터에서 바라본 동네와 능선"
+        }
+      ]
     }
   ],
   "SAFETY": [

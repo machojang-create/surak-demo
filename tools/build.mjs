@@ -23,6 +23,9 @@ const abs = p => BASE + (p.startsWith('/') ? p : '/' + p);
 const img = p => '/' + String(p).replace(/^\//, '');
 const fmtDate = d => { const [y, m, dd] = d.split('-').map(Number); const w = '일월화수목금토'[new Date(Date.UTC(y, m - 1, dd)).getUTCDay()]; return `${y}. ${m}. ${dd}. (${w})`; };
 const paras = t => String(t || '').split(/\n+/).map(p => { p = p.trim(); if (!p) return ''; if (p.startsWith('■')) return `<h2>${esc(p.replace(/^■\s*/, ''))}</h2>`; return `<p>${esc(p)}</p>`; }).join('');
+const fig = (p, lazy = true) => p ? `<figure class="ill-fig"><img src="${img(p.img)}" alt="${esc(p.cap)} — 삽화" width="1600" height="894"${lazy ? ' loading="lazy"' : ''}/><figcaption>${esc(p.cap)}</figcaption></figure>` : '';
+/* 칼럼 본문: ■ 소제목 바로 뒤에 그 소제목의 삽화를 넣는다 */
+const parasPics = (t, pics = {}) => String(t || '').split(/\n+/).map(p => { p = p.trim(); if (!p) return ''; if (p.startsWith('■')) { const h = p.replace(/^■\s*/, ''); return `<h2>${esc(h)}</h2>${fig(pics[h])}`; } return `<p>${esc(p)}</p>`; }).join('');
 const cut = (s, n) => { s = String(s).replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, n - 1) + '…' : s; };
 
 /* ── 연재 일정: 1화=시작일, 2화부터 매주 월요일 ── */
@@ -109,8 +112,12 @@ ${keywords ? `<meta name="keywords" content="${esc(keywords)}"/>\n` : ''}<link r
 <meta property="og:image" content="${ogImg}"/>
 <meta name="twitter:card" content="summary_large_image"/>
 ${published ? `<meta property="article:published_time" content="${published}T09:00:00+09:00"/>\n` : ''}${S.googleVerify ? `<meta name="google-site-verification" content="${esc(S.googleVerify)}"/>\n` : ''}${S.naverVerify ? `<meta name="naver-site-verification" content="${esc(S.naverVerify)}"/>\n` : ''}<meta name="theme-color" content="#F5F1EA"/>
-<link rel="icon" type="image/png" sizes="32x32" href="/img/brand/favicon-32.png"/>
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48"/>
+<link rel="icon" type="image/png" sizes="48x48" href="/img/brand/favicon-48.png"/>
+<link rel="icon" type="image/png" sizes="96x96" href="/img/brand/favicon-96.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="/img/brand/icon-192.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="/img/brand/apple-touch-icon.png"/>
+<link rel="manifest" href="/site.webmanifest"/>
 <link rel="alternate" type="application/rss+xml" title="${esc(S.name)}" href="/rss.xml"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -197,7 +204,7 @@ function pageHome() {
 <section class="sec">${head('STORIES', '수락산의 이야기', '사람의 이야기, 골목의 이야기, 산의 이야기.', 'h2')}<div class="teasers">
 ${latest ? `<a class="tz" href="${latest.url}"><div class="tz-img ill" style="background-image:url(/${latest.hero})"></div><div class="tz-b"><div class="tz-k">인물 연재 · 제${latest.no}화</div><h3>${esc(latest.title)}</h3><p>${esc(latest.summary)}</p></div></a>` : ''}
 <a class="tz" href="/column/${col.id}/"><div class="tz-img" style="background-image:url(${img(col.img)})"></div><div class="tz-b"><div class="tz-k">칼럼</div><h3>${esc(col.title)}</h3><p>${esc(col.summary)}</p></div></a>
-<a class="tz" href="/trail/${tr.slug}/"><div class="tz-img tz-mtn"><span>637m</span></div><div class="tz-b"><div class="tz-k">등산로</div><h3>${esc(tr.name)}</h3><p>${esc(tr.lead)}</p></div></a>
+<a class="tz" href="/trail/${tr.slug}/">${tr.hero ? `<div class="tz-img ill" style="background-image:url(${img(tr.hero.img)})"></div>` : '<div class="tz-img tz-mtn"><span>637m</span></div>'}<div class="tz-b"><div class="tz-k">등산로</div><h3>${esc(tr.name)}</h3><p>${esc(tr.lead)}</p></div></a>
 </div></section>
 ${gameCard()}</div>`;
   write('/', layout({ p: '/', title: `${S.name} — 수락산 등산코스 · 수락산역 맛집 · 먹자골목 안내`, desc: S.desc, sec: 'shops', body,
@@ -311,7 +318,7 @@ function pageColumn(c, i) {
 <nav class="crumb"><a href="/column/">칼럼</a> <i>›</i> No. ${num2(c.no)}</nav>
 <img class="art-photo" src="${img(c.img)}" alt="${esc(c.title)}" fetchpriority="high"/>
 <div class="kicker">COLUMN No. ${num2(c.no)} · 수락스트릿 편집부 · ${c.date}</div><h1 class="art-t">${esc(c.title)}</h1>
-<blockquote>${esc(c.summary)}</blockquote><div class="art-body">${paras(c.body)}</div>
+<blockquote>${esc(c.summary)}</blockquote><div class="art-body">${parasPics(c.body, c.pics)}</div>
 ${c.shops ? `<div class="kicker mt">글에 나온 가게</div><div class="sc-grid mini">${c.shops.map(k => { const s = SHOPS.find(x => x.key === k); return shopCard(s, SHOPS.indexOf(s), 'h2'); }).join('')}</div>` : ''}
 <nav class="pn">${pv ? `<a href="/column/${pv.id}/">← 이전 글</a>` : '<span></span>'}<a href="/column/">목록</a>${nx ? `<a href="/column/${nx.id}/">다음 글 →</a>` : '<span></span>'}</nav></article></div>`;
   write(`/column/${c.id}/`, layout({ p: `/column/${c.id}/`, title: `${c.title} | ${S.name} 칼럼`, desc: cut(c.summary + ' ' + c.body, 155), image: c.img, type: 'article', sec: 'column', body,
@@ -321,7 +328,7 @@ ${c.shops ? `<div class="kicker mt">글에 나온 가게</div><div class="sc-gri
 }
 function pageTrails() {
   const body = `<div class="wrap"><section class="sec">${head('TRAILS', '수락산 등산코스', '수락산역 3번 출구에서 시작하는 세 갈래 길 — 소요시간·난이도·구간 안내.')}<div class="trs">
-${D.TRAILS.map((t, i) => `<a class="trc" href="/trail/${t.slug}/"><div class="trc-n">${num2(i + 1)}</div><div class="trc-b"><div class="trc-lv">${esc(t.level)} · ${esc(t.dist)} · ${esc(t.time)}</div><h2>${esc(t.name)}</h2><p>${esc(t.lead)}</p><div class="route">${t.route.map(esc).join('<i>›</i>')}</div></div></a>`).join('')}
+${D.TRAILS.map((t, i) => `<a class="trc" href="/trail/${t.slug}/">${t.hero ? `<div class="trc-img"><img src="${img(t.hero.img)}" alt="" loading="lazy" width="1600" height="894"/></div>` : ''}<div class="trc-n">${num2(i + 1)}</div><div class="trc-b"><div class="trc-lv">${esc(t.level)} · ${esc(t.dist)} · ${esc(t.time)}</div><h2>${esc(t.name)}</h2><p>${esc(t.lead)}</p><div class="route">${t.route.map(esc).join('<i>›</i>')}</div></div></a>`).join('')}
 </div><div class="safety"><div class="kicker">SAFETY</div><ul>${D.SAFETY.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div></section></div>`;
   write('/trail/', layout({ p: '/trail/', title: `수락산 등산코스 — 주봉 · 벽운계곡 · 둘레길 소요시간·난이도 | ${S.name}`, desc: '수락산역 3번 출구에서 시작하는 수락산 등산코스 세 가지 — 정상 주봉 코스(8.2km·약 4시간), 벽운계곡 코스, 둘레길 코스의 소요시간·난이도·구간 안내와 안전 수칙. 하산 후엔 수락산역 먹자골목으로.', sec: 'trail', body,
     crumbs: [['수락스트릿', '/'], ['등산로', '/trail/']] }));
@@ -329,14 +336,16 @@ ${D.TRAILS.map((t, i) => `<a class="trc" href="/trail/${t.slug}/"><div class="tr
 function pageTrail(t, i) {
   const body = `<div class="wrap narrow"><article class="art">
 <nav class="crumb"><a href="/trail/">등산로</a> <i>›</i> ${esc(t.name)}</nav>
+${t.hero ? `<figure class="ill-hero"><img src="${img(t.hero.img)}" alt="${esc(t.hero.cap)} — 삽화" width="1600" height="894" fetchpriority="high"/><figcaption>${esc(t.hero.cap)}</figcaption></figure>` : ''}
 <div class="kicker">TRAIL ${num2(i + 1)} · ${esc(t.level)}</div><h1 class="art-t">${esc(t.name)}</h1>
 <div class="facts"><div><b>거리</b>${esc(t.dist)}</div><div><b>시간</b>${esc(t.time)}</div><div><b>난이도</b>${esc(t.level)}</div></div>
 <blockquote>${esc(t.lead)}</blockquote><div class="route big">${t.route.map(esc).join('<i>›</i>')}</div>
-${t.marks.length ? `<h2 class="h2">구간 안내</h2><ol class="tl">${t.marks.map((m, k) => `<li><div class="tl-n">${num2(k + 1)}</div><div class="tl-b"><h3>${esc(m.n)}</h3><div class="tl-m">출발 ${m.t}분 · 해발 ${m.e}m</div><p>${esc(m.d)}</p>${m.w ? `<p class="warn">${esc(m.w)}</p>` : ''}</div></li>`).join('')}</ol>` : ''}
+${!t.marks.length && t.pics ? `<div class="art-body">${t.pics.map(p => fig(p)).join('')}</div>` : ''}
+${t.marks.length ? `<h2 class="h2">구간 안내</h2><ol class="tl">${t.marks.map((m, k) => `<li><div class="tl-n">${num2(k + 1)}</div><div class="tl-b"><h3>${esc(m.n)}</h3><div class="tl-m">출발 ${m.t}분 · 해발 ${m.e}m</div><p>${esc(m.d)}</p>${(t.pics || []).filter(p => p.at === k).map(p => fig(p)).join('')}${m.w ? `<p class="warn">${esc(m.w)}</p>` : ''}</div></li>`).join('')}</ol>` : ''}
 <div class="safety"><div class="kicker">SAFETY</div><ul>${D.SAFETY.map(s => `<li>${esc(s)}</li>`).join('')}</ul></div>
 <div class="kicker mt">출발 전 · 하산 후 들르기</div><div class="sc-grid mini">${SHOPS.map((s, k) => shopCard(s, k, 'h2')).join('')}</div>
 <nav class="pn">${i > 0 ? `<a href="/trail/${D.TRAILS[i - 1].slug}/">← 이전 코스</a>` : '<span></span>'}<a href="/trail/">목록</a>${i < D.TRAILS.length - 1 ? `<a href="/trail/${D.TRAILS[i + 1].slug}/">다음 코스 →</a>` : '<span></span>'}</nav></article></div>`;
-  write(`/trail/${t.slug}/`, layout({ p: `/trail/${t.slug}/`, title: `${t.name} — ${t.dist} · ${t.level} | 수락산 등산로`, desc: cut(`${t.name}: ${t.lead} 경로 ${t.route.join('→')}. ${t.dist}, ${t.time}.`, 155), sec: 'trail', body,
+  write(`/trail/${t.slug}/`, layout({ p: `/trail/${t.slug}/`, image: t.hero ? t.hero.img : undefined, title: `${t.name} — ${t.dist} · ${t.level} | 수락산 등산로`, desc: cut(`${t.name}: ${t.lead} 경로 ${t.route.join('→')}. ${t.dist}, ${t.time}.`, 155), sec: 'trail', body,
     crumbs: [['수락스트릿', '/'], ['등산로', '/trail/'], [t.name, `/trail/${t.slug}/`]] }));
 }
 function page404() {
